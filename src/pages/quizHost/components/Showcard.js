@@ -5,6 +5,7 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import ButtonBase from '@mui/material/ButtonBase';
 import {Box, Button} from "@mui/material";
+import {useEffect, useState} from "react";
 
 
 const Img = styled('img')({
@@ -15,9 +16,29 @@ const Img = styled('img')({
 });
 
 
-export default function ComplexGrid(props) {
+export default function Showcard(props) {
     const [state, setState] = React.useState(false);
-    const data = props.data;
+    const [data, setData] = useState([]);
+    useEffect(() => {
+        setData([
+            {
+                key: 1,
+                title: "test1",
+                status: "작성중",
+                qcnt: 10,
+                author: "김재훈",
+                date: "2021-08-01"
+            },
+            {
+                key: 2,
+                title: "test2",
+                status: "사용가능",
+                qcnt: 10,
+                author: "김재이",
+                date: "2021-08-01"
+            },
+        ]);
+    },[]);
     const list = data.map(
         (item) => (
             <Box

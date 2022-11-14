@@ -1,39 +1,55 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useEffect, useState} from "react";
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+} from "react-router-dom";
+import Home from "./pages/home/home";
 
-import Test from './components/testlist';
-import Qpanel from './components/Quiz_panel';
-import {useEffect, useState} from "react";
+import QuizHostMain from "./pages/quizHost/main/Main";
+import QHostCreate from "./pages/quizHost/create/Quiz_panel";
+import QHostFind from "./pages/quizHost/find/Find";
+import QHostReport from "./pages/quizHost/report/Report";
 
-function App() {
-  const [data, setData] = useState([]);
-  useEffect(() => {
-      setData([
-          {
-              key: 1,
-              title: "test1",
-              status: "작성중",
-              qcnt: 10,
-              author: "김재훈",
-              date: "2021-08-01"
-          },
-          {
-              key: 2,
-              title: "test2",
-              status: "사용가능",
-              qcnt: 10,
-              author: "김재이",
-              date: "2021-08-01"
-          },
-      ]);
-  },[]);
-  return (
-    <>
-    {/*<Test data={data}/>*/}
-        <Qpanel/>
+import QuizClientMain from "./pages/quizClient/main/main";
+import QClientReady from "./pages/quizClient/ready/Ready";
+import QClientWait from "./pages/quizClient/wait/Wait";
+import QClientPlay from "./pages/quizClient/play/Play";
+import QClientResult from "./pages/quizClient/result/Result";
 
-    </>
-  );
+
+
+export default function App() {
+    return (
+        <Router>
+            <div>
+                <Switch>
+                    <Route path="/" component={Home} exact/>
+                    {/* 관리자 페이지 목록*/}
+
+                    {/* 진행자 페이지 목록*/}
+                    <Route path="/QHost" component={QuizHostMain} exact/>
+
+                    <Route path="/QHost/create" component={QHostCreate} exact/>
+
+                    <Route path="/QHost/find" component={QHostFind} exact/>
+
+                    <Route path="/QHost/result" component={QHostReport} exact/>
+
+                    {/* 참가자 페이지 목록*/}
+                    <Route path="/QClient" component={QuizClientMain} exact/>
+
+                    <Route path="/QClient/ready" component={QClientReady} exact/>
+
+                    <Route path="/QClient/wait" component={QClientWait} exact/>
+
+                    <Route path="/QClient/play" component={QClientPlay} exact/>
+
+                    <Route path="/QClient/result" component={QClientResult} exact/>
+
+                </Switch>
+            </div>
+        </Router>
+    );
 }
-
-export default App;
