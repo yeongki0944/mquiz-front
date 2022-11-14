@@ -15,6 +15,7 @@ import {styled} from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import Quiz_panel from "./Quiz_panel";
+import {useEffect} from "react";
 
 const Item = styled(Paper)(({theme}) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -33,45 +34,75 @@ const Img = styled('img')({
 
 
 export default function Component(props) {
+
+    //props refactoring
+    const quizList = props.quizList;
+    const setQuizList = props.setQuizList;
+    const currentShow = props.currentShow;
+    const currentQuiz = quizList[currentShow - 1];
+
+    //state
     const [types, setTypes] = React.useState(['선택형', 'OX형', '단답형']);
-    const [times, setTimes] = React.useState([{value: 0, label: '0초'},{value: 10, label: '10초'}, {value: 20, label: '20초'}, {value: 30, label: '30초'}, {value: 40, label: '40초'}, {value: 50, label: '50초'}, {value: 60, label: '60초'}]);
+    const [times, setTimes] = React.useState([{value: 0, label: '0초'}, {value: 10, label: '10초'}, {
+        value: 20,
+        label: '20초'
+    }, {value: 30, label: '30초'}, {value: 40, label: '40초'}, {value: 50, label: '50초'}, {value: 60, label: '60초'}]);
+
+
 
     return (
         <>
-            <TypeButton types={types} props={props}/>
+            <TypeButton/>
             <hr/>
             <Question/>
             <hr/>
-            <MediaBox props={props}/>
+            <MediaBox/>
             <hr/>
-            <FormType props={props}/>
+            <FormType/>
             <hr/>
-            <Options times={times} time={props.time} setTime={props.setTime} props={props}/>
+            <Options/>
 
         </>
     );
 
-    function modyfiQuiz(id,key, value) {
-        props.setQuiz(props.form.map((q) => {
-            if (q.id === props.currentshow) {
-                console.log(key, value);
-                return {
-                    ...q,
-                    [key]: value
-                }
-            }
-            return q;
-        }, []));
+    function modifyQuiz(keytype, key, value) {
+        switch (keytype) {
+            case 'base':
+                setQuizList(quizList.map((q) => {
+                    if (q.num === currentShow) {
+                        q[key] = value;
+                    }
+                    return q;
+                }));
+                break;
+            case 'media':
+                setQuizList(quizList.map((q) => {
+                    if (q.num === currentShow) {
+                        q.media[key] = value;
+                    }
+                    return q;
+                }));
+                break;
+            case 'choiceList':
+                setQuizList(quizList.map((q) => {
+                    if (q.num === currentShow) {
+                        q.choiceList[key] = value;
+                    }
+                    return q;
+                }));
+                break;
+        }
+
     }
 
-    function TypeButton(props) {
+    function TypeButton() {
         return (
             <Box>
                 <Grid container spacing={1}>
-                    {props.types.map((type) => (
+                    {types.map((type) => (
                         <Button
                             onClick={() => {
-                                modyfiQuiz(props.currentshow, 'type', type);
+                                modifyQuiz('base', 'type', type);
                             }}
                         >
                             <Card>
@@ -92,22 +123,24 @@ export default function Component(props) {
             </Box>
         );
     }
-    function Options(props){
-        return(
+
+    function Options() {
+        return (
             <Box>
                 <h3>Options</h3>
                 시간제한
                 <TextField
                     select
-                    value={props.time}
+                    value={currentQuiz.time}
                     onChange={(event) => {
-                        modyfiQuiz(props.currentshow,"time",event.target.value);}
+                        modifyQuiz("base", "time", event.target.value);
+                    }
                     }
                     SelectProps={{
                         native: true,
                     }}
                 >
-                    {props.times.map((time) => (
+                    {times.map((time) => (
                         <option
                             key={time.value}
                             value={time.value}
@@ -116,14 +149,20 @@ export default function Component(props) {
                         </option>
                     ))}
                 </TextField>[초]
-                점수 사용 <Switch/>
+                점수 사용
+                <Switch
+                    checked={currentQuiz.useScore}
+                    onChange={(event) => {
+                        modifyQuiz("base", "useScore", event.target.checked);
+                    }}
+                />
 
                 <Rating
                     name="simple-controlled"
                     max={3}
-                    value={props.props.rate}
+                    value={currentQuiz.rate}
                     onChange={(event, newValue) => {
-                        modyfiQuiz(props.currentshow,"rate",newValue);
+                        modifyQuiz("rate", newValue);
 
                     }}
                 />
@@ -142,19 +181,19 @@ export default function Component(props) {
                         name="row-radio-buttons-group"
                     >
                         <FormControlLabel value="Image" control={<Radio/>} onClick={() => {
-                            modyfiQuiz(props.currentshow,"mediaType",'Image');
+                            modifyQuiz("media", "type", 'Image');
                         }} label="Image"/>
                         <FormControlLabel value="Youtube" control={<Radio/>} onClick={() => {
-                            modyfiQuiz(props.currentshow,"mediaType",'Youtube');
+                            modifyQuiz("media", "type", 'Youtube');
                         }} label="Youtube"/>
                         <FormControlLabel value="Audio" control={<Radio/>} onClick={() => {
-                            modyfiQuiz(props.currentshow,"mediaType",'Audio');
+                            modifyQuiz("media", "type", 'Audio');
                         }} label="Audio"/>
                     </RadioGroup>
                 </FormControl>
-                {props.props.Mediatype === 'Image' ?
+                {currentQuiz.media.type === 'Image' ?
                     <ImageBox/> :
-                    (props.props.Mediatype === 'Youtube' ?
+                    (currentQuiz.media.type === 'Youtube' ?
                         <YoutubeBox/> :
                         <AudioBox/>)
                 }
@@ -166,6 +205,10 @@ export default function Component(props) {
                 <Box>
                     <TextField
                         placeholder={"이미지를 입력해주세요."}
+                        value={currentQuiz.media.url}
+                        onChange={(event) => {
+                            modifyQuiz("media", "url", event.target.value);
+                        }}
                     />
                 </Box>
             );
@@ -176,6 +219,10 @@ export default function Component(props) {
                 <Box>
                     <TextField
                         placeholder={"유튜브 링크를 입력해주세요."}
+                        value={currentQuiz.media.url}
+                        onChange={(event) => {
+                            modifyQuiz("media", "url", event.target.value);
+                        }}
                     />
                     <TextField/>~<TextField/>
                 </Box>
@@ -187,111 +234,131 @@ export default function Component(props) {
                 <Box>
                     <TextField
                         placeholder={"오디오 링크를 입력해주세요."}
+                        value={currentQuiz.media.url}
+                        onChange={(event) => {
+                            modifyQuiz("media", "url", event.target.value);
+                        }}
                     />
                 </Box>
             );
         }
     }
-}
 
 
-
-
-
-
-function Question(props) {
-    return (
-        <Box>
-            <h3>Question</h3>
-            <TextField
-                id="qfield"
-                multiline
-                rows={4}
-                placeholder={"질문을 입력해주세요."}
-            />
-        </Box>
-    );
-}
-
-function FormType(props) {
-    switch (props.props.type) {
-        case '선택형':
-            return <QSelect/>;
-        case 'OX형':
-            return <QOX/>;
-        case '단답형':
-            return <QRep/>;
-    }
-
-    function QSelect() {
+    function Question() {
         return (
             <Box>
-                <h3>정답</h3>
-                <Grid>
-                    <Typography>
-                        <Checkbox/><TextField
-                        id="qfield"
-                        placeholder={"답을 입력해주세요."}
-                    />
-                    </Typography>
-                    <Typography>
-                        <Checkbox/><TextField
-                        id="qfield"
-                        placeholder={"답을 입력해주세요."}
-                    />
-                    </Typography>
-                    <Typography>
-                        <Checkbox/><TextField
-                        id="qfield"
-                        placeholder={"답을 입력해주세요."}
-                    />
-                    </Typography>
-                    <Typography>
-                        <Checkbox/><TextField
-                        id="qfield"
-                        placeholder={"답을 입력해주세요."}
-                    />
-                    </Typography>
-                </Grid>
-
-            </Box>
-        );
-    }
-
-    function QOX() {
-        return (
-            <Box>
-                <h3>정답</h3>
-                <FormControl>
-                    <FormLabel id="demo-row-radio-buttons-group-label">Answer</FormLabel>
-                    <RadioGroup
-                        row
-                        aria-labelledby="demo-row-radio-buttons-group-label"
-                        name="row-radio-buttons-group"
-                    >
-                        <FormControlLabel value="O" control={<Radio/>} label="O"/>
-                        <FormControlLabel value="X" control={<Radio/>} label="X"/>
-                    </RadioGroup>
-                </FormControl>
-            </Box>
-        );
-    }
-
-    function QRep() {
-        return (
-            <Box>
-                <h3>정답</h3>
+                <h3>Question</h3>
                 <TextField
-                    id="qfield"
+                    id="textfield_test"
                     multiline
                     rows={4}
-                    placeholder={"답을 입력해주세요."}
+                    placeholder={"질문을 입력해주세요."}
+                    value={currentQuiz.question}
+                    onChange={(event) => {
+                        modifyQuiz("base","question", event.target.value);
+                    }
+                    }
                 />
             </Box>
         );
     }
 
+    function FormType() {
+        switch (currentQuiz.type) {
+            case '선택형':
+                return <QSelect/>;
+            case 'OX형':
+                return <QOX/>;
+            case '단답형':
+                return <QRep/>;
+        }
+
+        function QSelect() {
+            return (
+                <Box>
+                    <h3>정답</h3>
+                    <Grid>
+                        <Typography>
+                            <Checkbox/>
+                            <TextField
+                            id="qfield"
+                            placeholder={"답을 입력해주세요."}
+                            value={currentQuiz.choiceList[1]}
+                            onChange={(event) => {
+                                modifyQuiz("choiceList", "1", event.target.value);
+                            }}
+                        />
+                        </Typography>
+                        <Typography>
+                            <Checkbox/><TextField
+                            id="qfield"
+                            placeholder={"답을 입력해주세요."}
+                            value={currentQuiz.choiceList[2]}
+                            onChange={(event) => {
+                                modifyQuiz("choiceList", "2", event.target.value);
+                            }}
+                        />
+                        </Typography>
+                        <Typography>
+                            <Checkbox/><TextField
+                            id="qfield"
+                            placeholder={"답을 입력해주세요."}
+                            value={currentQuiz.choiceList[3]}
+                            onChange={(event) => {
+                                modifyQuiz("choiceList", "3", event.target.value);
+                            }}
+                        />
+                        </Typography>
+                        <Typography>
+                            <Checkbox/><TextField
+                            id="qfield"
+                            placeholder={"답을 입력해주세요."}
+                            value={currentQuiz.choiceList[4]}
+                            onChange={(event) => {
+                                modifyQuiz("choiceList", "4", event.target.value);
+                            }}
+                        />
+                        </Typography>
+                    </Grid>
+
+                </Box>
+            );
+        }
+
+        function QOX() {
+            return (
+                <Box>
+                    <h3>정답</h3>
+                    <FormControl>
+                        <FormLabel id="demo-row-radio-buttons-group-label">Answer</FormLabel>
+                        <RadioGroup
+                            row
+                            aria-labelledby="demo-row-radio-buttons-group-label"
+                            name="row-radio-buttons-group"
+                        >
+                            <FormControlLabel value="O" control={<Radio/>} label="O"/>
+                            <FormControlLabel value="X" control={<Radio/>} label="X"/>
+                        </RadioGroup>
+                    </FormControl>
+                </Box>
+            );
+        }
+
+        function QRep() {
+            return (
+                <Box>
+                    <h3>정답</h3>
+                    <TextField
+                        id="qfield"
+                        multiline
+                        rows={4}
+                        placeholder={"답을 입력해주세요."}
+                    />
+                </Box>
+            );
+        }
+
+    }
 }
-
-
 
