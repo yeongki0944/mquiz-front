@@ -14,8 +14,8 @@ import Grid from "@mui/material/Grid";
 import {styled} from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import Quiz_panel from "./Quiz_panel";
-import {useEffect} from "react";
+import ImageBox from "../../components/ImageBox";
+import {makeStyles} from "@material-ui/core/styles";
 
 const Item = styled(Paper)(({theme}) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -32,14 +32,25 @@ const Img = styled('img')({
     maxHeight: '80%',
 });
 
+const useStyles = makeStyles((theme) => ({
+    content: {
+        flexGrow: 1,
+        height: '90vh',
+        backgroundColor: '#f5f5f5',
+        overflow: 'scroll',
+        overflowX: 'hidden',
+    },
+}));
+
 
 export default function Component(props) {
+    const classes = useStyles();
 
     //props refactoring
     const quizList = props.quizList;
     const setQuizList = props.setQuizList;
     const currentShow = props.currentShow;
-    const currentQuiz = quizList[currentShow - 1];
+    const currentQuiz = props.currentQuiz;
 
     //state
     const [types, setTypes] = React.useState(['선택형', 'OX형', '단답형']);
@@ -51,7 +62,7 @@ export default function Component(props) {
 
 
     return (
-        <>
+        <div className={classes.content}>
             <TypeButton/>
             <hr/>
             <Question/>
@@ -62,7 +73,7 @@ export default function Component(props) {
             <hr/>
             <Options/>
 
-        </>
+        </div>
     );
 
     function modifyQuiz(keytype, key, value) {
@@ -95,14 +106,25 @@ export default function Component(props) {
 
     }
 
+    function resetAnswer() {
+        setQuizList(quizList.map((q) => {
+            if (q.num === currentShow) {
+                q.answer = '';
+            }
+            return q;
+        }));
+    }
+
     function TypeButton() {
         return (
             <Box>
                 <Grid container spacing={1}>
                     {types.map((type) => (
                         <Button
+                            key={type}
                             onClick={() => {
                                 modifyQuiz('base', 'type', type);
+                                resetAnswer();
                             }}
                         >
                             <Card>
@@ -162,8 +184,7 @@ export default function Component(props) {
                     max={3}
                     value={currentQuiz.rate}
                     onChange={(event, newValue) => {
-                        modifyQuiz("rate", newValue);
-
+                        modifyQuiz("base","rate", newValue);
                     }}
                 />
             </Box>
@@ -200,19 +221,6 @@ export default function Component(props) {
             </Box>
         );
 
-        function ImageBox() {
-            return (
-                <Box>
-                    <TextField
-                        placeholder={"이미지를 입력해주세요."}
-                        value={currentQuiz.media.url}
-                        onChange={(event) => {
-                            modifyQuiz("media", "url", event.target.value);
-                        }}
-                    />
-                </Box>
-            );
-        }
 
         function YoutubeBox() {
             return (
@@ -279,47 +287,78 @@ export default function Component(props) {
                 <Box>
                     <h3>정답</h3>
                     <Grid>
-                        <Typography>
-                            <Checkbox/>
-                            <TextField
-                            id="qfield"
-                            placeholder={"답을 입력해주세요."}
-                            value={currentQuiz.choiceList[1]}
-                            onChange={(event) => {
-                                modifyQuiz("choiceList", "1", event.target.value);
-                            }}
-                        />
-                        </Typography>
-                        <Typography>
-                            <Checkbox/><TextField
-                            id="qfield"
-                            placeholder={"답을 입력해주세요."}
-                            value={currentQuiz.choiceList[2]}
-                            onChange={(event) => {
-                                modifyQuiz("choiceList", "2", event.target.value);
-                            }}
-                        />
-                        </Typography>
-                        <Typography>
-                            <Checkbox/><TextField
-                            id="qfield"
-                            placeholder={"답을 입력해주세요."}
-                            value={currentQuiz.choiceList[3]}
-                            onChange={(event) => {
-                                modifyQuiz("choiceList", "3", event.target.value);
-                            }}
-                        />
-                        </Typography>
-                        <Typography>
-                            <Checkbox/><TextField
-                            id="qfield"
-                            placeholder={"답을 입력해주세요."}
-                            value={currentQuiz.choiceList[4]}
-                            onChange={(event) => {
-                                modifyQuiz("choiceList", "4", event.target.value);
-                            }}
-                        />
-                        </Typography>
+                        <Grid container>
+                            <Grid item xs={2}>
+                                <Checkbox/>
+                            </Grid>
+                            <Grid item xs={7}>
+                                <TextField
+                                    id="qfield"
+                                    placeholder={"답을 입력해주세요."}
+                                    value={currentQuiz.choiceList[1]}
+                                    onChange={(event) => {
+                                        modifyQuiz("choiceList", "1", event.target.value);
+                                    }}
+                                />
+                            </Grid>
+                            <Grid item xs>
+                                <ImageBox/>
+                            </Grid>
+                        </Grid>
+                        <Grid container>
+                            <Grid item xs={2}>
+                                <Checkbox/>
+                            </Grid>
+                            <Grid item xs={7}>
+                                <TextField
+                                    id="qfield"
+                                    placeholder={"답을 입력해주세요."}
+                                    value={currentQuiz.choiceList[2]}
+                                    onChange={(event) => {
+                                        modifyQuiz("choiceList", "2", event.target.value);
+                                    }}
+                                />
+                            </Grid>
+                            <Grid item xs>
+                                <ImageBox/>
+                            </Grid>
+                        </Grid>
+                        <Grid container>
+                            <Grid item xs={2}>
+                                <Checkbox/>
+                            </Grid>
+                            <Grid item xs={7}>
+                                <TextField
+                                    id="qfield"
+                                    placeholder={"답을 입력해주세요."}
+                                    value={currentQuiz.choiceList[3]}
+                                    onChange={(event) => {
+                                        modifyQuiz("choiceList", "3", event.target.value);
+                                    }}
+                                />
+                            </Grid>
+                            <Grid item xs>
+                                <ImageBox/>
+                            </Grid>
+                        </Grid>
+                        <Grid container>
+                            <Grid item xs={2}>
+                                <Checkbox/>
+                            </Grid>
+                            <Grid item xs={7}>
+                                <TextField
+                                    id="qfield"
+                                    placeholder={"답을 입력해주세요."}
+                                    value={currentQuiz.choiceList[4]}
+                                    onChange={(event) => {
+                                        modifyQuiz("choiceList", "4", event.target.value);
+                                    }}
+                                />
+                            </Grid>
+                            <Grid item xs>
+                                <ImageBox/>
+                            </Grid>
+                        </Grid>
                     </Grid>
 
                 </Box>

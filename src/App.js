@@ -8,7 +8,7 @@ import {
 import Home from "./pages/home/home";
 
 import QuizHostMain from "./pages/quizHost/main/Main";
-import QHostCreate from "./pages/quizHost/create/Quiz_panel";
+import QHostCreate from "./pages/quizHost/create/Panel";
 import QHostFind from "./pages/quizHost/find/Find";
 import QHostReport from "./pages/quizHost/report/Report";
 
