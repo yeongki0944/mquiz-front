@@ -261,7 +261,6 @@ export default function BasicModal(props) {
 
     return (
         <div>
-            <Button onClick={handleOpen}>Show 만들기</Button>
             <Modal
                 open={props.open}
                 onClose={handleClose}

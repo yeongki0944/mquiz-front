@@ -5,14 +5,15 @@ import Showcard from "../components/Showcard";
 import {Avatar, Box, Button, Modal, Switch, TextField} from "@mui/material";
 import {useEffect, useState} from "react";
 import axios from "axios";
+import QuizModal from '../create/Quiz_Make_modal';
 
 export default function QuizHostMain(props) {
-    const [createmodal, setCreateModal] = useState(false);
     const [data, setData] = useState([]);
 
     const onClick = async()=>{
         const res = await axios.get("http://localhost:8080/api/quiz");
         setData(res.data);
+        console.log(res.data);
         //
         // setData([
         //     {
@@ -88,7 +89,7 @@ export default function QuizHostMain(props) {
                         </Grid>
                         <Grid item xs={12} sm={12}>
                             <Button fullWidth={true} onClick={() => {
-                                setCreateModal(true);
+                                props.setOpen(true);
                             }}>
                                 <Box
                                     sx={{
@@ -127,17 +128,11 @@ export default function QuizHostMain(props) {
                     </Grid>
                 </Grid>
             </Grid>
-            <Modal open={createmodal}>
-                <Modal_a/>
-            </Modal>
+            <QuizModal
+            open={props.open}
+            setOpen={props.setOpen}
+            />
         </>
     );
 }
 
-function Modal_a() {
-    return (
-        <div>
-            <h1>Modal</h1>
-        </div>
-    );
-}

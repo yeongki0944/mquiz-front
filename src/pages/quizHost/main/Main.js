@@ -57,7 +57,10 @@ export default function QuizHostMain(props) {
         switch(page){
             case "main":
                 return(
-                    <LandingPage/>
+                    <LandingPage
+                        open={open}
+                        setOpen={setOpen}
+                    />
                     // <QuizModal
                     //     open={open}
                     //     setOpen={setOpen}
