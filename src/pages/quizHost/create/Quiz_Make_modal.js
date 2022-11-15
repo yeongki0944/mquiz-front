@@ -110,6 +110,10 @@ function init(){
 
 export default function BasicModal(props) {
 
+    useEffect(() => {
+        console.log("test==     "+props.page);
+    }, []);
+
     // DB에서 가져와야할 데이터 가져오기?
     init();
 
@@ -122,24 +126,27 @@ export default function BasicModal(props) {
         }));
     }
 
+    const Data = props.Data;
+    const setData = props.setData;
+
     // DB에 들어갈 데이터
-    const [Data, setData] = useState([
-        {
-            "_id": "quizId01",
-            "showInfo": {
-                "owner": "User Email",
-                "title": "쇼 제목",
-                "category": "일단",
-                "tags": ["1번", "2번", "3번"],
-                "titleImg-origin": "url",
-                "titleImg-thumb": "url",
-                "createDate": "생성시간",
-                "lastModifyDate": "최근수정시간",
-                "isPublic": true,
-                "state": "작성중, 완성"
-            }
-        }
-    ])
+    // const [Data, setData] = useState([
+    //     {
+    //         "_id": "quizId01",
+    //         "showInfo": {
+    //             "owner": "User Email",
+    //             "title": "쇼 제목",
+    //             "category": "일단",
+    //             "tags": ["1번", "2번", "3번"],
+    //             "titleImg-origin": "url",
+    //             "titleImg-thumb": "url",
+    //             "createDate": "생성시간",
+    //             "lastModifyDate": "최근수정시간",
+    //             "isPublic": true,
+    //             "state": "작성중, 완성"
+    //         }
+    //     }
+    // ])
 
     // Show 제목
     const [titleText, setTitletext] = useState('');
@@ -245,6 +252,7 @@ export default function BasicModal(props) {
         setQuizInfo("state", "작성중");
 
         handleClose();
+        props.setPage("quizcreate");
     }
 
     useEffect(()=>{
@@ -359,4 +367,8 @@ export default function BasicModal(props) {
             </Modal>
         </div>
     );
+    function test(){
+        props.setPage("quizcreate");
+        handleClose();
+    }
 }

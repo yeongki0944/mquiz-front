@@ -31,22 +31,9 @@ export default function App() {
                     {/* 진행자 페이지 목록*/}
                     <Route path="/QHost" component={QuizHostMain} exact/>
 
-                    <Route path="/QHost/create" component={QHostCreate} exact/>
-
-                    <Route path="/QHost/find" component={QHostFind} exact/>
-
-                    <Route path="/QHost/result" component={QHostReport} exact/>
 
                     {/* 참가자 페이지 목록*/}
                     <Route path="/QClient" component={QuizClientMain} exact/>
-
-                    <Route path="/QClient/ready" component={QClientReady} exact/>
-
-                    <Route path="/QClient/wait" component={QClientWait} exact/>
-
-                    <Route path="/QClient/play" component={QClientPlay} exact/>
-
-                    <Route path="/QClient/result" component={QClientResult} exact/>
 
                 </Switch>
             </div>

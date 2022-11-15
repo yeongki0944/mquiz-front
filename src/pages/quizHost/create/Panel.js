@@ -33,47 +33,13 @@ export default function Panel(props) {
     const [imgBase64, setImgBase64] = useState([]); // 파일 base64
     const [imgFile, setImgFile] = useState(null);	//파일
 
-    const [quizinfo, setQuizInfo] = useState([
-        {
-            "_id": "quizId01",
-            "showInfo": {
-                "owner": "User Email",
-                "title": "쇼 제목",
-                "category": "일단",
-                "tags": ["1번", "2번", "3번"],
-                "titleImg-origin": "url",
-                "titleImg-thumb": "url",
-                "createDate": "생성시간",
-                "lastModifyDate": "최근수정시간",
-                "isPulic": true,
-                "state": "작성중, 완성"
-            }
-        }
-    ]);
-    const [currentShow, setCurrentShow] = useState(1);
-    const [quizList, setQuizList] = useState([{
-        "num": 1,
-        "type": "선택형",
-        "question": " ",
-        "media": {
-            "type": "image",
-            "url": "",
-            "startTime": "",
-            "endTime": "",
-        },
-        "choiceList": {
-            "1": "답을 입력해 주세요",
-            "2": "답을 입력해 주세요",
-            "3": "",
-            "4": ""
-        },
-        "answer": [],
-        "time": 0,
-        "useScore": true,
-        "rate": 0
-    }]);
-    const [currentQuiz, setCurrentQuiz] = useState(quizList[currentShow - 1]);
 
+    const quizList = props.quizList;
+    const quizInfo = props.quizInfo;
+    const setQuizList = props.setQuizList;
+    const setQuizInfo = props.setQuizInfo;
+    const [currentShow, setCurrentShow] = useState(1);
+    const [currentQuiz, setCurrentQuiz] = useState(quizList[currentShow - 1]);
 
     // useEffect(() => {
     // switch (props.mode) {
@@ -107,7 +73,7 @@ export default function Panel(props) {
                         currentQuiz={currentQuiz}
                         setCurrentShow={setCurrentShow}
                         setCurrentQuiz={setCurrentQuiz}
-                        quizinfo={quizinfo}
+                        quizinfo={quizInfo}
                         setQuizList={setQuizList}
                     />
                 </Grid>
