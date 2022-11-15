@@ -102,8 +102,18 @@ const currencies = [
     },
 ];
 
+function init(){
+    // 1. DB에서 이미지 데이터 가져오기
+
+    // 2. DB에서 사용자가 생성한 카테고리 가져오기
+}
+
 export default function BasicModal(props) {
-    /*
+
+    // DB에서 가져와야할 데이터 가져오기?
+    init();
+
+    // Data에 key=value에 맞게 설정
     function setQuizInfo(key, value){
         console.log(key+" : "+value);
         setData(Data.map(item =>{
@@ -111,8 +121,8 @@ export default function BasicModal(props) {
             return item;
         }));
     }
-    */
 
+    // DB에 들어갈 데이터
     const [Data, setData] = useState([
         {
             "_id": "quizId01",
@@ -125,7 +135,7 @@ export default function BasicModal(props) {
                 "titleImg-thumb": "url",
                 "createDate": "생성시간",
                 "lastModifyDate": "최근수정시간",
-                "isPulic": true,
+                "isPublic": true,
                 "state": "작성중, 완성"
             }
         }
@@ -151,20 +161,33 @@ export default function BasicModal(props) {
     const handleOpen = () => {
         props.setOpen(true)
     };
-    const handleClose = () => {props.setOpen(false)};
+    const handleClose = () => {
+        setTitletext('');
+        setCurrency('');
+        setChipData([]);
+        setChipText('');
+        setChipCount(0);
+        setChipTextField('');
+        setChipTextField('standard-basic');
+        setIsPublic(true);
+        setLabel("공개");
+        setImageUrl(itemData[0].img);
+
+        props.setOpen(false)
+    };
 
     // 카테고리 변경
     const handleChange = (event) => {
         setCurrency(event.target.value);
     };
 
-    // Chip
+    // 태그 입력
     const handleKey = (event) => {
         setChipTextField("standard-basic");
         setChipErrorMsg('');
         setChipText(event.target.value);
     }
-
+    // 태그 입력 후 엔터를 눌럿을 때
     const handleEnterkey = (event) => {
         if(event.keyCode === 13){
             let tagList=[];
@@ -186,8 +209,8 @@ export default function BasicModal(props) {
             setChipCount(chipCount+1);
         }
     }
-
-    const handleDelete = (chipToDelete) => () => {
+    // 태그 삭제
+    const handleChipDelete = (chipToDelete) => () => {
         setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
     };
 
@@ -201,17 +224,35 @@ export default function BasicModal(props) {
         }
     };
 
+    // 생성 버튼 클릭 이벤트
+    const handleMakeShowButton = () => {
+        // 태그 데이터 key값 정리
+        let checkTags = chipData;
+        for(let i = 0; i<checkTags.length;i++){
+            checkTags[i].key = i;
+        }
+
+        // data 세팅
+        setQuizInfo("owner", "유저아이디");
+        setQuizInfo("title", titleText);
+        setQuizInfo("category", currency);
+        setQuizInfo("tags", checkTags);
+        setQuizInfo("titleImg-origin", "URL 입력");
+        setQuizInfo("titleImg-thumb", "URL 입력");
+        setQuizInfo("createDate", new Date());
+        setQuizInfo("lastModifyDate", new Date());
+        setQuizInfo("isPublic", isPublic);
+        setQuizInfo("state", "작성중");
+
+        handleClose();
+    }
+
     useEffect(()=>{
-        console.log(chipData);
-    });
+        console.log(Data);
+    },[Data]);
 
     return (
         <div>
-            {
-                Data.map((item)=>(
-                    item.showInfo.title
-                ))
-            }
             <Button onClick={handleOpen}>Show 만들기</Button>
             <Modal
                 open={props.open}
@@ -282,7 +323,7 @@ export default function BasicModal(props) {
                                 <b>공개 / 비공개 설정</b>
                             </Typography>
                             <FormGroup>
-                                <FormControlLabel control={<Switch defaultChecked={isPublic} />} label={label} onChange={handleSwitchChange}/>
+                                <FormControlLabel control={<Switch checked={isPublic} />} label={label} onChange={handleSwitchChange}/>
                             </FormGroup>
                             <Typography align={"left"} variant="p" sx={{fontSize:12}}>
                                 공개로 설정하는 경우 다른 사용자에게 Show가 공유됩니다.
@@ -300,7 +341,9 @@ export default function BasicModal(props) {
                                 {
                                     chipData.map((item)=>{
                                         return (
-                                            <Chip label={item.label} sx={{marginLeft:1, marginRight:1}} onDelete={handleDelete(item)}/>
+                                            <div key={item.key} style={{display:"inline-block"}}>
+                                                <Chip label={item.label} sx={{marginLeft:1, marginRight:1}} onDelete={handleChipDelete(item)}/>
+                                            </div>
                                         )
                                     })
                                 }
@@ -308,7 +351,7 @@ export default function BasicModal(props) {
                         </Grid>
                         <Grid item xs={12}>
                             <div align={"center"}>
-                                <Button variant="contained">생성</Button>
+                                <Button variant="contained" onClick={handleMakeShowButton}>생성</Button>
                             </div>
                         </Grid>
                     </Grid>
