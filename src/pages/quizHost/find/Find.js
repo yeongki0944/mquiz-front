@@ -1,9 +1,11 @@
 import * as React from 'react';
+import {useState, useEffect} from "react";
 import Grid from "@mui/material/Grid";
 import {
     Button,
     Card,
-    CardActionArea, CardActions, CardContent,
+    CardActionArea,
+    CardContent,
     CardMedia,
     FormControl,
     MenuItem,
@@ -12,12 +14,14 @@ import {
 } from "@mui/material";
 import Box from "@mui/material/Box";
 import SearchIcon from '@mui/icons-material/Search';
-import {useState, useEffect} from "react";
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import Typography from "@mui/material/Typography";
 
 export default function Find(props) {
     // 테스트
     const [Data, setData] = useState([]);
+    const [pageCount, setPageCount] = useState(0);
+    const [pageLimit, setPageLimit] = useState(20);
 
     // 테스트
     let list = [];
@@ -144,8 +148,9 @@ export default function Find(props) {
                                 alt={item.showInfo.title}
                             />
                             <CardContent>
-                                <Typography gutterBottom variant="h5" component="div">
-                                    {item.showInfo.title}
+                                <Typography component="div">
+                                    <div style={{textAlign:"left", marginBottom:1}}><b style={{fontSize:20}}>{item.showInfo.title}</b></div>
+                                    <div style={{textAlign:"right"}}><AccountBoxIcon/><b style={{fontSize:15}}>{item.showInfo.email}</b></div>
                                 </Typography>
                             </CardContent>
                         </CardActionArea>
