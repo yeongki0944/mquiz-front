@@ -1,11 +1,53 @@
 import * as React from 'react';
 import Grid from "@mui/material/Grid";
-import {Button, FormControl, InputLabel, MenuItem, Select, TextField} from "@mui/material";
+import {
+    Button,
+    Card,
+    CardActionArea, CardActions, CardContent,
+    CardMedia,
+    FormControl,
+    MenuItem,
+    Select,
+    TextField
+} from "@mui/material";
 import Box from "@mui/material/Box";
 import SearchIcon from '@mui/icons-material/Search';
 import {useState, useEffect} from "react";
+import Typography from "@mui/material/Typography";
 
 export default function Find(props) {
+    // 테스트
+    const [Data, setData] = useState([]);
+
+    // 테스트
+    let list = [];
+    function testDataSetting(){
+        for(let i = 0; i<100;i++){
+            list.push(
+                {
+                    "_id": "테스트ID" + i,
+                    "showInfo": {
+                        "email": "테스트이메일" + i,
+                        "title": "쇼 제목"+i,
+                        "category": "일단",
+                        "tags": [
+                            "1번",
+                            "2번",
+                            "3번"
+                        ],
+                        "titleImg_origin": "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
+                        "titleImg_thumb": "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
+                        "createDate": "2022-11-11T00:00:00.000+00:00",
+                        "lastModifyDate": "2022-11-11T00:00:00.000+00:00",
+                        "state": "완성",
+                        "public": false
+                    }
+                }
+            )
+        }
+        setData(list);
+    }
+
     return (
         <>
             <Grid container spacing={2}>
@@ -33,7 +75,9 @@ export default function Find(props) {
 
     function Nav() {
         return (
-            <div style={{height:80}}><h1>네비게이션</h1></div>
+            <div style={{height:80}}>
+                <h1>네비게이션</h1><Button onClick={testDataSetting}>테스트데이터세팅</Button>
+            </div>
         );
     }
 
@@ -83,9 +127,36 @@ export default function Find(props) {
     }
 
     function QuizSearchResultBox() {
+
+        const ResultBox = Data.map(
+            (item) => (
+                <Box key={item._id} sx={{margin:1,display:"inline-block"}}>
+                    <Card sx={{ maxWidth: 345}} >
+                        <CardActionArea onClick={
+                            ()=>{
+                                console.log("클릭");
+                            }
+                        }>
+                            <CardMedia
+                                component="img"
+                                height="220"
+                                image={item.showInfo.titleImg_thumb}
+                                alt={item.showInfo.title}
+                            />
+                            <CardContent>
+                                <Typography gutterBottom variant="h5" component="div">
+                                    {item.showInfo.title}
+                                </Typography>
+                            </CardContent>
+                        </CardActionArea>
+                    </Card>
+                </Box>
+            )
+        );
+
         return (
             <Box sx={{textAlign:"center", marginTop:5}}>
-
+                {ResultBox}
             </Box>
         );
     }
