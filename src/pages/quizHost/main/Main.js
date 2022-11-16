@@ -60,6 +60,9 @@ export default function QuizHostMain(props) {
                     <LandingPage
                         open={open}
                         setOpen={setOpen}
+                        quizInfo={quizInfo}
+                        setQuizInfo={setQuizInfo}
+                        setPage={setPage}
                     />
                     // <QuizModal
                     //     open={open}

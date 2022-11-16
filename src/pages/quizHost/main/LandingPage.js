@@ -131,6 +131,9 @@ export default function QuizHostMain(props) {
             <QuizModal
             open={props.open}
             setOpen={props.setOpen}
+            Data = {props.quizInfo}
+            setData = {props.setQuizInfo}
+            setPage={props.setPage}
             />
         </>
     );

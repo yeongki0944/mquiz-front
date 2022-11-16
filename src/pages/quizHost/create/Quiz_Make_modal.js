@@ -366,8 +366,4 @@ export default function BasicModal(props) {
             </Modal>
         </div>
     );
-    function test(){
-        props.setPage("quizcreate");
-        handleClose();
-    }
 }
