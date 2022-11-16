@@ -8,35 +8,37 @@ import {
 import Home from "./pages/home/home";
 
 import QuizHostMain from "./pages/quizHost/main/Main";
-import QHostCreate from "./pages/quizHost/create/Panel";
-import QHostFind from "./pages/quizHost/find/Find";
-import QHostReport from "./pages/quizHost/report/Report";
+import QuizHostCreate from "./pages/quizHost/create/Panel";
 
 import QuizClientMain from "./pages/quizClient/main/main";
-import QClientReady from "./pages/quizClient/ready/Ready";
-import QClientWait from "./pages/quizClient/wait/Wait";
-import QClientPlay from "./pages/quizClient/play/Play";
-import QClientResult from "./pages/quizClient/result/Result";
 
+import ReduxTest from './pages/ReduxTest/ReduxTest';
+import store from "./pages/redux/store";
+import {Provider} from "react-redux";
 
 
 export default function App() {
     return (
-        <Router>
-            <div>
-                <Switch>
-                    <Route path="/" component={Home} exact/>
-                    {/* 관리자 페이지 목록*/}
+        <Provider store={store}>
+            <Router>
+                <div>
+                    <Switch>
+                        <Route path="/" component={Home} exact/>
+                        {/* 관리자 페이지 목록*/}
 
-                    {/* 진행자 페이지 목록*/}
-                    <Route path="/QHost" component={QuizHostMain} exact/>
+                        {/* 진행자 페이지 목록*/}
+                        <Route path="/QHost" component={QuizHostMain} exact/>
+
+                        <Route path="/QHost/create" component={QuizHostCreate} exact/>
 
 
-                    {/* 참가자 페이지 목록*/}
-                    <Route path="/QClient" component={QuizClientMain} exact/>
+                        {/* 참가자 페이지 목록*/}
+                        <Route path="/QClient" component={QuizClientMain} exact/>
 
-                </Switch>
-            </div>
-        </Router>
+
+                    </Switch>
+                </div>
+            </Router>
+        </Provider>
     );
 }

@@ -1,42 +1,23 @@
 import {Button} from "@mui/material";
 import * as React from "react";
+import {useDispatch, useSelector} from "react-redux";
 
 export default function Controllbar(props){
-    const quizList = props.quizList;
-    const setQuizList = props.setQuizList;
-    const setCurrentShow = props.setCurrentShow;
+    const dispatch = useDispatch();
+
+    const { quizList } = useSelector(state => state.quizList)
+    const { currentShow } = useSelector(state => state.currentShow)
+
+    const addQuiz = () => {
+        dispatch({type: "ADD_QUIZ"})
+        setCurrentShow(quizList.length)
+    }
+    const setCurrentShow = (index) => {
+        dispatch({type: "SET_CURRENT_SHOW", payload: index})
+    }
 
     return(
-        <Button variant="contained" onClick={() => {
-            addPage();
-        }}>추가</Button>
+        <Button variant="contained" onClick={addQuiz}>추가</Button>
     );
 
-    function addPage() {
-        let length = quizList.length;
-        setQuizList([...quizList,
-            {
-                "num": length + 1,
-                "type": "선택형",
-                "question": " ",
-                "media": {
-                    "type": "image",
-                    "url": "",
-                    "startTime": "",
-                    "endTime": "",
-                },
-                "choiceList": {
-                    "1": " ",
-                    "2": " ",
-                    "3": "",
-                    "4": ""
-                },
-                "answer": [],
-                "time": 0,
-                "useScore": true,
-                "rate": 0
-            }
-        ]);
-        setCurrentShow(length + 1);
-    }
 }

@@ -6,6 +6,7 @@ import Grid from '@mui/material/Grid';
 import Typography from "@mui/material/Typography";
 import {Button, Card, CardActions, CardContent, TextField} from "@mui/material";
 import {useEffect} from "react";
+import {useSelector} from "react-redux";
 
 const Item = styled(Paper)(({theme}) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -16,9 +17,11 @@ const Item = styled(Paper)(({theme}) => ({
 }));
 
 export default function BasicGrid(props) {
-    const quizList = props.quizList;
-    const currentShow = props.currentShow;
-    const currentQuiz = props.currentQuiz;
+
+    const {currentShow} = useSelector(state => state.currentShow);
+    // const { currentQuiz } = useSelector((state) => state.currentQuiz);
+    const { quizList } = useSelector((state) => state.quizList);
+    const currentQuiz = quizList.find((quiz) => quiz.num === currentShow);
 
     useEffect(() => {
         // console.log("현재 슬라이드:"+currentShow);
@@ -78,6 +81,7 @@ export default function BasicGrid(props) {
     }
 
     function AnswerSheet() {
+        console.log(currentQuiz.type);
         switch (currentQuiz.type) {
             case "선택형":
                 return (<선택형/>);

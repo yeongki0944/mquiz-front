@@ -16,6 +16,8 @@ import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import ImageBox from "../../components/ImageBox";
 import {makeStyles} from "@material-ui/core/styles";
+import {useDispatch, useSelector} from "react-redux";
+import {useEffect, useState} from "react";
 
 const Item = styled(Paper)(({theme}) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -43,14 +45,20 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function Component(props) {
+export default function Component() {
+    const dispatch = useDispatch();
     const classes = useStyles();
 
-    //props refactoring
-    const quizList = props.quizList;
-    const setQuizList = props.setQuizList;
-    const currentShow = props.currentShow;
-    const currentQuiz = props.currentQuiz;
+    const { currentShow } = useSelector(state => state.currentShow);
+    // const { currentQuiz } = useSelector(state => state.currentQuiz);
+    const { quizInfo } = useSelector((state) => state.quizInfo);
+    const { quizList } = useSelector((state) => state.quizList);
+
+    const currentQuiz = quizList.find((quiz) => quiz.num === currentShow);
+
+    const [form,setForm] = useState([]);
+
+    const modifyQuiz = (keytype,key,value) => { dispatch({type:'MODIFY_QUIZ',payload:{keytype,key,value}}) }
 
     //state
     const [types, setTypes] = React.useState(['선택형', 'OX형', '단답형']);
@@ -58,8 +66,6 @@ export default function Component(props) {
         value: 20,
         label: '20초'
     }, {value: 30, label: '30초'}, {value: 40, label: '40초'}, {value: 50, label: '50초'}, {value: 60, label: '60초'}]);
-
-
 
     return (
         <div className={classes.content}>
@@ -76,43 +82,21 @@ export default function Component(props) {
         </div>
     );
 
-    function modifyQuiz(keytype, key, value) {
-        switch (keytype) {
-            case 'base':
-                setQuizList(quizList.map((q) => {
-                    if (q.num === currentShow) {
-                        q[key] = value;
-                    }
-                    return q;
-                }));
-                break;
-            case 'media':
-                setQuizList(quizList.map((q) => {
-                    if (q.num === currentShow) {
-                        q.media[key] = value;
-                    }
-                    return q;
-                }));
-                break;
-            case 'choiceList':
-                setQuizList(quizList.map((q) => {
-                    if (q.num === currentShow) {
-                        q.choiceList[key] = value;
-                    }
-                    return q;
-                }));
-                break;
-        }
-
-    }
-
     function resetAnswer() {
-        setQuizList(quizList.map((q) => {
-            if (q.num === currentShow) {
-                q.answer = '';
-            }
-            return q;
+        setForm(form.map((f) => {
+            f.answer = '';
+            return f;
         }));
+        // setCurrentQuiz({
+        //     ...currentQuiz,
+        //     answer: ''
+        // });
+        // setQuizList(quizList.map((q) => {
+        //     if (q.num === currentShow) {
+        //         q.answer = '';
+        //     }
+        //     return q;
+        // }));
     }
 
     function TypeButton() {
@@ -191,7 +175,7 @@ export default function Component(props) {
         );
     }
 
-    function MediaBox(props) {
+    function MediaBox() {
         return (
             <Box>
                 <FormControl>
@@ -212,45 +196,55 @@ export default function Component(props) {
                         }} label="Audio"/>
                     </RadioGroup>
                 </FormControl>
-                {currentQuiz.media.type === 'Image' ?
-                    <ImageBox/> :
-                    (currentQuiz.media.type === 'Youtube' ?
-                        <YoutubeBox/> :
-                        <AudioBox/>)
-                }
+                <MediaTypeBox/>
             </Box>
         );
 
-
-        function YoutubeBox() {
-            return (
-                <Box>
-                    <TextField
-                        placeholder={"유튜브 링크를 입력해주세요."}
-                        value={currentQuiz.media.url}
-                        onChange={(event) => {
-                            modifyQuiz("media", "url", event.target.value);
-                        }}
-                    />
-                    <TextField/>~<TextField/>
-                </Box>
-            );
-        }
-
-        function AudioBox() {
-            return (
-                <Box>
-                    <TextField
-                        placeholder={"오디오 링크를 입력해주세요."}
-                        value={currentQuiz.media.url}
-                        onChange={(event) => {
-                            modifyQuiz("media", "url", event.target.value);
-                        }}
-                    />
-                </Box>
-            );
-        }
     }
+
+    function MediaTypeBox() {
+        console.log(currentQuiz);
+        // switch(currentQuiz.media.type) {
+        //     case 'Image':
+        //         return <ImageBox/>;
+        //     case 'Youtube':
+        //         return <YoutubeBox/>;
+        //     case 'Audio':
+        //         return <AudioBox/>;
+        //     default:
+        //         return <ImageBox/>;
+        // }
+    }
+
+    function YoutubeBox() {
+        return (
+            <Box>
+                <TextField
+                    placeholder={"유튜브 링크를 입력해주세요."}
+                    value={currentQuiz[0].media.url}
+                    onChange={(event) => {
+                        modifyQuiz("media", "url", event.target.value);
+                    }}
+                />
+                <TextField/>~<TextField/>
+            </Box>
+        );
+    }
+
+    function AudioBox() {
+        return (
+            <Box>
+                <TextField
+                    placeholder={"오디오 링크를 입력해주세요."}
+                    value={currentQuiz[0].media.url}
+                    onChange={(event) => {
+                        modifyQuiz("media", "url", event.target.value);
+                    }}
+                />
+            </Box>
+        );
+    }
+
 
 
     function Question() {
@@ -262,11 +256,10 @@ export default function Component(props) {
                     multiline
                     rows={4}
                     placeholder={"질문을 입력해주세요."}
-                    value={currentQuiz.question}
-                    onChange={(event) => {
-                        modifyQuiz("base","question", event.target.value);
-                    }
-                    }
+                    onBlur={(event) => {
+                        modifyQuiz("base", "question", event.target.value);
+
+                    }}
                 />
             </Box>
         );

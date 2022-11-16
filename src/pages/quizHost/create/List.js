@@ -6,6 +6,7 @@ import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import * as React from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import {useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
     content: {
@@ -31,27 +32,61 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function List(props) {
+    const dispatch = useDispatch();
     const classes = useStyles();
-    const quizList = props.quizList;
-    const currentShow = props.currentShow;
-    const currentQuiz = props.currentQuiz;
-    const setCurrentQuiz = props.setCurrentQuiz;
-    const setCurrentShow = props.setCurrentShow;
-    const quizinfo = props.quizinfo;
-    const setQuizList = props.setQuizList;
 
-    useEffect(() => {
-        //add class to selected item
-        const items = document.getElementsByClassName(classes.item_card);
-        for (let i = 0; i < items.length; i++) {
-            if (items[i].getAttribute("key") === currentShow) {
-                items[i].classList.add(classes.selected);
-            }else{
-                items[i].classList.remove(classes.selected);
+    const {currentShow} = useSelector(state => state.currentShow);
+    const { quizInfo } = useSelector((state) => state.quizInfo);
+    const { quizList } = useSelector((state) => state.quizList);
+    const { currentQuiz } = useSelector((state) => state.currentQuiz);
+
+    const setCurrentShow = (index) => {
+        dispatch({type: "SET_CURRENT_SHOW", payload: index});
+    };
+
+    const setCurrentQuiz = (index) => {
+        dispatch({type: "SET_CURRENT_QUIZ", payload: index});
+    };
+
+    const copyQuiz = (quizNum) => {
+        dispatch({
+            type: "COPY_QUIZ",
+            payload: {
+                quizNum: quizNum,
             }
+        });
+    };
 
-        }
-    }, [currentShow]);
+    const deleteQuiz = (quizNum) => {
+        dispatch({
+            type: "DELETE_QUIZ",
+            payload: {
+                quizNum: quizNum,
+            }
+        });
+        renumberQuiz();
+    };
+
+    const renumberQuiz = () => {
+        dispatch({
+            type: "RENUMBER_QUIZ",
+        });
+    };
+
+    //주황색 표기 제작중
+    // useEffect(() => {
+    //     //add class to selected item
+    //     const items = document.getElementsByClassName(classes.item_card);
+    //     for (let i = 0; i < items.length; i++) {
+    //         if (items[i].getAttribute("key") === currentShow) {
+    //             items[i].classList.add(classes.selected);
+    //         }else{
+    //             items[i].classList.remove(classes.selected);
+    //         }
+    //
+    //     }
+    // }, [currentShow]);
+
     return (
         <>
             <List/>
@@ -81,7 +116,7 @@ export default function List(props) {
                                     [{quiz.type}]
                                 </Grid>
                                 <Grid>
-                                    {quizinfo[0].showInfo.title}
+                                    {quizInfo.showInfo.title}
                                 </Grid>
                             </Grid>
                             <Grid container spacing={4}>
@@ -100,7 +135,7 @@ export default function List(props) {
                                     <Button
                                         onClick={
                                             () => {
-                                                removeQuiz(quiz.num)
+                                                deleteQuiz(quiz.num)
                                             }
                                         }
                                     >
@@ -115,48 +150,5 @@ export default function List(props) {
         )
     }
 
-    /**
-     * [퀴즈 목록 조작 함수]
-     *
-     * copyQuiz : 퀴즈 복사, 해당 퀴즈를 복사하여 추가
-     * removeQuiz : 퀴즈 삭제, 해당 퀴즈를 삭제
-     * renumberQuiz : 퀴즈 번호 재정렬, 퀴즈 번호 전체 재정렬
-     * @param quizNum
-     */
-    function copyQuiz(quizNum) {
-        let newQuizList = [...quizList];
-        let newQuiz = {...newQuizList[quizNum - 1]};
-        newQuiz.num = newQuizList.length + 1;
-        newQuizList.push(newQuiz);
-        setQuizList(newQuizList);
-    }
 
-    function removeQuiz(quizNum) {
-        if (quizList.length === 1) {
-            alert("퀴즈는 최소 1개 이상이여야 합니다.")
-            return
-        } else {
-            let index = quizList.findIndex((quiz) => quiz.num === quizNum);
-            quizList.splice(index, 1);
-            setQuizList([...quizList]);
-            //1번 삭제할때 처리
-            if (quizNum === 1) {
-                setCurrentQuiz(quizList[0]);
-                setCurrentShow(1);
-            } else {
-                setCurrentShow(quizNum - 1);
-                setCurrentQuiz(quizList[quizNum - 2]);
-            }
-            renumberQuiz();
-        }
-    }
-
-    function renumberQuiz() {
-        let i = 1;
-        setQuizList(quizList.map((item) => {
-            item.num = i;
-            i++;
-            return item;
-        }));
-    }
 }

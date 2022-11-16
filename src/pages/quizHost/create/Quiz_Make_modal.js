@@ -110,10 +110,6 @@ function init(){
 
 export default function BasicModal(props) {
 
-    useEffect(() => {
-        console.log("test==     "+props.page);
-    }, []);
-
     // DB에서 가져와야할 데이터 가져오기?
     init();
 
