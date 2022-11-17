@@ -7,7 +7,7 @@ import {
     CardMedia,
     FormControl,
     MenuItem,
-    Select,
+    Select, TablePagination,
     TextField
 } from "@mui/material";
 import Box from "@mui/material/Box";
@@ -16,6 +16,10 @@ import {useState, useEffect} from "react";
 import Typography from "@mui/material/Typography";
 
 export default function Find(props) {
+    // 페이징
+    const [pageCount, setPageCount] = useState(0);
+    const [pageLimit, setPageLimit] = useState(25);
+
     // 테스트
     const [Data, setData] = useState([]);
 
@@ -157,6 +161,24 @@ export default function Find(props) {
         return (
             <Box sx={{textAlign:"center", marginTop:5}}>
                 {ResultBox}
+                <TablePagination
+                    component="div"
+                    sx={{marginRight:5}}
+                    count={Data.length}
+                    page={pageCount}
+                    onPageChange={
+                        (event,page) => {
+                            setPageCount(page);
+                        }
+                    }
+                    rowsPerPage={pageLimit}
+                    onRowsPerPageChange={
+                        (event) => {
+                            setPageLimit(parseInt(event.target.value, 20));
+                            setPageCount(0);
+                        }
+                    }
+                />
             </Box>
         );
     }

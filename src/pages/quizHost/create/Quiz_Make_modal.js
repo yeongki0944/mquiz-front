@@ -11,6 +11,7 @@ import TextField from '@mui/material/TextField';
 import MenuItem from "@mui/material/MenuItem";
 import Chip from "@mui/material/Chip";
 import {FormControlLabel, FormGroup, Switch} from "@mui/material";
+import {useSelector} from "react-redux";
 
 const style = {
     position: 'absolute',
@@ -33,7 +34,7 @@ const textFieldStyle = {
     width: 790,
     height: 50
 }
-const itemData = [
+const imageItemData = [
     {
         img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
         title: 'Breakfast',
@@ -102,69 +103,39 @@ const currencies = [
     },
 ];
 
-function init(){
-    // 1. DB에서 이미지 데이터 가져오기
-
-    // 2. DB에서 사용자가 생성한 카테고리 가져오기
-}
-
 export default function BasicModal(props) {
 
-    // DB에서 가져와야할 데이터 가져오기?
-    init();
-
     // Data에 key=value에 맞게 설정
-    function setQuizInfo(key, value){
+    /*function setQuizInfo(key, value){
         console.log(key+" : "+value);
         setData(Data.map(item =>{
             item.showInfo[key] = value;
             return item;
         }));
-    }
+    }*/
 
-    const Data = props.Data;
-    const setData = props.setData;
-
-    // DB에 들어갈 데이터
-    // const [Data, setData] = useState([
-    //     {
-    //         "_id": "quizId01",
-    //         "showInfo": {
-    //             "owner": "User Email",
-    //             "title": "쇼 제목",
-    //             "category": "일단",
-    //             "tags": ["1번", "2번", "3번"],
-    //             "titleImg-origin": "url",
-    //             "titleImg-thumb": "url",
-    //             "createDate": "생성시간",
-    //             "lastModifyDate": "최근수정시간",
-    //             "isPublic": true,
-    //             "state": "작성중, 완성"
-    //         }
-    //     }
-    // ])
+    const {quizInfo} = useSelector((state) => state.quizInfo);
 
     // Show 제목
-    const [titleText, setTitletext] = useState('');
+    const [titleTextData, setTitletextData] = useState('');
+
     // 카테고리
-    const [currency, setCurrency] = useState('카테고리');
+    const [currency, setCurrency] = useState('카테고리1');
+
     // chip
     const [chipData, setChipData] = useState([]);
-    const [chipText, setChipText] = useState('');
     const [chipCount, setChipCount] = useState(0);
-    const [chipErrorMsg, setChipErrorMsg] = useState('');
-    const [chipTextField, setChipTextField] = useState('standard-basic');
+
     // 공개 비공개
     const [isPublic, setIsPublic] = useState(true);
     const [label, setLabel] = useState("공개");
-    // 이미지 변경
-    const [imageUrl, setImageUrl] = useState(itemData[0].img);
 
-    // 모달 오픈/클로즈
-    const handleOpen = () => {
-        props.setOpen(true)
-    };
+    // 이미지 변경
+    const [imageUrl, setImageUrl] = useState(imageItemData[0].img);
+
+    // 모달창 닫기
     const handleClose = () => {
+        /*
         setTitletext('');
         setCurrency('');
         setChipData([]);
@@ -175,85 +146,15 @@ export default function BasicModal(props) {
         setIsPublic(true);
         setLabel("공개");
         setImageUrl(itemData[0].img);
+        */
 
         props.setOpen(false)
     };
-
-    // 카테고리 변경
-    const handleChange = (event) => {
-        setCurrency(event.target.value);
-    };
-
-    // 태그 입력
-    const handleKey = (event) => {
-        setChipTextField("standard-basic");
-        setChipErrorMsg('');
-        setChipText(event.target.value);
-    }
-    // 태그 입력 후 엔터를 눌럿을 때
-    const handleEnterkey = (event) => {
-        if(event.keyCode === 13){
-            let tagList=[];
-            for(let i = 0; i<chipData.length;i++){
-                if(chipData[i].label !== chipText){
-                    tagList.push({ key:chipData[i].key, label:chipData[i].label })
-                }
-                else{
-                    setChipText('');
-                    setChipTextField("standard-error-helper-text");
-                    setChipErrorMsg("현재 동일한 태그가 존재합니다.");
-                    return;
-                }
-            }
-            tagList.push({ key:chipCount, label:chipText });
-
-            setChipData(tagList);
-            setChipText('');
-            setChipCount(chipCount+1);
-        }
-    }
-    // 태그 삭제
-    const handleChipDelete = (chipToDelete) => () => {
-        setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
-    };
-
-    // 공개/비공개 변경
-    const handleSwitchChange = (event) => {
-        setIsPublic(event.target.checked);
-        if(isPublic) {
-            setLabel("비공개");
-        }else{
-            setLabel("공개");
-        }
-    };
-
-    // 생성 버튼 클릭 이벤트
-    const handleMakeShowButton = () => {
-        // 태그 데이터 key값 정리
-        let checkTags = chipData;
-        for(let i = 0; i<checkTags.length;i++){
-            checkTags[i].key = i;
-        }
-
-        // data 세팅
-        setQuizInfo("owner", "유저아이디");
-        setQuizInfo("title", titleText);
-        setQuizInfo("category", currency);
-        setQuizInfo("tags", checkTags);
-        setQuizInfo("titleImg-origin", "URL 입력");
-        setQuizInfo("titleImg-thumb", "URL 입력");
-        setQuizInfo("createDate", new Date());
-        setQuizInfo("lastModifyDate", new Date());
-        setQuizInfo("isPublic", isPublic);
-        setQuizInfo("state", "작성중");
-
-        handleClose();
-        props.setPage("quizcreate");
-    }
-
-    useEffect(()=>{
-        console.log(Data);
-    },[Data]);
+    /*
+        useEffect(()=>{
+            console.log(Data);
+        },[Data]);
+    */
 
     return (
         <div>
@@ -266,100 +167,275 @@ export default function BasicModal(props) {
                 <Box sx={style}>
                     <Grid container spacing={2}>
                         <Grid item xs={12} mb={4}>
-                            <Typography align={"center"} variant={"h3"} >
-                                <b>Show 기본 설정</b>
-                            </Typography>
+                            <ModalTitle/>
                         </Grid>
                         <Grid item xs={5} mb={2}>
-                            <Typography align={"left"} variant={"h6"}>
-                                <b>대표 이미지</b>
-                            </Typography>
-                            <img src={imageUrl} style={imageStyle} alt="대표 이미지"></img>
+                            <ModalThumbnail/>
                         </Grid>
                         <Grid item xs={7} mb={2}>
-                            <Typography align={"left"} variant={"h6"}>
-                                <b>기본 이미지</b>
-                            </Typography>
-                            <ImageList sx={{ width: 450, height: 200 }} cols={3} rowHeight={164}>
-                                {itemData.map((item) => (
-                                    <ImageListItem key={item.img}>
-                                        <img
-                                            id={item.title}
-                                            src={`${item.img}?w=150&h=150&fit=crop&auto=format`}
-                                            srcSet={`${item.img}?w=150&h=150&fit=crop&auto=format&dpr=2 2x`}
-                                            alt={item.title}
-                                            loading="lazy"
-                                            onClick={()=>{setImageUrl(item.img)}}
-                                        />
-                                    </ImageListItem>
-                                ))}
-                            </ImageList>
+                            <ModalBasicThumbnail/>
                         </Grid>
                         <Grid item xs={12}>
-                            <Typography align={"left"} variant="h5">
-                                <b>Show 제목</b>
-                            </Typography>
-                            <TextField id="standard-basic" variant="standard" sx={textFieldStyle} value={titleText} onChange={(event)=>{setTitletext(event.target.value)}}/>
+                            <ModalInputShowTitle/>
                         </Grid>
                         <Grid item xs={6}>
-                            <Typography align={"left"} variant="h5" >
-                                <b>카테고리 선택</b>
-                            </Typography>
-                            <TextField
-                                id="standard-select-currency"
-                                select
-                                label="카테고리 선택"
-                                value={currency}
-                                onChange={handleChange}
-                                helperText="카테고리를 선택하세요!"
-                                variant="standard"
-                            >
-                                {currencies.map((option) => (
-                                    <MenuItem key={option.value} value={option.value}>
-                                        {option.label}
-                                    </MenuItem>
-                                ))}
-                            </TextField>
+                            <ModalSelectCategory/>
                         </Grid>
                         <Grid item xs={6}>
-                            <Typography align={"left"} variant="h5" >
-                                <b>공개 / 비공개 설정</b>
-                            </Typography>
-                            <FormGroup>
-                                <FormControlLabel control={<Switch checked={isPublic} />} label={label} onChange={handleSwitchChange}/>
-                            </FormGroup>
-                            <Typography align={"left"} variant="p" sx={{fontSize:12}}>
-                                공개로 설정하는 경우 다른 사용자에게 Show가 공유됩니다.
-                            </Typography>
+                            <ModalShowIsPublic/>
                         </Grid>
                         <Grid item xs={12}>
-                            <Typography align={"left"} variant="h5" >
-                                <b>태그</b>
-                            </Typography>
-                            <TextField id={chipTextField} variant="standard" sx={textFieldStyle} helperText={chipErrorMsg} value={chipText} onChange={handleKey} onKeyUp={handleEnterkey}>
-                            </TextField>
+                            <ModalInputTag/>
                         </Grid>
                         <Grid item xs={12}>
-                            <div>
-                                {
-                                    chipData.map((item)=>{
-                                        return (
-                                            <div key={item.key} style={{display:"inline-block"}}>
-                                                <Chip label={item.label} sx={{marginLeft:1, marginRight:1}} onDelete={handleChipDelete(item)}/>
-                                            </div>
-                                        )
-                                    })
-                                }
-                            </div>
+                            <ModalAddTagChip/>
                         </Grid>
                         <Grid item xs={12}>
-                            <div align={"center"}>
-                                <Button variant="contained" onClick={handleMakeShowButton}>생성</Button>
-                            </div>
+                            <ModalDataSubmit/>
                         </Grid>
                     </Grid>
                 </Box>
             </Modal>
         </div>
     );
+
+    function ModalTitle() {
+        return (
+            <Typography align={"center"} variant={"h3"}>
+                <b>Show 기본 설정</b>
+            </Typography>
+        );
+    }
+
+    function ModalThumbnail() {
+        return (
+            <div>
+                <Typography align={"left"} variant={"h6"}>
+                    <b>대표 이미지</b>
+                </Typography>
+                <img src={imageUrl} style={imageStyle} alt="대표 이미지"></img>
+            </div>
+        );
+    }
+
+    function ModalBasicThumbnail() {
+        return (
+            <div>
+                <Typography align={"left"} variant={"h6"}>
+                    <b>기본 이미지</b>
+                </Typography>
+                <ImageList
+                    sx={{width: 450, height: 200}}
+                    cols={3}
+                    rowHeight={164}
+                >
+                    {imageItemData.map((item) => (
+                        <ImageListItem key={item.img}>
+                            <img
+                                id={item.title}
+                                src={`${item.img}?w=150&h=150&fit=crop&auto=format`}
+                                srcSet={`${item.img}?w=150&h=150&fit=crop&auto=format&dpr=2 2x`}
+                                alt={item.title}
+                                loading="lazy"
+                                onClick={() => {
+                                    setImageUrl(item.img)
+                                }}
+                            />
+                        </ImageListItem>
+                    ))}
+                </ImageList>
+            </div>
+        )
+    }
+
+    function ModalInputShowTitle() {
+        const [titleText, setTitleText] = useState('')
+        return (
+            <div>
+                <Typography align={"left"} variant="h5">
+                    <b>Show 제목</b>
+                </Typography>
+                <TextField
+                    id="standard-basic"
+                    variant="standard"
+                    sx={textFieldStyle}
+                    value={titleText}
+                    onChange={(event) => {
+                        setTitleText(event.target.value)
+                    }}
+                />
+            </div>
+        );
+    }
+
+    function ModalSelectCategory() {
+        return (
+            <div>
+                <Typography align={"left"} variant="h5">
+                    <b>카테고리 선택</b>
+                </Typography>
+                <TextField
+                    id="standard-select-currency"
+                    select
+                    label="카테고리 선택"
+                    value={currency}
+                    onChange={
+                        (event) => {
+                            setCurrency(event.target.value);
+                        }
+                    }
+                    helperText="카테고리를 선택하세요!"
+                    variant="standard"
+                >
+                    {currencies.map((option) => (
+                        <MenuItem key={option.value} value={option.value}>
+                            {option.label}
+                        </MenuItem>
+                    ))}
+                </TextField>
+            </div>
+        );
+    }
+
+    function ModalShowIsPublic() {
+        return (
+            <div>
+                <Typography align={"left"} variant="h5">
+                    <b>공개 / 비공개 설정</b>
+                </Typography>
+                <FormGroup>
+                    <FormControlLabel
+                        control={<Switch checked={isPublic}/>}
+                        label={label}
+                        onChange={
+                            (event) => {
+                                setIsPublic(event.target.checked);
+                                if (isPublic) {
+                                    setLabel("비공개");
+                                } else {
+                                    setLabel("공개");
+                                }
+                            }
+                        }
+                    />
+                </FormGroup>
+                <Typography align={"left"} variant="p" sx={{fontSize: 12}}>
+                    공개로 설정하는 경우 다른 사용자에게 Show가 공유됩니다.
+                </Typography>
+            </div>
+        );
+    }
+
+    function ModalInputTag() {
+        // 태그 입력
+        const [chipText, setChipText] = useState('');
+        const [chipErrorMsg, setChipErrorMsg] = useState('');
+        const [chipTextField, setChipTextField] = useState('standard-basic');
+
+        return (
+            <div>
+                <Typography align={"left"} variant="h5">
+                    <b>태그</b>
+                </Typography>
+                <TextField
+                    id={chipTextField}
+                    variant="standard"
+                    sx={textFieldStyle}
+                    helperText={chipErrorMsg}
+                    value={chipText}
+                    onChange={
+                        (event) => {
+                            setChipTextField("standard-basic");
+                            setChipErrorMsg('');
+                            setChipText(event.target.value);
+                        }
+                    }
+                    onKeyUp={
+                        (event) => {
+                            if (event.keyCode === 13) {
+                                if (chipText !== '') {
+                                    let tagList = [];
+                                    for (let i = 0; i < chipData.length; i++) {
+                                        if (chipData[i].label !== chipText) {
+                                            tagList.push({key: chipData[i].key, label: chipData[i].label})
+                                        } else {
+                                            setChipText('');
+                                            setChipTextField("standard-error-helper-text");
+                                            setChipErrorMsg("현재 동일한 태그가 존재합니다.");
+                                            return;
+                                        }
+                                    }
+                                    tagList.push({key: chipCount, label: chipText});
+
+                                    setChipData(tagList);
+                                    setChipText('');
+                                    setChipCount(chipCount + 1);
+                                }
+                            }
+                        }
+                    }
+                >
+                </TextField>
+            </div>
+        );
+    }
+
+    function ModalAddTagChip() {
+        return (
+            <div style={{height: 30}}>
+                {
+                    chipData.map((item) => {
+                        return (
+                            <div key={item.key} style={{display: "inline-block"}}>
+                                <Chip
+                                    label={item.label}
+                                    sx={{marginLeft: 1, marginRight: 1}}
+                                    onDelete={
+                                        () => {
+                                            setChipData((chips) => chips.filter((chip) => chip.key !== item.key));
+                                        }
+                                    }/>
+                            </div>
+                        )
+                    })
+                }
+            </div>
+        )
+    }
+
+    function ModalDataSubmit() {
+        return (
+            <div align={"center"}>
+                <Button
+                    variant="contained"
+                    onClick={
+                        () => {
+                            // 태그 데이터 key값 정리
+                            let checkTags = chipData;
+                            for (let i = 0; i < checkTags.length; i++) {
+                                checkTags[i].key = i;
+                            }
+                            /*
+                            // data 세팅
+                            setQuizInfo("owner", "유저아이디");
+                            setQuizInfo("title", titleText);
+                            setQuizInfo("category", currency);
+                            setQuizInfo("tags", checkTags);
+                            setQuizInfo("titleImg-origin", "URL 입력");
+                            setQuizInfo("titleImg-thumb", "URL 입력");
+                            setQuizInfo("createDate", new Date());
+                            setQuizInfo("lastModifyDate", new Date());
+                            setQuizInfo("isPublic", isPublic);
+                            setQuizInfo("state", "작성중");
+                            */
+                            handleClose();
+                            props.setPage("quizcreate");
+                        }
+                    }
+                >
+                    생성
+                </Button>
+            </div>
+        )
+    }
 }
