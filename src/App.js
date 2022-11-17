@@ -12,7 +12,6 @@ import QuizHostCreate from "./pages/quizHost/create/Panel";
 
 import QuizClientMain from "./pages/quizClient/main/main";
 
-import ReduxTest from './pages/ReduxTest/ReduxTest';
 import store from "./pages/redux/store";
 import {Provider} from "react-redux";
 
@@ -34,6 +33,8 @@ export default function App() {
 
                         {/* 참가자 페이지 목록*/}
                         <Route path="/QClient" component={QuizClientMain} exact/>
+
+
 
 
                     </Switch>

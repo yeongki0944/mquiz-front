@@ -14,14 +14,19 @@ export default function QuizHostMain(props) {
 
     const [modalOpen, setModalOpen] = useState(false);
 
+
+
     const setQuizList = () => {
-        // axios.get('http://localhost:8080/quiz/list')
-        //     .then(res => {
-        //         dispatch({type: 'SET_QUIZ_LIST', payload: res.data});
-        //     })
-        //     .catch(err => {
-        //         console.log(err);
-        //     })
+        axios.post('http://13.39.86.114:8888/v1/Qready/getQuizList', {
+            email: "dudrl0944@gmail.com",
+            id: "637440e817bb6d42edbf3927"
+        }).then((res) => {
+            console.log(res.data);
+            dispatch({type: 'SET_QUIZ_LIST', payload: res.data});
+        }).catch((err) => {
+            console.log(err);
+        })
+
     }
 
     useEffect(() => {

@@ -11,7 +11,7 @@ import {
     TextField
 } from "@mui/material";
 import Box from "@mui/material/Box";
-import SearchIcon from '@mui/icons-material/Search';
+import SearchIcon from '@material-ui/icons/Search';
 import {useState, useEffect} from "react";
 import Typography from "@mui/material/Typography";
 
