@@ -52,9 +52,9 @@ export default function Component() {
     const { currentShow } = useSelector(state => state.currentShow);
     // const { currentQuiz } = useSelector(state => state.currentQuiz);
     const { quizInfo } = useSelector((state) => state.quizInfo);
-    const { quizList } = useSelector((state) => state.quizList);
+    const { quizData } = useSelector((state) => state.quizData);
 
-    const currentQuiz = quizList.find((quiz) => quiz.num === currentShow);
+    const currentQuiz = quizData.find((quiz) => quiz.num === currentShow);
 
     const [form,setForm] = useState([]);
 
@@ -91,7 +91,7 @@ export default function Component() {
         //     ...currentQuiz,
         //     answer: ''
         // });
-        // setQuizList(quizList.map((q) => {
+        // setQuizList(quizData.map((q) => {
         //     if (q.num === currentShow) {
         //         q.answer = '';
         //     }

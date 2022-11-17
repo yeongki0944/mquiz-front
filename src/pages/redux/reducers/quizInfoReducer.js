@@ -14,7 +14,7 @@ const initialState = {
             state: "작성중, 완성"
         }
     },
-    quizList: [
+    quizData: [
         {
             "num": 1,
             "type": "선택형",

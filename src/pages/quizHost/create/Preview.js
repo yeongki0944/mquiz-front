@@ -20,8 +20,8 @@ export default function BasicGrid(props) {
 
     const {currentShow} = useSelector(state => state.currentShow);
     // const { currentQuiz } = useSelector((state) => state.currentQuiz);
-    const { quizList } = useSelector((state) => state.quizList);
-    const currentQuiz = quizList.find((quiz) => quiz.num === currentShow);
+    const { quizData } = useSelector((state) => state.quizData);
+    const currentQuiz = quizData.find((quiz) => quiz.num === currentShow);
 
     useEffect(() => {
         // console.log("현재 슬라이드:"+currentShow);
@@ -155,21 +155,21 @@ export default function BasicGrid(props) {
     function Image() {
         return (
             <></>
-            // <img src={quizList[currentShow-1].media.url} alt="이미지"/>
+            // <img src={quizData[currentShow-1].media.url} alt="이미지"/>
         )
     }
 
     function Video() {
         return (
             <></>
-            // <video src={quizList[currentShow - 1].media.url} controls/>
+            // <video src={quizData[currentShow - 1].media.url} controls/>
         )
     }
 
     function Audio() {
         return (
             <></>
-            // <audio src={quizList[currentShow - 1].media.url} controls/>
+            // <audio src={quizData[currentShow - 1].media.url} controls/>
         )
     }
 }

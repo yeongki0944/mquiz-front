@@ -5,12 +5,12 @@ import {useDispatch, useSelector} from "react-redux";
 export default function Controllbar(props){
     const dispatch = useDispatch();
 
-    const { quizList } = useSelector(state => state.quizList)
+    const { quizData } = useSelector(state => state.quizData)
     const { currentShow } = useSelector(state => state.currentShow)
 
     const addQuiz = () => {
         dispatch({type: "ADD_QUIZ"})
-        setCurrentShow(quizList.length)
+        setCurrentShow(quizData.length)
     }
     const setCurrentShow = (index) => {
         dispatch({type: "SET_CURRENT_SHOW", payload: index})

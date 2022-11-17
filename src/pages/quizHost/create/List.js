@@ -37,7 +37,7 @@ export default function List(props) {
 
     const {currentShow} = useSelector(state => state.currentShow);
     const { quizInfo } = useSelector((state) => state.quizInfo);
-    const { quizList } = useSelector((state) => state.quizList);
+    const { quizData } = useSelector((state) => state.quizData);
     const { currentQuiz } = useSelector((state) => state.currentQuiz);
 
     const setCurrentShow = (index) => {
@@ -96,7 +96,7 @@ export default function List(props) {
     function List() {
         return (
             <div className={classes.content}>
-                {quizList.map((quiz) =>
+                {quizData.map((quiz) =>
                     <Grid container className={classes.items} key={quiz.num}>
                         <Grid item xs={2}>
                             {quiz.num}P
@@ -106,7 +106,7 @@ export default function List(props) {
                                   onClick={
                                       () => {
                                           setCurrentShow(quiz.num);
-                                          setCurrentQuiz(quizList[quiz.num - 1]);
+                                          setCurrentQuiz(quizData[quiz.num - 1]);
                                       }
                                   }>
                                 <Grid>

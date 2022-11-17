@@ -3,7 +3,7 @@ import quizInfoReducer from './reducers/quizInfoReducer'
 
 const Reducer = combineReducers({
     quizInfo : quizInfoReducer,
-    quizList : quizInfoReducer,
+    quizData : quizInfoReducer,
     currentShow : quizInfoReducer,
     currentQuiz : quizInfoReducer,
 })

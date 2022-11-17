@@ -37,7 +37,7 @@ export default function Panel(props) {
 
 
     const {currentShow} = useSelector(state => state.currentShow);
-    const { quizList } = useSelector((state) => state.quizList);
+    const { quizData } = useSelector((state) => state.quizData);
 
 
 
