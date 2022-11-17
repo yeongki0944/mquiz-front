@@ -5,7 +5,10 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import ButtonBase from '@mui/material/ButtonBase';
 import {Box, Button} from "@mui/material";
+import EditIcon from "@material-ui/icons/Edit";
+import PlayArrow from "@material-ui/icons/PlayArrow";
 import {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
 
 
 const Img = styled('img')({
@@ -15,35 +18,42 @@ const Img = styled('img')({
     maxHeight: '100%',
 });
 
+//quizInfo 예시
+// {
+//     "_id": "637440e817bb6d42edbf3927",
+//     "showInfo": {
+//     "email": "dudrl0944@gmail.com",
+//         "title": "쇼 제목",
+//         "category": "일단",
+//         "tags": [
+//         "1번",
+//         "2번",
+//         "3번"
+//     ],
+//         "titleImg_origin": "url",
+//         "titleImg_thumb": "url",
+//         "createDate": "2022-11-11T00:00:00.000+00:00",
+//         "lastModifyDate": "2022-11-11T00:00:00.000+00:00",
+//         "state": "작성중, 완성",
+//         "pulic": false
+// }
+// },
 
-export default function Showcard(props) {
-    const [state, setState] = React.useState(false);
-    const data = props.data;
-    // const [data, setData] = useState([]);
-    // useEffect(() => {
-    //     setData([
-    //         {
-    //             key: 1,
-    //             title: "test1",
-    //             status: "작성중",
-    //             qcnt: 10,
-    //             author: "김재훈",
-    //             date: "2021-08-01"
-    //         },
-    //         {
-    //             key: 2,
-    //             title: "test2",
-    //             status: "사용가능",
-    //             qcnt: 10,
-    //             author: "김재이",
-    //             date: "2021-08-01"
-    //         },
-    //     ]);
-    // },[]);
-    const list = data.map(
+
+
+export default function Showcard() {
+    const dispatch = useDispatch();
+
+    const {quizList} = useSelector(state => state.quizList);
+    const setQuizInfo = (id) => {
+        const quizInfo = quizList.find(quiz => quiz._id === id);
+        dispatch({type: 'SET_QUIZ_INFO', quizInfo});
+    }
+
+    const list = quizList.map(
         (item) => (
             <Box
-                key={item.key}
+                key={item._id}
                 sx={{
                     p: 2,
                     margin: 'auto',
@@ -67,24 +77,34 @@ export default function Showcard(props) {
                         <Grid item xs container direction="column" spacing={2}>
                             <Grid item xs>
                                 <Typography variant="subtitle1" gutterBottom>
-                                    {item.status === "작성중" ?
+                                    {item.showInfo.state === "작성중" ?
                                         <span style={{color: "white", backgroundColor: "orange"}}>작성중</span> : <span
                                             style={{color: "white", backgroundColor: "green"}}>사용가능</span>} {item.title}
                                 </Typography>
                                 <Typography variant="body2" color="text.secondary">
-                                    Q.{item.qcnt}문제
+                                    Q.{item.showInfo.qcnt}문제 카운터 추가 필요
                                 </Typography>
                                 <Typography variant="body2" color="text.secondary">
-                                    {item.author} {item.date}
+                                    {item.showInfo.email}
+                                </Typography>
+                                <Typography variant="body2" color="text.secondary">
+                                    생성일자: {item.showInfo.createDate}
                                 </Typography>
                             </Grid>
                         </Grid>
                         <Grid item>
-                            {item.status === "작성중" ?
-                                <Typography variant="subtitle1" component="div"></Typography>
+                            {item.showInfo.state === "작성중" ?
+                                <Typography variant="subtitle1" component="div">
+                                    <Button variant="contained" onClick={()=>{
+                                       toEdit(item._id);
+                                    }}><EditIcon/></Button>
+                                </Typography>
                                 :
                                 <Typography variant="subtitle1" component="div">
-                                    <Button variant="outlined" size="small">Play</Button>
+                                    <Button variant="contained" onClick={()=>{
+                                        toEdit(item._id);
+                                    }}><EditIcon/></Button>
+                                    <Button variant="outlined" size="small"><PlayArrow/></Button>
                                 </Typography>
                             }
                         </Grid>
@@ -98,4 +118,11 @@ export default function Showcard(props) {
             {list}
         </>
     );
+
+    function toEdit(id) {
+        setQuizInfo(id);
+        //여기에서 axios 한 다음 quizData set 해줘야함
+        // eslint-disable-next-line no-restricted-globals
+        location.href = "/QHost/create";
+    }
 }

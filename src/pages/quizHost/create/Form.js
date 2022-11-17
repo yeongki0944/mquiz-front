@@ -18,6 +18,9 @@ import ImageBox from "../../components/ImageBox";
 import {makeStyles} from "@material-ui/core/styles";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
+import QSelect from "./QuizTypes/Select";
+import QOX from "./QuizTypes/OX";
+import QRep from "./QuizTypes/Write";
 
 const Item = styled(Paper)(({theme}) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -49,18 +52,20 @@ export default function Component() {
     const dispatch = useDispatch();
     const classes = useStyles();
 
-    const { currentShow } = useSelector(state => state.currentShow);
+    const {currentShow} = useSelector(state => state.currentShow);
     // const { currentQuiz } = useSelector(state => state.currentQuiz);
-    const { quizInfo } = useSelector((state) => state.quizInfo);
-    const { quizData } = useSelector((state) => state.quizData);
+    const {quizInfo} = useSelector((state) => state.quizInfo);
+    const {quizData} = useSelector((state) => state.quizData);
+
 
     const currentQuiz = quizData.find((quiz) => quiz.num === currentShow);
 
-    const [form,setForm] = useState([]);
-
-    const modifyQuiz = (keytype,key,value) => { dispatch({type:'MODIFY_QUIZ',payload:{keytype,key,value}}) }
+    const modifyQuiz = (keytype, key, value) => {
+        dispatch({type: 'MODIFY_QUIZ', payload: {keytype, key, value}})
+    }
 
     //state
+    const [answerList, setAnswerList] = useState([]);
     const [types, setTypes] = React.useState(['선택형', 'OX형', '단답형']);
     const [times, setTimes] = React.useState([{value: 0, label: '0초'}, {value: 10, label: '10초'}, {
         value: 20,
@@ -78,49 +83,25 @@ export default function Component() {
             <FormType/>
             <hr/>
             <Options/>
-
         </div>
     );
-
-    function resetAnswer() {
-        setForm(form.map((f) => {
-            f.answer = '';
-            return f;
-        }));
-        // setCurrentQuiz({
-        //     ...currentQuiz,
-        //     answer: ''
-        // });
-        // setQuizList(quizData.map((q) => {
-        //     if (q.num === currentShow) {
-        //         q.answer = '';
-        //     }
-        //     return q;
-        // }));
-    }
 
     function TypeButton() {
         return (
             <Box>
                 <Grid container spacing={1}>
                     {types.map((type) => (
-                        <Button
-                            key={type}
+                        <Button key={type}
                             onClick={() => {
                                 modifyQuiz('base', 'type', type);
-                                resetAnswer();
+                                modifyQuiz('base', 'answer', '');
                             }}
                         >
                             <Card>
                                 <CardContent>
-                                    <Typography>
-                                        <Img alt="complex"
-                                             src="https://www.quizn.show/webdata/images/type-icon/ico_type2_on.png"/>
-                                    </Typography>
-                                    <Typography>
-                                        {type}
-
-                                    </Typography>
+                                    <Img alt="complex"
+                                         src="https://www.quizn.show/webdata/images/type-icon/ico_type2_on.png"/>
+                                    {type}
                                 </CardContent>
                             </Card>
                         </Button>
@@ -140,8 +121,7 @@ export default function Component() {
                     value={currentQuiz.time}
                     onChange={(event) => {
                         modifyQuiz("base", "time", event.target.value);
-                    }
-                    }
+                    }}
                     SelectProps={{
                         native: true,
                     }}
@@ -168,7 +148,7 @@ export default function Component() {
                     max={3}
                     value={currentQuiz.rate}
                     onChange={(event, newValue) => {
-                        modifyQuiz("base","rate", newValue);
+                        modifyQuiz("base", "rate", newValue);
                     }}
                 />
             </Box>
@@ -203,7 +183,7 @@ export default function Component() {
     }
 
     function MediaTypeBox() {
-        console.log(currentQuiz);
+        // console.log(currentQuiz);
         // switch(currentQuiz.media.type) {
         //     case 'Image':
         //         return <ImageBox/>;
@@ -246,7 +226,6 @@ export default function Component() {
     }
 
 
-
     function Question() {
         return (
             <Box>
@@ -258,12 +237,12 @@ export default function Component() {
                     placeholder={"질문을 입력해주세요."}
                     onBlur={(event) => {
                         modifyQuiz("base", "question", event.target.value);
-
                     }}
                 />
             </Box>
         );
     }
+
 
     function FormType() {
         switch (currentQuiz.type) {
@@ -275,121 +254,6 @@ export default function Component() {
                 return <QRep/>;
         }
 
-        function QSelect() {
-            return (
-                <Box>
-                    <h3>정답</h3>
-                    <Grid>
-                        <Grid container>
-                            <Grid item xs={2}>
-                                <Checkbox/>
-                            </Grid>
-                            <Grid item xs={7}>
-                                <TextField
-                                    id="qfield"
-                                    placeholder={"답을 입력해주세요."}
-                                    value={currentQuiz.choiceList[1]}
-                                    onChange={(event) => {
-                                        modifyQuiz("choiceList", "1", event.target.value);
-                                    }}
-                                />
-                            </Grid>
-                            <Grid item xs>
-                                <ImageBox/>
-                            </Grid>
-                        </Grid>
-                        <Grid container>
-                            <Grid item xs={2}>
-                                <Checkbox/>
-                            </Grid>
-                            <Grid item xs={7}>
-                                <TextField
-                                    id="qfield"
-                                    placeholder={"답을 입력해주세요."}
-                                    value={currentQuiz.choiceList[2]}
-                                    onChange={(event) => {
-                                        modifyQuiz("choiceList", "2", event.target.value);
-                                    }}
-                                />
-                            </Grid>
-                            <Grid item xs>
-                                <ImageBox/>
-                            </Grid>
-                        </Grid>
-                        <Grid container>
-                            <Grid item xs={2}>
-                                <Checkbox/>
-                            </Grid>
-                            <Grid item xs={7}>
-                                <TextField
-                                    id="qfield"
-                                    placeholder={"답을 입력해주세요."}
-                                    value={currentQuiz.choiceList[3]}
-                                    onChange={(event) => {
-                                        modifyQuiz("choiceList", "3", event.target.value);
-                                    }}
-                                />
-                            </Grid>
-                            <Grid item xs>
-                                <ImageBox/>
-                            </Grid>
-                        </Grid>
-                        <Grid container>
-                            <Grid item xs={2}>
-                                <Checkbox/>
-                            </Grid>
-                            <Grid item xs={7}>
-                                <TextField
-                                    id="qfield"
-                                    placeholder={"답을 입력해주세요."}
-                                    value={currentQuiz.choiceList[4]}
-                                    onChange={(event) => {
-                                        modifyQuiz("choiceList", "4", event.target.value);
-                                    }}
-                                />
-                            </Grid>
-                            <Grid item xs>
-                                <ImageBox/>
-                            </Grid>
-                        </Grid>
-                    </Grid>
-
-                </Box>
-            );
-        }
-
-        function QOX() {
-            return (
-                <Box>
-                    <h3>정답</h3>
-                    <FormControl>
-                        <FormLabel id="demo-row-radio-buttons-group-label">Answer</FormLabel>
-                        <RadioGroup
-                            row
-                            aria-labelledby="demo-row-radio-buttons-group-label"
-                            name="row-radio-buttons-group"
-                        >
-                            <FormControlLabel value="O" control={<Radio/>} label="O"/>
-                            <FormControlLabel value="X" control={<Radio/>} label="X"/>
-                        </RadioGroup>
-                    </FormControl>
-                </Box>
-            );
-        }
-
-        function QRep() {
-            return (
-                <Box>
-                    <h3>정답</h3>
-                    <TextField
-                        id="qfield"
-                        multiline
-                        rows={4}
-                        placeholder={"답을 입력해주세요."}
-                    />
-                </Box>
-            );
-        }
 
     }
 }

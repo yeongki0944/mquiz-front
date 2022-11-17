@@ -81,7 +81,7 @@ export default function BasicGrid(props) {
     }
 
     function AnswerSheet() {
-        console.log(currentQuiz.type);
+        // console.log(currentQuiz.type);
         switch (currentQuiz.type) {
             case "선택형":
                 return (<선택형/>);

@@ -1,19 +1,24 @@
 const initialState = {
     quizInfo: {
-        _id: "quizId01",
-        showInfo: {
-            owner: "User Email",
-            title: "쇼 제목",
-            category: "일단",
-            tags: ["1번", "2번", "3번"],
-            titleImg_origin: "url",
-            titleImg_thumb: "url",
-            createDate: "생성시간",
-            lastModifyDate: "최근수정시간",
-            isPublic: true,
-            state: "작성중, 완성"
+        "_id": "637440e817bb6d42edbf3927",
+        "showInfo": {
+            "email": "dudrl0944@gmail.com",
+            "title": "쇼 제목",
+            "category": "일단",
+            "tags": [
+                "1번",
+                "2번",
+                "3번"
+            ],
+            "titleImg_origin": "url",
+            "titleImg_thumb": "url",
+            "createDate": "2022-11-11T00:00:00.000+00:00",
+            "lastModifyDate": "2022-11-11T00:00:00.000+00:00",
+            "state": "작성중",
+            "pulic": false
         }
     },
+    currentShow: 1,
     quizData: [
         {
             "num": 1,
@@ -37,36 +42,28 @@ const initialState = {
             "rate": 0
         }
     ],
-    currentShow: 1,
 
 }
 
 export default function quizInfoReducer(state = initialState, action) {
     switch (action.type) {
-        case "SET_QUIZ_INFO":
-            console.log(action.payload.title);
+        case "SET_CURRENT_SHOW": //현재 조회중인 쇼 num
             return {
                 ...state,
-                quizInfo: {
-                    ...state.quizInfo,
-                    showInfo: action.payload
-                }
-            };
-        case "DELETE_QUIZ":
-            //delete quiz where quiz.num = action.payload.quizNum
-            let index = state.quizList.findIndex(quiz => quiz.num === action.payload.quizNum);
-            state.quizList.splice(index, 1);
-            return {
-                ...state,
-                quizList: state.quizList
-            };
+                currentShow: action.payload
+            }
 
-
-        case "ADD_QUIZ":
+        case "SET_QUIZ_INFO": //쇼 정보 설정
             return {
                 ...state,
-                quizList: [...state.quizList, {
-                    "num": state.quizList.length + 1,
+                quizInfo: action.payload
+            }
+
+        case "ADD_QUIZ": //퀴즈 추가
+            return {
+                ...state,
+                quizData: [...state.quizData, {
+                    "num": state.quizData.length + 1,
                     "type": "선택형",
                     "question": " ",
                     "media": {
@@ -87,56 +84,64 @@ export default function quizInfoReducer(state = initialState, action) {
                     "rate": 0
                 }]
             }
-        case "RENUMBER_QUIZ":
+
+        case "DELETE_QUIZ": //선택된 퀴즈 삭제
+            //delete quiz where quiz.num = action.payload.quizNum
+            let index = state.quizData.findIndex(quiz => quiz.num === action.payload.quizNum);
+            state.quizData.splice(index, 1);
             return {
                 ...state,
-                quizList: state.quizList.map((quiz, index) => {
+                quizData: state.quizData
+            };
+
+        case "COPY_QUIZ": //선택된 퀴즈 복사
+            return {
+                ...state,
+                quizData: [...state.quizData, {
+                    ...state.quizData[action.payload.quizNum - 1],
+                    num: state.quizData.length + 1
+                }]
+            }
+
+        case "RENUMBER_QUIZ": //퀴즈 번호 재정렬
+            return {
+                ...state,
+                quizData: state.quizData.map((quiz, index) => {
                     quiz.num = index + 1;
                     return quiz;
                 })
             }
-        case "COPY_QUIZ":
-            return {
-                ...state,
-                quizList: [...state.quizList, {
-                    ...state.quizList[action.payload.quizNum - 1],
-                    num: state.quizList.length + 1
-                }]
-            }
-        case "SET_CURRENT_SHOW":
-            return {
-                ...state,
-                currentShow: action.payload
-            }
-        case "SET_CURRENT_QUIZ":
-            //set currentquiz as quiz where quiz.num = status.currentShow
-            return {
-                ...state,
-                currentQuiz: state.quizList.find(quiz => quiz.num === state.currentShow)
-            }
-        case "MODIFY_QUIZ":
-            // console.log(action.payload.keytype+" "+action.payload.key+" "+action.payload.value);
-            let quizIndex = state.quizList.findIndex(quiz => quiz.num === state.currentShow);
-            // console.log(state.quizList[quizIndex].media[action.payload.key]);
+
+
+        case "MODIFY_QUIZ": //퀴즈 수정
+            console.log(action.payload.keytype + " " + action.payload.key + " " + action.payload.value);
+            let quizIndex = state.quizData.findIndex(quiz => quiz.num === state.currentShow);
             switch (action.payload.keytype) {
                 case "base":
-                    state.quizList[quizIndex][action.payload.key] = action.payload.value;
+                    state.quizData[quizIndex][action.payload.key] = action.payload.value;
                     return {
                         ...state,
-                        quizList: state.quizList
+                        quizData: state.quizData
                     }
                 case "media":
-                    state.quizList[quizIndex].media[action.payload.key] = action.payload.value;
+                    state.quizData[quizIndex].media[action.payload.key] = action.payload.value;
                     return {
                         ...state,
-                        quizList: state.quizList
+                        quizData: state.quizData
                     }
-                case "choice":
-                    state.quizList[quizIndex].choiceList[action.payload.key] = action.payload.value;
+                case "choiceList":
+                    state.quizData[quizIndex].choiceList[action.payload.key] = action.payload.value;
                     return {
                         ...state,
-                        quizList: state.quizList
+                        quizData: state.quizData
                     }
+            }
+        case "MODIFY_QUIZ_ANSWER": //퀴즈 정답 수정
+            let quizIndex2 = state.quizData.findIndex(quiz => quiz.num === state.currentShow);
+            state.quizData[quizIndex2].answer = action.payload;
+            return {
+                ...state,
+                quizData: state.quizData
             }
         default:
             return state;
