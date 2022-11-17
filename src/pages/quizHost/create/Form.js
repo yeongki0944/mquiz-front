@@ -56,8 +56,6 @@ export default function Component() {
 
     const currentQuiz = quizData.find((quiz) => quiz.num === currentShow);
 
-    const [form,setForm] = useState([]);
-
     const modifyQuiz = (keytype,key,value) => { dispatch({type:'MODIFY_QUIZ',payload:{keytype,key,value}}) }
 
     //state
@@ -82,23 +80,6 @@ export default function Component() {
         </div>
     );
 
-    function resetAnswer() {
-        setForm(form.map((f) => {
-            f.answer = '';
-            return f;
-        }));
-        // setCurrentQuiz({
-        //     ...currentQuiz,
-        //     answer: ''
-        // });
-        // setQuizList(quizData.map((q) => {
-        //     if (q.num === currentShow) {
-        //         q.answer = '';
-        //     }
-        //     return q;
-        // }));
-    }
-
     function TypeButton() {
         return (
             <Box>
@@ -108,7 +89,7 @@ export default function Component() {
                             key={type}
                             onClick={() => {
                                 modifyQuiz('base', 'type', type);
-                                resetAnswer();
+                                modifyQuiz('base','answer', '');
                             }}
                         >
                             <Card>

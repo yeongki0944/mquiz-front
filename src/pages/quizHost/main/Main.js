@@ -4,44 +4,28 @@ import Paper from "@mui/material/Paper";
 import Showcard from "../components/Showcard";
 import {Avatar, Box, Button, Modal, Switch, TextField} from "@mui/material";
 import {useContext, useEffect, useState} from "react";
+import Add from "@material-ui/icons/Add";
 import axios from "axios";
 import QuizModal from '../create/Quiz_Make_modal';
+import {useDispatch, useSelector} from "react-redux";
 
 export default function QuizHostMain(props) {
+    const dispatch = useDispatch();
+
     const [modalOpen, setModalOpen] = useState(false);
 
-    const [data, setData] = useState([]);
-
-    const onClick = async()=>{
-        const res = await axios.get("http://localhost:8080/api/quiz");
-        setData(res.data);
-        // console.log(res.data);
-        //
-        // setData([
-        //     {
-        //         key: 1,
-        //         title: "test1",
-        //         status: "작성중",
-        //         qcnt: 10,
-        //         author: "김재훈",
-        //         date: "2021-08-01"
-        //     },
-        //     {
-        //         _id: 2,
-        //         title: "test2",
-        //         status: "사용가능",
-        //         qcnt: 10,
-        //         author: "김재이",
-        //         date: "2021-08-01"
-        //     },
-        // ]);
-        //
-
+    const setQuizList = () => {
+        // axios.get('http://localhost:8080/quiz/list')
+        //     .then(res => {
+        //         dispatch({type: 'SET_QUIZ_LIST', payload: res.data});
+        //     })
+        //     .catch(err => {
+        //         console.log(err);
+        //     })
     }
 
     useEffect(() => {
-        onClick();
-        console.log(props.QuizContext);
+        setQuizList();
     }, []);
 
     return (
@@ -108,13 +92,11 @@ export default function QuizHostMain(props) {
 
                                     }}
                                 >
-                                    추가
+                                    <Add/>
                                 </Box>
                             </Button>
                         </Grid>
-                        <Showcard
-                            data={data}
-                        />
+                        <Showcard/>
                     </Grid>
 
                     <Grid item xs={6}>
