@@ -22,8 +22,8 @@ const FormHelperTexts = styled(FormHelperText)`
   color: #d32f2f !important;
 `;
 
-const PinNumCheck = () => {
-    const [pinNumState, setPinNumState] = useState('');
+const NicNameCheck = () => {
+    const [nicNameState, setNicNameState] = useState('');
     const [passwordError, setPasswordError] = useState('');
      // form 전송
 
@@ -32,22 +32,22 @@ const PinNumCheck = () => {
       
         const data = new FormData(e.currentTarget);
         const joinData = {
-            pinNum: data.get('pinNum'),
+            nicName: data.get('nicName'),
           //rePassword: data.get('rePassword'),
         };
-    const {pinNum} = joinData;
+    const {nicName} = joinData;
       
-    // pin 번호 유효성 체크
-    const pinNumRegex = /^[0-9]{0,6}$/g;
-    if (!pinNumRegex.test(pinNum)) {
-        setPinNumState('전달받은 6자리 번호 입력해주세요!');
+    // 닉네임 번호 유효성 체크
+    const nicNameRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,12}$/;
+    if (!nicNameRegex.test(nicName)) {
+        setNicNameState('전달받은 6자리 번호 입력해주세요!');
     } else {
-        setPinNumState('');
+        setNicNameState('');
     }
 
     // 모두 통과하면 post되는 코드 실행 (axios나 fecth등)
      if (
-        pinNumRegex.test(pinNum)
+        nicNameRegex.test(nicName)
     //     password === rePassword
        ) {
         return;
@@ -81,24 +81,20 @@ return(
         <Box align='center' sx={{ minWidth: 275}} component="form" noValidate onSubmit={handleSubmit}>
 
         <Typography variant="h5" component="div" align='center'>
-        PIN 번호를 입력한다면
-        </Typography>
-
-        <Typography variant="h5" component="div" align='center'>
-        퀴즈를 드리지요
+            취향저격 닉네임을 만들어 주세요
         </Typography>
 
         <FormControl component="fieldset" variant="standard">
         <Typography variant="h5" component="div" align='center'>
-        <TextField id="pinNum" name="pinNum" type="pinNum" label="PIN 번호 입력(숫자 6자리)" helperText={setPinNumState} variant="outlined" error={pinNumState !== '' || false} required autoFocus/>
+        <TextField id="nicName" name="nicName" type="nicName" label="닉네임 입력" helperText={setNicNameState} variant="outlined" error={nicNameState !== '' || false} required autoFocus/>
         </Typography>
     
-        <FormHelperText>{pinNumState}</FormHelperText>
+        <FormHelperText>{nicNameState}</FormHelperText>
         
-        <Link to="/QClient/createNicName">
-        <Typography variant="h5" component="div" align='center'>
-        <Button type="submit" variant="contained">참여확인</Button>
-        </Typography>
+        <Link to="/QClient/ready">
+            <Typography variant="h5" component="div" align='center'>
+            <Button variant="contained">확인</Button>
+            </Typography>
         </Link>
 
         </FormControl>
@@ -111,10 +107,11 @@ return(
     );
 }
 
-export default function quizClientMain(props) {
-    return(
+export default function quizClientCreateNicName(props) {
+
+    return (
         <>
-        <PinNumCheck></PinNumCheck>
+            <NicNameCheck></NicNameCheck>
         </>
     );
 }
