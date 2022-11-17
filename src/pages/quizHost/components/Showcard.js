@@ -41,7 +41,7 @@ const Img = styled('img')({
 
 
 
-export default function Showcard(props) {
+export default function Showcard() {
     const dispatch = useDispatch();
 
     const {quizList} = useSelector(state => state.quizList);

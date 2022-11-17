@@ -18,6 +18,7 @@ const initialState = {
             "pulic": false
         }
     },
+    currentShow: 1,
     quizData: [
         {
             "num": 1,
@@ -41,7 +42,7 @@ const initialState = {
             "rate": 0
         }
     ],
-    currentShow: 1,
+
 }
 
 export default function quizInfoReducer(state = initialState, action) {
@@ -113,9 +114,8 @@ export default function quizInfoReducer(state = initialState, action) {
 
 
         case "MODIFY_QUIZ": //퀴즈 수정
-            // console.log(action.payload.keytype+" "+action.payload.key+" "+action.payload.value);
+            console.log(action.payload.keytype + " " + action.payload.key + " " + action.payload.value);
             let quizIndex = state.quizData.findIndex(quiz => quiz.num === state.currentShow);
-            // console.log(state.quizData[quizIndex].media[action.payload.key]);
             switch (action.payload.keytype) {
                 case "base":
                     state.quizData[quizIndex][action.payload.key] = action.payload.value;
@@ -129,14 +129,20 @@ export default function quizInfoReducer(state = initialState, action) {
                         ...state,
                         quizData: state.quizData
                     }
-                case "choice":
+                case "choiceList":
                     state.quizData[quizIndex].choiceList[action.payload.key] = action.payload.value;
                     return {
                         ...state,
                         quizData: state.quizData
                     }
             }
-
+        case "MODIFY_QUIZ_ANSWER": //퀴즈 정답 수정
+            let quizIndex2 = state.quizData.findIndex(quiz => quiz.num === state.currentShow);
+            state.quizData[quizIndex2].answer = action.payload;
+            return {
+                ...state,
+                quizData: state.quizData
+            }
         default:
             return state;
     }
