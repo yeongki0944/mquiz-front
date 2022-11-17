@@ -9,6 +9,7 @@ import Home from "./pages/home/home";
 
 import QuizHostMain from "./pages/quizHost/main/Main";
 import QuizHostCreate from "./pages/quizHost/create/Panel";
+import QuizHostFind from "./pages/quizHost/find/Find"
 
 import QuizClientMain from "./pages/quizClient/main/main";
 
@@ -30,6 +31,7 @@ export default function App() {
 
                         <Route path="/QHost/create" component={QuizHostCreate} exact/>
 
+                        <Route path="/QHost/find" component={QuizHostFind} exact/>
 
                         {/* 참가자 페이지 목록*/}
                         <Route path="/QClient" component={QuizClientMain} exact/>
