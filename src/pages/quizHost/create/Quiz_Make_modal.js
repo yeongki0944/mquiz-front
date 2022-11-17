@@ -11,9 +11,28 @@ import TextField from '@mui/material/TextField';
 import MenuItem from "@mui/material/MenuItem";
 import Chip from "@mui/material/Chip";
 import {FormControlLabel, FormGroup, Switch} from "@mui/material";
-import {useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
+import {makeStyles} from "@material-ui/core/styles";
 
-const style = {
+const useStyles = makeStyles(()=>({
+        imageStyle: {
+            marginTop: 15,
+            width: 323,
+            height: 200
+        },
+        textFieldStyle: {
+            width: 790,
+            height: 50
+        },
+        tagTextFieldStyle: {
+            width: 790,
+            height: 50
+        }
+    }
+));
+
+// useStyles에 넣으면 이상해짐 ㅎㄷㄷ
+const boxstyle={
     position: 'absolute',
     top: '50%',
     left: '50%',
@@ -23,17 +42,9 @@ const style = {
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
-    p: 4,
-};
-const imageStyle = {
-    marginTop: 15,
-    width: 323,
-    height: 200,
+    p: 4
 }
-const textFieldStyle = {
-    width: 790,
-    height: 50
-}
+
 const imageItemData = [
     {
         img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
@@ -104,57 +115,49 @@ const currencies = [
 ];
 
 export default function BasicModal(props) {
+    const dispatch = useDispatch();
+    const classes = useStyles();
 
-    // Data에 key=value에 맞게 설정
-    /*function setQuizInfo(key, value){
-        console.log(key+" : "+value);
-        setData(Data.map(item =>{
-            item.showInfo[key] = value;
-            return item;
-        }));
-    }*/
-
-    const {quizInfo} = useSelector((state) => state.quizInfo);
+    const makeQuizInfo = (title, currency, tags, titleimgOrigin, titleimgThumb,
+                          createDate, lastModifyDate, state, isPublic) => {
+        dispatch({type:"MAKE_QUIZ_INFO", payload:{
+                title:title,
+                category:currency,
+                tags:tags,
+                titleimg_origin:titleimgOrigin,
+                titleimg_thumb:titleimgThumb,
+                createDate:createDate,
+                lastModifyDate:lastModifyDate,
+                state:state,
+                pulic:isPublic
+            }
+        });
+    }
 
     // Show 제목
-    const [titleTextData, setTitletextData] = useState('');
-
+    const [titleTextData, setTitleTextData] = useState('');
     // 카테고리
     const [currency, setCurrency] = useState('카테고리1');
-
     // chip
     const [chipData, setChipData] = useState([]);
     const [chipCount, setChipCount] = useState(0);
-
     // 공개 비공개
     const [isPublic, setIsPublic] = useState(true);
     const [label, setLabel] = useState("공개");
-
     // 이미지 변경
     const [imageUrl, setImageUrl] = useState(imageItemData[0].img);
-
     // 모달창 닫기
     const handleClose = () => {
-        /*
-        setTitletext('');
+        setTitleTextData('');
         setCurrency('');
         setChipData([]);
-        setChipText('');
         setChipCount(0);
-        setChipTextField('');
-        setChipTextField('standard-basic');
         setIsPublic(true);
         setLabel("공개");
-        setImageUrl(itemData[0].img);
-        */
+        setImageUrl(imageItemData[0].img);
 
         props.setOpen(false)
     };
-    /*
-        useEffect(()=>{
-            console.log(Data);
-        },[Data]);
-    */
 
     return (
         <div>
@@ -164,7 +167,7 @@ export default function BasicModal(props) {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <Box sx={style}>
+                <Box sx={boxstyle}>
                     <Grid container spacing={2}>
                         <Grid item xs={12} mb={4}>
                             <ModalTitle/>
@@ -213,7 +216,7 @@ export default function BasicModal(props) {
                 <Typography align={"left"} variant={"h6"}>
                     <b>대표 이미지</b>
                 </Typography>
-                <img src={imageUrl} style={imageStyle} alt="대표 이미지"></img>
+                <img src={imageUrl} className={classes.imageStyle} alt="대표 이미지"></img>
             </div>
         );
     }
@@ -249,7 +252,7 @@ export default function BasicModal(props) {
     }
 
     function ModalInputShowTitle() {
-        const [titleText, setTitleText] = useState('')
+        const [titleText, setTitleText] = useState(titleTextData);
         return (
             <div>
                 <Typography align={"left"} variant="h5">
@@ -258,11 +261,18 @@ export default function BasicModal(props) {
                 <TextField
                     id="standard-basic"
                     variant="standard"
-                    sx={textFieldStyle}
+                    className={classes.textFieldStyle}
                     value={titleText}
-                    onChange={(event) => {
-                        setTitleText(event.target.value)
-                    }}
+                    onChange={
+                        (event) => {
+                            setTitleText(event.target.value);
+                        }
+                    }
+                    onBlur={
+                        (event)=>{
+                            setTitleTextData(titleText);
+                        }
+                    }
                 />
             </div>
         );
@@ -340,7 +350,7 @@ export default function BasicModal(props) {
                 <TextField
                     id={chipTextField}
                     variant="standard"
-                    sx={textFieldStyle}
+                    className={classes.tagTextFieldStyle}
                     helperText={chipErrorMsg}
                     value={chipText}
                     onChange={
@@ -411,25 +421,24 @@ export default function BasicModal(props) {
                     onClick={
                         () => {
                             // 태그 데이터 key값 정리
-                            let checkTags = chipData;
-                            for (let i = 0; i < checkTags.length; i++) {
-                                checkTags[i].key = i;
+                            let tagList = [];
+                            for (let i = 0; i < chipData.length; i++) {
+                                tagList.push(chipData[i].label);
                             }
-                            /*
-                            // data 세팅
-                            setQuizInfo("owner", "유저아이디");
-                            setQuizInfo("title", titleText);
-                            setQuizInfo("category", currency);
-                            setQuizInfo("tags", checkTags);
-                            setQuizInfo("titleImg-origin", "URL 입력");
-                            setQuizInfo("titleImg-thumb", "URL 입력");
-                            setQuizInfo("createDate", new Date());
-                            setQuizInfo("lastModifyDate", new Date());
-                            setQuizInfo("isPublic", isPublic);
-                            setQuizInfo("state", "작성중");
-                            */
+
+                            makeQuizInfo(
+                                titleTextData,
+                                currency,
+                                chipData,
+                                imageUrl,
+                                imageUrl,
+                                new Date(),
+                                new Date(),
+                                "작성중",
+                                isPublic
+                            );
+
                             handleClose();
-                            props.setPage("quizcreate");
                         }
                     }
                 >

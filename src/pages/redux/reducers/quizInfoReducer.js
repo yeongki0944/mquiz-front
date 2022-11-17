@@ -112,7 +112,6 @@ export default function quizInfoReducer(state = initialState, action) {
                 })
             }
 
-
         case "MODIFY_QUIZ": //퀴즈 수정
             console.log(action.payload.keytype + " " + action.payload.key + " " + action.payload.value);
             let quizIndex = state.quizData.findIndex(quiz => quiz.num === state.currentShow);
@@ -143,6 +142,25 @@ export default function quizInfoReducer(state = initialState, action) {
                 ...state,
                 quizData: state.quizData
             }
+
+        case "MAKE_QUIZ_INFO":
+            console.log(action.payload);
+            return{
+                ...state,
+                quizInfo: {
+                    ...state,
+                    title: action.payload.title,
+                    category:action.payload.category,
+                    tags:action.payload.tags,
+                    titleimg_origin:action.payload.titleimg_origin,
+                    titleimg_thumb:action.payload.titleimg_thumb,
+                    createDate:action.payload.createDate,
+                    lastModifyDate:action.payload.lastModifyDate,
+                    state:action.payload.state,
+                    pulic:action.payload.pulic
+                }
+            }
+
         default:
             return state;
     }
