@@ -14,10 +14,10 @@ export default function QuizHostMain(props) {
 
     const [modalOpen, setModalOpen] = useState(false);
 
-
+    const {mongodbUrl} = useSelector(state => state.mongodbUrl)
 
     const setQuizList = () => {
-        axios.post('http://13.39.86.114:8888/v1/Qready/getQuizList', {
+        axios.post(mongodbUrl.url+mongodbUrl.getQuizList, {
             email: "dudrl0944@gmail.com",
             id: "637440e817bb6d42edbf3927"
         }).then((res) => {
@@ -26,16 +26,16 @@ export default function QuizHostMain(props) {
         }).catch((err) => {
             console.log(err);
         })
-
     }
 
     useEffect(() => {
-        setQuizList();
+        setQuizList();;
     }, []);
 
     return (
         <>
             <Grid>
+
                 <Grid container spacing={3}>
                     <Grid item xs={12}/> {/* 빈칸 띄우기용 */}
                     {/*프로필*/}
