@@ -9,7 +9,6 @@ import {Button, Card, Container} from "@mui/material";
 import {useEffect, useState} from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import Paper from "@mui/material/Paper";
-import {useDispatch, useSelector} from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
     content:{
@@ -29,17 +28,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Panel(props) {
-    const dispatch = useDispatch();
     const classes = useStyles();
 
     const [imgBase64, setImgBase64] = useState([]); // 파일 base64
     const [imgFile, setImgFile] = useState(null);	//파일
-
-
-    const {currentShow} = useSelector(state => state.currentShow);
-    const { quizData } = useSelector((state) => state.quizData);
-
-
 
     // useEffect(() => {
     // switch (props.mode) {

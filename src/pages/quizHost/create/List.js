@@ -7,6 +7,8 @@ import * as React from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
+import {R_copyQuiz, R_deleteQuiz, R_setCurrentShow} from "../../redux/reducers/quizInfoReducer";
+
 
 const useStyles = makeStyles((theme) => ({
     content: {
@@ -31,61 +33,15 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function List(props) {
+export default function List() {
     const dispatch = useDispatch();
     const classes = useStyles();
 
-    const {currentShow} = useSelector(state => state.currentShow);
-    const { quizInfo } = useSelector((state) => state.quizInfo);
-    const { quizData } = useSelector((state) => state.quizData);
-    const { currentQuiz } = useSelector((state) => state.currentQuiz);
+    const {quiz} = useSelector(state => state.quiz);
 
-    const setCurrentShow = (index) => {
-        dispatch({type: "SET_CURRENT_SHOW", payload: index});
-    };
-
-    const setCurrentQuiz = (index) => {
-        dispatch({type: "SET_CURRENT_QUIZ", payload: index});
-    };
-
-    const copyQuiz = (quizNum) => {
-        dispatch({
-            type: "COPY_QUIZ",
-            payload: {
-                quizNum: quizNum,
-            }
-        });
-    };
-
-    const deleteQuiz = (quizNum) => {
-        dispatch({
-            type: "DELETE_QUIZ",
-            payload: {
-                quizNum: quizNum,
-            }
-        });
-        renumberQuiz();
-    };
-
-    const renumberQuiz = () => {
-        dispatch({
-            type: "RENUMBER_QUIZ",
-        });
-    };
-
-    //주황색 표기 제작중
-    // useEffect(() => {
-    //     //add class to selected item
-    //     const items = document.getElementsByClassName(classes.item_card);
-    //     for (let i = 0; i < items.length; i++) {
-    //         if (items[i].getAttribute("key") === currentShow) {
-    //             items[i].classList.add(classes.selected);
-    //         }else{
-    //             items[i].classList.remove(classes.selected);
-    //         }
-    //
-    //     }
-    // }, [currentShow]);
+    useEffect(() => {
+        setSelected(quiz.currentShow);
+    }, [quiz.currentShow]);
 
     return (
         <>
@@ -93,30 +49,39 @@ export default function List(props) {
         </>
     )
 
+    function setSelected(currentShow) {
+        // const allItems = document.getElementsByClassName(classes.item_card);
+        // console.log(quiz.currentShow);
+        // for (let i = 0; i < allItems.length; i++) {
+        //     if(allItems[i].id == quiz.currentShow){
+        //         allItems[i].classList.add(classes.selected);
+        //     }else {
+        //         allItems[i].classList.remove(classes.selected);
+        //     }
+        // }
+        const allItems = document.getElementsByClassName(classes.item_card);
+        for (let i = 0; i < allItems.length; i++) {
+            allItems[i].classList.remove(classes.selected);
+        }
+        document.getElementById(currentShow).classList.add(classes.selected);
+
+    }
+
     function List() {
         return (
             <div className={classes.content}>
-                {quizData.map((quiz) =>
-                    <Grid container className={classes.items} key={quiz.num}>
+                {quiz.quizData.map((item) =>
+                    <Grid container className={classes.items} key={item.num}>
                         <Grid item xs={2}>
-                            {quiz.num}P
+                            {item.num}P
                         </Grid>
-                        <Paper elevation={2} className={classes.item_card} key={quiz.num}>
-                            <Grid item xs={10}
-                                  onClick={
-                                      () => {
-                                          setCurrentShow(quiz.num);
-                                          setCurrentQuiz(quizData[quiz.num - 1]);
-                                      }
-                                  }>
+                        <Paper elevation={2} className={classes.item_card} key={item.num} id={item.num} onClick={()=>dispatch(R_setCurrentShow(item.num))}>
+                            <Grid item xs={10} >
                                 <Grid>
                                     Status
                                 </Grid>
                                 <Grid>
-                                    [{quiz.type}]
-                                </Grid>
-                                <Grid>
-                                    {quizInfo.showInfo.title}
+                                    [{item.type}]
                                 </Grid>
                             </Grid>
                             <Grid container spacing={4}>
@@ -124,7 +89,7 @@ export default function List(props) {
                                     <Button
                                         onClick={
                                             () => {
-                                                copyQuiz(quiz.num);
+                                                dispatch(R_copyQuiz(item.num));
                                             }
                                         }
                                     >
@@ -135,7 +100,7 @@ export default function List(props) {
                                     <Button
                                         onClick={
                                             () => {
-                                                deleteQuiz(quiz.num)
+                                                dispatch(R_deleteQuiz(item.num));
                                             }
                                         }
                                     >
@@ -146,6 +111,7 @@ export default function List(props) {
                         </Paper>
                     </Grid>
                 )}
+
             </div>
         )
     }

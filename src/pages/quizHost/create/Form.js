@@ -21,6 +21,7 @@ import {useEffect, useState} from "react";
 import QSelect from "./QuizTypes/Select";
 import QOX from "./QuizTypes/OX";
 import QRep from "./QuizTypes/Write";
+import {R_modifyQuiz} from "../../redux/reducers/quizInfoReducer";
 
 const Item = styled(Paper)(({theme}) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -52,17 +53,9 @@ export default function Component() {
     const dispatch = useDispatch();
     const classes = useStyles();
 
-    const {currentShow} = useSelector(state => state.currentShow);
-    // const { currentQuiz } = useSelector(state => state.currentQuiz);
-    const {quizInfo} = useSelector((state) => state.quizInfo);
-    const {quizData} = useSelector((state) => state.quizData);
+    const {quiz} = useSelector(state => state.quiz);
+    const currentQuiz = quiz.quizData.find(item => item.num === quiz.currentShow);
 
-
-    const currentQuiz = quizData.find((quiz) => quiz.num === currentShow);
-
-    const modifyQuiz = (keytype, key, value) => {
-        dispatch({type: 'MODIFY_QUIZ', payload: {keytype, key, value}})
-    }
 
     //state
     const [answerList, setAnswerList] = useState([]);
@@ -72,9 +65,14 @@ export default function Component() {
         label: '20초'
     }, {value: 30, label: '30초'}, {value: 40, label: '40초'}, {value: 50, label: '50초'}, {value: 60, label: '60초'}]);
 
+    const setQuiz= (keytype,key,value)=>{
+        dispatch(R_modifyQuiz({keytype:keytype,key:key,value:value}));
+    }
+
     return (
         <div className={classes.content}>
             <TypeButton/>
+            {answerList}
             <hr/>
             <Question/>
             <hr/>
@@ -93,8 +91,8 @@ export default function Component() {
                     {types.map((type) => (
                         <Button key={type}
                             onClick={() => {
-                                modifyQuiz('base', 'type', type);
-                                modifyQuiz('base', 'answer', '');
+                                setQuiz('base','type',type);
+                                setQuiz('base','answer','');
                             }}
                         >
                             <Card>
@@ -120,7 +118,7 @@ export default function Component() {
                     select
                     value={currentQuiz.time}
                     onChange={(event) => {
-                        modifyQuiz("base", "time", event.target.value);
+                        setQuiz("base", "time", event.target.value);
                     }}
                     SelectProps={{
                         native: true,
@@ -139,7 +137,7 @@ export default function Component() {
                 <Switch
                     checked={currentQuiz.useScore}
                     onChange={(event) => {
-                        modifyQuiz("base", "useScore", event.target.checked);
+                        setQuiz("base", "useScore", event.target.checked);
                     }}
                 />
 
@@ -148,7 +146,7 @@ export default function Component() {
                     max={3}
                     value={currentQuiz.rate}
                     onChange={(event, newValue) => {
-                        modifyQuiz("base", "rate", newValue);
+                        R_modifyQuiz({keytype:"base", key:"rate", value:newValue});
                     }}
                 />
             </Box>
@@ -166,13 +164,13 @@ export default function Component() {
                         name="row-radio-buttons-group"
                     >
                         <FormControlLabel value="Image" control={<Radio/>} onClick={() => {
-                            modifyQuiz("media", "type", 'Image');
+                            setQuiz("media", "type", 'Image');
                         }} label="Image"/>
                         <FormControlLabel value="Youtube" control={<Radio/>} onClick={() => {
-                            modifyQuiz("media", "type", 'Youtube');
+                            setQuiz("media", "type", 'Youtube');
                         }} label="Youtube"/>
                         <FormControlLabel value="Audio" control={<Radio/>} onClick={() => {
-                            modifyQuiz("media", "type", 'Audio');
+                            setQuiz("media", "type", 'Audio');
                         }} label="Audio"/>
                     </RadioGroup>
                 </FormControl>
@@ -203,7 +201,7 @@ export default function Component() {
                     placeholder={"유튜브 링크를 입력해주세요."}
                     value={currentQuiz[0].media.url}
                     onChange={(event) => {
-                        modifyQuiz("media", "url", event.target.value);
+                        setQuiz("media", "url", event.target.value);
                     }}
                 />
                 <TextField/>~<TextField/>
@@ -218,7 +216,7 @@ export default function Component() {
                     placeholder={"오디오 링크를 입력해주세요."}
                     value={currentQuiz[0].media.url}
                     onChange={(event) => {
-                        modifyQuiz("media", "url", event.target.value);
+                        setQuiz("media", "url", event.target.value);
                     }}
                 />
             </Box>
@@ -236,7 +234,7 @@ export default function Component() {
                     rows={4}
                     placeholder={"질문을 입력해주세요."}
                     onBlur={(event) => {
-                        modifyQuiz("base", "question", event.target.value);
+                        setQuiz("base", "question", event.target.value);
                     }}
                 />
             </Box>
