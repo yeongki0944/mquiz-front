@@ -9,7 +9,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import PlayArrow from "@material-ui/icons/PlayArrow";
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {setQuizInfo} from "../../redux/reducers/quizInfoReducer";
+import {R_setQuizInfo} from "../../redux/reducers/quizInfoReducer";
 
 
 const Img = styled('img')({
@@ -97,7 +97,7 @@ export default function Showcard() {
 
     function toEdit(id) {
         const quizInfo = quizList.find(quiz => quiz.id === id);
-        dispatch(setQuizInfo(quizInfo));
+        dispatch(R_setQuizInfo(quizInfo));
         //여기에서 axios 한 다음 quizData set 해줘야함
         // eslint-disable-next-line no-restricted-globals
         location.href = "/QHost/create";
