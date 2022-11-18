@@ -1,25 +1,13 @@
+import {handleActions} from "redux-actions";
+
 const initialState = {
     mongodbUrl: {
-        url : "http://13.39.86.114:8888",
-        getQuizList : "/v1/Qready/getQuizList",
+        getQuizList : "http://13.39.86.114:8888/v1/Qready/getQuizList",
+        getShowList : "http://13.39.86.114:8888/v1/Qready/showList",
    }
 
 }
 
-export default function mongodbReducer(state = initialState, action) {
-    switch (action.type) {
-        case "Mongodb_Data":
-            console.log("Mongodb_Data")
-            //set print quiz as /v1/Qready/quiz
-            return {
-                ...state,
-                mongodbUrl: {
-                    ...state.mongodbUrl,
-                    printquiz: action.payload
-                }
-            }
+export const mongodbReducer = handleActions({
+}, initialState)
 
-        default:
-            return state;
-    }
-}

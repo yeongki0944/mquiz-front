@@ -8,6 +8,8 @@ import Add from "@material-ui/icons/Add";
 import axios from "axios";
 import QuizModal from '../create/Quiz_Make_modal';
 import {useDispatch, useSelector} from "react-redux";
+import CustomAxios from "../../function/CustomAxios";
+import {setQuizList} from "../../redux/reducers/quizListReducer";
 
 export default function QuizHostMain(props) {
     const dispatch = useDispatch();
@@ -16,20 +18,21 @@ export default function QuizHostMain(props) {
 
     const {mongodbUrl} = useSelector(state => state.mongodbUrl)
 
-    const setQuizList = () => {
-        axios.post(mongodbUrl.url+mongodbUrl.getQuizList, {
+    const setQuizList_ = async () => {
+
+        await CustomAxios.post(mongodbUrl.getShowList, {
             email: "dudrl0944@gmail.com",
             id: "637440e817bb6d42edbf3927"
         }).then((res) => {
-            console.log(res.data);
-            dispatch({type: 'SET_QUIZ_LIST', payload: res.data});
+            console.log(res.data)
+            dispatch(setQuizList(res.data))
         }).catch((err) => {
-            console.log(err);
+            console.log(err)
         })
     }
 
     useEffect(() => {
-        setQuizList();;
+        setQuizList_();;
     }, []);
 
     return (
@@ -118,10 +121,10 @@ export default function QuizHostMain(props) {
                     </Grid>
                 </Grid>
             </Grid>
-            <QuizModal
-            open={modalOpen}
-            setOpen={setModalOpen}
-            />
+            {/*<QuizModal*/}
+            {/*open={modalOpen}*/}
+            {/*setOpen={setModalOpen}*/}
+            {/*/>*/}
         </>
     );
 }

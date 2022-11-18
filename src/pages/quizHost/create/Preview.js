@@ -18,14 +18,10 @@ const Item = styled(Paper)(({theme}) => ({
 
 export default function BasicGrid(props) {
 
-    const {currentShow} = useSelector(state => state.currentShow);
-    // const { currentQuiz } = useSelector((state) => state.currentQuiz);
-    const { quizData } = useSelector((state) => state.quizData);
-    const currentQuiz = quizData.find((quiz) => quiz.num === currentShow);
+    const {quiz} = useSelector(state => state.quiz);
+    const currentQuiz = quiz.quizData.find(item => item.num === quiz.currentShow);
 
     useEffect(() => {
-        // console.log("현재 슬라이드:"+currentShow);
-        // console.log(currentQuiz);
     });
 
 
@@ -48,7 +44,7 @@ export default function BasicGrid(props) {
             <>
                 <Typography variant="h4" component="div" gutterBottom>
                     PIN : 123456
-                    currentpage: {currentShow}
+                    currentpage: {quiz.currentShow}
                 </Typography>
             </>
         )

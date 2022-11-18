@@ -1,149 +1,207 @@
+import {createAction, handleActions} from "redux-actions";
+
+const SET_CURRENT_SHOW = 'SET_CURRENT_SHOW';
+const SET_QUIZ_INFO = 'SET_QUIZ_INFO';
+const ADD_QUIZ = 'ADD_QUIZ';
+const DELETE_QUIZ = 'DELETE_QUIZ';
+const COPY_QUIZ = 'COPY_QUIZ';
+const RENUMBER_QUIZ = 'RENUMBER_QUIZ';
+const MODIFY_QUIZ = 'MODIFY_QUIZ';
+const MODIFY_QUIZ_ANSWER = 'MODIFY_QUIZ_ANSWER';
+
+export const setCurrentShow = createAction(SET_CURRENT_SHOW);
+export const setQuizInfo = createAction(SET_QUIZ_INFO);
+export const addQuiz = createAction(ADD_QUIZ);
+export const deleteQuiz = createAction(DELETE_QUIZ);
+export const copyQuiz = createAction(COPY_QUIZ);
+export const renumberQuiz = createAction(RENUMBER_QUIZ);
+export const modifyQuiz = createAction(MODIFY_QUIZ);
+export const modifyQuizAnswer = createAction(MODIFY_QUIZ_ANSWER);
+
 const initialState = {
-    quizInfo: {
-        "_id": "637440e817bb6d42edbf3927",
-        "showInfo": {
-            "email": "dudrl0944@gmail.com",
-            "title": "쇼 제목",
-            "category": "일단",
-            "tags": [
-                "1번",
-                "2번",
-                "3번"
-            ],
-            "titleImg_origin": "url",
-            "titleImg_thumb": "url",
-            "createDate": "2022-11-11T00:00:00.000+00:00",
-            "lastModifyDate": "2022-11-11T00:00:00.000+00:00",
-            "state": "작성중",
-            "pulic": false
-        }
-    },
-    currentShow: 1,
-    quizData: [
-        {
-            "num": 1,
-            "type": "선택형",
-            "question": " ",
-            "media": {
-                "type": "image",
-                "url": "",
-                "startTime": "",
-                "endTime": "",
-            },
-            "choiceList": {
-                "1": "답을 입력해 주세요",
-                "2": "답을 입력해 주세요",
-                "3": "",
-                "4": ""
-            },
-            "answer": [],
-            "time": 0,
-            "useScore": true,
-            "rate": 0
-        }
-    ],
+    quiz: {
+        _id: "637440e817bb6d42edbf3927",
+        quizInfo: {
+            "showInfo": {
+                "email": "dudrl0944@gmail.com",
+                "title": "쇼 제목",
+                "category": "일단",
+                "tags": [
+                    "1번",
+                    "2번",
+                    "3번"
+                ],
+                "titleImg_origin": "url",
+                "titleImg_thumb": "url",
+                "createDate": "2022-11-11T00:00:00.000+00:00",
+                "lastModifyDate": "2022-11-11T00:00:00.000+00:00",
+                "state": "작성중",
+                "pulic": false
+            }
+        },
+        currentShow: 1,
+        quizData: [
+            {
+                "num": 1,
+                "type": "선택형",
+                "question": " ",
+                "media": {
+                    "type": "image",
+                    "url": "",
+                    "startTime": "",
+                    "endTime": "",
+                },
+                "choiceList": {
+                    "1": "답을 입력해 주세요",
+                    "2": "답을 입력해 주세요",
+                    "3": "",
+                    "4": ""
+                },
+                "answer": [],
+                "time": 0,
+                "useScore": true,
+                "rate": 0
+            }
+        ],
+    }
 
 }
 
-export default function quizInfoReducer(state = initialState, action) {
-    switch (action.type) {
-        case "SET_CURRENT_SHOW": //현재 조회중인 쇼 num
-            return {
-                ...state,
+
+const quizInfoReducer = handleActions({
+    [SET_CURRENT_SHOW]: (state, action) => {
+        return {
+            ...state,
+            quiz: {
+                ...state.quiz,
                 currentShow: action.payload
             }
-
-        case "SET_QUIZ_INFO": //쇼 정보 설정
-            return {
-                ...state,
+        }
+    },
+    [SET_QUIZ_INFO]: (state, action) => {
+        return {
+            ...state,
+            quiz: {
+                ...state.quiz,
                 quizInfo: action.payload
             }
+        }
+    },
+    [ADD_QUIZ]: (state, action) => {
+        return {
+            ...state,
+            quiz: {
+                ...state.quiz,
+                quizData: [
+                    ...state.quiz.quizData, {
+                        "num": state.quiz.quizData.length + 1,
+                        "type": "선택형",
+                        "question": " ",
+                        "media": {
+                            "type": "image",
+                            "url": "",
+                            "startTime": "",
+                            "endTime": "",
+                        },
+                        "choiceList": {
+                            "1": "답을 입력해 주세요",
+                            "2": "답을 입력해 주세요",
+                            "3": "",
+                            "4": ""
+                        },
+                        "answer": [],
+                        "time": 0,
+                        "useScore": true,
+                        "rate": 0
+                    }]
+            }
+        }
+    },
+    [DELETE_QUIZ]: (state, action) => {
+        // let index = state.quizData.findIndex(quiz => quiz.num === action.payload.quizNum);
+        // state.quizData.splice(index, 1);
 
-        case "ADD_QUIZ": //퀴즈 추가
-            return {
-                ...state,
-                quizData: [...state.quizData, {
-                    "num": state.quizData.length + 1,
-                    "type": "선택형",
-                    "question": " ",
-                    "media": {
-                        "type": "image",
-                        "url": "",
-                        "startTime": "",
-                        "endTime": "",
-                    },
-                    "choiceList": {
-                        "1": "답을 입력해 주세요",
-                        "2": "답을 입력해 주세요",
-                        "3": "",
-                        "4": ""
-                    },
-                    "answer": [],
-                    "time": 0,
-                    "useScore": true,
-                    "rate": 0
+        let index = state.quiz.quizData.findIndex(quiz => quiz.num === action.payload.quizNum);
+        state.quiz.quizData.splice(index, 1);
+        return {
+            ...state,
+            quiz: {
+                ...state.quiz,
+                quizData: [
+                    ...state.quiz.quizData
+                ]
+            }
+        }
+    },
+    [COPY_QUIZ]: (state, action) => {
+        console.log("COPY_QUIZ");
+        return {
+            ...state,
+            quiz: {
+                ...state.quiz,
+                quizData: [...state.quiz.quizData, {
+                    ...state.quiz.quizData[action.payload - 1],
+                    num: state.quiz.quizData.length + 1
                 }]
             }
-
-        case "DELETE_QUIZ": //선택된 퀴즈 삭제
-            //delete quiz where quiz.num = action.payload.quizNum
-            let index = state.quizData.findIndex(quiz => quiz.num === action.payload.quizNum);
-            state.quizData.splice(index, 1);
-            return {
-                ...state,
-                quizData: state.quizData
-            };
-
-        case "COPY_QUIZ": //선택된 퀴즈 복사
-            return {
-                ...state,
-                quizData: [...state.quizData, {
-                    ...state.quizData[action.payload.quizNum - 1],
-                    num: state.quizData.length + 1
-                }]
-            }
-
-        case "RENUMBER_QUIZ": //퀴즈 번호 재정렬
-            return {
-                ...state,
-                quizData: state.quizData.map((quiz, index) => {
-                    quiz.num = index + 1;
-                    return quiz;
-                })
-            }
-
-
-        case "MODIFY_QUIZ": //퀴즈 수정
-            console.log(action.payload.keytype + " " + action.payload.key + " " + action.payload.value);
-            let quizIndex = state.quizData.findIndex(quiz => quiz.num === state.currentShow);
-            switch (action.payload.keytype) {
-                case "base":
-                    state.quizData[quizIndex][action.payload.key] = action.payload.value;
-                    return {
-                        ...state,
-                        quizData: state.quizData
+        }
+    },
+    [RENUMBER_QUIZ]: (state, action) => {
+        return {
+            ...state,
+            quizData: state.quizData.map((quiz, index) => {
+                quiz.num = index + 1;
+                return quiz;
+            })
+        }
+    },
+    [MODIFY_QUIZ]: (state, action) => {
+        let quizIndex = state.quiz.quizData.findIndex(quiz => quiz.num === state.quiz.currentShow);
+        switch (action.payload.keytype)
+        {
+            case "base":
+                state.quiz.quizData[quizIndex][action.payload.key] = action.payload.value;
+                return {
+                    ...state,
+                    quiz: {
+                        ...state.quiz,
+                        quizData: [
+                            ...state.quiz.quizData
+                        ]
                     }
-                case "media":
-                    state.quizData[quizIndex].media[action.payload.key] = action.payload.value;
-                    return {
-                        ...state,
-                        quizData: state.quizData
+                }
+            case "media":
+                state.quiz.quizData[quizIndex].media[action.payload.key] = action.payload.value;
+                return {
+                    ...state,
+                    quiz: {
+                        ...state.quiz,
+                        quizData: state.quiz.quizData
                     }
-                case "choiceList":
-                    state.quizData[quizIndex].choiceList[action.payload.key] = action.payload.value;
-                    return {
-                        ...state,
-                        quizData: state.quizData
+                }
+            case "choiceList":
+                state.quiz.quizData[quizIndex].choiceList[action.payload.key] = action.payload.value;
+                return {
+                    ...state,
+                    quiz: {
+                        ...state.quiz,
+                        quizData: state.quiz.quizData
                     }
+                }
+        }
+    },
+    [MODIFY_QUIZ_ANSWER]: (state, action) => {
+        let quizIndex2 = state.quiz.quizData.findIndex(quiz => quiz.num === state.quiz.currentShow);
+        state.quiz.quizData[quizIndex2].answer = action.payload;
+        return {
+            ...state,
+            quiz: {
+                ...state.quiz,
+                quizData: state.quiz.quizData
             }
-        case "MODIFY_QUIZ_ANSWER": //퀴즈 정답 수정
-            let quizIndex2 = state.quizData.findIndex(quiz => quiz.num === state.currentShow);
-            state.quizData[quizIndex2].answer = action.payload;
-            return {
-                ...state,
-                quizData: state.quizData
-            }
-        default:
-            return state;
-    }
-}
+        }
+    },
+
+
+}, initialState);
+export default quizInfoReducer;

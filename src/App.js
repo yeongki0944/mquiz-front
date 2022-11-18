@@ -29,13 +29,8 @@ export default function App() {
                         <Route path="/QHost" component={QuizHostMain} exact/>
 
                         <Route path="/QHost/create" component={QuizHostCreate} exact/>
-
-
                         {/* 참가자 페이지 목록*/}
                         <Route path="/QClient" component={QuizClientMain} exact/>
-
-
-
 
                     </Switch>
                 </div>
