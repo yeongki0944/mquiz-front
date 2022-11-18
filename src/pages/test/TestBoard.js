@@ -7,6 +7,7 @@ export default function TestBoard(){
                 Qnum={1}
                 TotalQcnt={10}
                 timeprogress={30}
+                timeleft={30}
             />
         </>
     )
