@@ -121,10 +121,10 @@ export default function QuizHostMain(props) {
                     </Grid>
                 </Grid>
             </Grid>
-            {/*<QuizModal*/}
-            {/*open={modalOpen}*/}
-            {/*setOpen={setModalOpen}*/}
-            {/*/>*/}
+            <QuizModal
+            open={modalOpen}
+            setOpen={setModalOpen}
+            />
         </>
     );
 }

@@ -11,8 +11,9 @@ import TextField from '@mui/material/TextField';
 import MenuItem from "@mui/material/MenuItem";
 import Chip from "@mui/material/Chip";
 import {FormControlLabel, FormGroup, Switch} from "@mui/material";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {makeStyles} from "@material-ui/core/styles";
+import {R_makeQuizShow} from "../../redux/reducers/quizInfoReducer";
 
 const useStyles = makeStyles(()=>({
         imageStyle: {
@@ -118,22 +119,6 @@ export default function BasicModal(props) {
     const dispatch = useDispatch();
     const classes = useStyles();
 
-    const makeQuizInfo = (title, currency, tags, titleimgOrigin, titleimgThumb,
-                          createDate, lastModifyDate, state, isPublic) => {
-        dispatch({type:"MAKE_QUIZ_INFO", payload:{
-                title:title,
-                category:currency,
-                tags:tags,
-                titleimg_origin:titleimgOrigin,
-                titleimg_thumb:titleimgThumb,
-                createDate:createDate,
-                lastModifyDate:lastModifyDate,
-                state:state,
-                pulic:isPublic
-            }
-        });
-    }
-
     // Show 제목
     const [titleTextData, setTitleTextData] = useState('');
     // 카테고리
@@ -146,6 +131,9 @@ export default function BasicModal(props) {
     const [label, setLabel] = useState("공개");
     // 이미지 변경
     const [imageUrl, setImageUrl] = useState(imageItemData[0].img);
+
+    const [helperText, setHelperText] = useState('');
+
     // 모달창 닫기
     const handleClose = () => {
         setTitleTextData('');
@@ -155,6 +143,7 @@ export default function BasicModal(props) {
         setIsPublic(true);
         setLabel("공개");
         setImageUrl(imageItemData[0].img);
+        setHelperText('');
 
         props.setOpen(false)
     };
@@ -263,6 +252,7 @@ export default function BasicModal(props) {
                     variant="standard"
                     className={classes.textFieldStyle}
                     value={titleText}
+                    helperText={helperText}
                     onChange={
                         (event) => {
                             setTitleText(event.target.value);
@@ -420,23 +410,34 @@ export default function BasicModal(props) {
                     variant="contained"
                     onClick={
                         () => {
+                            if(titleTextData === ''){
+                                setHelperText("제목을 입력하세요!");
+                                return;
+                            }
+                            // Date 포맷
+                            let d = new Date();
+                            let TIME_ZONE = 3240 * 10000;
+                            let date = new Date(+d + TIME_ZONE).toISOString().split('T')[0];
+                            let time = d.toTimeString().split(' ')[0];
+                            let dateData = date + ' ' + time;
+
                             // 태그 데이터 key값 정리
                             let tagList = [];
                             for (let i = 0; i < chipData.length; i++) {
                                 tagList.push(chipData[i].label);
                             }
 
-                            makeQuizInfo(
-                                titleTextData,
-                                currency,
-                                chipData,
-                                imageUrl,
-                                imageUrl,
-                                new Date(),
-                                new Date(),
-                                "작성중",
-                                isPublic
-                            );
+                            dispatch(R_makeQuizShow({
+                                title:titleTextData,
+                                category:currency,
+                                tags:tagList,
+                                titleimg_origin:imageUrl,
+                                titleimg_thumb:imageUrl,
+                                createDate:dateData,
+                                lastModifyDate:dateData,
+                                state:"작성중",
+                                pulic:isPublic
+                            }));
 
                             handleClose();
                         }

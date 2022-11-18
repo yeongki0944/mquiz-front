@@ -1,5 +1,6 @@
 import {createAction, handleActions} from "redux-actions";
 
+const MAKE_QUIZ_SHOW = 'MAKE_QUIZ_SHOW';
 const SET_CURRENT_SHOW = 'SET_CURRENT_SHOW';
 const SET_QUIZ_INFO = 'SET_QUIZ_INFO';
 const ADD_QUIZ = 'ADD_QUIZ';
@@ -9,6 +10,7 @@ const RENUMBER_QUIZ = 'RENUMBER_QUIZ';
 const MODIFY_QUIZ = 'MODIFY_QUIZ';
 const MODIFY_QUIZ_ANSWER = 'MODIFY_QUIZ_ANSWER';
 
+export  const R_makeQuizShow = createAction(MAKE_QUIZ_SHOW);
 export const R_setCurrentShow = createAction(SET_CURRENT_SHOW);
 export const R_setQuizInfo = createAction(SET_QUIZ_INFO);
 export const R_addQuiz = createAction(ADD_QUIZ);
@@ -67,6 +69,15 @@ const initialState = {
 
 
 const quizInfoReducer = handleActions({
+    [MAKE_QUIZ_SHOW]:(state, action)=>{
+        return {
+            ...state,
+            quiz: {
+                ...state.quiz,
+                quizInfo:action.payload
+            }
+        }
+    },
     [SET_CURRENT_SHOW]: (state, action) => {
         return {
             ...state,
@@ -200,23 +211,5 @@ const quizInfoReducer = handleActions({
             }
         }
     },
-//     case "MAKE_QUIZ_INFO":
-// console.log(action.payload);
-// return{
-//     ...state,
-//     quizInfo: {
-//         ...state,
-//         title: action.payload.title,
-//         category:action.payload.category,
-//         tags:action.payload.tags,
-//         titleimg_origin:action.payload.titleimg_origin,
-//         titleimg_thumb:action.payload.titleimg_thumb,
-//         createDate:action.payload.createDate,
-//         lastModifyDate:action.payload.lastModifyDate,
-//         state:action.payload.state,
-//         pulic:action.payload.pulic
-//     }
-// }
-
 }, initialState);
 export default quizInfoReducer;
