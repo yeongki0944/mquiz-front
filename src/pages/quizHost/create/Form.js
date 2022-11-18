@@ -14,7 +14,7 @@ import Grid from "@mui/material/Grid";
 import {styled} from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import ImageBox from "../../components/deprecated/ImageBox";
+import ImageBox from "../../components/ImageBox";
 import {makeStyles} from "@material-ui/core/styles";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
@@ -22,8 +22,8 @@ import QSelect from "./QuizTypes/Select";
 import QOX from "./QuizTypes/OX";
 import QRep from "./QuizTypes/Write";
 import {R_modifyQuiz} from "../../redux/reducers/quizInfoReducer";
-import YoutubeBox from "../../components/deprecated/YoutubeBox";
-import AudioBox from "../../components/deprecated/AudioBox";
+import YoutubeBox from "../../components/YoutubeBox";
+import AudioBox from "../../components/AudioBox";
 
 const Item = styled(Paper)(({theme}) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
