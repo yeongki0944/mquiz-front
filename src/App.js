@@ -11,7 +11,7 @@ import QuizHostMain from "./pages/quizHost/main/Main";
 import QuizHostCreate from "./pages/quizHost/create/Panel";
 import QuizHostFind from "./pages/quizHost/find/Find"
 import QuizHostPlay from "./pages/quizHost/play/QuizPlay"
-import PlayBoard from "./pages/quizHost/play/PlayBoard";
+import TestBoard from "./pages/test/TestBoard"
 
 import QuizClientMain from "./pages/quizClient/main/main";
 
@@ -37,7 +37,7 @@ export default function App() {
 
                         <Route path="/QHost/quizplay" component={QuizHostPlay} exact/>
 
-                        <Route path="/QHost/playBoard" component={PlayBoard} exact/>
+                        <Route path="/Test" component={TestBoard} exact/>
 
                         {/* 참가자 페이지 목록*/}
                         <Route path="/QClient" component={QuizClientMain} exact/>
