@@ -201,7 +201,23 @@ const quizInfoReducer = handleActions({
             }
         }
     },
-
+//     case "MAKE_QUIZ_INFO":
+// console.log(action.payload);
+// return{
+//     ...state,
+//     quizInfo: {
+//         ...state,
+//         title: action.payload.title,
+//         category:action.payload.category,
+//         tags:action.payload.tags,
+//         titleimg_origin:action.payload.titleimg_origin,
+//         titleimg_thumb:action.payload.titleimg_thumb,
+//         createDate:action.payload.createDate,
+//         lastModifyDate:action.payload.lastModifyDate,
+//         state:action.payload.state,
+//         pulic:action.payload.pulic
+//     }
+// }
 
 }, initialState);
 export default quizInfoReducer;
