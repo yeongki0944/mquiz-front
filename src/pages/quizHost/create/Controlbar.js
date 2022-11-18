@@ -6,7 +6,6 @@ import {R_addQuiz, R_setCurrentShow} from "../../redux/reducers/quizInfoReducer"
 
 export default function Controllbar(props) {
     const dispatch = useDispatch();
-
     const {quiz} = useSelector(state => state.quiz)
 
 

@@ -31,6 +31,7 @@ export default function BasicGrid(props) {
             <Grid container spacing={3}>
                 <Grid item xs={12}>
                     <PinField/>
+                    중요도: {currentQuiz.rate}
                 </Grid>
                 <QuestionField/>
                 <Grid item xs={12}>
@@ -45,7 +46,6 @@ export default function BasicGrid(props) {
             <>
                 <Typography variant="h4" component="div" gutterBottom>
                     PIN : 123456
-                    currentpage: {quiz.currentShow}
                 </Typography>
             </>
         )
@@ -109,7 +109,7 @@ export default function BasicGrid(props) {
         return (
             <>
                 <TextField
-                    placeholder="답입력"></TextField>
+                    placeholder={currentQuiz.answer}></TextField>
             </>
         )
     }

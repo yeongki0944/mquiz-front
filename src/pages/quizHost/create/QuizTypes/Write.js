@@ -1,12 +1,10 @@
 import {Box, TextField} from "@mui/material";
 import * as React from "react";
 import {useDispatch} from "react-redux";
+import {R_modifyQuizAnswer} from "../../../redux/reducers/quizInfoReducer";
 
 export default function QRep() {
     const dispatch = useDispatch();
-    const modifyQuiz = (keytype, key, value) => {
-        dispatch({type: 'MODIFY_QUIZ', payload: {keytype, key, value}})
-    }
     return (
         <Box>
             <h3>정답</h3>
@@ -14,7 +12,10 @@ export default function QRep() {
                 id="qfield"
                 multiline
                 rows={4}
-                placeholder={"답을 입력해주세요."}
+                defaultValue={""}
+                onBlur={(e) => {
+                    dispatch(R_modifyQuizAnswer([e.target.value]));
+                }}
             />
         </Box>
     );

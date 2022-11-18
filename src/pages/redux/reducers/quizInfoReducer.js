@@ -158,6 +158,7 @@ const quizInfoReducer = handleActions({
         switch (action.payload.keytype)
         {
             case "base":
+                // console.log(action.payload);
                 state.quiz.quizData[quizIndex][action.payload.key] = action.payload.value;
                 return {
                     ...state,

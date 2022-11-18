@@ -22,6 +22,8 @@ import QSelect from "./QuizTypes/Select";
 import QOX from "./QuizTypes/OX";
 import QRep from "./QuizTypes/Write";
 import {R_modifyQuiz} from "../../redux/reducers/quizInfoReducer";
+import YoutubeBox from "../../components/YoutubeBox";
+import AudioBox from "../../components/AudioBox";
 
 const Item = styled(Paper)(({theme}) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -59,7 +61,7 @@ export default function Component() {
 
     //state
     const [answerList, setAnswerList] = useState([]);
-    const [types, setTypes] = React.useState(['선택형', 'OX형', '단답형']);
+    const [types, setTypes] = React.useState(['선택형', 'OX', '단답형']);
     const [times, setTimes] = React.useState([{value: 0, label: '0초'}, {value: 10, label: '10초'}, {
         value: 20,
         label: '20초'
@@ -72,7 +74,6 @@ export default function Component() {
     return (
         <div className={classes.content}>
             <TypeButton/>
-            {answerList}
             <hr/>
             <Question/>
             <hr/>
@@ -146,7 +147,7 @@ export default function Component() {
                     max={3}
                     value={currentQuiz.rate}
                     onChange={(event, newValue) => {
-                        R_modifyQuiz({keytype:"base", key:"rate", value:newValue});
+                        setQuiz("base", "rate", newValue);
                     }}
                 />
             </Box>
@@ -174,55 +175,13 @@ export default function Component() {
                         }} label="Audio"/>
                     </RadioGroup>
                 </FormControl>
-                <MediaTypeBox/>
+                {currentQuiz.media.type === 'Image' && <ImageBox/>}
+                {currentQuiz.media.type === 'Youtube' && <YoutubeBox/>}
+                {currentQuiz.media.type === 'Audio' && <AudioBox/>}
             </Box>
         );
 
     }
-
-    function MediaTypeBox() {
-        // console.log(currentQuiz);
-        // switch(currentQuiz.media.type) {
-        //     case 'Image':
-        //         return <ImageBox/>;
-        //     case 'Youtube':
-        //         return <YoutubeBox/>;
-        //     case 'Audio':
-        //         return <AudioBox/>;
-        //     default:
-        //         return <ImageBox/>;
-        // }
-    }
-
-    function YoutubeBox() {
-        return (
-            <Box>
-                <TextField
-                    placeholder={"유튜브 링크를 입력해주세요."}
-                    value={currentQuiz[0].media.url}
-                    onChange={(event) => {
-                        setQuiz("media", "url", event.target.value);
-                    }}
-                />
-                <TextField/>~<TextField/>
-            </Box>
-        );
-    }
-
-    function AudioBox() {
-        return (
-            <Box>
-                <TextField
-                    placeholder={"오디오 링크를 입력해주세요."}
-                    value={currentQuiz[0].media.url}
-                    onChange={(event) => {
-                        setQuiz("media", "url", event.target.value);
-                    }}
-                />
-            </Box>
-        );
-    }
-
 
     function Question() {
         return (
@@ -246,13 +205,11 @@ export default function Component() {
         switch (currentQuiz.type) {
             case '선택형':
                 return <QSelect/>;
-            case 'OX형':
+            case 'OX':
                 return <QOX/>;
             case '단답형':
                 return <QRep/>;
         }
-
-
     }
 }
 
