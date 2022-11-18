@@ -117,7 +117,7 @@ const style = {
         <CardMedia
           component="img"
           height="150"
-          image="/img/logo192.png"
+          image="src/pages/quizClient/image/logo192.png"
           alt="green iguana"
         />
     );
