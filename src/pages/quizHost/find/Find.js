@@ -19,6 +19,7 @@ export default function Find(props) {
     // 페이징
     const [pageCount, setPageCount] = useState(0);
     const [pageLimit, setPageLimit] = useState(25);
+    const offset = pageCount * pageLimit;
 
     // 테스트
     const [Data, setData] = useState([]);
@@ -132,7 +133,10 @@ export default function Find(props) {
 
     function QuizSearchResultBox() {
 
-        const ResultBox = Data.map(
+
+
+
+        const ResultBox = Data.slice(offset, offset + pageLimit).map(
             (item) => (
                 <Box key={item._id} sx={{margin:1,display:"inline-block"}}>
                     <Card sx={{ maxWidth: 345}} >
@@ -174,7 +178,7 @@ export default function Find(props) {
                     rowsPerPage={pageLimit}
                     onRowsPerPageChange={
                         (event) => {
-                            setPageLimit(parseInt(event.target.value, 20));
+                            setPageLimit(parseInt(event.target.value, 10));
                             setPageCount(0);
                         }
                     }
