@@ -9,20 +9,19 @@ const RENUMBER_QUIZ = 'RENUMBER_QUIZ';
 const MODIFY_QUIZ = 'MODIFY_QUIZ';
 const MODIFY_QUIZ_ANSWER = 'MODIFY_QUIZ_ANSWER';
 
-export const setCurrentShow = createAction(SET_CURRENT_SHOW);
-export const setQuizInfo = createAction(SET_QUIZ_INFO);
-export const addQuiz = createAction(ADD_QUIZ);
-export const deleteQuiz = createAction(DELETE_QUIZ);
-export const copyQuiz = createAction(COPY_QUIZ);
-export const renumberQuiz = createAction(RENUMBER_QUIZ);
-export const modifyQuiz = createAction(MODIFY_QUIZ);
-export const modifyQuizAnswer = createAction(MODIFY_QUIZ_ANSWER);
+export const R_setCurrentShow = createAction(SET_CURRENT_SHOW);
+export const R_setQuizInfo = createAction(SET_QUIZ_INFO);
+export const R_addQuiz = createAction(ADD_QUIZ);
+export const R_deleteQuiz = createAction(DELETE_QUIZ);
+export const R_copyQuiz = createAction(COPY_QUIZ);
+export const R_renumberQuiz = createAction(RENUMBER_QUIZ);
+export const R_modifyQuiz = createAction(MODIFY_QUIZ);
+export const R_modifyQuizAnswer = createAction(MODIFY_QUIZ_ANSWER);
 
 const initialState = {
     quiz: {
         _id: "637440e817bb6d42edbf3927",
         quizInfo: {
-            "showInfo": {
                 "email": "dudrl0944@gmail.com",
                 "title": "쇼 제목",
                 "category": "일단",
@@ -37,7 +36,6 @@ const initialState = {
                 "lastModifyDate": "2022-11-11T00:00:00.000+00:00",
                 "state": "작성중",
                 "pulic": false
-            }
         },
         currentShow: 1,
         quizData: [

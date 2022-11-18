@@ -72,13 +72,13 @@ export default function Showcard() {
                             {item.quizInfo.state === "작성중" ?
                                 <Typography variant="subtitle1" component="div">
                                     <Button variant="contained" onClick={()=>{
-                                       // toEdit(item.id);
+                                       toEdit(item.id);
                                     }}><EditIcon/></Button>
                                 </Typography>
                                 :
                                 <Typography variant="subtitle1" component="div">
                                     <Button variant="contained" onClick={()=>{
-                                        // toEdit(item.id);
+                                        toEdit(item.id);
                                     }}><EditIcon/></Button>
                                     <Button variant="outlined" size="small"><PlayArrow/></Button>
                                 </Typography>

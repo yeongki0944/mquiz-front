@@ -2,7 +2,7 @@ import {createAction,handleActions} from "redux-actions";
 
 const SET_QUIZ_LIST = "SET_QUIZ_LIST";
 
-export const setQuizList = createAction(SET_QUIZ_LIST);
+export const R_setQuizList = createAction(SET_QUIZ_LIST);
 
 const initialState = {
     quizList: []

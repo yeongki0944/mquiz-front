@@ -1,4 +1,4 @@
-import {handleActions} from "redux-actions";
+import {createAction, handleActions} from "redux-actions";
 
 const initialState = {
     mongodbUrl: {
@@ -9,5 +9,6 @@ const initialState = {
 }
 
 export const mongodbReducer = handleActions({
-}, initialState)
+
+}, initialState);
 

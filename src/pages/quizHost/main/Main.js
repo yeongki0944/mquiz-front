@@ -9,7 +9,7 @@ import axios from "axios";
 import QuizModal from '../create/Quiz_Make_modal';
 import {useDispatch, useSelector} from "react-redux";
 import CustomAxios from "../../function/CustomAxios";
-import {setQuizList} from "../../redux/reducers/quizListReducer";
+import {R_setQuizList} from "../../redux/reducers/quizListReducer";
 
 export default function QuizHostMain(props) {
     const dispatch = useDispatch();
@@ -18,21 +18,21 @@ export default function QuizHostMain(props) {
 
     const {mongodbUrl} = useSelector(state => state.mongodbUrl)
 
-    const setQuizList_ = async () => {
+    const setQuizList = async () => {
 
         await CustomAxios.post(mongodbUrl.getShowList, {
             email: "dudrl0944@gmail.com",
             id: "637440e817bb6d42edbf3927"
         }).then((res) => {
             console.log(res.data)
-            dispatch(setQuizList(res.data))
+            dispatch(R_setQuizList(res.data))
         }).catch((err) => {
             console.log(err)
         })
     }
 
     useEffect(() => {
-        setQuizList_();;
+        setQuizList();;
     }, []);
 
     return (

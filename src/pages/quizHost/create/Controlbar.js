@@ -2,7 +2,7 @@ import {Button} from "@mui/material";
 import * as React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import axios from "axios";
-import {addQuiz, setCurrentShow} from "../../redux/reducers/quizInfoReducer";
+import {R_addQuiz, R_setCurrentShow} from "../../redux/reducers/quizInfoReducer";
 
 export default function Controllbar(props) {
     const dispatch = useDispatch();
@@ -12,7 +12,7 @@ export default function Controllbar(props) {
 
     return (
         <>
-            <Button variant="contained" onClick={()=>{dispatch(addQuiz());dispatch(setCurrentShow(quiz.quizData.length))}}>추가</Button>
+            <Button variant="contained" onClick={()=>{dispatch(R_addQuiz());dispatch(R_setCurrentShow(quiz.quizData.length))}}>추가</Button>
             <Button onClick={() => {
                 save();
             }}>

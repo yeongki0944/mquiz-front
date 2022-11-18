@@ -7,7 +7,7 @@ import * as React from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {copyQuiz, deleteQuiz, setCurrentShow} from "../../redux/reducers/quizInfoReducer";
+import {R_copyQuiz, R_deleteQuiz, R_setCurrentShow} from "../../redux/reducers/quizInfoReducer";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -75,7 +75,7 @@ export default function List() {
                         <Grid item xs={2}>
                             {item.num}P
                         </Grid>
-                        <Paper elevation={2} className={classes.item_card} key={item.num} id={item.num} onClick={()=>dispatch(setCurrentShow(item.num))}>
+                        <Paper elevation={2} className={classes.item_card} key={item.num} id={item.num} onClick={()=>dispatch(R_setCurrentShow(item.num))}>
                             <Grid item xs={10} >
                                 <Grid>
                                     Status
@@ -89,7 +89,7 @@ export default function List() {
                                     <Button
                                         onClick={
                                             () => {
-                                                dispatch(copyQuiz(item.num));
+                                                dispatch(R_copyQuiz(item.num));
                                             }
                                         }
                                     >
@@ -100,7 +100,7 @@ export default function List() {
                                     <Button
                                         onClick={
                                             () => {
-                                                dispatch(deleteQuiz(item.num));
+                                                dispatch(R_deleteQuiz(item.num));
                                             }
                                         }
                                     >

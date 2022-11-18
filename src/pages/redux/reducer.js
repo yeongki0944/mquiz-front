@@ -7,6 +7,5 @@ export default combineReducers({
     quiz: quizInfoReducer,
     quizList: quizListReducer,
     mongodbUrl : mongodbReducer,
-
 })
 

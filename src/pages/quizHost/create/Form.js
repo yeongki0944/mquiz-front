@@ -21,7 +21,7 @@ import {useEffect, useState} from "react";
 import QSelect from "./QuizTypes/Select";
 import QOX from "./QuizTypes/OX";
 import QRep from "./QuizTypes/Write";
-import {modifyQuiz} from "../../redux/reducers/quizInfoReducer";
+import {R_modifyQuiz} from "../../redux/reducers/quizInfoReducer";
 
 const Item = styled(Paper)(({theme}) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -66,7 +66,7 @@ export default function Component() {
     }, {value: 30, label: '30초'}, {value: 40, label: '40초'}, {value: 50, label: '50초'}, {value: 60, label: '60초'}]);
 
     const setQuiz= (keytype,key,value)=>{
-        dispatch(modifyQuiz({keytype:keytype,key:key,value:value}));
+        dispatch(R_modifyQuiz({keytype:keytype,key:key,value:value}));
     }
 
     return (
@@ -146,7 +146,7 @@ export default function Component() {
                     max={3}
                     value={currentQuiz.rate}
                     onChange={(event, newValue) => {
-                        modifyQuiz({keytype:"base", key:"rate", value:newValue});
+                        R_modifyQuiz({keytype:"base", key:"rate", value:newValue});
                     }}
                 />
             </Box>
