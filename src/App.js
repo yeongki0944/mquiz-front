@@ -13,6 +13,7 @@ import QuizHostFind from "./pages/quizHost/find/Find"
 import QuizHostReady from "./pages/quizHost/ready/HostReady"
 import QuizHostPlay from "./pages/quizHost/play/QuizPlay"
 import TestBoard from "./pages/test/TestBoard"
+import ComponentTest from "./pages/test/ComponentTest"
 
 import QuizClientMain from "./pages/quizClient/main/main";
 import quizClientCreateNicName from "./pages/quizClient/main/CreateNicName";
@@ -46,6 +47,8 @@ export default function App() {
                         <Route path="/QHost/quizplay" component={QuizHostPlay} exact/>
 
                         <Route path="/Test" component={TestBoard} exact/>
+
+                        <Route path="/ComponentTest" component={ComponentTest} exact/>
 
                         {/* 참가자 페이지 목록*/}
                         <Route path="/QClient" component={QuizClientMain} exact/>
