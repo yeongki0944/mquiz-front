@@ -9,7 +9,7 @@ import {
     TextField
 } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import ImageBox from "../../../components/deprecated/ImageBox";
+import ImageBox from "../../../components/ImageBox";
 import * as React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
