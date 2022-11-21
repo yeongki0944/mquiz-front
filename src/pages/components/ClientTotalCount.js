@@ -5,6 +5,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import {styled} from "@mui/material/styles";
 import {createSvgIcon} from "@mui/material/utils";
+import {useState} from "react";
 
 // Grid Item 설정
 const Item = styled(Paper)(({ theme }) => ({
@@ -22,6 +23,7 @@ const HomeIcon = createSvgIcon(
 );
 
 export const ClientTotalCount = (props) => {
+    const [total, settotal] = useState();
     return (
         <>
         <Grid item xs={12} md={12}>

@@ -4,6 +4,7 @@ import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import {styled} from "@mui/material/styles";
+import { useState } from 'react';
 
 // Grid Item 설정
 const Item = styled(Paper)(({ theme }) => ({
@@ -14,7 +15,8 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
 }));
 
-export const PinNumInput = (props) => {
+export const PinNum = (props) => {
+
     return (
         <>
             <Grid item xs={3} md={12}>

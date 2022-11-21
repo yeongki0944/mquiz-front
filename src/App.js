@@ -16,7 +16,7 @@ import TestBoard from "./pages/test/TestBoard"
 import ComponentTest from "./pages/test/ComponentTest"
 
 import QuizClientMain from "./pages/quizClient/main/main";
-import quizClientCreateNicName from "./pages/quizClient/main/CreateNicName";
+import QuizClientCreateNickName from "./pages/quizClient/main/CreateNickName";
 import QClientReady from "./pages/quizClient/ready/Ready";
 import QClientWait from "./pages/quizClient/wait/Wait";
 import QClientPlay from "./pages/quizClient/play/Play";
@@ -53,7 +53,7 @@ export default function App() {
                         {/* 참가자 페이지 목록*/}
                         <Route path="/QClient" component={QuizClientMain} exact/>
 
-                        <Route path="/QClient/createNicName" component={quizClientCreateNicName} exact/>
+                        <Route path="/QClient/createNickName" component={QuizClientCreateNickName} exact/>
 
                         <Route path="/QClient/ready" component={QClientReady} exact/>
 

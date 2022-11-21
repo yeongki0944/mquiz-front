@@ -1,5 +1,5 @@
-import {LinearProgress} from "@mui/material";
-import * as React from "react";
+
+import * as React from 'react';
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
@@ -8,16 +8,16 @@ import Typography from "@mui/material/Typography";
 import CardMedia from "@mui/material/CardMedia";
 
 const User = ({userData}) => {
-    let nicName = null;
+    let nickName = null;
     for(let i = 0; i<userData.length;i++){
-        nicName = userData.nicName[i];
-        console.log(userData.nicName);
+        nickName = userData.nickName[i];
+        console.log(userData.nickName);
     }
 
     return (
         <tr>
             {/* <td>핀번호 : {userData.pinNum}</td> */}
-            <td>닉네임 : {userData.nicName}</td>
+            <td>닉네임 : {userData.nickName}</td>
         </tr>
 
     )
@@ -25,13 +25,9 @@ const User = ({userData}) => {
 
 const UserList = (props) => {
     const users = [
-        {pinNum : '123123', nicName : '갑시다'},
-        {pinNum : '123123', nicName : '갑시다2'},
-        {pinNum : '123123', nicName : '갑시다3'},
-        {pinNum : '123123', nicName : '갑시다4'},
-        {pinNum : '123123', nicName : '갑시다5'}
+        {pinNum : '123123', nickName : '갑시다'},
+        {pinNum : '123456', nickName : 'gogo'},
     ]
-
 
     return (
         <table>
@@ -40,7 +36,7 @@ const UserList = (props) => {
             </tr>
             </thead>
             <tbody>
-            {users.map(user => <User key={user.nicName} userData={user}/>)}
+            {users.map(user => <User key={user.nickName} userData={user}/>)}
             </tbody>
         </table>
     )
@@ -103,7 +99,7 @@ export function AlterImg() {
         <CardMedia
             component="img"
             height="150"
-            image="src/pages/quizClient/image/logo192.png"
+            image="/img/logo192.png"
             alt="green iguana"
         />
     );

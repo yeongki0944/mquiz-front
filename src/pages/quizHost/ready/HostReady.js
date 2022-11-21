@@ -11,31 +11,32 @@ import Slider from '@mui/material/Slider';
 import styles from './layoutstyle.css'
 import Modal from "@mui/material/Modal";
 import CardMedia from "@mui/material/CardMedia";
-import {PinNumInput} from "../../components/PinNumInput";
+import {PinNum} from "../../components/PinNum";
 import {ClientTotalCount} from "../../components/ClientTotalCount";
 import {ClientJoinList} from "../../components/ClientJoinList";
+import {VolumeControlButton} from "../../components/VolumeControlButton";
 import {BasicModal} from "../../components/ClientJoinList";
 
 // import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
 
-export function ColorSlider() {
-  return (
-    <Box sx={{ width: 80 }}>
-      <Slider
-        aria-label="Temperature"
-        defaultValue={30}
-        color="secondary"
-      />
-    </Box>
-
-  );
-}
+// export function ColorSlider() {
+//   return (
+//     <Box sx={{ width: 80 }}>
+//       <Slider
+//         aria-label="Temperature"
+//         defaultValue={30}
+//         color="secondary"
+//       />
+//     </Box>
+//
+//   );
+// }
 
 // 아이콘
-const HomeIcon = createSvgIcon(
-    <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />,
-    'Home',
-);
+// const HomeIcon = createSvgIcon(
+//     <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />,
+//     'Home',
+// );
 
 // Grid Item 설정
 const Item = styled(Paper)(({ theme }) => ({
@@ -46,51 +47,13 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-// const User = ({userData}) => {
-//     let nicName = null;
-//     for(let i = 0; i<userData.length;i++){
-//         nicName = userData.nicName[i];
-//         console.log(userData.nicName);
-//     }
-//
-//   return (
-//       <tr>
-//           {/* <td>핀번호 : {userData.pinNum}</td> */}
-//           <td>닉네임 : {userData.nicName}</td>
-//       </tr>
-//
-//   )
-// }
-//
-// const UserList = (props) => {
-//   const users = [
-//     {pinNum : '123123', nicName : '갑시다'},
-//     {pinNum : '123123', nicName : '갑시다2'},
-//     {pinNum : '123123', nicName : '갑시다3'},
-//     {pinNum : '123123', nicName : '갑시다4'},
-//     {pinNum : '123123', nicName : '갑시다5'}
-//   ]
-//
-//
-//   return (
-//     <table>
-//         <thead>
-//             <tr>
-//             </tr>
-//         </thead>
-//         <tbody>
-//             {users.map(user => <User key={user.nicName} userData={user}/>)}
-//         </tbody>
-//     </table>
-//   )
-// }
-
 export default function HostReady(props) {
     return (
         <>
         <div className="clientLayout">
         <div className="sliderbar">
-        <ColorSlider></ColorSlider><HomeIcon />
+        {/*<ColorSlider></ColorSlider><HomeIcon />*/}
+            <VolumeControlButton/>
         </div>
 
         <Typography align='center' id="modal-modal-title" variant="h6" component="h2" margin = "70px">
@@ -99,29 +62,20 @@ export default function HostReady(props) {
 
         <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={4}>
-        <Grid item xs={12} md={6}>
-          <Item><Button variant="contained">QR code</Button></Item>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <Item><Button variant="contained">URL copy</Button></Item>
+
+        <Grid item xs={6} md={6}>
+            <Typography variant="h5" component="div" align='center' padding='20'>
+          <Button variant="contained">QR code</Button>
+            </Typography>
         </Grid>
 
-        {/*<Grid item xs={3} md={12}>*/}
-        {/*  <Item>*/}
-        {/*      <Typography align='center' id="modal-modal-title" variant="h6" component="h2">*/}
-        {/*          <b>PIN : </b>*/}
-        {/*      </Typography>*/}
-        {/*  </Item>*/}
-        {/*</Grid>*/}
-            <PinNumInput></PinNumInput>
+        <Grid item xs={6} md={6}>
+            <Typography variant="h5" component="div" align='center' padding='20'>
+            <Button variant="contained">URL copy</Button>
+            </Typography>
+        </Grid>
 
-        {/*<Grid item xs={12} md={12}>*/}
-        {/*  <Item>*/}
-        {/*  <Typography align='center' id="modal-modal-title" variant="h6" component="h2">*/}
-        {/*  <HomeIcon /> <b>총 참여자 수 X 명</b>*/}
-        {/*</Typography>*/}
-        {/*</Item>*/}
-        {/*</Grid>*/}
+            <PinNum></PinNum>
             <ClientTotalCount></ClientTotalCount>
 
       </Grid>
@@ -138,10 +92,6 @@ export default function HostReady(props) {
         },
       }}
     >
-
-      {/*<Paper>*/}
-      {/*  <BasicModal></BasicModal>*/}
-      {/*</Paper>*/}
           <ClientJoinList></ClientJoinList>
     </Box>
 
