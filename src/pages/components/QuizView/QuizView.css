@@ -1,0 +1,54 @@
+div{
+    /*border: 1px solid grey;*/
+}
+#content{
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+#section1{
+    border: 1px solid grey;
+    width:100%;
+    height: 55vh;
+    display: block;
+    float: left;
+}
+#section2{
+    border: 1px solid grey;
+    width:100%;
+    height: 45vh;
+    display: block;
+    float: left;
+}
+@media screen and (min-width: 100px) {
+
+    #QuestionArea{
+        width:100%;
+        height: 25vh;
+        display: block;
+        float: left;
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+    }
+
+}
+
+@media screen and (min-width: 1000px) {
+
+    #QuestionArea{
+        width:50%;
+        height: 25vh;
+        display: block;
+        float: left;
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+    }
+}

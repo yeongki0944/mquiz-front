@@ -1,46 +1,40 @@
-import * as React from 'react';
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
 import {
+    R_addQuiz,
+    R_copyQuiz,
+    R_deleteQuiz,
+    R_modifyQuiz,
+    R_modifyQuizAnswer,
+    R_setCurrentShow
+} from "../../redux/reducers/quizInfoReducer";
+import {
+    BottomNavigation,
+    BottomNavigationAction,
     Box,
     Button,
     Card,
-    CardContent, Checkbox,
-    FormControl,
-    FormControlLabel,
-    FormLabel, Radio,
-    RadioGroup, Rating, Switch,
-    TextField, ToggleButtonGroup
+    CardContent, Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, Radio, RadioGroup, Rating,
+    Switch,
+    TextField
 } from "@mui/material";
-import Grid from "@mui/material/Grid";
-import {styled} from "@mui/material/styles";
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import ImageBox from "../../components/Inputs/ImageBox";
+import FileCopyIcon from "@material-ui/icons/FileCopy";
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
+import * as React from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
-import QSelect from "./QuizTypes/Select";
-import QOX from "./QuizTypes/OX";
-import QRep from "./QuizTypes/Write";
-import {R_modifyQuiz} from "../../redux/reducers/quizInfoReducer";
-import YoutubeBox from "../../components/Inputs/YoutubeBox";
-import AudioBox from "../../components/Inputs/AudioBox";
+import ImageBox from "../Inputs/ImageBox";
+import YoutubeBox from "../Inputs/YoutubeBox";
+import AudioBox from "../Inputs/AudioBox";
+import {styled} from "@mui/material/styles";
+import {Type_Reply} from "./QuizFormTypes/Type_Reply";
+import {Type_OX} from "./QuizFormTypes/Type_OX";
+import {Type_Select} from "./QuizFormTypes/Type_Select";
 
-const Item = styled(Paper)(({theme}) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-}));
 
-const Img = styled('img')({
-    margin: 'auto',
-    display: 'block',
-    maxWidth: '80%',
-    maxHeight: '80%',
-});
 
-const useStyles = makeStyles((theme) => ({
+const FormPanelStyles = makeStyles((theme) => ({
     content: {
         flexGrow: 1,
         height: '90vh',
@@ -50,51 +44,46 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+const Img = styled('img')({
+    margin: 'auto',
+    display: 'block',
+    maxWidth: '80%',
+    maxHeight: '80%',
+});
 
-export default function Component() {
+
+export const FormPanel = (props) => {
     const dispatch = useDispatch();
-    const classes = useStyles();
+    const classes = FormPanelStyles();
+    const currentQuiz = props.currentQuiz;
 
-    const {quiz} = useSelector(state => state.quiz);
-    const currentQuiz = quiz.quizData.find(item => item.num === quiz.currentShow);
-
-
-    //state
-    const [answerList, setAnswerList] = useState([]);
-    const [types, setTypes] = React.useState(['선택형', 'OX', '단답형']);
-    const [times, setTimes] = React.useState([{value: 0, label: '0초'}, {value: 10, label: '10초'}, {
-        value: 20,
-        label: '20초'
-    }, {value: 30, label: '30초'}, {value: 40, label: '40초'}, {value: 50, label: '50초'}, {value: 60, label: '60초'}]);
-
-    const setQuiz= (keytype,key,value)=>{
-        dispatch(R_modifyQuiz({keytype:keytype,key:key,value:value}));
+    const setQuiz = (keytype, key, value) => {
+        dispatch(R_modifyQuiz({keytype: keytype, key: key, value: value}));
     }
 
-    return (
-        <div className={classes.content}>
-            <TypeButton/>
-            <hr/>
-            <Question/>
-            <hr/>
-            <MediaBox/>
-            <hr/>
-            <FormType/>
-            <hr/>
-            <Options/>
-        </div>
-    );
+    const TypeButton = () => {
+        const types = ['선택형', 'OX', '단답형'];
 
-    function TypeButton() {
         return (
             <Box>
                 <Grid container spacing={1}>
                     {types.map((type) => (
                         <Button key={type}
-                            onClick={() => {
-                                setQuiz('base','type',type);
-                                setQuiz('base','answer','');
-                            }}
+                                onClick={() => {
+                                    setQuiz('base', 'type', type);
+                                    setQuiz('base', 'answer', []);
+                                    switch(type){
+                                        case '선택형':
+                                            setQuiz('base', 'choiceList', {1: '', 2: '', 3: '', 4: ''});
+                                            break;
+                                        case 'OX':
+                                            setQuiz('base', 'choiceList', {1: 'O', 2: '', 3: '', 4: ''});
+                                            break;
+                                        case '단답형':
+                                            setQuiz('base', '', {1: '', 2: '', 3: '', 4: ''});
+                                            break;
+                                    }
+                                }}
                         >
                             <Card>
                                 <CardContent>
@@ -107,10 +96,32 @@ export default function Component() {
                     ))}
                 </Grid>
             </Box>
-        );
+        )
     }
 
-    function Options() {
+    const handleChangeText = (event) => {
+        const {name, value} = event.target;
+        setQuiz("base", "question", value);
+    };
+
+    const Question = () => {
+        return (
+            <Box>
+                <h3>Question</h3>
+                <TextField
+                    multiline
+                    rows={4}
+                    placeholder={"질문을 입력해주세요."}
+                    variant="outlined"
+                    defaultValue={currentQuiz.question}
+                    onBlur={handleChangeText}
+                    name={"Question"}
+                />
+            </Box>
+        )
+    }
+    const Options = () => {
+        const times = [{value: 0, label: '0초'}, {value: 10, label: '10초'}, {value: 20, label: '20초'}, {value: 30, label: '30초'}, {value: 40, label: '40초'}, {value: 50, label: '50초'}, {value: 60, label: '60초'}];
         return (
             <Box>
                 <h3>Options</h3>
@@ -154,7 +165,7 @@ export default function Component() {
         );
     }
 
-    function MediaBox() {
+    const MediaBox = () => {
         return (
             <Box>
                 <FormControl>
@@ -183,33 +194,30 @@ export default function Component() {
 
     }
 
-    function Question() {
-        return (
-            <Box>
-                <h3>Question</h3>
-                <TextField
-                    id="textfield_test"
-                    multiline
-                    rows={4}
-                    placeholder={"질문을 입력해주세요."}
-                    onBlur={(event) => {
-                        setQuiz("base", "question", event.target.value);
-                    }}
-                />
-            </Box>
-        );
-    }
 
-
-    function FormType() {
+    const FormType = () => {
         switch (currentQuiz.type) {
             case '선택형':
-                return <QSelect/>;
+                return <Type_Select/>;
             case 'OX':
-                return <QOX/>;
+                return <Type_OX/>;
             case '단답형':
-                return <QRep/>;
+                return <Type_Reply/>;
         }
     }
+
+    return (
+        <div className={classes.content}>
+            <TypeButton/>
+            <hr/>
+            <Question/>
+            <hr/>
+            <MediaBox/>
+            <hr/>
+            <FormType/>
+            <hr/>
+            <Options/>
+        </div>
+    );
 }
 

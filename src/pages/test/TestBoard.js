@@ -1,5 +1,4 @@
-import {Gauge} from "../components/Gauge";
-import {ControlPanel, FormPanel, ListPanel} from "../components/QuizCreate";
+import {Gauge} from "../components/QuizView/Gauge";
 import {useDispatch, useSelector} from "react-redux";
 import {makeStyles} from "@material-ui/core/styles";
 import Grid from "@mui/material/Grid";
@@ -10,7 +9,11 @@ import {R_setQuizList} from "../redux/reducers/quizListReducer";
 import {useEffect, useState} from "react";
 import QuizModal from "../quizHost/create/Quiz_Make_modal";
 import HostProfile from "../components/HostProfile";
-
+import SockJsClient from "react-stomp";
+import {ListPanel} from "../components/QuizCreate/ListPanel";
+import {QuizView} from "../components/QuizView/QuizView";
+import {FormPanel} from "../components/QuizCreate/FormPanel";
+import {ControlPanel} from "../components/QuizCreate/ControlPanel";
 
 const useStyles = makeStyles((theme) => ({
     content: {
@@ -50,22 +53,26 @@ export default function TestBoard() {
         })
     }
     useEffect(() => {
-        setQuizList();;
+        setQuizList();
     }, []);
-    return (
-        <>
-            <div className={classes.content}>
-                <Grid container spacing={3} className={classes.container}>
-                    <Grid item xs={12} md={6} className={classes.components}>
-                        <HostProfile/>
-                        <QuizListHostMain
-                            setModalOpen={setModalOpen}
-                            quizList={quizList}
-                        />
-                    </Grid>
-                </Grid>
-            </div>
-        </>
+    return(
+        <QuizView currentQuiz={currentQuiz}/>
+        // <div className={classes.content}>
+        //     <Grid container spacing={3} className={classes.container}>
+        //         <Grid item xs={2} className={classes.components}>
+        //             <ListPanel quiz={quiz}/>
+        //         </Grid>
+        //         <Grid item xs={7} className={classes.components}>
+        //             <QuizView currentQuiz={currentQuiz}/>
+        //         </Grid>
+        //         <Grid item xs={3} className={classes.components}>
+        //             <FormPanel currentQuiz={currentQuiz}/>
+        //         </Grid>
+        //         <Grid item xs={12} className={classes.components}>
+        //             <ControlPanel quiz={quiz}/>
+        //         </Grid>
+        //     </Grid>
+        // </div>
     )
 }
 
@@ -90,5 +97,16 @@ export default function TestBoard() {
 // </div>
 
 /**
- *
+ * 퀴즈 목록 컴포넌트
  */
+// <div className={classes.content}>
+//     <Grid container spacing={3} className={classes.container}>
+//         <Grid item xs={12} md={6} className={classes.components}>
+//             <HostProfile/>
+//             <QuizListHostMain
+//                 setModalOpen={setModalOpen}
+//                 quizList={quizList}
+//             />
+//         </Grid>
+//     </Grid>
+// </div>

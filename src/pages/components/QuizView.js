@@ -7,31 +7,18 @@ import Typography from "@mui/material/Typography";
 import {Button, Card, CardActions, CardContent, TextField} from "@mui/material";
 import {useEffect} from "react";
 import {useSelector} from "react-redux";
+import {Type_Select} from "./QuizView/QuizViewTypes/Type_Select";
+import {Type_OX} from "./QuizView/QuizViewTypes/Type_OX";
+import {Type_Reply} from "./QuizView/QuizViewTypes/Type_Reply";
 
-const Item = styled(Paper)(({theme}) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-}));
 
 export default function QuizView(props) {
     const quiz = props.quiz;
     const currentQuiz =props.currentQuiz;
 
-
-    useEffect(() => {
-    });
-
-
     return (
         <Box sx={{flexGrow: 1}}>
             <Grid container spacing={3}>
-                <Grid item xs={12}>
-                    <PinField/>
-                    중요도: {currentQuiz.rate}
-                </Grid>
                 <QuestionField/>
                 <Grid item xs={12}>
                     <AnswerSheet/>
@@ -39,16 +26,6 @@ export default function QuizView(props) {
             </Grid>
         </Box>
     );
-
-    function PinField() {
-        return (
-            <>
-                <Typography variant="h4" component="div" gutterBottom>
-                    PIN : 123456
-                </Typography>
-            </>
-        )
-    }
 
     function QuestionField() {
         return (
@@ -80,59 +57,17 @@ export default function QuizView(props) {
         // console.log(currentQuiz.type);
         switch (currentQuiz.type) {
             case "선택형":
-                return (<선택형/>);
+                return (<Type_Select/>);
                 break;
             case "OX":
-                return (<OX/>);
+                return (<Type_OX/>);
                 break;
             case "단답형":
-                return (<단답형/>);
+                return (<Type_Reply/>);
                 break;
         }
     }
 
-    function OX() {
-        return (
-            <Grid container spacing={3}>
-                <Grid item xs>
-                    <Paper>O</Paper>
-                </Grid>
-                <Grid item xs>
-                    <Paper>X</Paper>
-                </Grid>
-            </Grid>
-        )
-    }
-
-    function 단답형() {
-        return (
-            <>
-                <TextField
-                    placeholder={currentQuiz.answer}></TextField>
-            </>
-        )
-    }
-
-    function 선택형() {
-        return (
-            <>
-                <Grid container spacing={3}>
-                    <Grid item xs>
-                        <Paper>{currentQuiz.choiceList["1"]}</Paper>
-                    </Grid>
-                    <Grid item xs>
-                        <Paper>{currentQuiz.choiceList["2"]}</Paper>
-                    </Grid>
-                    <Grid item xs>
-                        <Paper>{currentQuiz.choiceList["3"]}</Paper>
-                    </Grid>
-                    <Grid item xs>
-                        <Paper>{currentQuiz.choiceList["4"]}</Paper>
-                    </Grid>
-                </Grid>
-            </>
-        )
-    }
 
     function Media() {
         switch (currentQuiz.media.type) {
