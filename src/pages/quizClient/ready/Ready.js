@@ -9,116 +9,17 @@ import { styled } from '@mui/material/styles';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import CardMedia from '@mui/material/CardMedia';
+import {ClientCountOutModal} from "../../components/ClientCountOutModal";
+import {ClientReady} from "../../components/ClientReady";
 
 export default function Ready(props) {
-    const Img = styled('img')({
-        margin: 'auto',
-        display: 'block',
-        maxWidth: '100%',
-        maxHeight: '100%',
-      });
+
     return (
         <>
-        <div className="clientLayout">
-            <Paper
-            sx={{
-                p: 2,
-                margin: 'auto',
-                maxWidth: 500,
-                flexGrow: 1,
-                backgroundColor: (theme) =>
-                theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-            }}
-            >
-            <Grid container spacing={2}>
-                <Grid item>
-                <ButtonBase sx={{ width: 128, height: 128 }}>
-                    <Img alt="complex" src="/img/logo192.png"></Img>
-                </ButtonBase>
-                </Grid>
-                <Grid item xs={12} sm container>
-                <Grid item xs container direction="column" spacing={2}>
-                    <Grid item xs>
-                    <Typography variant="h5" component="div" align='center'>
-                    님이
-                    </Typography>
-
-                    <Typography variant="h5" component="div" align='center'>
-                    입장하였습니다.
-                    </Typography>
-
-                    <Typography variant="h6" component="div" align='center'>
-                    화면에서 닉네임을 확인해 주세요
-                    </Typography>
-                    
-                    </Grid>
-                </Grid>
-                </Grid>
-            </Grid>
-            </Paper>
-            <Link to="/QClient/play">
-            <Typography variant="h5" component="div" align='center'>
-            <Button variant="contained">참여하기</Button>
-            </Typography>
-            </Link>
-
-            <BasicModal></BasicModal>
-    
-        </div>
+            <div className="clientLayout">
+                <ClientReady></ClientReady>
+                <ClientCountOutModal></ClientCountOutModal>
+            </div>
         </>
     );
 }
-
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-  };
-  
-  export function BasicModal() {
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
-  
-    return (
-      <div>
-        <Button onClick={handleOpen}>참가자 퇴장</Button>
-        <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style}>
-            <AlterImg></AlterImg>
-            <Typography align='center' id="modal-modal-title" variant="h6" component="h2">
-             진행자에 의해 강퇴 되었습니다.
-            </Typography>
-         
-            <Link to="/QClient">
-            <Typography variant="h5" component="div" align='center'>
-            <Button variant="contained">확인</Button>
-            </Typography>
-            </Link>
-          </Box>
-        </Modal>
-      </div>
-    );
-  }
-
-  export function AlterImg() {
-    return (
-        <CardMedia
-          component="img"
-          height="150"
-          image="src/pages/quizClient/image/logo192.png"
-          alt="green iguana"
-        />
-    );
-  }
