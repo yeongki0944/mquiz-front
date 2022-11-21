@@ -2,18 +2,12 @@ import * as React from 'react';
 import Grid from "@mui/material/Grid";
 import {
     Button,
-    Card,
-    CardActionArea, CardActions, CardContent,
-    CardMedia,
-    FormControl,
-    MenuItem,
-    Select, TablePagination,
-    TextField
+    TablePagination,
 } from "@mui/material";
 import Box from "@mui/material/Box";
-import SearchIcon from '@material-ui/icons/Search';
 import {useState, useEffect} from "react";
-import Typography from "@mui/material/Typography";
+import {AllQuizListCard} from "../../components/AllQuizListCard"
+import {QuizSearchBox} from "../../components/QuizSearchBox"
 
 export default function Find(props) {
     // 페이징
@@ -63,7 +57,7 @@ export default function Find(props) {
                     <Grid item xs={1}></Grid>
                     <Grid item xs={10} container spacing={2}>
                         <Grid item xs={12}>
-                            <QuizSearchBox />
+                            <QuizSearchBox page={"Find"}/>
                         </Grid>
                         <Grid item xs={12}>
                             <QuizSearchResultBox/>
@@ -86,79 +80,14 @@ export default function Find(props) {
         );
     }
 
-    function QuizSearchBox() {
-        // 나중에 리덕스로!
-        const [searchType, setSearchType] = useState("A");
-        const [searchText, setSearchText] = useState('');
-
-        return (
-            <Box sx={{textAlign:"center", marginTop:5}}>
-                <FormControl sx={{width:150, marginRight:1}}>
-                    <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={searchType}
-                        onChange={(event) => {
-                            setSearchType(event.target.value);
-                        }}
-                    >
-                        <MenuItem value={"A"}>전체</MenuItem>
-                        <MenuItem value={"T"}>제목</MenuItem>
-                        <MenuItem value={"TG"}>태그</MenuItem>
-                    </Select>
-                </FormControl>
-                <TextField
-                    id="outlined-search"
-                    type="search"
-                    sx={{width:700, marginRight:1}}
-                    value={searchText}
-                    onChange={
-                    (event) => {
-                            setSearchText(event.target.value);
-                        }
-                    }
-                />
-                <Button
-                    variant="contained"
-                    sx={{height:55.9}}
-                    onClick={
-                        () => {console.log(searchText);}
-                    }
-                >
-                    <SearchIcon/>
-                </Button>
-            </Box>
-        );
-    }
-
     function QuizSearchResultBox() {
-
-
-
-
         const ResultBox = Data.slice(offset, offset + pageLimit).map(
             (item) => (
-                <Box key={item._id} sx={{margin:1,display:"inline-block"}}>
-                    <Card sx={{ maxWidth: 345}} >
-                        <CardActionArea onClick={
-                            ()=>{
-                                console.log("클릭");
-                            }
-                        }>
-                            <CardMedia
-                                component="img"
-                                height="220"
-                                image={item.showInfo.titleImg_thumb}
-                                alt={item.showInfo.title}
-                            />
-                            <CardContent>
-                                <Typography gutterBottom variant="h5" component="div">
-                                    {item.showInfo.title}
-                                </Typography>
-                            </CardContent>
-                        </CardActionArea>
-                    </Card>
-                </Box>
+                <AllQuizListCard
+                    id={item._id}
+                    titleImg={item.showInfo.titleImg_thumb}
+                    title={item.showInfo.title}
+                />
             )
         );
 
