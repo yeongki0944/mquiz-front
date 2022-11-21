@@ -256,16 +256,7 @@ export const FormPanel = (props) => {
             </Box>
         );
     }
-    const FormType = () => {
-        switch (currentQuiz.type) {
-            case '선택형':
-                return <QSelect/>;
-            case 'OX':
-                return <QOX/>;
-            case '단답형':
-                return <QRep/>;
-        }
-    }
+
     const MediaBox = () => {
         return (
             <Box>
@@ -294,6 +285,174 @@ export const FormPanel = (props) => {
         );
 
     }
+    const QSelect = () =>{
+        const dispatch = useDispatch();
+
+        const {quiz} = useSelector(state => state.quiz);
+        const currentQuiz = quiz.quizData.find(item => item.num === quiz.currentShow);
+
+        const modifyQuiz = (keytype, key, value) => {
+            dispatch(R_modifyQuiz({keytype, key, value}))
+        }
+
+        const chk = getAnswer();
+
+        function getAnswer() {
+            let answer = [];
+
+            if (currentQuiz.answer.includes(1)) {
+                answer.push(true);
+            } else {
+                answer.push(false);
+            }
+            if (currentQuiz.answer.includes(2)) {
+                answer.push(true);
+            } else {
+                answer.push(false);
+            }
+            if (currentQuiz.answer.includes(3)) {
+                answer.push(true);
+            } else {
+                answer.push(false);
+            }
+            if (currentQuiz.answer.includes(4)) {
+                answer.push(true);
+            } else {
+                answer.push(false);
+            }
+            return answer;
+        }
+
+        useEffect(() => {
+            // console.log(chk[0]);
+        }, [])
+
+        function handleCheck(e) {
+            let answer = [];
+            for (let i = 1; i < 5; i++) {
+                if (document.getElementById("chk" + i).checked) {
+                    answer.push(i);
+                }
+            }
+            console.log(answer);
+            R_modifyQuizAnswer(["1","2", "3", "4"]);
+        }
+
+        return (
+            <>
+                {/*<Button onClick={()=>{*/}
+                {/*    modifyQuizAnswerExecute(modifyQuizAnswer())*/}
+                {/*}}>test</Button>*/}
+                <FormControl component="fieldset">
+                    <FormLabel component="legend">정답</FormLabel>
+                    <FormGroup>
+                        <FormControlLabel
+                            control={<Checkbox
+                                defaultValue={chk[0]}
+                                onChange={()=>{
+                                    R_modifyQuizAnswer(["1","2", "3", "4"]);
+                                }}
+                                id={"chk1"}
+                            />}
+                            label={<TextField placeholder={"답을 입력해주세요."}
+                                              defaultValue={currentQuiz.choiceList[1]}
+                                              onBlur={(event) => {
+                                                  modifyQuiz("choiceList", "1", event.target.value);
+                                              }}/>}
+                        />
+                        <FormControlLabel
+                            control={<Checkbox
+                                defaultValue={chk[1]}
+                                onChange={handleCheck}
+                                id={"chk2"}
+                            />}
+                            label={<TextField placeholder={"답을 입력해주세요."}
+                                              defaultValue={currentQuiz.choiceList[2]}
+                                              onBlur={(event) => {
+                                                  modifyQuiz("choiceList", "2", event.target.value);
+                                              }}/>}
+                        />
+                        <FormControlLabel
+                            control={<Checkbox
+                                defaultValue={chk[2]}
+                                onChange={handleCheck}
+                                id={"chk3"}
+                            />}
+                            label={<TextField placeholder={"답을 입력해주세요."}
+                                              defaultValue={currentQuiz.choiceList[3]}
+                                              onBlur={(event) => {
+                                                  modifyQuiz("choiceList", "3", event.target.value);
+                                              }}/>}
+                        />
+                        <FormControlLabel
+                            control={<Checkbox
+                                defaultValue={chk[3]}
+                                onChange={handleCheck}
+                                id={"chk4"}
+                            />}
+                            label={<TextField placeholder={"답을 입력해주세요."}
+                                              defaultValue={currentQuiz.choiceList[4]}
+                                              onBlur={(event) => {
+                                                  modifyQuiz("choiceList", "4", event.target.value);
+                                              }}/>}
+                        />
+                    </FormGroup>
+                    {/*<FormHelperText>Be careful</FormHelperText>*/}
+                </FormControl>
+            </>
+        );
+    }
+    const QOX = () =>{
+        const dispatch = useDispatch();
+        return (
+            <Box>
+                <FormControl>
+                    <FormLabel id="demo-row-radio-buttons-group-label">정답</FormLabel>
+                    <RadioGroup
+                        row
+                        aria-label="quiz"
+                        name="quiz"
+                        defaultValue="O"
+                        onChange={(e) => {
+                            dispatch(R_modifyQuizAnswer(e.target.value));
+                        }}
+                    >
+                        <FormControlLabel value="O" control={<Radio/>} label="O"/>
+                        <FormControlLabel value="X" control={<Radio/>} label="X"/>
+                    </RadioGroup>
+                </FormControl>
+            </Box>
+        );
+    }
+    const QRep = () =>{
+        const dispatch = useDispatch();
+        return (
+            <Box>
+                <h3>정답</h3>
+                <TextField
+                    id="qfield"
+                    multiline
+                    rows={4}
+                    defaultValue={""}
+                    onBlur={(e) => {
+                        dispatch(R_modifyQuizAnswer([e.target.value]));
+                    }}
+                />
+            </Box>
+        );
+    }
+
+    const FormType = () => {
+        switch (currentQuiz.type) {
+            case '선택형':
+                return <QSelect/>;
+            case 'OX':
+                return <QOX/>;
+            case '단답형':
+                return <QRep/>;
+        }
+    }
+
     return (
         <div className={classes.content}>
             <TypeButton/>
@@ -306,163 +465,6 @@ export const FormPanel = (props) => {
             <hr/>
             <Options/>
         </div>
-    );
-}
-
-const QSelect = () =>{
-    const dispatch = useDispatch();
-
-    const {quiz} = useSelector(state => state.quiz);
-    const currentQuiz = quiz.quizData.find(item => item.num === quiz.currentShow);
-
-    const modifyQuiz = (keytype, key, value) => {
-        dispatch(R_modifyQuiz({keytype, key, value}))
-    }
-
-    const chk = getAnswer();
-
-    function getAnswer() {
-        let answer = [];
-
-        if (currentQuiz.answer.includes(1)) {
-            answer.push(true);
-        } else {
-            answer.push(false);
-        }
-        if (currentQuiz.answer.includes(2)) {
-            answer.push(true);
-        } else {
-            answer.push(false);
-        }
-        if (currentQuiz.answer.includes(3)) {
-            answer.push(true);
-        } else {
-            answer.push(false);
-        }
-        if (currentQuiz.answer.includes(4)) {
-            answer.push(true);
-        } else {
-            answer.push(false);
-        }
-        return answer;
-    }
-
-    useEffect(() => {
-        // console.log(chk[0]);
-    }, [])
-
-    function handleCheck(e) {
-        let answer = [];
-        for (let i = 1; i < 5; i++) {
-            if (document.getElementById("chk" + i).checked) {
-                answer.push(i);
-            }
-        }
-        console.log(answer);
-        R_modifyQuizAnswer(["1","2", "3", "4"]);
-    }
-
-    return (
-        <>
-            {/*<Button onClick={()=>{*/}
-            {/*    modifyQuizAnswerExecute(modifyQuizAnswer())*/}
-            {/*}}>test</Button>*/}
-            <FormControl component="fieldset">
-                <FormLabel component="legend">정답</FormLabel>
-                <FormGroup>
-                    <FormControlLabel
-                        control={<Checkbox
-                            defaultValue={chk[0]}
-                            onChange={()=>{
-                                R_modifyQuizAnswer(["1","2", "3", "4"]);
-                            }}
-                            id={"chk1"}
-                        />}
-                        label={<TextField placeholder={"답을 입력해주세요."}
-                                          defaultValue={currentQuiz.choiceList[1]}
-                                          onBlur={(event) => {
-                                              modifyQuiz("choiceList", "1", event.target.value);
-                                          }}/>}
-                    />
-                    <FormControlLabel
-                        control={<Checkbox
-                            defaultValue={chk[1]}
-                            onChange={handleCheck}
-                            id={"chk2"}
-                        />}
-                        label={<TextField placeholder={"답을 입력해주세요."}
-                                          defaultValue={currentQuiz.choiceList[2]}
-                                          onBlur={(event) => {
-                                              modifyQuiz("choiceList", "2", event.target.value);
-                                          }}/>}
-                    />
-                    <FormControlLabel
-                        control={<Checkbox
-                            defaultValue={chk[2]}
-                            onChange={handleCheck}
-                            id={"chk3"}
-                        />}
-                        label={<TextField placeholder={"답을 입력해주세요."}
-                                          defaultValue={currentQuiz.choiceList[3]}
-                                          onBlur={(event) => {
-                                              modifyQuiz("choiceList", "3", event.target.value);
-                                          }}/>}
-                    />
-                    <FormControlLabel
-                        control={<Checkbox
-                            defaultValue={chk[3]}
-                            onChange={handleCheck}
-                            id={"chk4"}
-                        />}
-                        label={<TextField placeholder={"답을 입력해주세요."}
-                                          defaultValue={currentQuiz.choiceList[4]}
-                                          onBlur={(event) => {
-                                              modifyQuiz("choiceList", "4", event.target.value);
-                                          }}/>}
-                    />
-                </FormGroup>
-                {/*<FormHelperText>Be careful</FormHelperText>*/}
-            </FormControl>
-        </>
-    );
-}
-const QOX = () =>{
-    const dispatch = useDispatch();
-    return (
-        <Box>
-            <FormControl>
-                <FormLabel id="demo-row-radio-buttons-group-label">정답</FormLabel>
-                <RadioGroup
-                    row
-                    aria-label="quiz"
-                    name="quiz"
-                    defaultValue="O"
-                    onChange={(e) => {
-                        dispatch(R_modifyQuizAnswer(e.target.value));
-                    }}
-                >
-                    <FormControlLabel value="O" control={<Radio/>} label="O"/>
-                    <FormControlLabel value="X" control={<Radio/>} label="X"/>
-                </RadioGroup>
-            </FormControl>
-        </Box>
-    );
-}
-const QRep = () =>{
-    const dispatch = useDispatch();
-    return (
-        <Box>
-            <h3>정답</h3>
-            <TextField
-                id="qfield"
-                multiline
-                rows={4}
-                defaultValue={""}
-                onBlur={(e) => {
-                    dispatch(R_modifyQuizAnswer([e.target.value]));
-                }}
-            />
-        </Box>
     );
 }
 
