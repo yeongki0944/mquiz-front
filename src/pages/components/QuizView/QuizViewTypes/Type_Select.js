@@ -11,7 +11,7 @@ export const Type_Select = () => {
     const currentQuiz = quiz.quizData.find(item => item.num === quiz.currentShow);
 
     return (
-        <div id={"content"}>
+        <div id={"answer"}>
             <div class={"answers"}elevation={2}>{currentQuiz.choiceList["1"]}</div>
             <div class={"answers"}elevation={2}>{currentQuiz.choiceList["2"]}</div>
             {/*2번까지는 빈값도 표시*/}

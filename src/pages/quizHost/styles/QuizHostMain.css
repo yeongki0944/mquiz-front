@@ -1,0 +1,43 @@
+div div{
+    /*border : 1px solid darkgrey;*/
+}
+#profile{
+    width:70%;
+}
+
+/*모바일*/
+@media screen and (max-width: 700px) {
+    #quiz{
+        display: block;
+        width: 100%;
+    }
+    #quizList{
+        width: 100%;
+        height: 100%;
+        /*border : 1px solid darkgrey;*/
+    }
+    #quizPreviewList{
+        display: none;
+    }
+
+}
+
+/*PC*/
+@media screen and (min-width: 700px) {
+    #quiz{
+        display: flex;
+        width: 100%;
+    }
+    #quizList{
+        width: 50%;
+        /*border : 1px solid darkgrey;*/
+    }
+    #quizPreviewList{
+        width: 50%;
+        /*border : 1px solid darkgrey;*/
+    }
+
+}
+
+
+

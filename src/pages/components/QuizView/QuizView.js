@@ -12,6 +12,8 @@ import {AudioShow} from "../Outputs/AudioShow";
 import {YoutubeShow} from "../Outputs/YoutubeShow";
 import {makeStyles} from "@material-ui/core/styles";
 import './QuizView.css';
+import {PinNum} from "../PinNum";
+import {VolumeControlButton} from "../VolumeControlButton";
 
 
 export const QuizView = (props) => {
@@ -49,11 +51,15 @@ export const QuizView = (props) => {
         <div id={"content"}>
             <div id={"section1"}>
                 <div id={"section1_items"}>
+                    <PinNum pinNum={55555}/>
+                    <VolumeControlButton/>
+                </div>
+                <div id={"section1_items"}>
                     <Gauge
-                        Qnum={1}
+                        Qnum={currentQuiz.num}
                         TotalQcnt={10}
-                        timeprogress={50}
-                        timeleft={20}
+                        timeprogress={10}
+                        timeleft={currentQuiz.time}
                     />
                 </div>
                 <div id={"section1_items"}>
@@ -68,9 +74,7 @@ export const QuizView = (props) => {
                 </div>
             </div>
             <div  id={"section2"}>
-                <div id={"section2_items"}>
                     <AnswerSheet/>
-                </div>
             </div>
         </div>
 

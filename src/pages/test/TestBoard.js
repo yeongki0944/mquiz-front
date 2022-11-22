@@ -3,17 +3,18 @@ import {useDispatch, useSelector} from "react-redux";
 import {makeStyles} from "@material-ui/core/styles";
 import Grid from "@mui/material/Grid";
 import * as React from "react";
-import QuizListHostMain from "../components/QuizListHostMain";
+import QuizListHostMain from "../quizHost/components/QuizListHostMain";
 import CustomAxios from "../function/CustomAxios";
 import {R_setQuizList} from "../redux/reducers/quizListReducer";
 import {useEffect, useState} from "react";
-import QuizModal from "../quizHost/create/Quiz_Make_modal";
-import HostProfile from "../components/HostProfile";
+import QuizModal from "../quizHost/components/Create/Quiz_Make_modal";
+import HostProfile from "../quizHost/components/HostProfile";
 import SockJsClient from "react-stomp";
-import {ListPanel} from "../components/QuizCreate/ListPanel";
+import {ListPanel} from "../quizHost/components/Create/ListPanel";
 import {QuizView} from "../components/QuizView/QuizView";
-import {FormPanel} from "../components/QuizCreate/FormPanel";
-import {ControlPanel} from "../components/QuizCreate/ControlPanel";
+import {FormPanel} from "../quizHost/components/Create/FormPanel";
+import {ControlPanel} from "../quizHost/components/Create/ControlPanel";
+import {PinNumCheck} from "../components/Client/ClientPinNumInput";
 
 const useStyles = makeStyles((theme) => ({
     content: {
@@ -24,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     },
     container: {
         // height: '100vh',
-        // padding: theme.spacing(3),
+        // padding: theme.spacing(3),dd-
     },
     components: {
         // padding: theme.spacing(2),
@@ -40,30 +41,31 @@ export default function TestBoard() {
     const [modalOpen, setModalOpen] = useState(false);
     const {mongodbUrl} = useSelector(state => state.mongodbUrl);
     const {quizList} = useSelector(state => state.quizList);
-
-    const setQuizList = async () => {
-        await CustomAxios.post(mongodbUrl.getShowList, {
-            email: "dudrl0944@gmail.com",
-            id: "637440e817bb6d42edbf3927"
-        }).then((res) => {
-            console.log(res.data)
-            dispatch(R_setQuizList(res.data))
-        }).catch((err) => {
-            console.log(err)
-        })
-    }
-    useEffect(() => {
-        setQuizList();
-    }, []);
+    //
+    // const setQuizList = async () => {
+    //     await CustomAxios.post(mongodbUrl.getShowList, {
+    //         email: "dudrl0944@gmail.com",
+    //         id: "637440e817bb6d42edbf3927"
+    //     }).then((res) => {
+    //         console.log(res.data)
+    //         dispatch(R_setQuizList(res.data))
+    //     }).catch((err) => {
+    //         console.log(err)
+    //     })
+    // }
+    // useEffect(() => {
+    //     setQuizList();
+    // }, []);
     return(
-        <QuizView currentQuiz={currentQuiz}/>
         // <div className={classes.content}>
+        //     <QuizView currentQuiz={currentQuiz}/>
+        //
         //     <Grid container spacing={3} className={classes.container}>
         //         <Grid item xs={2} className={classes.components}>
         //             <ListPanel quiz={quiz}/>
         //         </Grid>
         //         <Grid item xs={7} className={classes.components}>
-        //             <QuizView currentQuiz={currentQuiz}/>
+        // <QuizView currentQuiz={currentQuiz}/>
         //         </Grid>
         //         <Grid item xs={3} className={classes.components}>
         //             <FormPanel currentQuiz={currentQuiz}/>
@@ -73,6 +75,9 @@ export default function TestBoard() {
         //         </Grid>
         //     </Grid>
         // </div>
+    <>
+        <QuizView currentQuiz={currentQuiz}/>
+    </>
     )
 }
 

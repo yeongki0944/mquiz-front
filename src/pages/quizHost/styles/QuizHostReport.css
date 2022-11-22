@@ -1,0 +1,16 @@
+div div{
+    border : 1px solid darkgrey;
+}
+
+/*모바일*/
+@media screen and (min-width: 300px) {
+
+}
+
+/*PC*/
+@media screen and (min-width: 700px) {
+
+}
+
+
+

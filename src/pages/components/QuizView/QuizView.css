@@ -11,14 +11,14 @@ div{
 }
 
 #section1{
-    border: 1px solid grey;
+    /*border: 1px solid grey;*/
     width:100%;
     height: 55vh;
     display: block;
     float: left;
 }
 #section2{
-    border: 1px solid grey;
+    /*border: 1px solid grey;*/
     width:100%;
     height: 45vh;
     display: block;

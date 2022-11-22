@@ -5,21 +5,21 @@ import {Link} from "react-router-dom";
 import ButtonBase from '@mui/material/ButtonBase';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import { styled } from '@mui/material/styles';
+import {styled} from '@mui/material/styles';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import CardMedia from '@mui/material/CardMedia';
-import {ClientCountOutModal} from "../../components/ClientCountOutModal";
-import {ClientReady} from "../../components/ClientReady";
+import {ClientCountOutModal} from "../../components/Client/ClientCountOutModal";
+import {ClientReady} from "../../components/Client/ClientReady";
 
-export default function Ready(props) {
+export default function Ready() {
 
     return (
-        <>
-            <div className="clientLayout">
+        <div id={"content"}>
+            <div id={"item"}>
                 <ClientReady></ClientReady>
                 <ClientCountOutModal></ClientCountOutModal>
             </div>
-        </>
+        </div>
     );
 }

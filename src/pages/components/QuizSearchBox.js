@@ -70,8 +70,8 @@ export const QuizSearchBox = (props) => {
                 onClick={
                     () => {
                         console.log(props.page);
-                        if(props.page === "Find"){
-                            console.log("Find Page");
+                        if(props.page === "QuizHostFind"){
+                            console.log("QuizHostFind Page");
                         }
                         else if(props.page === "hostMain"){
                             console.log("Main Page");
