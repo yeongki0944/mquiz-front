@@ -5,6 +5,7 @@ export const AudioShow = () =>{
     const currentQuiz = quiz.quizData.find(item => item.num === quiz.currentShow);
     return(
         <>
+            Audio
         </>
     )
 }

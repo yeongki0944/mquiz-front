@@ -33,17 +33,6 @@ import {Type_OX} from "./QuizFormTypes/Type_OX";
 import {Type_Select} from "./QuizFormTypes/Type_Select";
 
 
-
-const FormPanelStyles = makeStyles((theme) => ({
-    content: {
-        flexGrow: 1,
-        height: '100vh',
-        backgroundColor: '#f5f5f5',
-        overflow: 'scroll',
-        overflowX: 'hidden',
-    },
-}));
-
 const Img = styled('img')({
     margin: 'auto',
     display: 'block',
@@ -54,7 +43,6 @@ const Img = styled('img')({
 
 export const FormPanel = (props) => {
     const dispatch = useDispatch();
-    const classes = FormPanelStyles();
     const currentQuiz = props.currentQuiz;
 
     const setQuiz = (keytype, key, value) => {
@@ -207,7 +195,7 @@ export const FormPanel = (props) => {
     }
 
     return (
-        <div className={classes.content}>
+        <div>
             <TypeButton/>
             <hr/>
             <Question/>

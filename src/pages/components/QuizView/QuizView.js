@@ -34,13 +34,13 @@ export const QuizView = (props) => {
 
     const Media = () => {
         switch (currentQuiz.media.type) {
-            case "image":
+            case "Image":
                 return (<ImageShow/>);
                 break;
-            case "video":
+            case "Youtube":
                 return (<YoutubeShow/>);
                 break;
-            case "audio":
+            case "Audio":
                 return (<AudioShow/>);
                 break;
         }

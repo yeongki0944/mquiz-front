@@ -109,8 +109,6 @@ const quizInfoReducer = handleActions({
                         "media": {
                             "type": "image",
                             "url": "",
-                            "startTime": "",
-                            "endTime": "",
                         },
                         "choiceList": {
                             "1": "답을 입력해 주세요",

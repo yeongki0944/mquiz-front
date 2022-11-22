@@ -4,16 +4,7 @@ import {R_addQuiz, R_setCurrentShow} from "../../../redux/reducers/quizInfoReduc
 import {BottomNavigation, BottomNavigationAction} from "@mui/material";
 import * as React from "react";
 
-const ControlPanelStyles = makeStyles((theme) => ({
-    content: {
-        height: "10vh",
-        overflow: "scroll",
-        overflowX: "hidden",
-    },
-}));
-
 export const ControlPanel = (props) => {
-    const classes = ControlPanelStyles();
     const dispatch = useDispatch();
     const quiz = props.quiz;
 

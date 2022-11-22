@@ -24,10 +24,14 @@ export const QuizHostCreate = () => {
                 <div id={"list"}>
                     <ListPanel quiz={quiz}/>
                 </div>
-
+                <div id={"quizview"}>
                     <QuizView currentQuiz={currentQuiz}/>
+                </div>
+                <div id={"form"}>
                     <FormPanel currentQuiz={currentQuiz}/>
+                </div>
             </div>
+
             <div id={"control"}>
                 <ControlPanel quiz={quiz}/>
             </div>

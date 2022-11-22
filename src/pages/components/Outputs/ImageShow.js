@@ -5,7 +5,7 @@ export const ImageShow = () =>{
     const currentQuiz = quiz.quizData.find(item => item.num === quiz.currentShow);
     return(
         <>
-test
+            Image
         </>
     )
 }

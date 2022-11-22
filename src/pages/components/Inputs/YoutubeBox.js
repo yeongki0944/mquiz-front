@@ -1,43 +1,98 @@
 import * as React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import {useState} from "react";
+import Modal from "@mui/material/Modal";
+import {R_modifyQuiz} from "../../redux/reducers/quizInfoReducer";
+import {useDispatch} from "react-redux";
+import {Slider} from "@mui/material";
+import styled from "@mui/material/styles/styled";
+import Paper from "@mui/material/Paper";
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        '& > *': {
-            margin: theme.spacing(1),
-        },
-    },
-    input: {
-        display: 'none',
-    },
-}));
 
-export default function YoutubeBox(props){
-    const classes = useStyles();
-    const [file, setFile] = useState();
+const YoutubeModal = styled(Modal) ({
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+});
+const ModalPaper = styled(Paper)({
+    width: '50%',
+    height: '10%',
+});
 
-    function handleChange(e) {
-        console.log(e.target.files);
-        setFile(URL.createObjectURL(e.target.files[0]));
+export default function YoutubeBox() {
+
+    const dispatch = useDispatch();
+
+    const [url, setUrl] = useState("");
+    const [value, setValue] = useState([0, 10]);
+    const [showModal, setShowModal] = useState(false);
+    const [videoId, setVideoId] = useState("");
+    const [videoLength, setVideoLength] = useState(200);
+
+    const handleUrl = (e) => {
+        setUrl(e.target.value);
     }
 
+    function getVideoDuration(url) {
+    }
+
+
+    const handleShowModal = () => {
+        setShowModal(true);
+    }
+
+    const handleclosemodal = () => {
+        setShowModal(false);
+    }
+
+    const handleVideoId = () => {
+        let videoId = url.split("v=")[1];
+        let ampersandPosition = videoId.indexOf("&");
+        if (ampersandPosition != -1) {
+            videoId = videoId.substring(0, ampersandPosition);
+        }else{
+            return;
+        }
+        setVideoId(videoId);
+
+        handleShowModal();
+    }
+
+    const handleVideoUrl = () => {
+        let videoUrl = `https://www.youtube.com/embed/${videoId}?start=${value[0]}&end=${value[1]}`;
+        dispatch(R_modifyQuiz({keytype: "media", key: "url", value: videoUrl}));
+        setShowModal(false);
+    }
+
+    function valuetext(value) {
+        return `${value}`;
+    }
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
+
     return (
-        <div className={classes.root}>
-            <input
-                accept="image/*"
-                className={classes.input}
-                id={props.id}
-                type="file"
-                onChange={handleChange}
-            />
-            <label htmlFor="contained-button-file">
-                youtube
-            </label>
+        <div>
+            <input type="text" value={url} onChange={handleUrl}/>
+            <button onClick={handleVideoId}>Set Start and End</button>
+            <YoutubeModal open={showModal} handleClose={handleclosemodal}>
+                <ModalPaper>
+                    <Slider
+                        value={value}
+                        onChange={handleChange}
+                        valueLabelDisplay="auto"
+                        getAriaValueText={valuetext}
+                        max={videoLength}
+                    />
+                    <button onClick={handleVideoUrl}>Set</button>
+                </ModalPaper>
+            </YoutubeModal>
+            <div>
+                <iframe id={"myVideo"} src={url} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+            </div>
         </div>
-    );
+    )
+
+
+
 
 }
