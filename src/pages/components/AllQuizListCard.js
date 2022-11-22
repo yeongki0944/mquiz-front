@@ -87,6 +87,7 @@ const UserIdTypography = styled(Typography)`
 `
 
 
+
 export const AllQuizListCard = (props) => {
     console.log(props.id);
 

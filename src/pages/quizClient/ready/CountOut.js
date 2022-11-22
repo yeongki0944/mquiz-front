@@ -2,7 +2,6 @@ import * as React from 'react';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import style from '../Style/layoutstyle.css';
 
 const style = {
   position: 'absolute',
@@ -35,7 +34,7 @@ export function BasicModal() {
           <Typography align='center' id="modal-modal-title" variant="h6" component="h2">
            진행자에 의해 강퇴 되었습니다.
           </Typography>
-       
+
           <Link to="/QClient">
           <Typography variant="h5" component="div" align='center'>
           <Button variant="contained">확인</Button>

@@ -8,7 +8,6 @@ import {styled} from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import {createSvgIcon} from '@mui/material/utils';
 import Slider from '@mui/material/Slider';
-import styles from './styles/layoutstyle.css'
 import Modal from "@mui/material/Modal";
 import CardMedia from "@mui/material/CardMedia";
 import {PinNum} from "../components/PinNum";

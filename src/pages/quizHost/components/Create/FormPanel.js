@@ -37,7 +37,7 @@ import {Type_Select} from "./QuizFormTypes/Type_Select";
 const FormPanelStyles = makeStyles((theme) => ({
     content: {
         flexGrow: 1,
-        height: '90vh',
+        height: '100vh',
         backgroundColor: '#f5f5f5',
         overflow: 'scroll',
         overflowX: 'hidden',

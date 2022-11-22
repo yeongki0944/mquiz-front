@@ -6,7 +6,6 @@ import CustomAxios from "../function/CustomAxios";
 import {R_setQuizList} from "../redux/reducers/quizListReducer";
 import QuizListHostMain from "./components/QuizListHostMain";
 import HostProfile from "./components/HostProfile";
-import './styles/BaseLayout.css';
 import './styles/QuizHostMain.css';
 import {NavBar} from "../components/NavBar";
 
@@ -20,7 +19,6 @@ export const QuizHostMain = () => {
     const {quizList} = useSelector(state => state.quizList);
 
     const setQuizList = async () => {
-
         await CustomAxios.post(mongodbUrl.getShowList, {
             email: "dudrl0944@gmail.com",
             id: "637440e817bb6d42edbf3927"

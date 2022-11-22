@@ -1,0 +1,24 @@
+
+/*.content{*/
+/*    height: 100vh;*/
+/*    overflow: scroll;*/
+/*    overflow-x: hidden;*/
+/*}*/
+
+.items{
+    /*backgroundColor: "#ffffff",*/
+    /*color: "#000000",*/
+}
+
+.item_card{
+    background-color: #ffffff;
+    color: #000000;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,0.2);
+}
+
+.selected{
+    border: 1px solid orange;
+}
