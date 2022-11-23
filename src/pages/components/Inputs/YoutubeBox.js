@@ -49,11 +49,8 @@ export default function YoutubeBox() {
         let ampersandPosition = videoId.indexOf("&");
         if (ampersandPosition != -1) {
             videoId = videoId.substring(0, ampersandPosition);
-        }else{
-            return;
         }
         setVideoId(videoId);
-
         handleShowModal();
     }
 
@@ -86,9 +83,7 @@ export default function YoutubeBox() {
                     <button onClick={handleVideoUrl}>Set</button>
                 </ModalPaper>
             </YoutubeModal>
-            <div>
-                <iframe id={"myVideo"} src={url} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-            </div>
+
         </div>
     )
 

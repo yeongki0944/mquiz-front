@@ -22,22 +22,22 @@ export const R_modifyQuizAnswer = createAction(MODIFY_QUIZ_ANSWER);
 
 const initialState = {
     quiz: {
-        _id: "637440e817bb6d42edbf3927",
+        id: "",
         quizInfo: {
-                "email": "dudrl0944@gmail.com",
-                "title": "쇼 제목",
-                "category": "일단",
-                "tags": [
-                    "1번",
-                    "2번",
-                    "3번"
-                ],
-                "titleImg_origin": "url",
-                "titleImg_thumb": "url",
-                "createDate": "2022-11-11T00:00:00.000+00:00",
-                "lastModifyDate": "2022-11-11T00:00:00.000+00:00",
-                "state": "작성중",
-                "pulic": false
+                // "email": "dudrl0944@gmail.com",
+                // "title": "쇼 제목",
+                // "category": "일단",
+                // "tags": [
+                //     "1번",
+                //     "2번",
+                //     "3번"
+                // ],
+                // "titleImg_origin": "url",
+                // "titleImg_thumb": "url",
+                // "createDate": "2022-11-11T00:00:00.000+00:00",
+                // "lastModifyDate": "2022-11-11T00:00:00.000+00:00",
+                // "state": "작성중",
+                // "pulic": false
         },
         currentShow: 1,
         quizData: [
@@ -70,13 +70,24 @@ const initialState = {
 
 const quizInfoReducer = handleActions({
     [MAKE_QUIZ_SHOW]:(state, action)=>{
+
         return {
             ...state,
             quiz: {
                 ...state.quiz,
-                quizInfo:action.payload
+                quizInfo: {
+                    ...state.quiz.quizInfo,
+                    [action.payload.key]: action.payload.value
+                }
             }
         }
+        // return {
+        //     ...state,
+        //     quiz: {
+        //         ...state.quiz,
+        //         quizInfo:action.payload
+        //     }
+        // }
     },
     [SET_CURRENT_SHOW]: (state, action) => {
         return {

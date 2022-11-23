@@ -21,10 +21,10 @@ export const QuizHostMain = () => {
     const setQuizList = async () => {
         await CustomAxios.post(mongodbUrl.getShowList, {
             email: "dudrl0944@gmail.com",
-            id: "637440e817bb6d42edbf3927"
+            id: ""
         }).then((res) => {
             console.log(res.data)
-            dispatch(R_setQuizList(res.data))
+            dispatch(R_setQuizList(res.data.data))
         }).catch((err) => {
             console.log(err)
         })
@@ -32,7 +32,6 @@ export const QuizHostMain = () => {
 
     useEffect(() => {
         setQuizList();
-        ;
     }, []);
 
     return (

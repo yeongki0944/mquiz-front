@@ -3,16 +3,16 @@ import {useDispatch} from "react-redux";
 import {R_addQuiz, R_setCurrentShow} from "../../../redux/reducers/quizInfoReducer";
 import {BottomNavigation, BottomNavigationAction} from "@mui/material";
 import * as React from "react";
+import axios from "axios";
 
 export const ControlPanel = (props) => {
     const dispatch = useDispatch();
     const quiz = props.quiz;
 
     const save = () => {
-        const data = JSON.stringify(quiz.quizData);
+        const data = JSON.stringify(quiz);
         console.log(data);
-        // console.log(data);
-        // axios.post("http://localhost:8080/quiz", data)
+        // axios.post("http://localhost:8080/save", data)
         //     .then(res => {
         //         console.log(res)
         //     })

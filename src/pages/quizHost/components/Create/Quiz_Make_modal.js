@@ -14,8 +14,11 @@ import {FormControlLabel, FormGroup, Switch} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import {makeStyles} from "@material-ui/core/styles";
 import {R_makeQuizShow} from "../../../redux/reducers/quizInfoReducer";
+import CustomAxios from "../../../function/CustomAxios";
+import {R_setQuizList} from "../../../redux/reducers/quizListReducer";
+import axios from "axios";
 
-const useStyles = makeStyles(()=>({
+const useStyles = makeStyles(() => ({
         imageStyle: {
             marginTop: 15,
             width: 323,
@@ -33,7 +36,7 @@ const useStyles = makeStyles(()=>({
 ));
 
 // useStyles에 넣으면 이상해짐 ㅎㄷㄷ
-const boxstyle={
+const boxstyle = {
     position: 'absolute',
     top: '50%',
     left: '50%',
@@ -118,6 +121,7 @@ const currencies = [
 export default function BasicModal(props) {
     const dispatch = useDispatch();
     const classes = useStyles();
+    const {quiz} = useSelector(state => state.quiz);
 
     // Show 제목
     const [titleTextData, setTitleTextData] = useState('');
@@ -134,19 +138,60 @@ export default function BasicModal(props) {
 
     const [helperText, setHelperText] = useState('');
 
+    const mongodbUrl = useSelector(state => state.mongodbUrl);
+
+
+    const setQuizInfo = async () => {
+        console.log(quiz.quizInfo);
+
+
+        await CustomAxios.post("/v1/Qready/save", {
+            quizInfo: quiz.quizInfo,
+        }).then((res) => {
+            console.log(res.data)
+            // props.setOpen(false)
+        }).catch((err) => {
+            console.log(err)
+            // props.setOpen(false)
+        })
+    }
+
     // 모달창 닫기
     const handleClose = () => {
-        setTitleTextData('');
-        setCurrency('');
-        setChipData([]);
-        setChipCount(0);
-        setIsPublic(true);
-        setLabel("공개");
-        setImageUrl(imageItemData[0].img);
-        setHelperText('');
+        // setTitleTextData('');
+        // setCurrency('');
+        // setChipData([]);
+        // setChipCount(0);
+        // setIsPublic(true);
+        // setLabel("공개");
+        // setImageUrl(imageItemData[0].img);
+        // setHelperText('');
+        // setQuizInfo();
 
         props.setOpen(false)
     };
+
+    useEffect(() => {
+        // Date 포맷
+        // let d = new Date();
+        // let TIME_ZONE = 3240 * 10000;
+        // let date = new Date(+d + TIME_ZONE).toISOString().split('T')[0];
+        // let time = d.toTimeString().split(' ')[0];
+        // let dateData = date + ' ' + time;
+        // //Stringify dateData
+        // let dateDataString = JSON.stringify(dateData);
+
+
+
+
+        dispatch(R_makeQuizShow({key:'email', value: "test@gmail.com"}))
+        dispatch(R_makeQuizShow({key:'state', value: "작성중"}))
+
+        dispatch(R_makeQuizShow({key:'createDate', value: "2022-01-01"}))
+        dispatch(R_makeQuizShow({key:'lastModifyDate', value: "2022-01-01"}))
+        dispatch(R_makeQuizShow({key:'titleimg_origin', value: "https://images.unsplash.com/photo-1522770179533-24471fcdba45"}))
+        dispatch(R_makeQuizShow({key:'titleimg_thumb', value: "https://images.unsplash.com/photo-1522770179533-24471fcdba45"}))
+    }, [])
 
     return (
         <div>
@@ -231,6 +276,8 @@ export default function BasicModal(props) {
                                 loading="lazy"
                                 onClick={() => {
                                     setImageUrl(item.img)
+                                    dispatch(R_makeQuizShow({key:'titleimg_origin', value: item.img}))
+                                    dispatch(R_makeQuizShow({key:'titleimg_thumb', value: item.img}))
                                 }}
                             />
                         </ImageListItem>
@@ -251,16 +298,17 @@ export default function BasicModal(props) {
                     id="standard-basic"
                     variant="standard"
                     className={classes.textFieldStyle}
-                    value={titleText}
+                    // value={titleText}
                     helperText={helperText}
-                    onChange={
-                        (event) => {
-                            setTitleText(event.target.value);
-                        }
-                    }
+                    // onChange={
+                    //     (event) => {
+                    //         setTitleText(event.target.value);
+                    //     }
+                    // }
                     onBlur={
-                        (event)=>{
-                            setTitleTextData(titleText);
+                        (event) => {
+                            // setTitleTextData(titleText);
+                            dispatch(R_makeQuizShow({key:'title', value: event.target.value}))
                         }
                     }
                 />
@@ -282,6 +330,7 @@ export default function BasicModal(props) {
                     onChange={
                         (event) => {
                             setCurrency(event.target.value);
+                            dispatch(R_makeQuizShow({key:'category', value: event.target.value}))
                         }
                     }
                     helperText="카테고리를 선택하세요!"
@@ -309,11 +358,13 @@ export default function BasicModal(props) {
                         label={label}
                         onChange={
                             (event) => {
-                                setIsPublic(event.target.checked);
+                                // setIsPublic(event.target.checked);
                                 if (isPublic) {
                                     setLabel("비공개");
+                                    dispatch(R_makeQuizShow({key:'public', value: event.target.checked}))
                                 } else {
                                     setLabel("공개");
+                                    dispatch(R_makeQuizShow({key:'public', value: event.target.checked}))
                                 }
                             }
                         }
@@ -366,7 +417,15 @@ export default function BasicModal(props) {
                                         }
                                     }
                                     tagList.push({key: chipCount, label: chipText});
+                                    //Tag값 정리
 
+                                    let tagList2 = [];
+                                    for (let i = 0; i < chipData.length; i++) {
+                                        tagList2.push(chipData[i].label);
+                                    }
+
+                                    dispatch(R_makeQuizShow({key:'tags', value: tagList2}))
+                                    //
                                     setChipData(tagList);
                                     setChipText('');
                                     setChipCount(chipCount + 1);
@@ -406,45 +465,7 @@ export default function BasicModal(props) {
     function ModalDataSubmit() {
         return (
             <div align={"center"}>
-                <Button
-                    variant="contained"
-                    onClick={
-                        () => {
-                            if(titleTextData === ''){
-                                setHelperText("제목을 입력하세요!");
-                                return;
-                            }
-                            // Date 포맷
-                            let d = new Date();
-                            let TIME_ZONE = 3240 * 10000;
-                            let date = new Date(+d + TIME_ZONE).toISOString().split('T')[0];
-                            let time = d.toTimeString().split(' ')[0];
-                            let dateData = date + ' ' + time;
-
-                            // 태그 데이터 key값 정리
-                            let tagList = [];
-                            for (let i = 0; i < chipData.length; i++) {
-                                tagList.push(chipData[i].label);
-                            }
-
-                            dispatch(R_makeQuizShow({
-                                title:titleTextData,
-                                category:currency,
-                                tags:tagList,
-                                titleimg_origin:imageUrl,
-                                titleimg_thumb:imageUrl,
-                                createDate:dateData,
-                                lastModifyDate:dateData,
-                                state:"작성중",
-                                pulic:isPublic
-                            }));
-
-                            handleClose();
-                        }
-                    }
-                >
-                    생성
-                </Button>
+                <Button variant={"contained"} onClick={setQuizInfo}>생성</Button>
             </div>
         )
     }
