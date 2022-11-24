@@ -34,7 +34,7 @@ export function BasicModal() {
           <Typography align='center' id="modal-modal-title" variant="h6" component="h2">
            진행자에 의해 강퇴 되었습니다.
           </Typography>
-       
+
           <Link to="/QClient">
           <Typography variant="h5" component="div" align='center'>
           <Button variant="contained">확인</Button>

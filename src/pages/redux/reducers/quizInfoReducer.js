@@ -1,5 +1,6 @@
 import {createAction, handleActions} from "redux-actions";
 
+const SET_QUIZ = "SET_QUIZ";
 const MAKE_QUIZ_SHOW = 'MAKE_QUIZ_SHOW';
 const SET_CURRENT_SHOW = 'SET_CURRENT_SHOW';
 const SET_QUIZ_INFO = 'SET_QUIZ_INFO';
@@ -9,8 +10,11 @@ const COPY_QUIZ = 'COPY_QUIZ';
 const RENUMBER_QUIZ = 'RENUMBER_QUIZ';
 const MODIFY_QUIZ = 'MODIFY_QUIZ';
 const MODIFY_QUIZ_ANSWER = 'MODIFY_QUIZ_ANSWER';
+const SET_ID = 'SET_ID';
 
-export  const R_makeQuizShow = createAction(MAKE_QUIZ_SHOW);
+
+export const R_setQuiz = createAction(SET_QUIZ);
+export const R_makeQuizShow = createAction(MAKE_QUIZ_SHOW);
 export const R_setCurrentShow = createAction(SET_CURRENT_SHOW);
 export const R_setQuizInfo = createAction(SET_QUIZ_INFO);
 export const R_addQuiz = createAction(ADD_QUIZ);
@@ -19,25 +23,26 @@ export const R_copyQuiz = createAction(COPY_QUIZ);
 export const R_renumberQuiz = createAction(RENUMBER_QUIZ);
 export const R_modifyQuiz = createAction(MODIFY_QUIZ);
 export const R_modifyQuizAnswer = createAction(MODIFY_QUIZ_ANSWER);
+export const R_setId = createAction(SET_ID);
 
 const initialState = {
     quiz: {
-        _id: "637440e817bb6d42edbf3927",
+        id: "",
         quizInfo: {
-                "email": "dudrl0944@gmail.com",
-                "title": "쇼 제목",
-                "category": "일단",
-                "tags": [
-                    "1번",
-                    "2번",
-                    "3번"
-                ],
-                "titleImg_origin": "url",
-                "titleImg_thumb": "url",
-                "createDate": "2022-11-11T00:00:00.000+00:00",
-                "lastModifyDate": "2022-11-11T00:00:00.000+00:00",
-                "state": "작성중",
-                "pulic": false
+                // "email": "dudrl0944@gmail.com",
+                // "title": "쇼 제목",
+                // "category": "일단",
+                // "tags": [
+                //     "1번",
+                //     "2번",
+                //     "3번"
+                // ],
+                // "titleImg_origin": "url",
+                // "titleImg_thumb": "url",
+                // "createDate": "2022-11-11T00:00:00.000+00:00",
+                // "lastModifyDate": "2022-11-11T00:00:00.000+00:00",
+                // "state": "작성중",
+                // "pulic": false
         },
         currentShow: 1,
         quizData: [
@@ -52,10 +57,10 @@ const initialState = {
                     "endTime": "",
                 },
                 "choiceList": {
-                    "1": "답을 입력해 주세요",
-                    "2": "답을 입력해 주세요",
-                    "3": "",
-                    "4": ""
+                    "num1": "답을 입력해 주세요",
+                    "num2": "답을 입력해 주세요",
+                    "num3": "",
+                    "num4": ""
                 },
                 "answer": [],
                 "time": 0,
@@ -68,15 +73,41 @@ const initialState = {
 }
 
 
-const quizInfoReducer = handleActions({
-    [MAKE_QUIZ_SHOW]:(state, action)=>{
+export const quizInfoReducer = handleActions({
+    [SET_QUIZ]: (state, action) => {
+        return {
+            ...state,
+            quiz: action.payload
+        }
+    },
+    [SET_ID]: (state, action) => {
         return {
             ...state,
             quiz: {
                 ...state.quiz,
-                quizInfo:action.payload
+                id: action.payload
             }
         }
+    },
+    [MAKE_QUIZ_SHOW]:(state, action)=>{
+
+        return {
+            ...state,
+            quiz: {
+                ...state.quiz,
+                quizInfo: {
+                    ...state.quiz.quizInfo,
+                    [action.payload.key]: action.payload.value
+                }
+            }
+        }
+        // return {
+        //     ...state,
+        //     quiz: {
+        //         ...state.quiz,
+        //         quizInfo:action.payload
+        //     }
+        // }
     },
     [SET_CURRENT_SHOW]: (state, action) => {
         return {
@@ -109,14 +140,12 @@ const quizInfoReducer = handleActions({
                         "media": {
                             "type": "image",
                             "url": "",
-                            "startTime": "",
-                            "endTime": "",
                         },
                         "choiceList": {
-                            "1": "답을 입력해 주세요",
-                            "2": "답을 입력해 주세요",
-                            "3": "",
-                            "4": ""
+                            "num1": "답을 입력해 주세요",
+                            "num2": "답을 입력해 주세요",
+                            "num3": "",
+                            "num4": ""
                         },
                         "answer": [],
                         "time": 0,
@@ -212,4 +241,3 @@ const quizInfoReducer = handleActions({
         }
     },
 }, initialState);
-export default quizInfoReducer;
