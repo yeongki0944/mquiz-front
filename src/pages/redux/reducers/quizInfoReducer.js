@@ -1,5 +1,6 @@
 import {createAction, handleActions} from "redux-actions";
 
+const SET_QUIZ = "SET_QUIZ";
 const MAKE_QUIZ_SHOW = 'MAKE_QUIZ_SHOW';
 const SET_CURRENT_SHOW = 'SET_CURRENT_SHOW';
 const SET_QUIZ_INFO = 'SET_QUIZ_INFO';
@@ -9,8 +10,11 @@ const COPY_QUIZ = 'COPY_QUIZ';
 const RENUMBER_QUIZ = 'RENUMBER_QUIZ';
 const MODIFY_QUIZ = 'MODIFY_QUIZ';
 const MODIFY_QUIZ_ANSWER = 'MODIFY_QUIZ_ANSWER';
+const SET_ID = 'SET_ID';
 
-export  const R_makeQuizShow = createAction(MAKE_QUIZ_SHOW);
+
+export const R_setQuiz = createAction(SET_QUIZ);
+export const R_makeQuizShow = createAction(MAKE_QUIZ_SHOW);
 export const R_setCurrentShow = createAction(SET_CURRENT_SHOW);
 export const R_setQuizInfo = createAction(SET_QUIZ_INFO);
 export const R_addQuiz = createAction(ADD_QUIZ);
@@ -19,6 +23,7 @@ export const R_copyQuiz = createAction(COPY_QUIZ);
 export const R_renumberQuiz = createAction(RENUMBER_QUIZ);
 export const R_modifyQuiz = createAction(MODIFY_QUIZ);
 export const R_modifyQuizAnswer = createAction(MODIFY_QUIZ_ANSWER);
+export const R_setId = createAction(SET_ID);
 
 const initialState = {
     quiz: {
@@ -52,10 +57,10 @@ const initialState = {
                     "endTime": "",
                 },
                 "choiceList": {
-                    "1": "답을 입력해 주세요",
-                    "2": "답을 입력해 주세요",
-                    "3": "",
-                    "4": ""
+                    "num1": "답을 입력해 주세요",
+                    "num2": "답을 입력해 주세요",
+                    "num3": "",
+                    "num4": ""
                 },
                 "answer": [],
                 "time": 0,
@@ -68,7 +73,22 @@ const initialState = {
 }
 
 
-const quizInfoReducer = handleActions({
+export const quizInfoReducer = handleActions({
+    [SET_QUIZ]: (state, action) => {
+        return {
+            ...state,
+            quiz: action.payload
+        }
+    },
+    [SET_ID]: (state, action) => {
+        return {
+            ...state,
+            quiz: {
+                ...state.quiz,
+                id: action.payload
+            }
+        }
+    },
     [MAKE_QUIZ_SHOW]:(state, action)=>{
 
         return {
@@ -122,10 +142,10 @@ const quizInfoReducer = handleActions({
                             "url": "",
                         },
                         "choiceList": {
-                            "1": "답을 입력해 주세요",
-                            "2": "답을 입력해 주세요",
-                            "3": "",
-                            "4": ""
+                            "num1": "답을 입력해 주세요",
+                            "num2": "답을 입력해 주세요",
+                            "num3": "",
+                            "num4": ""
                         },
                         "answer": [],
                         "time": 0,
@@ -221,4 +241,3 @@ const quizInfoReducer = handleActions({
         }
     },
 }, initialState);
-export default quizInfoReducer;

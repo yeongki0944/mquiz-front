@@ -62,13 +62,13 @@ export const FormPanel = (props) => {
                                     setQuiz('base', 'answer', []);
                                     switch(type){
                                         case '선택형':
-                                            setQuiz('base', 'choiceList', {1: '', 2: '', 3: '', 4: ''});
+                                            setQuiz('base', 'choiceList', {"num1": '', "num2": '', "num3": '', "num4": ''});
                                             break;
                                         case 'OX':
-                                            setQuiz('base', 'choiceList', {1: 'O', 2: '', 3: '', 4: ''});
+                                            setQuiz('base', 'choiceList', {"num1": 'O', "num2": '', "num3": '', "num4": ''});
                                             break;
                                         case '단답형':
-                                            setQuiz('base', '', {1: '', 2: '', 3: '', 4: ''});
+                                            setQuiz('base', '', {"num1": '', "num2": '', "num3": '', "nu4": ''});
                                             break;
                                     }
                                 }}

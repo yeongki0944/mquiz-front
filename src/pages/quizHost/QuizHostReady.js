@@ -15,6 +15,8 @@ import {ClientTotalCount} from "../components/Client/ClientTotalCount";
 import {ClientJoinList} from "../components/Client/ClientJoinList";
 import {VolumeControlButton} from "../components/VolumeControlButton";
 import {BasicModal} from "../components/Client/ClientJoinList";
+import {useEffect} from "react";
+import {useSelector} from "react-redux";
 
 // import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
 
@@ -46,7 +48,16 @@ const Item = styled(Paper)(({theme}) => ({
     color: theme.palette.text.secondary,
 }));
 
+
 export const QuizHostReady = () => {
+
+    const {quiz} = useSelector(state => state.quiz);
+    useEffect(
+        () => {
+            console.log(quiz.id);
+        }, []
+    );
+
     return (
         <div id={"content"}>
             <div className="sliderbar">

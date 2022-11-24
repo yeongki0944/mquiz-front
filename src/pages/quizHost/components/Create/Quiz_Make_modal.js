@@ -13,10 +13,9 @@ import Chip from "@mui/material/Chip";
 import {FormControlLabel, FormGroup, Switch} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import {makeStyles} from "@material-ui/core/styles";
-import {R_makeQuizShow} from "../../../redux/reducers/quizInfoReducer";
+import {R_makeQuizShow, R_modifyQuiz, R_setId} from "../../../redux/reducers/quizInfoReducer";
 import CustomAxios from "../../../function/CustomAxios";
-import {R_setQuizList} from "../../../redux/reducers/quizListReducer";
-import axios from "axios";
+import {useHistory} from "react-router-dom";
 
 const useStyles = makeStyles(() => ({
         imageStyle: {
@@ -138,18 +137,21 @@ export default function BasicModal(props) {
 
     const [helperText, setHelperText] = useState('');
 
-    const mongodbUrl = useSelector(state => state.mongodbUrl);
-
+    const history = useHistory();
 
     const setQuizInfo = async () => {
-        console.log(quiz.quizInfo);
-
 
         await CustomAxios.post("/v1/Qready/save", {
             quizInfo: quiz.quizInfo,
+            quizData: quiz.quizData,
         }).then((res) => {
             console.log(res.data)
-            // props.setOpen(false)
+            props.setOpen(false);
+            //history push with id
+            history.push({
+                pathname:"/QHost/create",
+                state:{ id : res.data.data}
+            })
         }).catch((err) => {
             console.log(err)
             // props.setOpen(false)

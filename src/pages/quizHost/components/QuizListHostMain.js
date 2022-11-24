@@ -1,17 +1,17 @@
-import * as React from 'react';
-import {styled} from '@mui/material/styles';
+import * as React from 'react'
 import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
-import ButtonBase from '@mui/material/ButtonBase';
 import {Box, Button} from "@mui/material";
 import EditIcon from "@material-ui/icons/Edit";
 import PlayArrow from "@material-ui/icons/PlayArrow";
-import {useEffect, useState} from "react";
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import {useDispatch, useSelector} from "react-redux";
-import {R_setQuizInfo} from "../../redux/reducers/quizInfoReducer";
+import {R_setId, R_setQuiz, R_setQuizInfo} from "../../redux/reducers/quizInfoReducer";
 import Add from "@material-ui/icons/Add";
 import './styles/QuizListHostMain.css'
+import {Link, useHistory} from "react-router-dom";
+import CustomAxios from "../../function/CustomAxios";
+import {useState} from "react";
 
 /**
  * props:
@@ -19,9 +19,9 @@ import './styles/QuizListHostMain.css'
  *  - setModalOpen: 모달 오픈 상태 변경 함수
  */
 
-export default function QuizListHostMain(props) {
+export const QuizListHostMain = (props) =>{
     const dispatch = useDispatch();
-
+    const history = useHistory();
     const quizList = props.quizList;
 
     const list = quizList.map(
@@ -52,22 +52,14 @@ export default function QuizListHostMain(props) {
                             </Grid>
                         </Grid>
                         <Grid item>
-                            {item.quizInfo.state === "작성중" ?
-                                <Typography variant="subtitle1" component="div">
-                                    <Button variant="contained" onClick={() => {
-                                        toEdit(item.id);
-                                    }}><EditIcon/></Button>
-                                </Typography>
-                                :
-                                <Typography variant="subtitle1" component="div">
-                                    <Button id={"editBtn"} variant="contained" onClick={() => {
-                                        toEdit(item.id);
-                                    }}><EditIcon/></Button>
-                                    <Button variant="outlined" size="small" onClick={() => {
-                                        toPlay(item.id);
-                                    }}><PlayArrow/></Button>
-                                </Typography>
-                            }
+                            <Typography variant="subtitle1" component="div">
+                                {item.quizInfo.state === "작성중" ?
+                                    <Button id={item.id} onClick={handleEdit}><EditIcon/></Button>
+                                    : null
+                                }
+                                <Button id={item.id} onClick={handlePlay}><PlayArrow/></Button>
+                                <Button id={item.id} onClick={handledelete}><DeleteForeverIcon/></Button>
+                            </Typography>
                         </Grid>
                     </Grid>
                 </Grid>
@@ -77,27 +69,39 @@ export default function QuizListHostMain(props) {
     return (
         <>
             <div id={"addBtn"}>
-                <Button fullWidth={true} onClick={() => {
-                    props.setModalOpen(true);
-                }}><Add/></Button>
+                <Button fullWidth={true} onClick={()=>{handleCreate("55555")}}><Add/></Button>
             </div>
+            <Button onClick={()=>{handleEdit("55555")}}><EditIcon/></Button>
+            <Button onClick={()=>{handlePlay("55555")}}><PlayArrow/></Button>
+            <Button onClick={()=>{handledelete("55555")}}><DeleteForeverIcon/></Button>
             {list}
         </>
     );
 
-    function toEdit(id) {
-        const quizInfo = quizList.find(quiz => quiz.id === id);
-        dispatch(R_setQuizInfo(quizInfo));
-        //여기에서 axios 한 다음 quizData set 해줘야함
-        // eslint-disable-next-line no-restricted-globals
-        location.href = "/QHost/create";
+    function handledelete(id){
+        CustomAxios.delete(`/v1/show?showId=${id}`)
+            .then(res => {
+                console.log(res);
+                history.go(0);
+            })
+            .catch(err => {
+                console.log(err);
+            })
     }
 
-    function toPlay(id) {
-        const quizInfo = quizList.find(quiz => quiz.id === id);
-        dispatch(R_setQuizInfo(quizInfo));
-        //여기에서 axios 한 다음 quizData set 해줘야함
-        // eslint-disable-next-line no-restricted-globals
-        location.href = "/QHost/ready";
+    function handleEdit(id) {
+        // console.log(e.target.id);
+        dispatch(R_setId(id));
+        history.push({pathname: '/QHost/create',})
+    }
+
+    function handlePlay(id){
+        // console.log(e.target.id);
+        dispatch(R_setId(id));
+        history.push({pathname: '/QHost/ready',})
+    }
+
+    function handleCreate(){
+        props.setModalOpen(true);
     }
 }
