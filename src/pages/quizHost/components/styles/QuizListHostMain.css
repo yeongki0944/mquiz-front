@@ -1,0 +1,47 @@
+
+#addBtn {
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+    border: 2px solid darkgrey;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+/* PC (해상도 767px 이상)*/
+@media (min-width: 767px) {
+    .item {
+        width: 70%;
+        border: 3px solid orange;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        border-radius: 5px;
+        margin-bottom: 10px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 10px;
+        background-color: white;
+    }
+}
+
+/* 모바일 가로, 모바일 세로 (해상도 300px ~ 767px)*/
+@media (min-width: 300px) and (max-width: 767px) {
+    #editBtn {
+        display: none;
+    }
+
+    .item {
+        width: 70%;
+        border: 3px solid orange;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        border-radius: 5px;
+        margin-bottom: 10px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 10px;
+        background-color: white;
+    }
+}
+
+
+

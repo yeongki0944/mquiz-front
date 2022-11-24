@@ -1,0 +1,47 @@
+
+#panel {
+    display: flex;
+    float: left;
+    width: 100%;
+}
+
+#list {
+    width: 15%;
+    height: 90vh;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+#quizview{
+    width: 70%;
+    height: 90vh;
+    overflow: scroll;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+#form{
+    width: 15%;
+    height: 90vh;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+#control {
+/*아래로 정렬*/
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    width: 100%;
+    height: 5vh;
+}
+
+/* PC (해상도 1024px)*/
+@media all and (min-width: 1024px) {
+}
+
+/* 모바일 가로, 모바일 세로 (해상도 480px ~ 767px)*/
+@media all and (max-width: 767px) {
+}
+
+
+
