@@ -14,6 +14,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import './QuizView.css';
 import {PinNum} from "../PinNum";
 import {VolumeControlButton} from "../VolumeControlButton";
+import {useEffect} from "react";
 
 
 export const QuizView = (props) => {
@@ -43,9 +44,14 @@ export const QuizView = (props) => {
             case "Audio":
                 return (<AudioShow/>);
                 break;
+            default:
+                return (<>media</>);
         }
     }
 
+    useEffect(() => {
+        console.log(currentQuiz.media);
+    }, [])
 
     return (
         <div id={"content"}>
@@ -73,8 +79,8 @@ export const QuizView = (props) => {
                     </div>
                 </div>
             </div>
-            <div  id={"section2"}>
-                    <AnswerSheet/>
+            <div id={"section2"}>
+                <AnswerSheet/>
             </div>
         </div>
 

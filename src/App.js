@@ -27,46 +27,47 @@ import store from "./pages/redux/store";
 import {Provider} from "react-redux";
 
 
-export default function App() {
+const App = () =>{
     return (
-        <Provider store={store}>
-            <Router>
-                <div>
-                    <Switch>
-                        <Route path="/" component={Home} exact/>
-                        {/* 관리자 페이지 목록*/}
+            <Provider store={store}>
+                <Router>
+                    <div>
+                        <Switch>
+                            <Route path="/" component={Home} exact/>
+                            {/* 관리자 페이지 목록*/}
 
-                        {/* 진행자 페이지 목록*/}
-                        <Route path="/QHost" component={QuizHostMain} exact/>
+                            {/* 진행자 페이지 목록*/}
+                            <Route path="/QHost" component={QuizHostMain} exact/>
 
-                        <Route path="/QHost/create" component={QuizHostCreate} exact/>
+                            <Route path="/QHost/create" component={QuizHostCreate} exact/>
 
-                        <Route path="/QHost/find" component={QuizHostFind} exact/>
+                            <Route path="/QHost/find" component={QuizHostFind} exact/>
 
-                        <Route path="/QHost/ready" component={QuizHostReady} exact/>
+                            <Route path="/QHost/ready" component={QuizHostReady} exact/>
 
-                        <Route path="/QHost/play" component={QuizHostPlay} exact/>
+                            <Route path="/QHost/play" component={QuizHostPlay} exact/>
 
-                        <Route path="/Test" component={TestBoard} exact/>
+                            <Route path="/Test" component={TestBoard} exact/>
 
-                        <Route path="/ComponentTest" component={ComponentTest} exact/>
+                            <Route path="/ComponentTest" component={ComponentTest} exact/>
 
-                        {/* 참가자 페이지 목록*/}
-                        <Route path="/QClient" component={QuizClientMain} exact/>
+                            {/* 참가자 페이지 목록*/}
+                            <Route path="/QClient" component={QuizClientMain} exact/>
 
-                        <Route path="/QClient/createNickName" component={QuizClientCreateNickName} exact/>
+                            <Route path="/QClient/createNickName" component={QuizClientCreateNickName} exact/>
 
-                        <Route path="/QClient/ready" component={QClientReady} exact/>
+                            <Route path="/QClient/ready" component={QClientReady} exact/>
 
-                        <Route path="/QClient/wait" component={QClientWait} exact/>
+                            <Route path="/QClient/wait" component={QClientWait} exact/>
 
-                        <Route path="/QClient/play" component={QClientPlay} exact/>
+                            <Route path="/QClient/play" component={QClientPlay} exact/>
 
-                        <Route path="/QClient/result" component={QClientResult} exact/>
+                            <Route path="/QClient/result" component={QClientResult} exact/>
 
-                    </Switch>
-                </div>
-            </Router>
-        </Provider>
+                        </Switch>
+                    </div>
+                </Router>
+            </Provider>
     );
 }
+export default App;

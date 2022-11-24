@@ -53,8 +53,8 @@ const initialState = {
                 "media": {
                     "type": "image",
                     "url": "",
-                    "startTime": "",
-                    "endTime": "",
+                    // "startTime": "",
+                    // "endTime": "",
                 },
                 "choiceList": {
                     "num1": "답을 입력해 주세요",
@@ -75,12 +75,14 @@ const initialState = {
 
 export const quizInfoReducer = handleActions({
     [SET_QUIZ]: (state, action) => {
+        console.log("SET_QUIZ");
         return {
             ...state,
             quiz: action.payload
         }
     },
     [SET_ID]: (state, action) => {
+        console.log("SET_ID");
         return {
             ...state,
             quiz: {

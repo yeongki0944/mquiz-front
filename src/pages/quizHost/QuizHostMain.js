@@ -18,7 +18,7 @@ export const QuizHostMain = () => {
 
     const email = "test@gmail.com";
     const setQuizList = async () => {
-        await CustomAxios.get("v1/show/List?email="+email)
+        await CustomAxios.get("/v1/show/List?email="+email)
             .then((res) => {
                 console.log(res.data)
                 dispatch(R_setQuizList(res.data.data))

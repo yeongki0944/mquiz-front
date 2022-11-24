@@ -6,12 +6,12 @@ import EditIcon from "@material-ui/icons/Edit";
 import PlayArrow from "@material-ui/icons/PlayArrow";
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import {useDispatch, useSelector} from "react-redux";
-import {R_setId, R_setQuiz, R_setQuizInfo} from "../../redux/reducers/quizInfoReducer";
 import Add from "@material-ui/icons/Add";
 import './styles/QuizListHostMain.css'
 import {Link, useHistory} from "react-router-dom";
+import {useEffect, useState} from "react";
 import CustomAxios from "../../function/CustomAxios";
-import {useState} from "react";
+import {R_setCurrentShow, R_setId, R_setQuiz} from "../../redux/reducers/quizInfoReducer";
 
 /**
  * props:
@@ -19,7 +19,7 @@ import {useState} from "react";
  *  - setModalOpen: 모달 오픈 상태 변경 함수
  */
 
-export const QuizListHostMain = (props) =>{
+export const QuizListHostMain = (props) => {
     const dispatch = useDispatch();
     const history = useHistory();
     const quizList = props.quizList;
@@ -54,11 +54,17 @@ export const QuizListHostMain = (props) =>{
                         <Grid item>
                             <Typography variant="subtitle1" component="div">
                                 {item.quizInfo.state === "작성중" ?
-                                    <Button id={item.id} onClick={handleEdit}><EditIcon/></Button>
+                                    <Button onClick={() => {
+                                        handleEdit(item.id)
+                                    }}><EditIcon/></Button>
                                     : null
                                 }
-                                <Button id={item.id} onClick={handlePlay}><PlayArrow/></Button>
-                                <Button id={item.id} onClick={handledelete}><DeleteForeverIcon/></Button>
+                                <Button onClick={() => {
+                                    handlePlay(item.id)
+                                }}><PlayArrow/></Button>
+                                <Button onClick={() => {
+                                    handledelete(item.id)
+                                }}><DeleteForeverIcon/></Button>
                             </Typography>
                         </Grid>
                     </Grid>
@@ -66,19 +72,8 @@ export const QuizListHostMain = (props) =>{
             </div>
         )
     );
-    return (
-        <>
-            <div id={"addBtn"}>
-                <Button fullWidth={true} onClick={()=>{handleCreate("55555")}}><Add/></Button>
-            </div>
-            <Button onClick={()=>{handleEdit("55555")}}><EditIcon/></Button>
-            <Button onClick={()=>{handlePlay("55555")}}><PlayArrow/></Button>
-            <Button onClick={()=>{handledelete("55555")}}><DeleteForeverIcon/></Button>
-            {list}
-        </>
-    );
 
-    function handledelete(id){
+    function handledelete(id) {
         CustomAxios.delete(`/v1/show?showId=${id}`)
             .then(res => {
                 console.log(res);
@@ -89,19 +84,49 @@ export const QuizListHostMain = (props) =>{
             })
     }
 
-    function handleEdit(id) {
-        // console.log(e.target.id);
-        dispatch(R_setId(id));
-        history.push({pathname: '/QHost/create',})
+    const handleEdit = (id) => {
+        CustomAxios.get('/v1/show?showId=' + id)
+            .then(res => {
+                console.log(res.data);
+                dispatch(R_setId(id));
+                dispatch(R_setQuiz(res.data.data));
+                dispatch(R_setCurrentShow(1));
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        history.push({
+            pathname: '/QHost/create',
+        })
     }
 
-    function handlePlay(id){
-        // console.log(e.target.id);
-        dispatch(R_setId(id));
-        history.push({pathname: '/QHost/ready',})
+    const handlePlay = (id) => {
+        CustomAxios.get('/v1/show?showId=' + id)
+            .then(res => {
+                console.log(res.data);
+                dispatch(R_setId(id));
+                dispatch(R_setQuiz(res.data.data));
+                dispatch(R_setCurrentShow(1));
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        history.push({
+            pathname: '/QHost/play',})
     }
 
-    function handleCreate(){
+    function handleCreate() {
         props.setModalOpen(true);
     }
+
+    return (
+        <>
+            <div id={"addBtn"}>
+                <Button fullWidth={true} onClick={handleCreate}><Add/></Button>
+            </div>
+            {list}
+        </>
+    );
+
+
 }

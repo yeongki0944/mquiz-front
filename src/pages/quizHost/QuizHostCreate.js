@@ -11,7 +11,7 @@ import './styles/QuizHostCreate.css';
 import {NavBar} from "../components/NavBar";
 import {useLocation} from "react-router-dom";
 import {useEffect, useState} from "react";
-import {R_setId, R_setQuiz} from "../redux/reducers/quizInfoReducer";
+import {R_setCurrentShow, R_setId, R_setQuiz} from "../redux/reducers/quizInfoReducer";
 import CustomAxios from "../function/CustomAxios";
 
 
@@ -20,21 +20,11 @@ export const QuizHostCreate = () => {
     const dispatch = useDispatch();
 
     const {quiz} = useSelector(state => state.quiz);
-    useEffect(() => {
-        console.log(quiz.id);
-        CustomAxios.get('/v1/show?showId='+quiz.id)
-            .then(res => {
-                console.log(res.data);
-                dispatch(R_setQuiz(res.data.data));
-            })
-            .catch(err => {
-                console.log(err);
-            })
-    }, []);
-    const currentQuiz = quiz.quizData.find(item => item.num === quiz.currentShow);
+    const currentQuiz = (quiz.quizData.find(item => item.num === quiz.currentShow));
 
-
-
+    // useEffect(() => {
+        // console.log(quiz.quizData.find(item => item.num === "11));
+    // }, []);
 
     return (
         <div id={"content"}>

@@ -140,14 +140,13 @@ export default function BasicModal(props) {
     const history = useHistory();
 
     const setQuizInfo = async () => {
-
-        await CustomAxios.post("/v1/Qready/save", {
+        console.log(quiz.quizData);
+        await CustomAxios.post("/v1/show", {
             quizInfo: quiz.quizInfo,
             quizData: quiz.quizData,
         }).then((res) => {
             console.log(res.data)
             props.setOpen(false);
-            //history push with id
             history.push({
                 pathname:"/QHost/create",
                 state:{ id : res.data.data}
