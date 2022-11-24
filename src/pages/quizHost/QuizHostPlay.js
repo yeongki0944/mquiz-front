@@ -5,7 +5,14 @@ import {useEffect, useState} from "react";
 import Button from "@mui/material/Button";
 import {R_setCurrentShow} from "../redux/reducers/quizplayReducer";
 import {QuizStartCounter} from "../components/QuizStartCounter";
+import {styled} from "@mui/system";
+import Paper from "@mui/material/Paper";
 
+
+const Counter = styled(Paper)({
+    width : '100%',
+    height : '100vh',
+});
 
 export const QuizHostPlay = () => {
     const dispatch = useDispatch();
@@ -37,13 +44,15 @@ export const QuizHostPlay = () => {
 
     return (
         <div id={"content"}>
-            {/*<QuizStartCounter/>*/}
-
+            {/*<Counter><QuizStartCounter/></Counter>*/}
             {/*<Button onClick={handleNext}>Next</Button>*/}
             {/*if gaemStatus == wait button is start else button is next*/}
             {gameStatus === "wait" ? <Button onClick={handleNext}>Start</Button> : <Button onClick={handleNext}>Next</Button>}
+            {gameStatus === "count" && <Counter><QuizStartCounter/></Counter>}
+            {gameStatus === "play" && <QuizView quiz={currentQuiz}/>}
+            {gameStatus === "result" && <div>result</div>}
             {/*<QuizView currentQuiz={currentQuiz}/>*/}
-            {gameStatus === "waiting" ? null : <QuizView currentQuiz={currentQuiz}/>}
+            {/*{gameStatus === "waiting" ? null : <QuizView currentQuiz={currentQuiz}/>}*/}
         </div>
     );
 }
