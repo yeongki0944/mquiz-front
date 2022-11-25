@@ -7,6 +7,7 @@ import {QuizStartCounter} from "../components/QuizStartCounter";
 import {styled} from "@mui/system";
 import Paper from "@mui/material/Paper";
 import {R_setCurrentShow_play} from "../redux/reducers/quizplayReducer";
+import {useHistory} from "react-router-dom";
 
 
 const Counter = styled(Paper)({
@@ -16,9 +17,10 @@ const Counter = styled(Paper)({
 
 export const QuizHostPlay = () => {
     const dispatch = useDispatch();
+    const history = useHistory();
 
     //wait -> (count -> play ->result -> count) -> result
-    const [gameStatus, setGameStatus] = useState("wait");
+    const [command, setCommand] = useState("wait");
     const {quizPlay} = useSelector(state => state.quizPlay);
     const {quiz} = useSelector(state => state.quiz);
     const currentQuiz = (quiz.quizData.find(item => item.num === quizPlay.currentShow));
@@ -29,40 +31,44 @@ export const QuizHostPlay = () => {
     }, []);
 
     //이거 웹소캣이랑 연동
-    const handleNext = () => {
-        switch (gameStatus) {
+    const handleCommand = () => {
+        switch (command) {
             case "wait":
-                setGameStatus("start");
+                setCommand("start");
                 break;
             case "start":
-                setGameStatus("result");
+                setCommand("result");
                 break;
             case "show": //start 이후 자동
-                setGameStatus("result");
+                setCommand("result");
                 break;
             case "result":
                 dispatch(R_setCurrentShow_play(quizPlay.currentShow + 1));
-                setGameStatus("start");
+                setCommand("start");
                 break;
         }
     }
 
     useEffect(() => {
-        if (gameStatus === "start") {
-            setTimeout(() => {
-                setGameStatus("show");
-            }, 3000);
+        switch (command){
+            case "start":
+                setTimeout(() => {
+                    setCommand("show");
+                }, 3000);
+                break;
+            case "kick":
+                history.push("/QClient");
         }
-    }, [gameStatus]);
+    }, [command]);
 
     return (
         <div id={"content"}>
-            {gameStatus === "wait" ? <Button onClick={handleNext}>Start</Button> :
-                <Button onClick={handleNext}>Next</Button>}
-            {gameStatus === "start" && <Counter><QuizStartCounter/></Counter>}
-            {gameStatus === "show" && <QuizView currentQuiz={currentQuiz}/>}
-            {gameStatus === "result" && <div>result</div>}
-            {gameStatus === "final" && <div>final</div>}
+            {command === "wait" ? <Button onClick={handleCommand}>Start</Button> :
+                <Button onClick={handleCommand}>Next</Button>}
+            {command === "start" && <Counter><QuizStartCounter/></Counter>}
+            {command === "show" && <QuizView currentQuiz={currentQuiz}/>}
+            {command === "result" && <div>result</div>}
+            {command === "final" && <div>final</div>}
             {/*<QuizView currentQuiz={currentQuiz}/>*/}
         </div>
     );

@@ -6,7 +6,7 @@ import {ControlPanel} from "./components/Create/ControlPanel";
 import {useDispatch, useSelector} from "react-redux";
 import {makeStyles} from "@material-ui/core/styles";
 import {QuizView} from "../components/QuizView/QuizView";
-import './styles/BaseLayout.css';
+import '../styles/BaseLayout.css';
 import './styles/QuizHostCreate.css';
 import {NavBar} from "../components/NavBar";
 import {useLocation} from "react-router-dom";

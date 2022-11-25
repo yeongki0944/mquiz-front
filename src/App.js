@@ -13,18 +13,14 @@ import {QuizHostReady} from "./pages/quizHost/QuizHostReady"
 import {QuizHostPlay} from "./pages/quizHost/QuizHostPlay"
 import {QuizHostCreate} from "./pages/quizHost/QuizHostCreate";
 
-import QuizClientMain from "./pages/quizClient/main";
-import QuizClientCreateNickName from "./pages/quizClient/main/CreateNickName";
-import QClientReady from "./pages/quizClient/ready/Ready";
-import QClientWait from "./pages/quizClient/wait/Wait";
-import QClientPlay from "./pages/quizClient/play/Play";
-import QClientResult from "./pages/quizClient/result/Result";
+import {QuizClientMain} from "./pages/quizClient/QuizClientMain";
 
 import TestBoard from "./pages/test/TestBoard"
 import ComponentTest from "./pages/test/ComponentTest"
 
 import store from "./pages/redux/store";
 import {Provider} from "react-redux";
+import {QuizClientPlay} from "./pages/quizClient/QuizClientPlay";
 
 
 const App = () =>{
@@ -54,15 +50,7 @@ const App = () =>{
                             {/* 참가자 페이지 목록*/}
                             <Route path="/QClient" component={QuizClientMain} exact/>
 
-                            <Route path="/QClient/createNickName" component={QuizClientCreateNickName} exact/>
-
-                            <Route path="/QClient/ready" component={QClientReady} exact/>
-
-                            <Route path="/QClient/wait" component={QClientWait} exact/>
-
-                            <Route path="/QClient/play" component={QClientPlay} exact/>
-
-                            <Route path="/QClient/result" component={QClientResult} exact/>
+                            <Route path="/QClient/play" component={QuizClientPlay} exact/>
 
                         </Switch>
                     </div>

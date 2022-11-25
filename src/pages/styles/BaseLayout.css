@@ -1,11 +1,6 @@
 html{
     overflow: hidden;
-    background-color: red;
 }
-div {
-    /*border : 1px solid grey;*/
-}
-
 #content{
     width: 100%;
     height: 100%;

@@ -11,10 +11,10 @@ import Slider from '@mui/material/Slider';
 import Modal from "@mui/material/Modal";
 import CardMedia from "@mui/material/CardMedia";
 import {PinNum} from "../components/PinNum";
-import {ClientTotalCount} from "../components/Client/ClientTotalCount";
-import {ClientJoinList} from "../components/Client/ClientJoinList";
+import {ClientTotalCount} from "../quizClient/components/ClientTotalCount";
+import {ClientJoinList} from "../quizClient/components/ClientJoinList";
 import {VolumeControlButton} from "../components/VolumeControlButton";
-import {BasicModal} from "../components/Client/ClientJoinList";
+import {BasicModal} from "../quizClient/components/ClientJoinList";
 import {useEffect} from "react";
 import {useSelector} from "react-redux";
 

@@ -55,11 +55,11 @@ export function ClientReady(props) {
                     </Grid>
                 </Grid>
             </Paper>
-            <Link to="/QClient/play">
-                <Typography variant="h5" component="div" align='center'>
-                    <Button variant="contained">참여하기</Button>
-                </Typography>
-            </Link>
+            {/*<Link to="/QClient/play">*/}
+            {/*    <Typography variant="h5" component="div" align='center'>*/}
+            {/*        <Button variant="contained">참여하기</Button>*/}
+            {/*    </Typography>*/}
+            {/*</Link>*/}
         </>
     );
 }
