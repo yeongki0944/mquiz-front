@@ -8,9 +8,10 @@ import {styled} from "@mui/system";
 import Paper from "@mui/material/Paper";
 import {R_setCurrentShow_play} from "../redux/reducers/quizplayReducer";
 import {useHistory} from "react-router-dom";
+import {Page_Gradiant} from "../components/LayOuts/LayOuts";
 
 
-const Counter = styled(Paper)({
+const Counter = styled(QuizStartCounter)({
     width: '100%',
     height: '100vh',
 });
@@ -60,14 +61,14 @@ export const QuizHostPlay = () => {
     }, [command]);
 
     return (
-        <div id={"content"}>
+        <Page_Gradiant>
             {command === "wait" ? <Button onClick={handleCommand}>Start</Button> :
                 <Button onClick={handleCommand}>Next</Button>}
-            {command === "start" && <Counter><QuizStartCounter/></Counter>}
+            {command === "start" && <Counter/>}
             {command === "show" && <QuizView currentQuiz={currentQuiz}/>}
             {command === "result" && <div>result</div>}
             {command === "final" && <div>final</div>}
             {/*<QuizView currentQuiz={currentQuiz}/>*/}
-        </div>
+        </Page_Gradiant>
     );
 }

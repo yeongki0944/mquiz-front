@@ -10,30 +10,9 @@ import {NickNameCheck} from "./components/ClientNickNameInput";
 import {ClientReady} from "./components/ClientReady";
 import {ClientCountOutModal} from "./components/ClientCountOutModal";
 import {useHistory} from "react-router-dom";
+import {Item_c, Page_Gradiant} from "../components/LayOuts/LayOuts";
 
-const Page = styled.div`
-    width: 100%;
-    height: 100vh;
-    overflow-x: hidden;
-    overflow-y: hidden;
-    background: linear-gradient(to right, rebeccapurple, salmon);
-`;
 
-const Item = styled.div`
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-`;
-
-const Counter = styled.div`
-    width: 100%;
-    height: 100vh;
-    overflow-x: hidden;
-    overflow-y: hidden;
-    background: linear-gradient(to right, rebeccapurple, salmon);
-`;
 
 export const QuizClientPlay = () => {
     const dispatch = useDispatch();
@@ -77,18 +56,18 @@ export const QuizClientPlay = () => {
     }, [command]);
 
     return (
-        <Page>
-            <Item>
+        <Page_Gradiant>
+            <Item_c>
                 <Button onClick={handleCommand}>{command}</Button>
                 <Button onClick={()=>setOpen(true)}>kick</Button>
                 {command == "nickName" && <NickNameCheck setCommand={setCommand}/>}
                 {command == "wait" && <ClientReady/>}
-                {command === "start" && <Counter><QuizStartCounter/></Counter>}
+                {command === "start" && <Page_Gradiant><QuizStartCounter/></Page_Gradiant>}
                 {command === "show" && <QuizView currentQuiz={currentQuiz}/>}
                 {command === "result" && <div>result</div>}
                 {command === "final" && <div>final</div>}
                 <ClientCountOutModal open ={open} setOpen={setOpen}/>
-            </Item>
-        </Page>
+            </Item_c>
+        </Page_Gradiant>
     );
 }

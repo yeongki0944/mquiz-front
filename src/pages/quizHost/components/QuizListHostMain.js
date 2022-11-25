@@ -7,17 +7,58 @@ import PlayArrow from "@material-ui/icons/PlayArrow";
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import {useDispatch, useSelector} from "react-redux";
 import Add from "@material-ui/icons/Add";
-import './styles/QuizListHostMain.css'
 import {Link, useHistory} from "react-router-dom";
-import {useEffect, useState} from "react";
 import CustomAxios from "../../function/CustomAxios";
 import {R_setCurrentShow, R_setId, R_setQuiz} from "../../redux/reducers/quizInfoReducer";
+import styled from "styled-components";
 
 /**
  * props:
  *  - quizList: 퀴즈 목록
  *  - setModalOpen: 모달 오픈 상태 변경 함수
  */
+
+const Item = styled.div`
+    @media (min-width: 767px) {
+        width: 70%;
+        border: 3px solid orange;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        border-radius: 5px;
+        margin-bottom: 10px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 10px;
+        background-color: white;
+    }
+
+    @media (min-width: 300px) and (max-width: 767px) {
+        width: 70%;
+        border: 3px solid orange;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        border-radius: 5px;
+        margin-bottom: 10px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 10px;
+        background-color: white;
+    }
+`
+
+const EditIcon_Styled = styled(EditIcon)`
+    @media (min-width: 300px) and (max-width: 767px) {
+        display: none;
+    }
+`
+
+const AddBtn = styled.div`
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+    border: 2px solid darkgrey;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+`
 
 export const QuizListHostMain = (props) => {
     const dispatch = useDispatch();
@@ -26,7 +67,7 @@ export const QuizListHostMain = (props) => {
 
     const list = quizList.map(
         (item) => (
-            <div className={"item"} key={item.id}>
+            <Item key={item.id}>
                 <Grid container spacing={2}>
                     <Grid item>
                         <img alt="complex"
@@ -56,7 +97,7 @@ export const QuizListHostMain = (props) => {
                                 {item.quizInfo.state === "작성중" ?
                                     <Button onClick={() => {
                                         handleEdit(item.id)
-                                    }}><EditIcon/></Button>
+                                    }}><EditIcon_Styled/></Button>
                                     : null
                                 }
                                 <Button onClick={() => {
@@ -69,7 +110,7 @@ export const QuizListHostMain = (props) => {
                         </Grid>
                     </Grid>
                 </Grid>
-            </div>
+            </Item>
         )
     );
 
@@ -101,18 +142,8 @@ export const QuizListHostMain = (props) => {
     }
 
     const handlePlay = (id) => {
-        CustomAxios.get('/v1/show?showId=' + id)
-            .then(res => {
-                console.log(res.data);
-                dispatch(R_setId(id));
-                dispatch(R_setQuiz(res.data.data));
-                dispatch(R_setCurrentShow(1));
-            })
-            .catch(err => {
-                console.log(err);
-            })
         history.push({
-            pathname: '/QHost/play',})
+            pathname: '/QHost/ready',})
     }
 
     function handleCreate() {
@@ -120,12 +151,12 @@ export const QuizListHostMain = (props) => {
     }
 
     return (
-        <>
-            <div id={"addBtn"}>
+        <div>
+            <AddBtn>
                 <Button fullWidth={true} onClick={handleCreate}><Add/></Button>
-            </div>
+            </AddBtn>
             {list}
-        </>
+        </div>
     );
 
 

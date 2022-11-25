@@ -16,7 +16,9 @@ import {ClientJoinList} from "../quizClient/components/ClientJoinList";
 import {VolumeControlButton} from "../components/VolumeControlButton";
 import {BasicModal} from "../quizClient/components/ClientJoinList";
 import {useEffect} from "react";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import CustomAxios from "../function/CustomAxios";
+import {R_setCurrentShow, R_setId, R_setQuiz} from "../redux/reducers/quizInfoReducer";
 
 // import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
 
@@ -50,13 +52,22 @@ const Item = styled(Paper)(({theme}) => ({
 
 
 export const QuizHostReady = () => {
-
+    const dispatch = useDispatch();
     const {quiz} = useSelector(state => state.quiz);
-    useEffect(
-        () => {
-            console.log(quiz.id);
-        }, []
-    );
+
+    const handleStart = () => {
+        let id = "637f4c8d9fee5769ac5026f2";
+        CustomAxios.get('/v1/show?showId=' + id)
+            .then(res => {
+                console.log(res.data);
+                dispatch(R_setId(id));
+                dispatch(R_setQuiz(res.data.data));
+                dispatch(R_setCurrentShow(1));
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
 
     return (
         <div id={"content"}>
@@ -106,7 +117,7 @@ export const QuizHostReady = () => {
 
             <Link to="/QHost/play">
                 <Typography variant="h5" component="div" align='center' padding='20'>
-                    <Button variant="contained">시작</Button>
+                    <Button variant="contained" onClick={handleStart}>시작</Button>
                 </Typography>
             </Link>
 

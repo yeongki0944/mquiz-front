@@ -8,6 +8,7 @@ import Box from "@mui/material/Box";
 import {useState, useEffect} from "react";
 import {AllQuizListCard} from "../components/AllQuizListCard"
 import {QuizSearchBox} from "../components/QuizSearchBox"
+import {Page_Default} from "../components/LayOuts/LayOuts";
 
 export const QuizHostFind = () => {
     // 페이징
@@ -48,7 +49,7 @@ export const QuizHostFind = () => {
     }
 
     return (
-        <div id={"content"}>
+        <Page_Default>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
                     <Nav/>
@@ -69,7 +70,7 @@ export const QuizHostFind = () => {
                     footer
                 </Grid>
             </Grid>
-        </div>
+        </Page_Default>
     );
 
     function Nav() {
