@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 import ButtonBase from '@mui/material/ButtonBase';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import { styled } from '@mui/material/styles';
+import {styled} from '@mui/material/styles';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import CardMedia from '@mui/material/CardMedia';
@@ -22,34 +22,31 @@ const style = {
     p: 4,
 };
 
-export function ClientCountOutModal() {
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
+export function ClientCountOutModal(props) {
+    const open = props.open;
+    const setOpen = props.setOpen;
     const handleClose = () => setOpen(false);
 
     return (
-        <div>
-            <Button onClick={handleOpen}>참가자 퇴장</Button>
-            <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box sx={style}>
-                    <AlterImg></AlterImg>
-                    <Typography align='center' id="modal-modal-title" variant="h6" component="h2">
-                        진행자에 의해 강퇴 되었습니다.
-                    </Typography>
+        <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+        >
+            <Box sx={style}>
+                <AlterImg></AlterImg>
+                <Typography align='center' id="modal-modal-title" variant="h6" component="h2">
+                    진행자에 의해 강퇴 되었습니다.
+                </Typography>
 
-                    <Link to="/QClient">
-                        <Typography variant="h5" component="div" align='center'>
-                            <Button variant="contained">확인</Button>
-                        </Typography>
-                    </Link>
-                </Box>
-            </Modal>
-        </div>
+                <Link to="/QClient">
+                    <Typography variant="h5" component="div" align='center'>
+                        <Button variant="contained">확인</Button>
+                    </Typography>
+                </Link>
+            </Box>
+        </Modal>
     );
 }
 

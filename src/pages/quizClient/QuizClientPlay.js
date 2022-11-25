@@ -1,15 +1,15 @@
 import styled from "styled-components";
-import Paper from "@mui/material/Paper";
 import {useEffect, useState} from "react";
 import {R_setCurrentShow_play} from "../redux/reducers/quizplayReducer";
-import {PinNumCheck} from "./components/ClientPinNumInput";
-import Ready from "./ready/Ready";
 import {QuizStartCounter} from "../components/QuizStartCounter";
 import {QuizView} from "../components/QuizView/QuizView";
 import * as React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import Button from "@mui/material/Button";
 import {NickNameCheck} from "./components/ClientNickNameInput";
+import {ClientReady} from "./components/ClientReady";
+import {ClientCountOutModal} from "./components/ClientCountOutModal";
+import {useHistory} from "react-router-dom";
 
 const Page = styled.div`
     width: 100%;
@@ -37,11 +37,13 @@ const Counter = styled.div`
 
 export const QuizClientPlay = () => {
     const dispatch = useDispatch();
+    const history = useHistory();
     // pinNum -> nickName -> wait-> (count -> play ->result -> count) -> result
     const [command, setCommand] = useState("nickName");
     const {quizPlay} = useSelector(state => state.quizPlay);
     const {quiz} = useSelector(state => state.quiz);
     const currentQuiz = (quiz.quizData.find(item => item.num === quizPlay.currentShow));
+    const [open, setOpen] = useState(false);
 
 
     //이거 웹소캣이랑 연동
@@ -63,10 +65,14 @@ export const QuizClientPlay = () => {
         }
     }
     useEffect(() => {
-        if (command === "start") {
-            setTimeout(() => {
-                setCommand("show");
-            }, 3000);
+        switch (command){
+            case "start":
+                setTimeout(() => {
+                    setCommand("show");
+                }, 3000);
+                break;
+            case "kick":
+                setOpen(true);
         }
     }, [command]);
 
@@ -74,12 +80,14 @@ export const QuizClientPlay = () => {
         <Page>
             <Item>
                 <Button onClick={handleCommand}>{command}</Button>
+                <Button onClick={()=>setOpen(true)}>kick</Button>
                 {command == "nickName" && <NickNameCheck setCommand={setCommand}/>}
-                {command == "wait" && <Ready/>}
+                {command == "wait" && <ClientReady/>}
                 {command === "start" && <Counter><QuizStartCounter/></Counter>}
                 {command === "show" && <QuizView currentQuiz={currentQuiz}/>}
                 {command === "result" && <div>result</div>}
                 {command === "final" && <div>final</div>}
+                <ClientCountOutModal open ={open} setOpen={setOpen}/>
             </Item>
         </Page>
     );

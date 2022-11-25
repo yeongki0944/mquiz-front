@@ -56,8 +56,6 @@ export const QuizHostPlay = () => {
                     setCommand("show");
                 }, 3000);
                 break;
-            case "kick":
-                history.push("/QClient");
         }
     }, [command]);
 
