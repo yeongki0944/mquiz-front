@@ -1,9 +1,10 @@
 import * as React from 'react';
+import {Page_Default} from "../components/LayOuts/LayOuts";
 
 export const QuizHostReport = () => {
     return (
-        <div id={"content"}>
+        <Page_Default>
             Report
-        </div>
+        </Page_Default>
     );
 }

@@ -14,7 +14,7 @@ import {ListPanel} from "../quizHost/components/Create/ListPanel";
 import {QuizView} from "../components/QuizView/QuizView";
 import {FormPanel} from "../quizHost/components/Create/FormPanel";
 import {ControlPanel} from "../quizHost/components/Create/ControlPanel";
-import {PinNumCheck} from "../components/Client/ClientPinNumInput";
+import {PinNumCheck} from "../quizClient/components/ClientPinNumInput";
 
 const useStyles = makeStyles((theme) => ({
     content: {

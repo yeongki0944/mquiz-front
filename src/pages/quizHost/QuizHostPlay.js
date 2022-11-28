@@ -3,56 +3,72 @@ import {useDispatch, useSelector} from "react-redux";
 import {QuizView} from "../components/QuizView/QuizView";
 import {useEffect, useState} from "react";
 import Button from "@mui/material/Button";
-import {R_setCurrentShow} from "../redux/reducers/quizplayReducer";
 import {QuizStartCounter} from "../components/QuizStartCounter";
 import {styled} from "@mui/system";
 import Paper from "@mui/material/Paper";
+import {R_setCurrentShow_play} from "../redux/reducers/quizplayReducer";
+import {useHistory} from "react-router-dom";
+import {Page_Gradiant} from "../components/LayOuts/LayOuts";
 
 
-const Counter = styled(Paper)({
-    width : '100%',
-    height : '100vh',
+const Counter = styled(QuizStartCounter)({
+    width: '100%',
+    height: '100vh',
 });
 
 export const QuizHostPlay = () => {
     const dispatch = useDispatch();
+    const history = useHistory();
 
     //wait -> (count -> play ->result -> count) -> result
-    const [gameStatus, setGameStatus] = useState("wait");
-    const {quiz} = useSelector(state => state.quiz);
+    const [command, setCommand] = useState("wait");
     const {quizPlay} = useSelector(state => state.quizPlay);
-    const currentQuiz = quiz.quizData.find(item => item.num === quizPlay.currentShow);
+    const {quiz} = useSelector(state => state.quiz);
+    const currentQuiz = (quiz.quizData.find(item => item.num === quizPlay.currentShow));
 
+    useEffect(() => {
+        // console.log(quiz);
+        // console.log(currentQuiz);
+    }, []);
 
     //이거 웹소캣이랑 연동
-    const handleNext = () => {
-        switch (gameStatus) {
+    const handleCommand = () => {
+        switch (command) {
             case "wait":
-                setGameStatus("count");
+                setCommand("start");
                 break;
-            case "count":
-                setGameStatus("play");
+            case "start":
+                setCommand("result");
                 break;
-            case "play":
-                setGameStatus("result");
+            case "show": //start 이후 자동
+                setCommand("result");
                 break;
             case "result":
-                setGameStatus("count");
+                dispatch(R_setCurrentShow_play(quizPlay.currentShow + 1));
+                setCommand("start");
                 break;
         }
     }
 
+    useEffect(() => {
+        switch (command){
+            case "start":
+                setTimeout(() => {
+                    setCommand("show");
+                }, 3000);
+                break;
+        }
+    }, [command]);
+
     return (
-        <div id={"content"}>
-            {/*<Counter><QuizStartCounter/></Counter>*/}
-            {/*<Button onClick={handleNext}>Next</Button>*/}
-            {/*if gaemStatus == wait button is start else button is next*/}
-            {gameStatus === "wait" ? <Button onClick={handleNext}>Start</Button> : <Button onClick={handleNext}>Next</Button>}
-            {gameStatus === "count" && <Counter><QuizStartCounter/></Counter>}
-            {gameStatus === "play" && <QuizView quiz={currentQuiz}/>}
-            {gameStatus === "result" && <div>result</div>}
+        <Page_Gradiant>
+            {command === "wait" ? <Button onClick={handleCommand}>Start</Button> :
+                <Button onClick={handleCommand}>Next</Button>}
+            {command === "start" && <Counter/>}
+            {command === "show" && <QuizView currentQuiz={currentQuiz}/>}
+            {command === "result" && <div>result</div>}
+            {command === "final" && <div>final</div>}
             {/*<QuizView currentQuiz={currentQuiz}/>*/}
-            {/*{gameStatus === "waiting" ? null : <QuizView currentQuiz={currentQuiz}/>}*/}
-        </div>
+        </Page_Gradiant>
     );
 }

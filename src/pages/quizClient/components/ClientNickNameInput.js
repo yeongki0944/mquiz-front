@@ -84,11 +84,14 @@ export const NickNameCheck = (props) => {
 
                         <FormHelperText>{nicNameState}</FormHelperText>
 
-                        <Link to="/QClient/ready">
+                        {/*<Link to="/QClient/ready">*/}
                             <Typography variant="h5" component="div" align='center'>
-                                <Button variant="contained">확인</Button>
+                                {/*<Button variant="contained">확인</Button>*/}
+                                <Button variant="contained" onClick={()=>{
+                                    props.setCommand('wait');
+                                }}>확인</Button>
                             </Typography>
-                        </Link>
+                        {/*</Link>*/}
 
                     </FormControl>
 

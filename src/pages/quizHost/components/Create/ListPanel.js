@@ -38,7 +38,7 @@ export const ListPanel = (props) => {
     }
 
     return (
-        <>
+        <div>
             {quiz.quizData.map((item) =>
                 <div key={item.num}>
                     <div>{item.num}P</div>
@@ -60,6 +60,6 @@ export const ListPanel = (props) => {
                     </Item_card>
                 </div>
             )}
-        </>
+        </div>
     )
 }

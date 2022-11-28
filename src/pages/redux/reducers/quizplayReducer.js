@@ -1,20 +1,20 @@
 import {createAction, handleActions} from "redux-actions";
 
-const SET_CURRENT_SHOW = "SET_CURRENT_SHOW";
+const SET_CURRENT_SHOW_PLAY = "SET_CURRENT_SHOW_PLAY";
 
-export const R_setCurrentShow = createAction(SET_CURRENT_SHOW);
+export const R_setCurrentShow_play = createAction(SET_CURRENT_SHOW_PLAY);
 
 const initialState = {
     quizPlay:{
         userInfo:{},
-        currentShow: 0,
+        currentShow: 1,
         answer:'',
         result:{},
     }
 }
 
 export const quizPlayReducer = handleActions({
-    [SET_CURRENT_SHOW]: (state, action) => {
+    [SET_CURRENT_SHOW_PLAY]: (state, action) => {
         console.log(action.payload);
         return {
             quizPlay: {

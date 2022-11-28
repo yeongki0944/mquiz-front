@@ -3,7 +3,7 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import {useState} from 'react';
 
 import {
@@ -14,6 +14,9 @@ import {
 } from '@mui/material/';
 
 import styled from 'styled-components';
+import CustomAxios from "../../function/CustomAxios";
+import {R_setCurrentShow, R_setId, R_setQuiz} from "../../redux/reducers/quizInfoReducer";
+import {useDispatch} from "react-redux";
 
 // mui의 css 우선순위가 높기때문에 important를 설정 - 실무하다 보면 종종 발생 우선순위 문제
 const FormHelperTexts = styled(FormHelperText)`
@@ -24,6 +27,8 @@ const FormHelperTexts = styled(FormHelperText)`
 `;
 
 export const PinNumCheck = (props) => {
+    const dispatch = useDispatch();
+    const history = useHistory();
     const [pinNumState, setPinNumState] = useState('');
     const [passwordError, setPasswordError] = useState('');
     // form 전송
@@ -74,6 +79,23 @@ export const PinNumCheck = (props) => {
     //       });
     //   };
 
+    const handleEnter = () => {
+        //여기서 핀에 따라 퀴즈 정보 세팅 후 퀴즈 페이지로 이동
+        //아래는 임시 세팅
+        let id = "637f4c8d9fee5769ac5026f2";
+        CustomAxios.get('/v1/show?showId=' + id)
+            .then(res => {
+                console.log(res.data);
+                dispatch(R_setId(id));
+                dispatch(R_setQuiz(res.data.data));
+                dispatch(R_setCurrentShow(1));
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        history.push({
+            pathname: '/QClient/play',})
+    }
     return (
         <>
             <Container component="main" maxWidth="xs">
@@ -94,11 +116,14 @@ export const PinNumCheck = (props) => {
 
                         <FormHelperText>{pinNumState}</FormHelperText>
 
-                        <Link to="/QClient/createNickName">
+                        {/*<Link to="/QClient/createNickName">*/}
                             <Typography variant="h5" component="div" align='center'>
-                                <Button type="submit" variant="contained">참여확인</Button>
+                                {/*<Button type="submit" variant="contained">참여확인</Button>*/}
+                                <Button variant="contained" onClick={()=>{
+                                    handleEnter();
+                                }}>참여확인</Button>
                             </Typography>
-                        </Link>
+                        {/*</Link>*/}
                     </FormControl>
 
                 </Box>

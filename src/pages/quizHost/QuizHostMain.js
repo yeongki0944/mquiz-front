@@ -6,19 +6,52 @@ import CustomAxios from "../function/CustomAxios";
 import {R_setQuizList} from "../redux/reducers/quizListReducer";
 import {QuizListHostMain} from "./components/QuizListHostMain";
 import HostProfile from "./components/HostProfile";
-import './styles/QuizHostMain.css';
 import {NavBar} from "../components/NavBar";
-import {R_setQuiz} from "../redux/reducers/quizInfoReducer";
+import {Page_Default} from "../components/LayOuts/LayOuts";
+import styled from "styled-components";
+
+const Profile = styled(HostProfile)`
+    width: 100%;
+`;
+const Content= styled.div`
+    @media (min-width: 767px) {
+        display: flex;
+        width: 100%;
+    }
+
+    @media (min-width: 300px) and (max-width: 767px) {
+        display: block;
+        width: 100%;
+    }
+`;
+const QuizList = styled(QuizListHostMain)`
+    @media (min-width: 767px) {
+        width: 50%;
+    }
+
+    @media (min-width: 300px) and (max-width: 767px) {
+        width: 100%;
+        height: 100%;
+    }
+`;
+const QuizPreviewList = styled.div`
+    @media (min-width: 767px) {
+        width: 50%;
+    }
+
+    @media (min-width: 300px) and (max-width: 767px) {
+        display: none;
+    }
+`;
 
 export const QuizHostMain = () => {
-    const dispatch = useDispatch();
 
+    const dispatch = useDispatch();
     const [modalOpen, setModalOpen] = useState(false);
     const {quizList} = useSelector(state => state.quizList);
-
     const email = "test@gmail.com";
     const setQuizList = async () => {
-        await CustomAxios.get("v1/show/List?email="+email)
+        await CustomAxios.get("/v1/show/List?email=" + email)
             .then((res) => {
                 console.log(res.data)
                 dispatch(R_setQuizList(res.data.data))
@@ -32,24 +65,16 @@ export const QuizHostMain = () => {
     }, []);
 
     return (
-        <div id={"content"}>
-            <div id={"navbar"}>
-                <NavBar/>
-            </div>
-            <div id={"profile"}>
-                <HostProfile name={"test"} info={"info"}/>
-            </div>
+        <Page_Default>
+            <NavBar/>
+            <Profile name={"test"} info={"info"}/>
             <hr/>
-            <div id={"quiz"}>
-                <div id={"quizList"}>
-                    <QuizListHostMain quizList={quizList} setModalOpen={setModalOpen}/>
-                </div>
-                <div id={"quizPreviewList"}>
-                    미리보기
-                </div>
-            </div>
+            <Content>
+                <QuizList quizList={quizList} setModalOpen={setModalOpen}/>
+                <QuizPreviewList>미리보기</QuizPreviewList>
+            </Content>
             <QuizModal open={modalOpen} setOpen={setModalOpen}/>
-        </div>
+        </Page_Default>
     );
 }
 
