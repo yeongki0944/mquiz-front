@@ -19,6 +19,7 @@ import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import CustomAxios from "../function/CustomAxios";
 import {R_setCurrentShow, R_setId, R_setQuiz} from "../redux/reducers/quizInfoReducer";
+import {R_setCurrentCommand_play} from "../redux/reducers/quizplayReducer";
 
 // import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
 
@@ -63,6 +64,7 @@ export const QuizHostReady = () => {
                 dispatch(R_setId(id));
                 dispatch(R_setQuiz(res.data.data));
                 dispatch(R_setCurrentShow(1));
+                dispatch(R_setCurrentCommand_play("wait"));
             })
             .catch(err => {
                 console.log(err);

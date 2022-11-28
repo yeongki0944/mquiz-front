@@ -11,6 +11,7 @@ import {Link, useHistory} from "react-router-dom";
 import CustomAxios from "../../function/CustomAxios";
 import {R_setCurrentShow, R_setId, R_setQuiz} from "../../redux/reducers/quizInfoReducer";
 import styled from "styled-components";
+import {R_setCurrentCommand_play} from "../../redux/reducers/quizplayReducer";
 
 /**
  * props:
@@ -142,8 +143,11 @@ export const QuizListHostMain = (props) => {
     }
 
     const handlePlay = (id) => {
+        dispatch(R_setCurrentCommand_play("ready")); // 최초 세팅
         history.push({
-            pathname: '/QHost/ready',})
+            //pathname: '/QHost/ready',
+            pathname: '/QHost/play',
+        })
     }
 
     function handleCreate() {
