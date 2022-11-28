@@ -17,7 +17,6 @@ export default function HostProfile(props) {
                     </Grid>
                 </Grid>
             </CardContent>
-
         </Card>
     )
 }

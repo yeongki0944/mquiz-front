@@ -5,14 +5,14 @@ import styled from "styled-components";
 
 
 const Card_Btn = styled.div`
-    justify-content: center;
-    align-items: center;
+    // justify-content: center;
+    // align-items: center;
     border : 2px solid #D47AE8;
     border-radius: 5px;
     border-shadow: 10 10 10px #D47AE8;
     @media (min-width: 300px) and (max-width: 767px) {
-        display: flex;
-        width: 100%;
+        // display: flex;
+        // width: 50vh;
         background-color: #FFEBCC;
     }
     @media (min-width: 767px) {

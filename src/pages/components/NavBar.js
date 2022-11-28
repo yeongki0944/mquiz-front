@@ -7,7 +7,7 @@ const Styled_NavBar = styled(BottomNavigation)`
     height: 5vh;
 `;
 
-export const NavBar = (props) => {
+export const NavBar = () => {
     return (
         <Styled_NavBar showLabels>
             <BottomNavigationAction label="메뉴1"/>
