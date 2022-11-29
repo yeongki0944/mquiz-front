@@ -58,7 +58,7 @@ export const QuizHostReady = (props) => {
     const {quizPlay} = useSelector(state => state.quizPlay);
 
     const handleStart = () => {
-        let id = "637f4c8d9fee5769ac5026f2";
+        /*let id = "637f4c8d9fee5769ac5026f2";
         CustomAxios.get('/v1/show?showId=' + id)
             .then(res => {
                 console.log(res.data);
@@ -69,7 +69,8 @@ export const QuizHostReady = (props) => {
             })
             .catch(err => {
                 console.log(err);
-            })
+            })*/
+        dispatch(R_setData({key : "command", value:"start"}));
     }
 
     return (
