@@ -1,25 +1,70 @@
 import {createAction, handleActions} from "redux-actions";
 
-const SET_CURRENT_SHOW_PLAY = "SET_CURRENT_SHOW_PLAY";
+// 신버전
+const SET_DATA = "SET_DATA";
+const SET_CONTENT = "SET_CONTENT";
+export const setData = createAction(SET_DATA);
+export const setContent = createAction(SET_CONTENT);
 
+// 구버전
+const SET_CURRENT_SHOW_PLAY = "SET_CURRENT_SHOW_PLAY";
+const SET_CURRENT_COMMAND_PLAY = "SET_CURRENT_COMMAND_PLAY";
 export const R_setCurrentShow_play = createAction(SET_CURRENT_SHOW_PLAY);
+export const R_setCurrentCommand_play = createAction(SET_CURRENT_COMMAND_PLAY);
 
 const initialState = {
     quizPlay:{
-        userInfo:{},
-        currentShow: 1,
-        answer:'',
-        result:{},
+        pinNum : 0,
+        nickName : '',
+        command: '',
+        sender: '',
+        quizNum : 1,
+        content : {
+            answer: '',
+            solved_time: 0,
+        }
     }
 }
 
 export const quizPlayReducer = handleActions({
+    //신버전
+    [SET_DATA]: (state, action) => {
+        console.log(action.payload);
+        return {
+            quizPlay: {
+                ...state.quizPlay,
+                [action.payload.key]: action.payload.value
+            }
+        }
+    },
+    [SET_CONTENT]: (state, action) => {
+        // console.log(action.payload);
+        return {
+            quizPlay: {
+                ...state.quizPlay,
+                content: {
+                    ...state.quizPlay.content,
+                    [action.payload.key]: action.payload.value
+                }
+            }
+        }
+    },
+    //구버전
     [SET_CURRENT_SHOW_PLAY]: (state, action) => {
         console.log(action.payload);
         return {
             quizPlay: {
                 ...state.quizPlay,
                 currentShow: action.payload
+            }
+        }
+    },
+    [SET_CURRENT_COMMAND_PLAY]: (state, action) => {
+        console.log(action.payload);
+        return {
+            quizPlay: {
+                ...state.quizPlay,
+                currentCommand: action.payload
             }
         }
     }

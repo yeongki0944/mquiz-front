@@ -3,131 +3,102 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import {Link, useHistory} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import {useState} from 'react';
-
-import {
-    FormControl,
-    FormControlLabel,
-    FormHelperText,
-    Container,
-} from '@mui/material/';
-
 import styled from 'styled-components';
-import CustomAxios from "../../function/CustomAxios";
-import {R_setCurrentShow, R_setId, R_setQuiz} from "../../redux/reducers/quizInfoReducer";
 import {useDispatch} from "react-redux";
+import {setData} from "../../redux/reducers/quizplayReducer";
 
-// mui의 css 우선순위가 높기때문에 important를 설정 - 실무하다 보면 종종 발생 우선순위 문제
-const FormHelperTexts = styled(FormHelperText)`
-  width: 100%;
-  padding-left: 16px;
-  font-weight: 700 !important;
-  color: #d32f2f !important;
-`;
-
-export const PinNumCheck = (props) => {
+export const PinNumCheck = () => {
     const dispatch = useDispatch();
     const history = useHistory();
-    const [pinNumState, setPinNumState] = useState('');
-    const [passwordError, setPasswordError] = useState('');
-    // form 전송
+    const [pinNum, setPinNum] = useState('');
+    const [error, setError] = useState('');
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const handleInput = (e) => {
+        setPinNum(e.target.value);
+    }
 
-        const data = new FormData(e.currentTarget);
-        const joinData = {
-            pinNum: data.get('pinNum'),
-            //rePassword: data.get('rePassword'),
-        };
-        const {pinNum} = joinData;
-
+    const handleSubmit = () => {
+        // console.log(pinNum);
         // pin 번호 유효성 체크
-        const pinNumRegex = /^[0-9]{0,6}$/g;
+        const pinNumRegex = /^[0-9]{6,6}$/g;
         if (!pinNumRegex.test(pinNum)) {
-            setPinNumState('전달받은 6자리 번호 입력해주세요!');
+            setError('전달받은 6자리 번호 입력해주세요!');
         } else {
-            setPinNumState('');
-        }
-
-        // 모두 통과하면 post되는 코드 실행 (axios나 fecth등)
-        if (
-            pinNumRegex.test(pinNum)
-            //     password === rePassword
-        ) {
-            return;
-            //onhandlePost(joinData);
+            setError('');
+            handleEnter();
         }
     };
 
 
-    // const onhandlePost = async (data) => {
-    //     const { password } = data;
-    //     const postData = { password };
-
-    //     // post
-    //     await axios
-    //       .post('/member/join', postData)
-    //       .then(function (response) {
-    //         console.log(response, '성공');
-    //         history.push('/login');
-    //       })
-    //       .catch(function (err) {
-    //         console.log(err);
-    //         setRegisterError('실패하였습니다. 다시한번 확인해 주세요.');
-    //       });
-    //   };
-
     const handleEnter = () => {
-        //여기서 핀에 따라 퀴즈 정보 세팅 후 퀴즈 페이지로 이동
-        //아래는 임시 세팅
-        let id = "637f4c8d9fee5769ac5026f2";
-        CustomAxios.get('/v1/show?showId=' + id)
-            .then(res => {
-                console.log(res.data);
-                dispatch(R_setId(id));
-                dispatch(R_setQuiz(res.data.data));
-                dispatch(R_setCurrentShow(1));
-            })
-            .catch(err => {
-                console.log(err);
-            })
+        /**
+         * [참고]
+         * 여기 핀 감별 및 이동 코드 넣으시면 됩니다.
+         * success는 임시 값
+         * 1.핀 감별(방번호 존재 여부 확인)
+         * 2. 존재하면 dispatch ~~~ 하고 history.push
+         * 2-1. 방번호 존재하면 그에 해당하는 quiz id 받아와서 quizdata 세팅해야함
+         * 3. 존재안하면 틀림 출력
+         */
+
+        const success = true;
+        // if(success){
+        //     //핀번호가 맞으면
+        //     //여기서 핀에 따라 퀴즈 정보 세팅 후 퀴즈 페이지로 이동
+        //     //아래는 임시 세팅
+        //     let id = "637f4c8d9fee5769ac5026f2";
+        //     CustomAxios.get('/v1/show?showId=' + id)
+        //         .then(res => {
+        //             console.log(res.data);
+        //             dispatch(R_setId(id));
+        //             dispatch(R_setQuiz(res.data.data));
+        //             dispatch(R_setCurrentShow(1));
+        //             dispatch(setData({key: 'pinNum', value: pinNum}));
+        //             dispatch(setData({key: 'command', value: 'nickName'}));
+        //             // history.push({
+        //             //     pathname: '/QClient/play',})
+        //         })
+        //         .catch(err => {
+        //             console.log(err);
+        //         })
+        // }else{
+        //     //핀번호가 틀리면
+        //     //핀번호가 틀렸다는 메시지 출력
+        //     setError('핀번호가 틀렸습니다.');
+        // }
+
+        /**
+         * [참고]
+         * 임시로 성공부분만 출력해둔 상태
+         * 작성 완료 시 윗부분 주석 풀고 아래 삭제
+         */
+        dispatch(setData({key: 'pinNum', value: pinNum}));
+        dispatch(setData({key: 'command', value: 'nickName'}));
         history.push({
-            pathname: '/QClient/play',})
+            pathname: '/QClient/play',
+        })
+
+
     }
     return (
-        <>
-            <Container component="main" maxWidth="xs">
-                <Box align='center' sx={{minWidth: 275}} component="form" noValidate onSubmit={handleSubmit}>
-                    <Typography variant="h5" component="div" align='center'>
-                        PIN 번호를 입력한다면
-                    </Typography>
-                    <Typography variant="h5" component="div" align='center'>
-                        퀴즈를 드리지요
-                    </Typography>
-
-                    <FormControl component="fieldset" variant="standard">
-                        <Typography variant="h5" component="div" align='center'>
-                            <TextField id="pinNum" name="pinNum" type="pinNum" label="PIN 번호 입력(숫자 6자리)"
-                                       helperText={setPinNumState} variant="outlined"
-                                       error={pinNumState !== '' || false} required autoFocus/>
-                        </Typography>
-
-                        <FormHelperText>{pinNumState}</FormHelperText>
-
-                        {/*<Link to="/QClient/createNickName">*/}
-                            <Typography variant="h5" component="div" align='center'>
-                                {/*<Button type="submit" variant="contained">참여확인</Button>*/}
-                                <Button variant="contained" onClick={()=>{
-                                    handleEnter();
-                                }}>참여확인</Button>
-                            </Typography>
-                        {/*</Link>*/}
-                    </FormControl>
-
-                </Box>
-            </Container>
-        </>
+        <Box align='center' sx={{minWidth: 275}}>
+            <Typography variant="h5" component="div" align='center'>
+                PIN 번호를 입력한다면
+            </Typography>
+            <Typography variant="h5" component="div" align='center'>
+                퀴즈를 드리지요
+            </Typography>
+            <TextField id="pinNum" name="pinNum" type="pinNum" label="PIN 번호 입력(숫자 6자리)"
+                       variant="outlined"
+                       helperText={error}
+                       error={error !== '' || false} required autoFocus
+                       onBlur={handleInput}
+            />
+            <Typography>
+                <Button variant="contained" onClick={handleSubmit}>참여확인</Button>
+            </Typography>
+        </Box>
     );
 }
