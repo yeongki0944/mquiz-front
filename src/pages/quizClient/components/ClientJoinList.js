@@ -6,8 +6,11 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import CardMedia from "@mui/material/CardMedia";
+import Chip from "@mui/material/Chip";
+import {useState} from "react";
+import {stompSend} from "../../function/WebSocket";
 
-const User = ({userData}) => {
+/*const User = ({userData}) => {
     let nickName = null;
     for(let i = 0; i<userData.length;i++){
         nickName = userData.nickName[i];
@@ -16,20 +19,42 @@ const User = ({userData}) => {
 
     return (
         <tr>
-            {/* <td>핀번호 : {userData.pinNum}</td> */}
+            {/!* <td>핀번호 : {userData.pinNum}</td> *!/}
             <td>닉네임 : {userData.nickName}</td>
         </tr>
 
     )
-}
+}*/
 
 const UserList = (props) => {
-    const users = [
-        {pinNum : '123123', nickName : '갑시다'},
-        {pinNum : '123456', nickName : 'gogo'},
-    ]
+    // 나중에 레디스로 참여 유저 현황 가져오기
+    const [client,setClient] = useState([
+        {key : '123123', nickName : '갑시다'},
+        {key : '123456', nickName : 'gogo'},
+    ])
 
     return (
+        <div>
+            {client.map((item)=>{
+                return (
+                    <div key={item.key} style={{display: "inline-block"}}>
+                        <Chip
+                            label={item.nickName}
+                            sx={{marginLeft: 1, marginRight: 1}}
+                            onDelete={
+                                () => {
+                                    stompSend("/quiz/message",{
+                                        pinNum:props.pinNum,
+                                        command:"ban"
+                                    });
+                                    setClient((users) => users.filter((user) => user.key !== item.key));
+                                }
+                            }/>
+                    </div>
+                )
+            })}
+        </div>
+        /*
         <table>
             <thead>
             <tr>
@@ -39,13 +64,15 @@ const UserList = (props) => {
             {users.map(user => <User key={user.nickName} userData={user}/>)}
             </tbody>
         </table>
+        */
     )
 }
 
 export const ClientJoinList = (props) => {
     return (
         <>
-            <Paper><HostCountOutModal></HostCountOutModal></Paper>
+            <Paper><UserList pinNum={props.pinNum}></UserList></Paper>
+            <HostCountOutModal></HostCountOutModal>
         </>
     )
 }
@@ -69,7 +96,6 @@ export function HostCountOutModal() {
 
     return (
         <div>
-            <Button onClick={handleOpen}><UserList></UserList></Button>
             <Modal
                 open={open}
                 onClose={handleClose}

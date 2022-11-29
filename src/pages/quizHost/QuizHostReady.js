@@ -19,7 +19,7 @@ import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import CustomAxios from "../function/CustomAxios";
 import {R_setCurrentShow, R_setId, R_setQuiz} from "../redux/reducers/quizInfoReducer";
-import {R_setCurrentCommand_play} from "../redux/reducers/quizplayReducer";
+import {setData} from "../redux/reducers/quizplayReducer";
 
 // import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
 
@@ -52,7 +52,7 @@ const Item = styled(Paper)(({theme}) => ({
 }));
 
 
-export const QuizHostReady = () => {
+export const QuizHostReady = (props) => {
     const dispatch = useDispatch();
     const {quiz} = useSelector(state => state.quiz);
 
@@ -64,7 +64,7 @@ export const QuizHostReady = () => {
                 dispatch(R_setId(id));
                 dispatch(R_setQuiz(res.data.data));
                 dispatch(R_setCurrentShow(1));
-                dispatch(R_setCurrentCommand_play("wait"));
+                dispatch(setData({key : "command", value:"wait"}));
             })
             .catch(err => {
                 console.log(err);
@@ -114,7 +114,7 @@ export const QuizHostReady = () => {
                     },
                 }}
             >
-                <ClientJoinList></ClientJoinList>
+                <ClientJoinList pinNum={props.pinNum}></ClientJoinList>
             </Box>
 
             <Link to="/QHost/play">

@@ -3,13 +3,12 @@ import {Stomp} from "@stomp/stompjs";
 
 let sockJs = new SockJS("http://localhost:8080/stomp/quiz");
 let stomp = Stomp.over(sockJs);
-let webSocketConnect = false;
 
 export const stompInit = (pinNum) => {
-    console.log("왜 열림?");
     stomp.connect({}, () => {
         console.log("STOMP Connection");
 
+        // 나중에 destination 변경되면 바뀌야됨.
         stomp.subscribe("/sub/quiz-play/room/" + pinNum, (msg) => {
             console.log(msg);
         });

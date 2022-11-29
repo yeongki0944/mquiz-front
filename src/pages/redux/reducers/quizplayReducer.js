@@ -1,38 +1,48 @@
 import {createAction, handleActions} from "redux-actions";
 
-const SET_CURRENT_SHOW_PLAY = "SET_CURRENT_SHOW_PLAY";
-const SET_CURRENT_COMMAND_PLAY = "SET_CURRENT_COMMAND_PLAY";
+const SET_DATA = "SET_DATA";
+const SET_CONTENT = "SET_CONTENT";
 
-export const R_setCurrentShow_play = createAction(SET_CURRENT_SHOW_PLAY);
-export const R_setCurrentCommand_play = createAction(SET_CURRENT_COMMAND_PLAY);
+export const setData = createAction(SET_DATA);
+export const setContent = createAction(SET_CONTENT);
+
+// 사용법
+// setData({key:'~', value:'~'})
+// setContent({key:'~', value:'~'})
 
 const initialState = {
     quizPlay:{
-        currentCommand: '',
-        userInfo:{},
-        currentShow: 1,
-        answer:'',
-        result:{},
+        command: '',
+        sender: '',
+        quizNum : 1,
+        content : {
+            answer: '',
+            solved_time: 0,
+        }
     }
 }
 
 export const quizPlayReducer = handleActions({
-    [SET_CURRENT_SHOW_PLAY]: (state, action) => {
+    //신버전
+    [SET_DATA]: (state, action) => {
         console.log(action.payload);
         return {
             quizPlay: {
                 ...state.quizPlay,
-                currentShow: action.payload
+                [action.payload.key]: action.payload.value
             }
         }
     },
-    [SET_CURRENT_COMMAND_PLAY]: (state, action) => {
+    [SET_CONTENT]: (state, action) => {
         console.log(action.payload);
         return {
             quizPlay: {
                 ...state.quizPlay,
-                currentCommand: action.payload
+                content: {
+                    ...state.quizPlay.content,
+                    [action.payload.key]: action.payload.value
+                }
             }
         }
-    }
+    },
 }, initialState);
