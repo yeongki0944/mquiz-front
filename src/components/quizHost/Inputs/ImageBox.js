@@ -2,7 +2,7 @@ import * as React from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import {useDispatch} from "react-redux";
-import {R_modifyQuiz} from "../../../../redux/reducers/quizInfoReducer";
+import {R_modifyQuiz} from "../../../redux/reducers/quizInfoReducer";
 import styled from "styled-components";
 import {useState} from "react";
 

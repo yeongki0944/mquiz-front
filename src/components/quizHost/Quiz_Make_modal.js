@@ -13,8 +13,8 @@ import Chip from "@mui/material/Chip";
 import {FormControlLabel, FormGroup, Switch} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import {makeStyles} from "@material-ui/core/styles";
-import {R_makeQuizShow, R_modifyQuiz, R_setId} from "../../../redux/reducers/quizInfoReducer";
-import CustomAxios from "../../../function/CustomAxios";
+import {R_makeQuizShow, R_modifyQuiz, R_setId} from "../../redux/reducers/quizInfoReducer";
+import CustomAxios from "../../function/CustomAxios";
 import {useHistory} from "react-router-dom";
 
 const useStyles = makeStyles(() => ({

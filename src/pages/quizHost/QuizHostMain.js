@@ -1,16 +1,16 @@
 import * as React from 'react';
 import {useContext, useEffect, useState} from "react";
-import QuizModal from './components/Create/Quiz_Make_modal';
+import QuizModal from '../../components/quizHost/Quiz_Make_modal';
 import {useDispatch, useSelector} from "react-redux";
-import CustomAxios from "../function/CustomAxios";
-import {R_setQuizList} from "../redux/reducers/quizListReducer";
-import {QuizListHostMain} from "./components/QuizListHostMain";
-import HostProfile from "./components/HostProfile";
-import {NavBar} from "./components/NavBar";
-import {Page_Default} from "../components/LayOuts/LayOuts";
+import CustomAxios from "../../function/CustomAxios";
+import {R_setQuizList} from "../../redux/reducers/quizListReducer";
+import {QuizListHostMain} from "../../components/quizHost/QuizListHostMain";
+import HostProfile from "../../components/quizHost/HostProfile";
+import {NavBar} from "../../components/quizHost/NavBar";
+import {Page_Default} from "../../components/LayOuts/LayOuts";
 import styled from "styled-components";
 import {useHistory} from "react-router-dom";
-import {QuizPreviewHostMain} from "./components/QuizPreviewHostMain";
+import {QuizPreviewHostMain} from "../../components/quizHost/QuizPreviewHostMain";
 
 const Profile = styled(HostProfile)`
     width: 100%;

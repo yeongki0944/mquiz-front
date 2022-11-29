@@ -1,16 +1,16 @@
 
 import {useEffect, useState} from "react";
-import {R_setData} from "../redux/reducers/quizplayReducer";
-import {QuizStartCounter} from "../components/QuizStartCounter";
-import {QuizView} from "../components/QuizView/QuizView";
+import {R_setData} from "../../redux/reducers/quizplayReducer";
+import {QuizStartCounter} from "../../components/QuizStartCounter";
+import {QuizView} from "../../components/QuizView/QuizView";
 import * as React from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {NickNameCheck} from "./components/ClientNickNameInput";
-import {ClientReady} from "./components/ClientReady";
-import {ClientCountOutModal} from "./components/ClientCountOutModal";
+import {NickNameCheck} from "../../components/quizClient/ClientNickNameInput";
+import {ClientReady} from "../../components/quizClient/ClientReady";
+import {ClientCountOutModal} from "../../components/quizClient/ClientCountOutModal";
 import {useHistory} from "react-router-dom";
-import {Item_c, Page_Gradiant} from "../components/LayOuts/LayOuts";
-import {stompInit} from "../function/WebSocket";
+import {Item_c, Page_Gradiant} from "../../components/LayOuts/LayOuts";
+import {stompInit} from "../../function/WebSocket";
 
 
 

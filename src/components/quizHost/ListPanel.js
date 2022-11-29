@@ -7,7 +7,7 @@ import {
     R_renumberQuiz,
     R_setCurrentShow,
     R_setQuiz, R_setQuizData
-} from "../../../redux/reducers/quizInfoReducer";
+} from "../../redux/reducers/quizInfoReducer";
 import {Button} from "@mui/material";
 import FileCopyIcon from "@material-ui/icons/FileCopy";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";

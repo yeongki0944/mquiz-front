@@ -1,11 +1,11 @@
 import * as React from "react";
-import {ListPanel} from "./components/Create/ListPanel";
-import {FormPanel} from "./components/Create/FormPanel";
-import {ControlPanel} from "./components/Create/ControlPanel";
+import {ListPanel} from "../../components/quizHost/ListPanel";
+import {FormPanel} from "../../components/quizHost/FormPanel";
+import {ControlPanel} from "../../components/quizHost/ControlPanel";
 import {useSelector} from "react-redux";
-import {QuizView} from "../components/QuizView/QuizView";
-import {NavBar} from "./components/NavBar";
-import {Page_Default} from "../components/LayOuts/LayOuts";
+import {QuizView} from "../../components/QuizView/QuizView";
+import {NavBar} from "../../components/quizHost/NavBar";
+import {Page_Default} from "../../components/LayOuts/LayOuts";
 import styled from "styled-components";
 
 const Panel = styled.div`

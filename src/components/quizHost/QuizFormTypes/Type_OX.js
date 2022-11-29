@@ -1,6 +1,6 @@
 import {useDispatch, useSelector} from "react-redux";
 import {Box, Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, Radio, RadioGroup} from "@mui/material";
-import {R_modifyQuizAnswer} from "../../../../redux/reducers/quizInfoReducer";
+import {R_modifyQuizAnswer} from "../../../redux/reducers/quizInfoReducer";
 import * as React from "react";
 import {useState} from "react";
 
