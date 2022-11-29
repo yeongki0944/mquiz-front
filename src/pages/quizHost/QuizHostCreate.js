@@ -4,7 +4,7 @@ import {FormPanel} from "./components/Create/FormPanel";
 import {ControlPanel} from "./components/Create/ControlPanel";
 import {useSelector} from "react-redux";
 import {QuizView} from "../components/QuizView/QuizView";
-import {NavBar} from "../components/NavBar";
+import {NavBar} from "./components/NavBar";
 import {Page_Default} from "../components/LayOuts/LayOuts";
 import styled from "styled-components";
 

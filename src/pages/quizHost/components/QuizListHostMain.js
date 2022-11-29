@@ -58,6 +58,9 @@ const AddBtn = styled.div`
     border: 2px solid darkgrey;
     border-radius: 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    @media (min-width: 300px) and (max-width: 767px) {
+        display: none;
+    }
 `
 
 export const QuizListHostMain = (props) => {

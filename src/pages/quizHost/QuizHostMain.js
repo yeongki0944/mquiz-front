@@ -6,7 +6,7 @@ import CustomAxios from "../function/CustomAxios";
 import {R_setQuizList} from "../redux/reducers/quizListReducer";
 import {QuizListHostMain} from "./components/QuizListHostMain";
 import HostProfile from "./components/HostProfile";
-import {NavBar} from "../components/NavBar";
+import {NavBar} from "./components/NavBar";
 import {Page_Default} from "../components/LayOuts/LayOuts";
 import styled from "styled-components";
 

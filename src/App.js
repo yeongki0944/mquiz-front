@@ -15,12 +15,10 @@ import {QuizHostCreate} from "./pages/quizHost/QuizHostCreate";
 
 import {QuizClientMain} from "./pages/quizClient/QuizClientMain";
 
-import TestBoard from "./pages/test/TestBoard"
-import ComponentTest from "./pages/test/ComponentTest"
-
 import store from "./pages/redux/store";
 import {Provider} from "react-redux";
 import {QuizClientPlay} from "./pages/quizClient/QuizClientPlay";
+import {QuizHostReport} from "./pages/quizHost/QuizHostReport";
 
 
 const App = () =>{
@@ -43,9 +41,7 @@ const App = () =>{
 
                             <Route path="/QHost/play" component={QuizHostPlay} exact/>
 
-                            <Route path="/Test" component={TestBoard} exact/>
-
-                            <Route path="/ComponentTest" component={ComponentTest} exact/>
+                            <Route path="/QHost/report" component={QuizHostReport} exact/>
 
                             {/* 참가자 페이지 목록*/}
                             <Route path="/QClient" component={QuizClientMain} exact/>
