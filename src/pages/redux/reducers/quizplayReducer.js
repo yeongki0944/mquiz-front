@@ -4,8 +4,8 @@ import {createAction, handleActions} from "redux-actions";
 const SET_DATA = "SET_DATA";
 const SET_CONTENT = "SET_CONTENT";
 
-export const setData = createAction(SET_DATA);
-export const setContent = createAction(SET_CONTENT);
+export const R_setData = createAction(SET_DATA);
+export const R_setContent = createAction(SET_CONTENT);
 
 // 사용법
 // setData({key:'~', value:'~'})
@@ -13,12 +13,14 @@ export const setContent = createAction(SET_CONTENT);
 
 const initialState = {
     quizPlay:{
+        pinNum:0,
         command: '',
         sender: '',
         quizNum : 1,
         content : {
-            answer: '',
-            solved_time: 0,
+            selected: '',
+            totalElapsedTime:0,
+            ans: '',
         }
     }
 }

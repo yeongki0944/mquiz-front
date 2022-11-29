@@ -7,7 +7,7 @@ import {useHistory} from "react-router-dom";
 import {useState} from 'react';
 import styled from 'styled-components';
 import {useDispatch} from "react-redux";
-import {setData} from "../../redux/reducers/quizplayReducer";
+import {R_setData} from "../../redux/reducers/quizplayReducer";
 
 export const PinNumCheck = () => {
     const dispatch = useDispatch();
@@ -74,8 +74,8 @@ export const PinNumCheck = () => {
          * 임시로 성공부분만 출력해둔 상태
          * 작성 완료 시 윗부분 주석 풀고 아래 삭제
          */
-        dispatch(setData({key: 'pinNum', value: pinNum}));
-        dispatch(setData({key: 'command', value: 'nickName'}));
+        dispatch(R_setData({key: 'pinNum', value: pinNum}));
+        dispatch(R_setData({key: 'command', value: 'nickName'}));
         history.push({
             pathname: '/QClient/play',
         })

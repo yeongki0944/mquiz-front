@@ -15,9 +15,11 @@ import './QuizView.css';
 import {PinNum} from "../PinNum";
 import {VolumeControlButton} from "../VolumeControlButton";
 import {useEffect} from "react";
+import {useSelector} from "react-redux";
 
 
 export const QuizView = (props) => {
+    const {quizPlay}=useSelector(state => state.quizPlay)
     const currentQuiz = props.currentQuiz;
     const AnswerSheet = () => {
         switch (currentQuiz.type) {
@@ -57,7 +59,7 @@ export const QuizView = (props) => {
         <div id={"content"}>
             <div id={"section1"}>
                 <div id={"section1_items"}>
-                    <PinNum pinNum={props.pinNum}/>
+                    <PinNum pinNum={quizPlay.pinNum}/>
                     <VolumeControlButton/>
                 </div>
                 <div id={"section1_items"}>

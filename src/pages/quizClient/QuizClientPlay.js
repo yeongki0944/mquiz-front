@@ -1,6 +1,6 @@
 
 import {useEffect, useState} from "react";
-import {setData} from "../redux/reducers/quizplayReducer";
+import {R_setData} from "../redux/reducers/quizplayReducer";
 import {QuizStartCounter} from "../components/QuizStartCounter";
 import {QuizView} from "../components/QuizView/QuizView";
 import * as React from "react";
@@ -10,6 +10,7 @@ import {ClientReady} from "./components/ClientReady";
 import {ClientCountOutModal} from "./components/ClientCountOutModal";
 import {useHistory} from "react-router-dom";
 import {Item_c, Page_Gradiant} from "../components/LayOuts/LayOuts";
+import {stompInit} from "../function/WebSocket";
 
 
 
@@ -30,9 +31,12 @@ export const QuizClientPlay = () => {
 
     useEffect(() => {
         switch (quizPlay.command){
+            case "nickName":
+                stompInit(quizPlay.pinNum);
+                break;
             case "start":
                 setTimeout(() => {
-                    setData({key: "command", value: "show"});
+                    R_setData({key: "command", value: "show"});
                 }, 3000);
                 break;
             case "kick":

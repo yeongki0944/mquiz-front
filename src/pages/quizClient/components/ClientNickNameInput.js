@@ -8,7 +8,7 @@ import {useState} from 'react';
 import styled from 'styled-components';
 import {Container, FormControl, FormHelperText} from "@mui/material";
 import {useDispatch} from "react-redux";
-import {setData} from "../../redux/reducers/quizplayReducer";
+import {R_setData} from "../../redux/reducers/quizplayReducer";
 
 
 export const NickNameCheck = (props) => {
@@ -41,8 +41,8 @@ export const NickNameCheck = (props) => {
         const success = true;
         if(success){
             //아이디 중복 아니면
-            dispatch(setData({key: 'nickName', value: nickName}));
-            dispatch(setData({key:'command', value:'wait'}));
+            dispatch(R_setData({key: 'sender', value: nickName}));
+            dispatch(R_setData({key:'command', value:'wait'}));
         }else{
             //아이디 중복이면
             setError('이미 존재하는 닉네임입니다.');

@@ -19,7 +19,7 @@ import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import CustomAxios from "../function/CustomAxios";
 import {R_setCurrentShow, R_setId, R_setQuiz} from "../redux/reducers/quizInfoReducer";
-import {setData} from "../redux/reducers/quizplayReducer";
+import {R_setData} from "../redux/reducers/quizplayReducer";
 
 // import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
 
@@ -55,6 +55,7 @@ const Item = styled(Paper)(({theme}) => ({
 export const QuizHostReady = (props) => {
     const dispatch = useDispatch();
     const {quiz} = useSelector(state => state.quiz);
+    const {quizPlay} = useSelector(state => state.quizPlay);
 
     const handleStart = () => {
         let id = "637f4c8d9fee5769ac5026f2";
@@ -64,7 +65,7 @@ export const QuizHostReady = (props) => {
                 dispatch(R_setId(id));
                 dispatch(R_setQuiz(res.data.data));
                 dispatch(R_setCurrentShow(1));
-                dispatch(setData({key : "command", value:"wait"}));
+                dispatch(R_setData({key : "command", value:"wait"}));
             })
             .catch(err => {
                 console.log(err);
@@ -97,7 +98,7 @@ export const QuizHostReady = (props) => {
                         </Typography>
                     </Grid>
 
-                    <PinNum pinNum={props.pinNum}></PinNum>
+                    <PinNum pinNum={quizPlay.pinNum}></PinNum>
                     <ClientTotalCount></ClientTotalCount>
 
                 </Grid>
@@ -114,7 +115,7 @@ export const QuizHostReady = (props) => {
                     },
                 }}
             >
-                <ClientJoinList pinNum={props.pinNum}></ClientJoinList>
+                <ClientJoinList pinNum={quizPlay.pinNum}></ClientJoinList>
             </Box>
 
             <Link to="/QHost/play">

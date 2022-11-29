@@ -6,7 +6,7 @@ import Button from "@mui/material/Button";
 import {QuizStartCounter} from "../components/QuizStartCounter";
 import {styled} from "@mui/system";
 import Paper from "@mui/material/Paper";
-import {setData, setContent} from "../redux/reducers/quizplayReducer";
+import {R_setData, R_setContent} from "../redux/reducers/quizplayReducer";
 import {useHistory} from "react-router-dom";
 import {Page_Gradiant} from "../components/LayOuts/LayOuts";
 /*import SockJS from "sockjs-client";
@@ -22,11 +22,6 @@ const Counter = styled(QuizStartCounter)({
 export const QuizHostPlay = () => {
     const dispatch = useDispatch();
     const history = useHistory();
-
-    const [pinNum, setPinNum] = useState(null);
-    if(pinNum == null){
-        setPinNum(history.location.state.pinNum);
-    }
 
     /*let sockJs = new SockJS("http://localhost:8080/stomp/quiz");
     let stomp = Stomp.over(sockJs);*/
@@ -87,17 +82,17 @@ export const QuizHostPlay = () => {
         }*/
         switch (quizPlay.command) {
             case "wait":
-                dispatch(setData({key:"command", value:"start"}));
+                dispatch(R_setData({key:"command", value:"start"}));
                 break;
             case "start":
-                dispatch(setData({key:"command", value:"show"}));
+                dispatch(R_setData({key:"command", value:"show"}));
                 break;
             case "show": //start 이후 자동
-                dispatch(setData({key:"command", value:"result"}));
+                dispatch(R_setData({key:"command", value:"result"}));
                 break;
             case "result":
-                dispatch(setData({key:"quizNum", value:quizPlay.quizNum + 1}));
-                dispatch(setData({key:"command", value:"start"}));
+                dispatch(R_setData({key:"quizNum", value:quizPlay.quizNum + 1}));
+                dispatch(R_setData({key:"command", value:"start"}));
                 break;
         }
     }
@@ -111,7 +106,7 @@ export const QuizHostPlay = () => {
     useEffect(() => {
         switch (quizPlay.command) {
             case "ready":
-                stompInit(pinNum);
+                stompInit(quizPlay.pinNum);
                 /*setTimeout(() => {
                     //setCommand("show");
                     dispatch(setData({key:"command", value:"wait"}));
@@ -120,9 +115,9 @@ export const QuizHostPlay = () => {
             case "start":
                 setTimeout(() => {
                     //setCommand("show");
-                    dispatch(setData({key:"command", value:"show"}));
+                    dispatch(R_setData({key:"command", value:"show"}));
                     stompSend("/quiz/message", {
-                        pinNum: pinNum,
+                        pinNum: quizPlay.pinNum,
                         command: quizPlay.command
                     });
                 }, 3000);
@@ -130,11 +125,11 @@ export const QuizHostPlay = () => {
                 break;
             case "result":
                 if(quizPlay.quizNum === QuizCount)
-                    dispatch(setData({key:"command", value:"final"}));
+                    dispatch(R_setData({key:"command", value:"final"}));
                 break;
             case "final":
                 stompSend("/quiz/message", {
-                    pinNum: pinNum,
+                    pinNum: quizPlay.pinNum,
                     command: quizPlay.command
                 });
                 stompDisconnect();
@@ -143,7 +138,7 @@ export const QuizHostPlay = () => {
         if (quizPlay.command !== "ready" && quizPlay.command !== "final")
         {
             stompSend("/quiz/message",{
-                pinNum:pinNum,
+                pinNum:quizPlay.pinNum,
                 command : quizPlay.command
             });
         }
@@ -153,11 +148,11 @@ export const QuizHostPlay = () => {
 
         <Page_Gradiant>
 
-            {quizPlay.command === "ready" && <QuizHostReady pinNum={pinNum}/>}
+            {quizPlay.command === "ready" && <QuizHostReady/>}
             {quizPlay.command === "wait" ? <Button onClick={handleCommand}>Start</Button> :
                 <Button onClick={handleCommand}>Next</Button>}
             {quizPlay.command === "start" && <Counter/>}
-            {quizPlay.command === "show" && <QuizView pinNum={pinNum} currentQuiz={currentQuiz}/>}
+            {quizPlay.command === "show" && <QuizView currentQuiz={currentQuiz}/>}
             {quizPlay.command === "result" && <div>result</div>}
             {quizPlay.command === "final" && <div>final</div>}
 

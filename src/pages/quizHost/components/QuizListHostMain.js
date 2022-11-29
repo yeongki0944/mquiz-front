@@ -11,7 +11,7 @@ import {Link, useHistory} from "react-router-dom";
 import CustomAxios from "../../function/CustomAxios";
 import {R_setCurrentShow, R_setId, R_setQuiz} from "../../redux/reducers/quizInfoReducer";
 import styled from "styled-components";
-import {setData} from "../../redux/reducers/quizplayReducer";
+import {R_setData} from "../../redux/reducers/quizplayReducer";
 
 /**
  * props:
@@ -146,14 +146,11 @@ export const QuizListHostMain = (props) => {
         let pinNum;
         CustomAxios.post('/v1/host/createPlay')
             .then(res =>{
-                pinNum = res.data.data;
-                dispatch(setData({key:"command", value:"ready"})); // 최초 세팅
+                dispatch(R_setData({key:"command", value:"ready"})); // 최초 세팅
+                dispatch(R_setData({key:"pinNum", value:res.data.data}))
                 history.push({
                     //pathname: '/QHost/ready',
                     pathname: '/QHost/play',
-                    state:{
-                        pinNum:pinNum
-                    }
                 })
             })
             .catch(()=>{
