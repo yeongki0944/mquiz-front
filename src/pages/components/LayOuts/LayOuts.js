@@ -17,9 +17,11 @@ export const Page_Gradiant = styled.div`
 `;
 
 export const Item_c = styled.div`
+    margin :auto;
     width: 100%;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 `;
+
