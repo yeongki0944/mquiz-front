@@ -1,11 +1,10 @@
-import styled from "styled-components";
+
 import {useEffect, useState} from "react";
-import {R_setCurrentShow_play, setData} from "../redux/reducers/quizplayReducer";
+import {setData} from "../redux/reducers/quizplayReducer";
 import {QuizStartCounter} from "../components/QuizStartCounter";
 import {QuizView} from "../components/QuizView/QuizView";
 import * as React from "react";
 import {useDispatch, useSelector} from "react-redux";
-import Button from "@mui/material/Button";
 import {NickNameCheck} from "./components/ClientNickNameInput";
 import {ClientReady} from "./components/ClientReady";
 import {ClientCountOutModal} from "./components/ClientCountOutModal";
@@ -18,7 +17,6 @@ export const QuizClientPlay = () => {
     const dispatch = useDispatch();
     const history = useHistory();
     // pinNum -> nickName -> wait-> (count -> play ->result -> count) -> result
-    // const [command, setCommand] = useState("nickName");
     const {quizPlay} = useSelector(state => state.quizPlay);
     const {quiz} = useSelector(state => state.quiz);
     const currentQuiz = (quiz.quizData.find(item => item.num === quizPlay.currentShow));
