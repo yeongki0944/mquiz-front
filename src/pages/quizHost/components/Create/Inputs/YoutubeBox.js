@@ -1,11 +1,11 @@
 import * as React from 'react';
 import {useState} from "react";
 import Modal from "@mui/material/Modal";
-import {R_modifyQuiz} from "../../redux/reducers/quizInfoReducer";
 import {useDispatch} from "react-redux";
 import {Slider} from "@mui/material";
 import styled from "@mui/material/styles/styled";
 import Paper from "@mui/material/Paper";
+import {R_modifyQuiz} from "../../../../redux/reducers/quizInfoReducer";
 
 
 const YoutubeModal = styled(Modal) ({

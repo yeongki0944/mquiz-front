@@ -24,9 +24,9 @@ import * as React from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
-import ImageBox from "../../../components/Inputs/ImageBox";
-import YoutubeBox from "../../../components/Inputs/YoutubeBox";
-import AudioBox from "../../../components/Inputs/AudioBox";
+import ImageBox from "./Inputs/ImageBox";
+import YoutubeBox from "./Inputs/YoutubeBox";
+import AudioBox from "./Inputs/AudioBox";
 import {styled} from "@mui/material/styles";
 import {Type_Reply} from "./QuizFormTypes/Type_Reply";
 import {Type_OX} from "./QuizFormTypes/Type_OX";
@@ -44,6 +44,8 @@ const Img = styled('img')({
 export const FormPanel = (props) => {
     const dispatch = useDispatch();
     const currentQuiz = props.currentQuiz;
+
+
 
     const setQuiz = (keytype, key, value) => {
         dispatch(R_modifyQuiz({keytype: keytype, key: key, value: value}));
@@ -165,12 +167,15 @@ export const FormPanel = (props) => {
                     >
                         <FormControlLabel value="Image" control={<Radio/>} onClick={() => {
                             setQuiz("media", "type", 'Image');
+                            setQuiz("media", "url", '');
                         }} label="Image"/>
                         <FormControlLabel value="Youtube" control={<Radio/>} onClick={() => {
                             setQuiz("media", "type", 'Youtube');
+                            setQuiz("media", "url", '');
                         }} label="Youtube"/>
                         <FormControlLabel value="Audio" control={<Radio/>} onClick={() => {
                             setQuiz("media", "type", 'Audio');
+                            setQuiz("media", "url", '');
                         }} label="Audio"/>
                     </RadioGroup>
                 </FormControl>
