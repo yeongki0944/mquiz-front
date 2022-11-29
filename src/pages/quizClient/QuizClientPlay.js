@@ -27,6 +27,7 @@ export const QuizClientPlay = () => {
      * 여기 시현님 하시던거 연결해서 하면 끝납니다.(Host랑 거의 동일)
      * 대신 문제 입력부분은 완성 후 연결해야할듯..?합니다.
      */
+
     useEffect(() => {
         switch (quizPlay.command){
             case "start":
