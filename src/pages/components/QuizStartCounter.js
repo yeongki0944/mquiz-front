@@ -44,8 +44,6 @@ export const QuizStartCounter = (props) => {
     );
 
     return (
-        <Typography variant={"h1"} component={"h1"}>
-            {count > 0 ? count : "GO!"}
-        </Typography>
+        <div>{count > 0 ? count : "GO!"}</div>
     )
 }

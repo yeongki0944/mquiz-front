@@ -18,48 +18,30 @@ export function ClientReady(props) {
         maxHeight: '100%',
     });
     return (
-        <>
-            <Paper
-                sx={{
-                    p: 2,
-                    margin: 'auto',
-                    maxWidth: 500,
-                    flexGrow: 1,
-                    backgroundColor: (theme) =>
-                        theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-                }}
-            >
-                <Grid container spacing={2}>
-                    <Grid item>
-                        <ButtonBase sx={{width: 128, height: 128}}>
-                            <Img alt="complex" src="/img/logo192.png"></Img>
-                        </ButtonBase>
-                    </Grid>
-                    <Grid item xs={12} sm container>
-                        <Grid item xs container direction="column" spacing={2}>
-                            <Grid item xs>
-                                <Typography variant="h5" component="div" align='center'>
-                                    {props.nickName} 님이
-                                </Typography>
+        <Grid container spacing={2}>
+            <Grid item>
+                <ButtonBase sx={{width: 128, height: 128}}>
+                    <Img alt="complex" src="/img/logo192.png"></Img>
+                </ButtonBase>
+            </Grid>
+            <Grid item xs={12} sm container>
+                <Grid item xs container direction="column" spacing={2}>
+                    <Grid item xs>
+                        <Typography variant="h5" component="div" align='center'>
+                            {props.nickName} 님이
+                        </Typography>
 
-                                <Typography variant="h5" component="div" align='center'>
-                                    입장하였습니다.
-                                </Typography>
+                        <Typography variant="h5" component="div" align='center'>
+                            입장하였습니다.
+                        </Typography>
 
-                                <Typography variant="h6" component="div" align='center'>
-                                    화면에서 닉네임을 확인해 주세요
-                                </Typography>
+                        <Typography variant="h6" component="div" align='center'>
+                            화면에서 닉네임을 확인해 주세요
+                        </Typography>
 
-                            </Grid>
-                        </Grid>
                     </Grid>
                 </Grid>
-            </Paper>
-            {/*<Link to="/QClient/play">*/}
-            {/*    <Typography variant="h5" component="div" align='center'>*/}
-            {/*        <Button variant="contained">참여하기</Button>*/}
-            {/*    </Typography>*/}
-            {/*</Link>*/}
-        </>
+            </Grid>
+        </Grid>
     );
 }

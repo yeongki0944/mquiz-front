@@ -1,5 +1,6 @@
 import {createAction, handleActions} from "redux-actions";
 
+
 const SET_DATA = "SET_DATA";
 const SET_CONTENT = "SET_CONTENT";
 
@@ -25,7 +26,6 @@ const initialState = {
 export const quizPlayReducer = handleActions({
     //신버전
     [SET_DATA]: (state, action) => {
-        console.log(action.payload);
         return {
             quizPlay: {
                 ...state.quizPlay,
@@ -34,7 +34,6 @@ export const quizPlayReducer = handleActions({
         }
     },
     [SET_CONTENT]: (state, action) => {
-        console.log(action.payload);
         return {
             quizPlay: {
                 ...state.quizPlay,
