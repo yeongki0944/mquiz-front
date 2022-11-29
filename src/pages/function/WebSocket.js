@@ -10,16 +10,22 @@ export const stompInit = (pinNum) => {
         console.log("STOMP Connection");
 
         // 나중에 destination 변경되면 바뀌야됨.
-        stomp.subscribe("/sub/quiz-play/room/" + pinNum, (msg) => {
+        stomp.subscribe("/pin/" + pinNum, (msg) => {
             console.log(msg);
         });
     })
 }
 
+export const stompSubscribe = (pinNum) => {
+    stomp.subscribe("/pin/" + pinNum, (msg) => {
+        console.log(msg);
+    });
+}
+
 export const stompSend = (path, data) => {
     console.log("Send보냄");
     console.log(stomp);
-    stomp.send("/pub" + path, {}, JSON.stringify(data));
+    stomp.send("/quiz/" + path, {}, JSON.stringify(data));
 }
 
 export const stompDisconnect = () => {
