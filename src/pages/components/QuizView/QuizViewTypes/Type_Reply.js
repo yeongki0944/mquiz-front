@@ -14,7 +14,7 @@ export const Type_Reply = () => {
     if(TextField.valueOf() !== null || TextField.valueOf() !=="") {
         return (
             <div>
-                <TextFiel></TextFiel>
+                <TextField></TextField>
                 <Typography variant="h5" component="div" align='center'>
                     {/*<Button type="submit" variant="contained">참여확인</Button>*/}
                     <Button variant="contained" onClick={() => {
