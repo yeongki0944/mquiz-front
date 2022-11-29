@@ -2,7 +2,7 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import * as React from "react";
 import Paper from "@mui/material/Paper";
-import {Gauge, Gauge2} from "./Gauge";
+import {Gauge} from "./Gauge";
 import {QuizQuestion} from "./QuizQuestion";
 import {Type_Select} from "./QuizViewTypes/Type_Select";
 import {Type_OX} from "./QuizViewTypes/Type_OX";
@@ -63,12 +63,12 @@ export const QuizView = (props) => {
                     <VolumeControlButton/>
                 </div>
                 <div id={"section1_items"}>
-                    <Gauge
-                        Qnum={currentQuiz.num}
-                        TotalQcnt={10}
-                        timeprogress={10}
-                        timeleft={currentQuiz.time}
-                    />
+                    {/*<Gauge*/}
+                    {/*    Qnum={currentQuiz.num}*/}
+                    {/*    TotalQcnt={10}*/}
+                    {/*    timeprogress={10}*/}
+                    {/*    timeleft={currentQuiz.time}*/}
+                    {/*/>*/}
                 </div>
                 <div id={"section1_items"}>
                     <div id={"QuestionArea"}>
@@ -82,7 +82,8 @@ export const QuizView = (props) => {
                 </div>
             </div>
             <div id={"section2"}>
-                <AnswerSheet/>
+                {/*<AnswerSheet/>*/}
+                <Type_Reply/>
             </div>
         </div>
 

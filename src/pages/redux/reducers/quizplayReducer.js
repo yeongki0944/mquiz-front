@@ -18,9 +18,8 @@ const initialState = {
         sender: '',
         quizNum : 1,
         content : {
-            selected: '',
-            totalElapsedTime:0,
-            ans: '',
+            answer: '',
+            solved_time: 0,
         }
     }
 }

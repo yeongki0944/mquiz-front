@@ -20,7 +20,7 @@ export const QuizClientPlay = () => {
     // pinNum -> nickName -> wait-> (count -> play ->result -> count) -> result
     const {quizPlay} = useSelector(state => state.quizPlay);
     const {quiz} = useSelector(state => state.quiz);
-    const currentQuiz = (quiz.quizData.find(item => item.num === quizPlay.currentShow));
+    const currentQuiz = (quiz.quizData.find(item => item.num === quizPlay.quizNum));
     const [open, setOpen] = useState(false);
 
 
