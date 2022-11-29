@@ -54,5 +54,5 @@ export const quizPlayReducer = handleActions({
                 currentShow: action.payload
             }
         }
-    }
+    },
 }, initialState);
