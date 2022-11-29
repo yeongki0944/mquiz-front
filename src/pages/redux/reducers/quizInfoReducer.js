@@ -75,14 +75,14 @@ const initialState = {
 
 export const quizInfoReducer = handleActions({
     [SET_QUIZ]: (state, action) => {
-        console.log("SET_QUIZ");
+        // console.log("SET_QUIZ");
         return {
             ...state,
             quiz: action.payload
         }
     },
     [SET_ID]: (state, action) => {
-        console.log("SET_ID");
+        // console.log("SET_ID");
         return {
             ...state,
             quiz: {
@@ -112,6 +112,7 @@ export const quizInfoReducer = handleActions({
         // }
     },
     [SET_CURRENT_SHOW]: (state, action) => {
+        // console.log("SET_CURRENT_SHOW"+action.payload);
         return {
             ...state,
             quiz: {
@@ -158,10 +159,7 @@ export const quizInfoReducer = handleActions({
         }
     },
     [DELETE_QUIZ]: (state, action) => {
-        // let index = state.quizData.findIndex(quiz => quiz.num === action.payload.quizNum);
-        // state.quizData.splice(index, 1);
-
-        let index = state.quiz.quizData.findIndex(quiz => quiz.num === action.payload.quizNum);
+        let index = state.quiz.quizData.findIndex(quiz => quiz.num === action.payload);
         state.quiz.quizData.splice(index, 1);
         return {
             ...state,
@@ -174,7 +172,7 @@ export const quizInfoReducer = handleActions({
         }
     },
     [COPY_QUIZ]: (state, action) => {
-        console.log("COPY_QUIZ");
+        // console.log("COPY_QUIZ");
         return {
             ...state,
             quiz: {
@@ -189,10 +187,15 @@ export const quizInfoReducer = handleActions({
     [RENUMBER_QUIZ]: (state, action) => {
         return {
             ...state,
-            quizData: state.quizData.map((quiz, index) => {
-                quiz.num = index + 1;
-                return quiz;
-            })
+            quiz: {
+                ...state.quiz,
+                quizData: state.quiz.quizData.map((quiz, index) => {
+                    return {
+                        ...quiz,
+                        num: index + 1
+                    }
+                })
+            }
         }
     },
     [MODIFY_QUIZ]: (state, action) => {

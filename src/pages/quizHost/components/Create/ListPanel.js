@@ -1,7 +1,7 @@
 import {useDispatch} from "react-redux";
 import {useEffect} from "react";
 import Paper from "@mui/material/Paper";
-import {R_copyQuiz, R_deleteQuiz, R_setCurrentShow} from "../../../redux/reducers/quizInfoReducer";
+import {R_copyQuiz, R_deleteQuiz, R_renumberQuiz, R_setCurrentShow} from "../../../redux/reducers/quizInfoReducer";
 import {Button} from "@mui/material";
 import FileCopyIcon from "@material-ui/icons/FileCopy";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
@@ -9,7 +9,7 @@ import * as React from "react";
 import '../styles/ListPanel.css';
 import {styled} from "@mui/system";
 
-const Item_card = styled(Paper) ({
+const Item_card = styled(Paper)({
     backgroundColor: "#ffffff",
     color: "#000000",
     padding: "10px",
@@ -27,6 +27,7 @@ export const ListPanel = (props) => {
 
     useEffect(() => {
         setSelected(quiz.currentShow);
+        // console.log(quiz);
     }, [quiz.currentShow]);
 
     const setSelected = (currentShow) => {
@@ -43,19 +44,28 @@ export const ListPanel = (props) => {
                 <div key={item.num}>
                     <div>{item.num}P</div>
                     <Item_card className={"item_card"} key={item.num} id={item.num}
-                         onClick={() => dispatch(R_setCurrentShow(item.num))}>
+                    onClick = {()=>{
+                        dispatch(R_setCurrentShow(item.num));
+                    }}
+                    >
                         Status [{item.type}]
                         <div>
-                            <Button onClick={() => {
+                            <FileCopyIcon onClick={() => {
                                 dispatch(R_copyQuiz(item.num));
-                            }}>
-                                <FileCopyIcon/>
-                            </Button>
-                            <Button onClick={() => {
-                                dispatch(R_deleteQuiz(item.num));
-                            }}>
-                                <DeleteForeverIcon/>
-                            </Button>
+                            }}
+                            />
+                            <DeleteForeverIcon
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    if (quiz.quizData.length === 1) {
+                                        alert("최소 1개의 문제는 존재해야 합니다.");
+                                        return;
+                                    }
+                                    dispatch(R_setCurrentShow(item.num - 1));
+                                    dispatch(R_deleteQuiz(item.num));
+                                    dispatch(R_renumberQuiz());
+                                }}
+                            />
                         </div>
                     </Item_card>
                 </div>

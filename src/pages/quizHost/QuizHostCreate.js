@@ -9,38 +9,32 @@ import {Page_Default} from "../components/LayOuts/LayOuts";
 import styled from "styled-components";
 
 const Panel = styled.div`
+    border: 1px solid black;
     display: flex;
     float: left;
     width: 100%;
+    height: 90%;
+    margin : auto;
 `;
-const List = styled(ListPanel)`
+
+
+const List = styled('div')`
     width: 15%;
-    height: 90vh;
     overflow: scroll;
     overflow-x: hidden;
 `;
 
-const QuizView_styled = styled(QuizView)`
+const QuizView_styled = styled('div')`
     width: 60%;
-    height: 90vh;
     overflow: scroll;
     overflow-x: hidden;
     overflow-y: hidden;
 `;
 
-const Form = styled(FormPanel)`
-    width: 15%;
-    height: 90vh;
+const Form = styled('div')`
+    width: 25%;
     overflow: scroll;
     overflow-x: hidden;
-`;
-
-const Control = styled(ControlPanel)`
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    width: 100%;
-    height: 5vh;
 `;
 export const QuizHostCreate = () => {
 
@@ -51,11 +45,11 @@ export const QuizHostCreate = () => {
         <Page_Default>
             <NavBar/>
             <Panel>
-                <List quiz={quiz}/>
-                <QuizView_styled currentQuiz={currentQuiz}/>
-                <Form currentQuiz={currentQuiz}/>
+                <List><ListPanel quiz={quiz}/></List>
+                <QuizView_styled><QuizView currentQuiz={currentQuiz}/></QuizView_styled>
+                <Form><FormPanel currentQuiz={currentQuiz}/></Form>
             </Panel>
-            <Control quiz={quiz}/>
+            <ControlPanel quiz={quiz}/>
         </Page_Default>
     )
 }
