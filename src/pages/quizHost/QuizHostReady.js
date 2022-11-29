@@ -97,7 +97,7 @@ export const QuizHostReady = (props) => {
                         </Typography>
                     </Grid>
 
-                    <PinNum></PinNum>
+                    <PinNum pinNum={props.pinNum}></PinNum>
                     <ClientTotalCount></ClientTotalCount>
 
                 </Grid>

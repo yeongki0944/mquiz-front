@@ -4,7 +4,7 @@ import {useDispatch} from "react-redux";
 
 const session = window.sessionStorage
 
-export const URL = 'http://localhost:8080'; //'http://13.39.86.114:8888/'
+export const URL = 'http://15.152.42.217:8888'; //'http://13.39.86.114:8888/'
 
 const CustomAxios = axios.create({
     baseURL: URL,

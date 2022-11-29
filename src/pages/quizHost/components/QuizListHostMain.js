@@ -144,10 +144,9 @@ export const QuizListHostMain = (props) => {
 
     const handlePlay = (id) => {
         let pinNum;
-        CustomAxios.post('/quiz-play/createRoom')
+        CustomAxios.post('/v1/host/createPlay')
             .then(res =>{
-                console.log(res.data);
-                pinNum = res.data;
+                pinNum = res.data.data;
                 dispatch(setData({key:"command", value:"ready"})); // 최초 세팅
                 history.push({
                     //pathname: '/QHost/ready',

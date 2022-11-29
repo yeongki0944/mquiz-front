@@ -112,6 +112,10 @@ export const QuizHostPlay = () => {
         switch (quizPlay.command) {
             case "ready":
                 stompInit(pinNum);
+                /*setTimeout(() => {
+                    //setCommand("show");
+                    dispatch(setData({key:"command", value:"wait"}));
+                }, 5);*/
                 break;
             case "start":
                 setTimeout(() => {
@@ -146,7 +150,9 @@ export const QuizHostPlay = () => {
     }, [quizPlay.command]);
 
     return (
+
         <Page_Gradiant>
+
             {quizPlay.command === "ready" && <QuizHostReady pinNum={pinNum}/>}
             {quizPlay.command === "wait" ? <Button onClick={handleCommand}>Start</Button> :
                 <Button onClick={handleCommand}>Next</Button>}
