@@ -50,13 +50,11 @@ export const QuizHostPlay = () => {
             case "ready":
                 stompInit(quizPlay.pinNum);
                 setTimeout(() => {
-                    //setCommand("show");
                     dispatch(R_setData({key:"command", value:"wait"}));
                 }, 5);
                 break;
             case "start":
                 setTimeout(() => {
-                    //setCommand("show");
                     dispatch(R_setData({key:"command", value:"show"}));
                     stompSend("/quiz/message", {
                         pinNum: quizPlay.pinNum,
@@ -65,10 +63,9 @@ export const QuizHostPlay = () => {
                 }, 3000);
                 break;
             case "show":
-                console.log(quiz.quizData.time);
                 setTimeout(()=>{
                     dispatch(R_setData({key:"command", value:"result"}));
-                }, 5000);
+                }, quiz.quizData[quizPlay.quizNum].time*1000);
                 break;
             case "result":
                 if(quizPlay.quizNum === QuizCount)

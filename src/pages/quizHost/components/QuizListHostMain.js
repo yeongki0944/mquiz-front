@@ -161,7 +161,17 @@ export const QuizListHostMain = (props) => {
     }
 
     const handlePlay = (id) => {
-        let pinNum;
+        CustomAxios.get('/v1/show?showId=' + id)
+            .then(res => {
+                console.log(res.data);
+                dispatch(R_setId(id));
+                dispatch(R_setQuiz(res.data.data));
+                dispatch(R_setCurrentShow(1));
+            })
+            .catch(err => {
+                console.log(err);
+            });
+
         CustomAxios.post('/v1/host/createPlay')
             .then(res =>{
                 dispatch(R_setData({key:"command", value:"ready"})); // 최초 세팅
@@ -173,7 +183,7 @@ export const QuizListHostMain = (props) => {
             })
             .catch(()=>{
                 console.log("오류 발생");
-            })
+            });
     }
 
     function handleCreate() {
