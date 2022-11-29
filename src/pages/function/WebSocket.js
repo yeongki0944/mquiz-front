@@ -23,8 +23,7 @@ export const stompSubscribe = (pinNum) => {
 }
 
 export const stompSend = (path, data) => {
-    console.log("Send보냄");
-    console.log(stomp);
+    console.log(data);
     stomp.send("/quiz/" + path, {}, JSON.stringify(data));
 }
 

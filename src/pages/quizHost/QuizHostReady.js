@@ -65,7 +65,7 @@ export const QuizHostReady = (props) => {
                 dispatch(R_setId(id));
                 dispatch(R_setQuiz(res.data.data));
                 dispatch(R_setCurrentShow(1));
-                dispatch(R_setData({key : "command", value:"wait"}));
+                dispatch(R_setData({key : "command", value:"start"}));
             })
             .catch(err => {
                 console.log(err);
