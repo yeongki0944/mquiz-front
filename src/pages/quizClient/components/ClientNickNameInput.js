@@ -54,7 +54,7 @@ export const NickNameCheck = (props) => {
             handleSubmit();
         }
     }
-    
+
     return (
         <Box align='center' sx={{minWidth: 275}}>
             <Typography variant="h5" component="div" align='center'>
