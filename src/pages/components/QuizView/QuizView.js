@@ -2,7 +2,7 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import * as React from "react";
 import Paper from "@mui/material/Paper";
-import {Gauge} from "./Gauge";
+import {Gauge, Gauge2} from "./Gauge";
 import {QuizQuestion} from "./QuizQuestion";
 import {Type_Select} from "./QuizViewTypes/Type_Select";
 import {Type_OX} from "./QuizViewTypes/Type_OX";
