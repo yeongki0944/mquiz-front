@@ -71,7 +71,19 @@ export const QuizListHostMain = (props) => {
 
     const list = quizList.map(
         (item) => (
-            <Item key={item.id}>
+            <Item key={item.id}
+                  onClick={() => {
+                      CustomAxios.get('/v1/show?showId=' + item.id)
+                          .then(res => {
+                              console.log(res.data);
+                              dispatch(R_setId(item.id));
+                              dispatch(R_setQuiz(res.data.data));
+                              dispatch(R_setCurrentShow(1));
+                          })
+                          .catch(err => {
+                              console.log(err);
+                          })
+                  }}>
                 <Grid container spacing={2}>
                     <Grid item>
                         <img alt="complex"
@@ -99,15 +111,18 @@ export const QuizListHostMain = (props) => {
                         <Grid item>
                             <Typography variant="subtitle1" component="div">
                                 {item.quizInfo.state === "작성중" ?
-                                    <Button onClick={() => {
+                                    <Button onClick={(e) => {
+                                        e.stopPropagation();
                                         handleEdit(item.id)
                                     }}><EditIcon_Styled/></Button>
                                     : null
                                 }
-                                <Button onClick={() => {
+                                <Button onClick={(e) => {
+                                    e.stopPropagation();
                                     handlePlay(item.id)
                                 }}><PlayArrow/></Button>
-                                <Button onClick={() => {
+                                <Button onClick={(e) => {
+                                    e.stopPropagation();
                                     handledelete(item.id)
                                 }}><DeleteForeverIcon/></Button>
                             </Typography>

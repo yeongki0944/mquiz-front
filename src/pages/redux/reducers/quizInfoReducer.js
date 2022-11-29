@@ -30,22 +30,7 @@ export const R_setId = createAction(SET_ID);
 const initialState = {
     quiz: {
         id: "",
-        quizInfo: {
-                // "email": "dudrl0944@gmail.com",
-                // "title": "쇼 제목",
-                // "category": "일단",
-                // "tags": [
-                //     "1번",
-                //     "2번",
-                //     "3번"
-                // ],
-                // "titleImg_origin": "url",
-                // "titleImg_thumb": "url",
-                // "createDate": "2022-11-11T00:00:00.000+00:00",
-                // "lastModifyDate": "2022-11-11T00:00:00.000+00:00",
-                // "state": "작성중",
-                // "pulic": false
-        },
+        quizInfo: {},
         currentShow: 1,
         quizData: [
             {
@@ -55,8 +40,6 @@ const initialState = {
                 "media": {
                     "type": "image",
                     "url": "",
-                    // "startTime": "",
-                    // "endTime": "",
                 },
                 "choiceList": {
                     "num1": "답을 입력해 주세요",
@@ -69,48 +52,6 @@ const initialState = {
                 "useScore": true,
                 "rate": 0
             },
-            // {
-            //     "num": 2,
-            //     "type": "OX형",
-            //     "question": " ",
-            //     "media": {
-            //         "type": "image",
-            //         "url": "",
-            //         // "startTime": "",
-            //         // "endTime": "",
-            //     },
-            //     "choiceList": {
-            //         "num1": "답을 입력해 주세요",
-            //         "num2": "답을 입력해 주세요",
-            //         "num3": "",
-            //         "num4": ""
-            //     },
-            //     "answer": [],
-            //     "time": 0,
-            //     "useScore": true,
-            //     "rate": 0
-            // },
-            // {
-            //     "num": 3,
-            //     "type": "단답형",
-            //     "question": " ",
-            //     "media": {
-            //         "type": "image",
-            //         "url": "",
-            //         // "startTime": "",
-            //         // "endTime": "",
-            //     },
-            //     "choiceList": {
-            //         "num1": "답을 입력해 주세요",
-            //         "num2": "답을 입력해 주세요",
-            //         "num3": "",
-            //         "num4": ""
-            //     },
-            //     "answer": [],
-            //     "time": 0,
-            //     "useScore": true,
-            //     "rate": 0
-            // }
         ],
     }
 

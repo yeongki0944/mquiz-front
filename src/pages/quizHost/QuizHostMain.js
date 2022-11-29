@@ -10,6 +10,7 @@ import {NavBar} from "./components/NavBar";
 import {Page_Default} from "../components/LayOuts/LayOuts";
 import styled from "styled-components";
 import {useHistory} from "react-router-dom";
+import {QuizPreviewHostMain} from "./components/QuizPreviewHostMain";
 
 const Profile = styled(HostProfile)`
     width: 100%;
@@ -25,7 +26,7 @@ const Content= styled.div`
         width: 100%;
     }
 `;
-const QuizList = styled(QuizListHostMain)`
+const QuizList = styled.div`
     @media (min-width: 767px) {
         width: 50%;
     }
@@ -37,7 +38,10 @@ const QuizList = styled(QuizListHostMain)`
 `;
 const QuizPreviewList = styled.div`
     @media (min-width: 767px) {
+        height: 70vh;
         width: 50%;
+        overflow-y: scroll;
+        overflow-x: hidden;
     }
 
     @media (min-width: 300px) and (max-width: 767px) {
@@ -70,8 +74,8 @@ export const QuizHostMain = () => {
             <Profile name={"test"} info={"info"}/>
             <hr/>
             <Content>
-                <QuizList quizList={quizList} setModalOpen={setModalOpen}/>
-                <QuizPreviewList>미리보기</QuizPreviewList>
+                <QuizList><QuizListHostMain quizList={quizList} setModalOpen={setModalOpen}/></QuizList>
+                <QuizPreviewList><QuizPreviewHostMain/></QuizPreviewList>
             </Content>
             <QuizModal open={modalOpen} setOpen={setModalOpen}/>
         </Page_Default>
