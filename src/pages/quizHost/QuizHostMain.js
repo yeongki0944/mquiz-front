@@ -6,9 +6,10 @@ import CustomAxios from "../function/CustomAxios";
 import {R_setQuizList} from "../redux/reducers/quizListReducer";
 import {QuizListHostMain} from "./components/QuizListHostMain";
 import HostProfile from "./components/HostProfile";
-import {NavBar} from "../components/NavBar";
+import {NavBar} from "./components/NavBar";
 import {Page_Default} from "../components/LayOuts/LayOuts";
 import styled from "styled-components";
+import {useHistory} from "react-router-dom";
 
 const Profile = styled(HostProfile)`
     width: 100%;
@@ -45,7 +46,6 @@ const QuizPreviewList = styled.div`
 `;
 
 export const QuizHostMain = () => {
-
     const dispatch = useDispatch();
     const [modalOpen, setModalOpen] = useState(false);
     const {quizList} = useSelector(state => state.quizList);

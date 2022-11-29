@@ -5,6 +5,12 @@ import {BottomNavigation, BottomNavigationAction} from "@mui/material";
 import * as React from "react";
 import axios from "axios";
 import CustomAxios from "../../../function/CustomAxios";
+import styled from "styled-components";
+
+const Styled_BottomNavigation = styled(BottomNavigation)`
+    width: 100%;
+    height: 5vh;
+`;
 
 export const ControlPanel = (props) => {
     const dispatch = useDispatch();
@@ -25,10 +31,10 @@ export const ControlPanel = (props) => {
     }
 
     return (
-        <BottomNavigation showLabels>
+        <Styled_BottomNavigation showLabels>
             <BottomNavigationAction label="+ Page" onClick={addPage}/>
             <BottomNavigationAction label="+ Show"/>
             <BottomNavigationAction label="Save" onClick={save}/>
-        </BottomNavigation>
+        </Styled_BottomNavigation>
     )
 }

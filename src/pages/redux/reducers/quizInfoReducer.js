@@ -1,6 +1,7 @@
 import {createAction, handleActions} from "redux-actions";
 
 const SET_QUIZ = "SET_QUIZ";
+const SET_QUIZ_DATA = "SET_QUIZ_DATA";
 const MAKE_QUIZ_SHOW = 'MAKE_QUIZ_SHOW';
 const SET_CURRENT_SHOW = 'SET_CURRENT_SHOW';
 const SET_QUIZ_INFO = 'SET_QUIZ_INFO';
@@ -14,6 +15,7 @@ const SET_ID = 'SET_ID';
 
 
 export const R_setQuiz = createAction(SET_QUIZ);
+export const R_setQuizData = createAction(SET_QUIZ_DATA);
 export const R_makeQuizShow = createAction(MAKE_QUIZ_SHOW);
 export const R_setCurrentShow = createAction(SET_CURRENT_SHOW);
 export const R_setQuizInfo = createAction(SET_QUIZ_INFO);
@@ -66,7 +68,49 @@ const initialState = {
                 "time": 0,
                 "useScore": true,
                 "rate": 0
-            }
+            },
+            // {
+            //     "num": 2,
+            //     "type": "OX형",
+            //     "question": " ",
+            //     "media": {
+            //         "type": "image",
+            //         "url": "",
+            //         // "startTime": "",
+            //         // "endTime": "",
+            //     },
+            //     "choiceList": {
+            //         "num1": "답을 입력해 주세요",
+            //         "num2": "답을 입력해 주세요",
+            //         "num3": "",
+            //         "num4": ""
+            //     },
+            //     "answer": [],
+            //     "time": 0,
+            //     "useScore": true,
+            //     "rate": 0
+            // },
+            // {
+            //     "num": 3,
+            //     "type": "단답형",
+            //     "question": " ",
+            //     "media": {
+            //         "type": "image",
+            //         "url": "",
+            //         // "startTime": "",
+            //         // "endTime": "",
+            //     },
+            //     "choiceList": {
+            //         "num1": "답을 입력해 주세요",
+            //         "num2": "답을 입력해 주세요",
+            //         "num3": "",
+            //         "num4": ""
+            //     },
+            //     "answer": [],
+            //     "time": 0,
+            //     "useScore": true,
+            //     "rate": 0
+            // }
         ],
     }
 
@@ -75,14 +119,24 @@ const initialState = {
 
 export const quizInfoReducer = handleActions({
     [SET_QUIZ]: (state, action) => {
-        console.log("SET_QUIZ");
+        // console.log("SET_QUIZ");
         return {
             ...state,
             quiz: action.payload
         }
     },
+    [SET_QUIZ_DATA]: (state, action) => {
+        console.log(action.payload);
+        return {
+            ...state,
+            quiz: {
+                ...state.quiz,
+                quizData: action.payload
+            }
+        }
+    },
     [SET_ID]: (state, action) => {
-        console.log("SET_ID");
+        // console.log("SET_ID");
         return {
             ...state,
             quiz: {
@@ -112,6 +166,7 @@ export const quizInfoReducer = handleActions({
         // }
     },
     [SET_CURRENT_SHOW]: (state, action) => {
+        // console.log("SET_CURRENT_SHOW"+action.payload);
         return {
             ...state,
             quiz: {
@@ -158,10 +213,7 @@ export const quizInfoReducer = handleActions({
         }
     },
     [DELETE_QUIZ]: (state, action) => {
-        // let index = state.quizData.findIndex(quiz => quiz.num === action.payload.quizNum);
-        // state.quizData.splice(index, 1);
-
-        let index = state.quiz.quizData.findIndex(quiz => quiz.num === action.payload.quizNum);
+        let index = state.quiz.quizData.findIndex(quiz => quiz.num === action.payload);
         state.quiz.quizData.splice(index, 1);
         return {
             ...state,
@@ -174,7 +226,7 @@ export const quizInfoReducer = handleActions({
         }
     },
     [COPY_QUIZ]: (state, action) => {
-        console.log("COPY_QUIZ");
+        // console.log("COPY_QUIZ");
         return {
             ...state,
             quiz: {
@@ -189,10 +241,15 @@ export const quizInfoReducer = handleActions({
     [RENUMBER_QUIZ]: (state, action) => {
         return {
             ...state,
-            quizData: state.quizData.map((quiz, index) => {
-                quiz.num = index + 1;
-                return quiz;
-            })
+            quiz: {
+                ...state.quiz,
+                quizData: state.quiz.quizData.map((quiz, index) => {
+                    return {
+                        ...quiz,
+                        num: index + 1
+                    }
+                })
+            }
         }
     },
     [MODIFY_QUIZ]: (state, action) => {

@@ -9,6 +9,7 @@ import {useState, useEffect} from "react";
 import {AllQuizListCard} from "../components/AllQuizListCard"
 import {QuizSearchBox} from "../components/QuizSearchBox"
 import {Page_Default} from "../components/LayOuts/LayOuts";
+import {NavBar} from "./components/NavBar";
 
 export const QuizHostFind = () => {
     // 페이징
@@ -52,7 +53,7 @@ export const QuizHostFind = () => {
         <Page_Default>
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <Nav/>
+                    <NavBar/>
                 </Grid>
                 <Grid item xs={12} container spacing={2}>
                     <Grid item xs={1}></Grid>
