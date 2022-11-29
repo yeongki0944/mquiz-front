@@ -49,6 +49,12 @@ export const NickNameCheck = (props) => {
         }
     }
 
+    const handleEnterKey = (e) => {
+        if (e.key === 'Enter') {
+            handleSubmit();
+        }
+    }
+    
     return (
         <Box align='center' sx={{minWidth: 275}}>
             <Typography variant="h5" component="div" align='center'>
@@ -59,6 +65,7 @@ export const NickNameCheck = (props) => {
                        helperText={error}
                        error={error !== '' || false} required autoFocus
                        onBlur={handleInput}
+                       onKeyPress={handleEnterKey}
             />
             <Typography>
                 <Button variant="contained" onClick={handleSubmit}>참여확인</Button>
