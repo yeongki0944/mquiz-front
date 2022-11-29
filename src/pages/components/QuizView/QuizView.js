@@ -61,12 +61,12 @@ export const QuizView = (props) => {
                     <VolumeControlButton/>
                 </div>
                 <div id={"section1_items"}>
-                    <Gauge
-                        Qnum={currentQuiz.num}
-                        TotalQcnt={10}
-                        timeprogress={10}
-                        timeleft={currentQuiz.time}
-                    />
+                    {/*<Gauge*/}
+                    {/*    Qnum={currentQuiz.num}*/}
+                    {/*    TotalQcnt={10}*/}
+                    {/*    timeprogress={10}*/}
+                    {/*    timeleft={currentQuiz.time}*/}
+                    {/*/>*/}
                 </div>
                 <div id={"section1_items"}>
                     <div id={"QuestionArea"}>
