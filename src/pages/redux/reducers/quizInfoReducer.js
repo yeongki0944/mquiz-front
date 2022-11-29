@@ -1,6 +1,7 @@
 import {createAction, handleActions} from "redux-actions";
 
 const SET_QUIZ = "SET_QUIZ";
+const SET_QUIZ_DATA = "SET_QUIZ_DATA";
 const MAKE_QUIZ_SHOW = 'MAKE_QUIZ_SHOW';
 const SET_CURRENT_SHOW = 'SET_CURRENT_SHOW';
 const SET_QUIZ_INFO = 'SET_QUIZ_INFO';
@@ -14,6 +15,7 @@ const SET_ID = 'SET_ID';
 
 
 export const R_setQuiz = createAction(SET_QUIZ);
+export const R_setQuizData = createAction(SET_QUIZ_DATA);
 export const R_makeQuizShow = createAction(MAKE_QUIZ_SHOW);
 export const R_setCurrentShow = createAction(SET_CURRENT_SHOW);
 export const R_setQuizInfo = createAction(SET_QUIZ_INFO);
@@ -66,7 +68,49 @@ const initialState = {
                 "time": 0,
                 "useScore": true,
                 "rate": 0
-            }
+            },
+            // {
+            //     "num": 2,
+            //     "type": "OX형",
+            //     "question": " ",
+            //     "media": {
+            //         "type": "image",
+            //         "url": "",
+            //         // "startTime": "",
+            //         // "endTime": "",
+            //     },
+            //     "choiceList": {
+            //         "num1": "답을 입력해 주세요",
+            //         "num2": "답을 입력해 주세요",
+            //         "num3": "",
+            //         "num4": ""
+            //     },
+            //     "answer": [],
+            //     "time": 0,
+            //     "useScore": true,
+            //     "rate": 0
+            // },
+            // {
+            //     "num": 3,
+            //     "type": "단답형",
+            //     "question": " ",
+            //     "media": {
+            //         "type": "image",
+            //         "url": "",
+            //         // "startTime": "",
+            //         // "endTime": "",
+            //     },
+            //     "choiceList": {
+            //         "num1": "답을 입력해 주세요",
+            //         "num2": "답을 입력해 주세요",
+            //         "num3": "",
+            //         "num4": ""
+            //     },
+            //     "answer": [],
+            //     "time": 0,
+            //     "useScore": true,
+            //     "rate": 0
+            // }
         ],
     }
 
@@ -79,6 +123,16 @@ export const quizInfoReducer = handleActions({
         return {
             ...state,
             quiz: action.payload
+        }
+    },
+    [SET_QUIZ_DATA]: (state, action) => {
+        console.log(action.payload);
+        return {
+            ...state,
+            quiz: {
+                ...state.quiz,
+                quizData: action.payload
+            }
         }
     },
     [SET_ID]: (state, action) => {
