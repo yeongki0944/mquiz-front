@@ -6,7 +6,7 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 
 import styled from "styled-components";
-import {setContent, setData} from "../../../redux/reducers/quizplayReducer";
+import {R_setContent} from "../../../redux/reducers/quizplayReducer";
 
 const Card_Btn = styled.div`
     background-color: white;
@@ -47,12 +47,12 @@ export const Type_OX = () => {
                 {console.log(quizPlay)}
                 <Card_Btn
                     onClick={() => {
-                        dispatch(setContent({key: "answer", value: "O"}));
+                        dispatch(R_setContent({key: "answer", value: "O"}));
                     }}
                 >O</Card_Btn>
                 <Card_Btn
                     onClick={() => {
-                        dispatch(setContent({key: "answer", value: "X"}));
+                        dispatch(R_setContent({key: "answer", value: "X"}));
                     }}
                 >X</Card_Btn>
             </div>

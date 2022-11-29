@@ -5,8 +5,8 @@ const SET_DATA = "SET_DATA";
 const SET_CONTENT = "SET_CONTENT";
 const SET_CURRENT_SHOW_PLAY = "SET_CURRENT_SHOW_PLAY";
 
-export const setData = createAction(SET_DATA);
-export const setContent = createAction(SET_CONTENT);
+export const R_setData = createAction(SET_DATA);
+export const R_setContent = createAction(SET_CONTENT);
 export const R_setCurrentShow_play = createAction(SET_CURRENT_SHOW_PLAY);
 
 // 사용법
