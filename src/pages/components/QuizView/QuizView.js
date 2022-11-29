@@ -57,7 +57,7 @@ export const QuizView = (props) => {
         <div id={"content"}>
             <div id={"section1"}>
                 <div id={"section1_items"}>
-                    <PinNum pinNum={55555}/>
+                    <PinNum pinNum={props.pinNum}/>
                     <VolumeControlButton/>
                 </div>
                 <div id={"section1_items"}>

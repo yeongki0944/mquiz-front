@@ -38,7 +38,7 @@ export const QuizClientPlay = () => {
                 setCommand("result");
                 break;
             case "result":
-                dispatch(R_setCurrentShow_play(quizPlay.currentShow + 1));
+                //dispatch(R_setCurrentShow_play(quizPlay.currentShow + 1));
                 setCommand("start");
                 break;
         }
