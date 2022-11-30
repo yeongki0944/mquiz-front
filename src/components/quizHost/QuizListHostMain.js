@@ -172,9 +172,9 @@ export const QuizListHostMain = (props) => {
                 console.log(err);
             });
 
-        CustomAxios.post('/v1/host/createPlay')
+        CustomAxios.post('/v1/host/createPlay', {'quizId':id})
             .then(res =>{
-                dispatch(R_setData({key:"command", value:"ready"})); // 최초 세팅
+                dispatch(R_setData({key:"command", value:"READY"})); // 최초 세팅
                 dispatch(R_setData({key:"pinNum", value:res.data.data}))
                 history.push({
                     //pathname: '/QHost/ready',
