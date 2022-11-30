@@ -1,6 +1,6 @@
 import {Link} from "react-router-dom";
 import React from "react";
-import {Item_c, Page_Gradiant} from "../components/LayOuts/LayOuts";
+import {Item_c, Page_Gradiant} from "../../components/LayOuts/LayOuts";
 import styled from "styled-components";
 
 export const Item = styled.div`

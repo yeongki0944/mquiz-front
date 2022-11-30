@@ -1,18 +1,18 @@
 import * as React from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {QuizView} from "../components/QuizView/QuizView";
+import {QuizView} from "../../components/QuizView/QuizView";
 import {useEffect, useState} from "react";
 import Button from "@mui/material/Button";
-import {QuizStartCounter} from "../components/QuizStartCounter";
+import {QuizStartCounter} from "../../components/QuizStartCounter";
 import {styled} from "@mui/system";
 import Paper from "@mui/material/Paper";
-import {R_setData, R_setContent} from "../redux/reducers/quizplayReducer";
+import {R_setData, R_setContent} from "../../redux/reducers/quizplayReducer";
 import {useHistory} from "react-router-dom";
-import {Page_Gradiant} from "../components/LayOuts/LayOuts";
+import {Page_Gradiant} from "../../components/LayOuts/LayOuts";
 /*import SockJS from "sockjs-client";
 import {Stomp} from "@stomp/stompjs";*/
 import {QuizHostReady} from "./QuizHostReady";
-import {stompInit, stompSend, stompDisconnect} from "../function/WebSocket";
+import {stompInit, stompSend, stompDisconnect} from "../../function/WebSocket";
 
 const Counter = styled(QuizStartCounter)({
     width: '100%',

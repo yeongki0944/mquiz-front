@@ -5,7 +5,7 @@ import {useDispatch} from "react-redux";
 import {Slider} from "@mui/material";
 import styled from "@mui/material/styles/styled";
 import Paper from "@mui/material/Paper";
-import {R_modifyQuiz} from "../../../../redux/reducers/quizInfoReducer";
+import {R_modifyQuiz} from "../../../redux/reducers/quizInfoReducer";
 
 
 const YoutubeModal = styled(Modal) ({

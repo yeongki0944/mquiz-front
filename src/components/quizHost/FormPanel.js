@@ -7,7 +7,7 @@ import {
     R_modifyQuiz,
     R_modifyQuizAnswer,
     R_setCurrentShow
-} from "../../../redux/reducers/quizInfoReducer";
+} from "../../redux/reducers/quizInfoReducer";
 import {
     BottomNavigation,
     BottomNavigationAction,

@@ -1,6 +1,6 @@
 import {useDispatch, useSelector} from "react-redux";
 import {Box, FormControl, FormGroup, FormLabel, TextField} from "@mui/material";
-import {R_modifyQuiz, R_modifyQuizAnswer} from "../../../../redux/reducers/quizInfoReducer";
+import {R_modifyQuiz, R_modifyQuizAnswer} from "../../../redux/reducers/quizInfoReducer";
 import * as React from "react";
 
 export const Type_Reply = () => {
