@@ -1,16 +1,8 @@
 import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
 import {
-    R_addQuiz,
-    R_copyQuiz,
-    R_deleteQuiz,
     R_modifyQuiz,
-    R_modifyQuizAnswer,
-    R_setCurrentShow
-} from "../../redux/reducers/quizInfoReducer";
+} from "../../../redux/reducers/quizInfoReducer";
 import {
-    BottomNavigation,
-    BottomNavigationAction,
     Box,
     Button,
     Card,
@@ -18,19 +10,15 @@ import {
     Switch,
     TextField
 } from "@mui/material";
-import FileCopyIcon from "@material-ui/icons/FileCopy";
-import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import * as React from "react";
-import {makeStyles} from "@material-ui/core/styles";
-import {useDispatch, useSelector} from "react-redux";
-import {useEffect, useState} from "react";
-import ImageBox from "./Inputs/ImageBox";
-import YoutubeBox from "./Inputs/YoutubeBox";
-import AudioBox from "./Inputs/AudioBox";
+import {useDispatch} from "react-redux";
+import ImageBox from "../Inputs/ImageBox";
+import YoutubeBox from "../Inputs/YoutubeBox";
+import AudioBox from "../Inputs/AudioBox";
 import {styled} from "@mui/material/styles";
-import {Type_Reply} from "./QuizFormTypes/Type_Reply";
-import {Type_OX} from "./QuizFormTypes/Type_OX";
-import {Type_Select} from "./QuizFormTypes/Type_Select";
+import {Type_Reply} from "../QuizFormTypes/Type_Reply";
+import {Type_OX} from "../QuizFormTypes/Type_OX";
+import {Type_Select} from "../QuizFormTypes/Type_Select";
 
 
 const Img = styled('img')({

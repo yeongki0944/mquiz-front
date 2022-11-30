@@ -1,10 +1,10 @@
 import {makeStyles} from "@material-ui/core/styles";
 import {useDispatch, useSelector} from "react-redux";
-import {R_addQuiz, R_setCurrentShow} from "../../redux/reducers/quizInfoReducer";
+import {R_addQuiz, R_setCurrentShow} from "../../../redux/reducers/quizInfoReducer";
 import {BottomNavigation, BottomNavigationAction} from "@mui/material";
 import * as React from "react";
 import axios from "axios";
-import CustomAxios from "../../function/CustomAxios";
+import CustomAxios from "../../../function/CustomAxios";
 import styled from "styled-components";
 
 const Styled_BottomNavigation = styled(BottomNavigation)`

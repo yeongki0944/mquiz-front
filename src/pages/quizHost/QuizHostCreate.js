@@ -1,12 +1,12 @@
 import * as React from "react";
-import {ListPanel} from "../../components/quizHost/ListPanel";
-import {FormPanel} from "../../components/quizHost/FormPanel";
-import {ControlPanel} from "../../components/quizHost/ControlPanel";
+import {FormPanel} from "../../components/quizHost/create/FormPanel";
+import {ControlPanel} from "../../components/quizHost/create/ControlPanel";
 import {useSelector} from "react-redux";
 import {QuizView} from "../../components/QuizView/QuizView";
 import {NavBar} from "../../components/quizHost/NavBar";
 import {Page_Default} from "../../components/LayOuts/LayOuts";
 import styled from "styled-components";
+import {ListPanel} from "../../components/quizHost/create/ListPanel";
 
 const Panel = styled.div`
     border: 1px solid black;

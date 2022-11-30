@@ -1,7 +1,4 @@
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
 import * as React from "react";
-import Paper from "@mui/material/Paper";
 import {Gauge} from "./Gauge";
 import {QuizQuestion} from "./QuizQuestion";
 import {Type_Select} from "./QuizViewTypes/Type_Select";
@@ -10,16 +7,53 @@ import {Type_Reply} from "./QuizViewTypes/Type_Reply";
 import {ImageShow} from "./Outputs/ImageShow";
 import {AudioShow} from "./Outputs/AudioShow";
 import {YoutubeShow} from "./Outputs/YoutubeShow";
-import {makeStyles} from "@material-ui/core/styles";
-import './QuizView.css';
 import {PinNum} from "../PinNum";
 import {VolumeControlButton} from "../VolumeControlButton";
 import {useEffect} from "react";
-import {useSelector} from "react-redux";
+import styled from "styled-components";
 
+
+const View = styled.div`
+    display: block;
+    background-color: #ffffff;
+    width: 90%;
+    height: 90%;
+    margin: auto;
+    margin-top: 5%;
+    padding: 10px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+
+`;
+
+const Volume = styled.div`
+    width: 20%;
+    padding: 10px;
+    border-radius: 20px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+`;
+
+const QArea = styled.div`
+    width: 100%;
+    height: 30%;
+    display: flex;
+    float: left;
+`;
+
+const AArea = styled.div`
+    width: 100%;
+    height: 40%;
+    margin : auto;
+`;
+
+const QBox = styled.div`
+    width: 50%;
+    height: 90%;
+    margin : 5px;
+    padding: 10px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+`;
 
 export const QuizView = (props) => {
-    const {quizPlay}=useSelector(state => state.quizPlay)
     const currentQuiz = props.currentQuiz;
     const AnswerSheet = () => {
         switch (currentQuiz.type) {
@@ -56,36 +90,24 @@ export const QuizView = (props) => {
     }, [])
 
     return (
-        <div id={"content"}>
-            <div id={"section1"}>
-                <div id={"section1_items"}>
-                    <PinNum pinNum={quizPlay.pinNum}/>
-                    <VolumeControlButton/>
-                </div>
-                <div id={"section1_items"}>
-                    {/*<Gauge*/}
-                    {/*    Qnum={currentQuiz.num}*/}
-                    {/*    TotalQcnt={10}*/}
-                    {/*    timeprogress={10}*/}
-                    {/*    timeleft={currentQuiz.time}*/}
-                    {/*/>*/}
-                </div>
-                <div id={"section1_items"}>
-                    <div id={"QuestionArea"}>
-                        <QuizQuestion
-                            question={currentQuiz.question}
-                        />
-                    </div>
-                    <div id={"QuestionArea"}>
-                        <Media/>
-                    </div>
-                </div>
-            </div>
-            <div id={"section2"}>
-                {/*<AnswerSheet/>*/}
-                <Type_Reply/>
-            </div>
-        </div>
+        <View>
+            <Volume><VolumeControlButton/></Volume>
+            <PinNum pinNum={55555}/>
+            <Gauge
+                Qnum={currentQuiz.num}
+                TotalQcnt={10}
+                timeprogress={10}
+                timeleft={currentQuiz.time}
+            />
+
+            <QArea>
+                <QBox><QuizQuestion question={currentQuiz.question}/></QBox>
+                <QBox><Media/></QBox>
+            </QArea>
+            <AArea>
+                <AnswerSheet/>
+            </AArea>
+        </View>
 
     )
 }
