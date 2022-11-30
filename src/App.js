@@ -19,6 +19,7 @@ import store from "./redux/store";
 import {Provider} from "react-redux";
 import {QuizClientPlay} from "./pages/quizClient/QuizClientPlay";
 import {QuizHostReport} from "./pages/quizHost/QuizHostReport";
+import {NotFound404} from "./pages/NotFound404";
 
 
 const App = () =>{
@@ -48,6 +49,7 @@ const App = () =>{
 
                             <Route path="/QClient/play" component={QuizClientPlay} exact/>
 
+                            <Route path="*" component={NotFound404} />
                         </Switch>
                     </div>
                 </Router>
