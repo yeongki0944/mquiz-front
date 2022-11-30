@@ -34,12 +34,15 @@ export const QuizHostPlay = () => {
         // console.log(currentQuiz);
     }, []);
 
-    //이거 웹소캣이랑 연동
     const startCommand = () => {
         dispatch(R_setData({key:"command", value:"START"}));
-        stompSend("START/"+quizPlay.pinNum, {
+        stompSend(quizPlay.pinNum, {
             pinNum: quizPlay.pinNum,
-            command: quizPlay.command
+            command: quizPlay.command,
+            quizId:quizPlay.quizId,
+            quizNum:quizPlay.quizNum,
+            sender:"tester",
+            content:{}
         });
     }
 
@@ -52,8 +55,10 @@ export const QuizHostPlay = () => {
     useEffect(() => {
         switch (quizPlay.command) {
             case "READY":
+                dispatch(R_setData({key:"quizId", value:quiz.id}))
                 stompInit(quizPlay.pinNum);
                 setTimeout(() => {
+                    //stompSubscribe(quizPlay.pinNum);
                     dispatch(R_setData({key:"command", value:"WAIT"}));
                 }, 50);
                 break;
@@ -77,18 +82,26 @@ export const QuizHostPlay = () => {
                 }
                 break;
             case "FINAL":
-                stompSend(quizPlay.command + "/" + quizPlay.pinNum, {
+                stompSend(quizPlay.pinNum, {
                     pinNum: quizPlay.pinNum,
-                    command: quizPlay.command
+                    command: quizPlay.command,
+                    quizId:quizPlay.quizId,
+                    quizNum:quizPlay.quizNum,
+                    sender:"tester",
+                    content:{}
                 });
                 stompDisconnect();
                 break;
         }
         if (quizPlay.command !== "READY" && quizPlay.command !== "FINAL" && quizPlay.command !== "SHOW" && quizPlay.command !== "WAIT")
         {
-            stompSend(quizPlay.command + "/" + quizPlay.pinNum,{
-                pinNum:quizPlay.pinNum,
-                command : quizPlay.command
+            stompSend(quizPlay.pinNum,{
+                pinNum: quizPlay.pinNum,
+                command: quizPlay.command,
+                quizId:quizPlay.quizId,
+                quizNum:quizPlay.quizNum,
+                sender:"tester",
+                content:{}
             });
         }
     }, [quizPlay.command]);
@@ -96,7 +109,6 @@ export const QuizHostPlay = () => {
     return (
 
         <Page_Gradiant>
-
             {/*{quizPlay.command === "ready" && <QuizHostReady/>}
             {quizPlay.command === "wait" ? <Button onClick={handleCommand}>Start</Button> :
                 <Button onClick={handleCommand}>Next</Button>}
