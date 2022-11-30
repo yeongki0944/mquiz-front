@@ -35,6 +35,7 @@ export const quizPlayReducer = handleActions({
         }
     },
     [SET_CONTENT]: (state, action) => {
+        console.log(action.payload.value);
         return {
             quizPlay: {
                 ...state.quizPlay,

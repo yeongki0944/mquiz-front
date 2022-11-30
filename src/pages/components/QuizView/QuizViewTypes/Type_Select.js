@@ -42,24 +42,22 @@ export const Type_Select = () => {
             <div>
                 <Card_Btn onClick={()=>{
                     dispatch(R_setContent({key: "answer", value: "1"}));
-                    console.log("1111");
+                    //console.log("1111");
                 }}>{currentQuiz.choiceList["1"]}</Card_Btn>
 
                 <Card_Btn onClick={()=>{
                     dispatch(R_setContent({key: "answer", value: "2"}));
-                    console.log("2222");
+                    //console.log("2222");
                 }}>{currentQuiz.choiceList["2"]}</Card_Btn>
 
-                {/*<div className={"answers"}elevation={2}>{currentQuiz.choiceList["2"]}</div>*/}
-                {/*2번까지는 빈값도 표시*/}
                 {<Card_Btn onClick={()=>{
                     dispatch(R_setContent({key: "answer", value: "3"}));
-                    console.log("333");
+                    //console.log("333");
                 }}>{currentQuiz.choiceList["3"]}</Card_Btn>}
 
                 {<Card_Btn onClick={()=>{
                     dispatch(R_setContent({key: "answer", value: "4"}));
-                    console.log("444");
+                    //console.log("444");
                 }}>{currentQuiz.choiceList["4"]}</Card_Btn>}
             </div>
         );
