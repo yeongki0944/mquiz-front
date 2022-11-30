@@ -1,15 +1,16 @@
 
 import {useEffect, useState} from "react";
-import {setData} from "../redux/reducers/quizplayReducer";
-import {QuizStartCounter} from "../components/QuizStartCounter";
-import {QuizView} from "../components/QuizView/QuizView";
+import {R_setData} from "../../redux/reducers/quizplayReducer";
+import {QuizStartCounter} from "../../components/QuizStartCounter";
+import {QuizView} from "../../components/QuizView/QuizView";
 import * as React from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {NickNameCheck} from "./components/ClientNickNameInput";
-import {ClientReady} from "./components/ClientReady";
-import {ClientCountOutModal} from "./components/ClientCountOutModal";
+import {NickNameCheck} from "../../components/quizClient/ClientNickNameInput";
+import {ClientReady} from "../../components/quizClient/ClientReady";
+import {ClientCountOutModal} from "../../components/quizClient/ClientCountOutModal";
 import {useHistory} from "react-router-dom";
-import {Item_c, Page_Gradiant} from "../components/LayOuts/LayOuts";
+import {Item_c, Page_Gradiant} from "../../components/LayOuts/LayOuts";
+import {stompInit} from "../../function/WebSocket";
 
 
 
@@ -19,7 +20,7 @@ export const QuizClientPlay = () => {
     // pinNum -> nickName -> wait-> (count -> play ->result -> count) -> result
     const {quizPlay} = useSelector(state => state.quizPlay);
     const {quiz} = useSelector(state => state.quiz);
-    const currentQuiz = (quiz.quizData.find(item => item.num === quizPlay.currentShow));
+    const currentQuiz = (quiz.quizData.find(item => item.num === quizPlay.quizNum));
     const [open, setOpen] = useState(false);
 
 
@@ -30,9 +31,12 @@ export const QuizClientPlay = () => {
 
     useEffect(() => {
         switch (quizPlay.command){
+            case "nickName":
+                stompInit(quizPlay.pinNum);
+                break;
             case "start":
                 setTimeout(() => {
-                    setData({key: "command", value: "show"});
+                    R_setData({key: "command", value: "show"});
                 }, 3000);
                 break;
             case "kick":
@@ -46,7 +50,7 @@ export const QuizClientPlay = () => {
         <Page_Gradiant>
             <Item_c>
                 {quizPlay.command == "nickName" && <NickNameCheck/>}
-                {quizPlay.command == "wait" && <ClientReady nickName={quizPlay.nickName}/>}
+                {quizPlay.command == "wait" && <ClientReady nickName={quizPlay.sender}/>}
                 {quizPlay.command === "start" && <Page_Gradiant><QuizStartCounter/></Page_Gradiant>}
                 {quizPlay.command === "show" && <QuizView currentQuiz={currentQuiz}/>}
                 {quizPlay.command === "result" && <div>result</div>}

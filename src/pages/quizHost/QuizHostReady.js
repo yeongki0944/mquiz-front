@@ -10,16 +10,16 @@ import {createSvgIcon} from '@mui/material/utils';
 import Slider from '@mui/material/Slider';
 import Modal from "@mui/material/Modal";
 import CardMedia from "@mui/material/CardMedia";
-import {PinNum} from "../components/PinNum";
-import {ClientTotalCount} from "../quizClient/components/ClientTotalCount";
-import {ClientJoinList} from "../quizClient/components/ClientJoinList";
-import {VolumeControlButton} from "../components/VolumeControlButton";
-import {BasicModal} from "../quizClient/components/ClientJoinList";
+import {PinNum} from "../../components/PinNum";
+import {ClientTotalCount} from "../../components/quizClient/ClientTotalCount";
+import {ClientJoinList} from "../../components/quizClient/ClientJoinList";
+import {VolumeControlButton} from "../../components/VolumeControlButton";
+import {BasicModal} from "../../components/quizClient/ClientJoinList";
 import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import CustomAxios from "../function/CustomAxios";
-import {R_setCurrentShow, R_setId, R_setQuiz} from "../redux/reducers/quizInfoReducer";
-import {setData} from "../redux/reducers/quizplayReducer";
+import CustomAxios from "../../function/CustomAxios";
+import {R_setCurrentShow, R_setId, R_setQuiz} from "../../redux/reducers/quizInfoReducer";
+import {R_setData} from "../../redux/reducers/quizplayReducer";
 
 // import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
 
@@ -55,20 +55,22 @@ const Item = styled(Paper)(({theme}) => ({
 export const QuizHostReady = (props) => {
     const dispatch = useDispatch();
     const {quiz} = useSelector(state => state.quiz);
+    const {quizPlay} = useSelector(state => state.quizPlay);
 
     const handleStart = () => {
-        let id = "637f4c8d9fee5769ac5026f2";
+        /*let id = "637f4c8d9fee5769ac5026f2";
         CustomAxios.get('/v1/show?showId=' + id)
             .then(res => {
                 console.log(res.data);
                 dispatch(R_setId(id));
                 dispatch(R_setQuiz(res.data.data));
                 dispatch(R_setCurrentShow(1));
-                dispatch(setData({key : "command", value:"wait"}));
+                dispatch(R_setData({key : "command", value:"start"}));
             })
             .catch(err => {
                 console.log(err);
-            })
+            })*/
+        dispatch(R_setData({key : "command", value:"start"}));
     }
 
     return (
@@ -97,7 +99,7 @@ export const QuizHostReady = (props) => {
                         </Typography>
                     </Grid>
 
-                    <PinNum pinNum={props.pinNum}></PinNum>
+                    <PinNum pinNum={quizPlay.pinNum}></PinNum>
                     <ClientTotalCount></ClientTotalCount>
 
                 </Grid>
@@ -114,7 +116,7 @@ export const QuizHostReady = (props) => {
                     },
                 }}
             >
-                <ClientJoinList pinNum={props.pinNum}></ClientJoinList>
+                <ClientJoinList pinNum={quizPlay.pinNum}></ClientJoinList>
             </Box>
 
             <Link to="/QHost/play">

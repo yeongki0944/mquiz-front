@@ -1,7 +1,7 @@
 import * as React from 'react';
-import {PinNumCheck} from "./components/ClientPinNumInput";
+import {PinNumCheck} from "../../components/quizClient/ClientPinNumInput";
 import styled from "styled-components";
-import {Item_c, Page_Gradiant} from "../components/LayOuts/LayOuts";
+import {Item_c, Page_Gradiant} from "../../components/LayOuts/LayOuts";
 
 
 

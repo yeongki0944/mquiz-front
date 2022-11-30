@@ -1,14 +1,16 @@
 import * as React from 'react';
 import {useContext, useEffect, useState} from "react";
-import QuizModal from './components/Create/Quiz_Make_modal';
+import QuizModal from '../../components/quizHost/Quiz_Make_modal';
 import {useDispatch, useSelector} from "react-redux";
-import CustomAxios from "../function/CustomAxios";
-import {R_setQuizList} from "../redux/reducers/quizListReducer";
-import {QuizListHostMain} from "./components/QuizListHostMain";
-import HostProfile from "./components/HostProfile";
-import {NavBar} from "../components/NavBar";
-import {Page_Default} from "../components/LayOuts/LayOuts";
+import CustomAxios from "../../function/CustomAxios";
+import {R_setQuizList} from "../../redux/reducers/quizListReducer";
+import {QuizListHostMain} from "../../components/quizHost/QuizListHostMain";
+import HostProfile from "../../components/quizHost/HostProfile";
+import {NavBar} from "../../components/quizHost/NavBar";
+import {Page_Default} from "../../components/LayOuts/LayOuts";
 import styled from "styled-components";
+import {useHistory} from "react-router-dom";
+import {QuizPreviewHostMain} from "../../components/quizHost/QuizPreviewHostMain";
 
 const Profile = styled(HostProfile)`
     width: 100%;
@@ -24,7 +26,7 @@ const Content= styled.div`
         width: 100%;
     }
 `;
-const QuizList = styled(QuizListHostMain)`
+const QuizList = styled.div`
     @media (min-width: 767px) {
         width: 50%;
     }
@@ -36,7 +38,10 @@ const QuizList = styled(QuizListHostMain)`
 `;
 const QuizPreviewList = styled.div`
     @media (min-width: 767px) {
+        height: 70vh;
         width: 50%;
+        overflow-y: scroll;
+        overflow-x: hidden;
     }
 
     @media (min-width: 300px) and (max-width: 767px) {
@@ -45,7 +50,6 @@ const QuizPreviewList = styled.div`
 `;
 
 export const QuizHostMain = () => {
-
     const dispatch = useDispatch();
     const [modalOpen, setModalOpen] = useState(false);
     const {quizList} = useSelector(state => state.quizList);
@@ -70,8 +74,8 @@ export const QuizHostMain = () => {
             <Profile name={"test"} info={"info"}/>
             <hr/>
             <Content>
-                <QuizList quizList={quizList} setModalOpen={setModalOpen}/>
-                <QuizPreviewList>미리보기</QuizPreviewList>
+                <QuizList><QuizListHostMain quizList={quizList} setModalOpen={setModalOpen}/></QuizList>
+                <QuizPreviewList><QuizPreviewHostMain/></QuizPreviewList>
             </Content>
             <QuizModal open={modalOpen} setOpen={setModalOpen}/>
         </Page_Default>
