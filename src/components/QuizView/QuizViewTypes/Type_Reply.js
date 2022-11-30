@@ -49,7 +49,6 @@ export const Type_Reply = () => {
                        onKeyPress={handleEnterKey}
             />
             <Typography variant="h5" component="div" align='center'>
-                {/*<Button type="submit" variant="contained">참여확인</Button>*/}
                 <Button variant="contained" onClick={handleSubmit}>정답제출</Button>
             </Typography>
         </div>
