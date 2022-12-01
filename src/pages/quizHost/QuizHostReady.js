@@ -57,22 +57,6 @@ export const QuizHostReady = (props) => {
     const {quiz} = useSelector(state => state.quiz);
     const {quizPlay} = useSelector(state => state.quizPlay);
 
-    const handleStart = () => {
-        /*let id = "637f4c8d9fee5769ac5026f2";
-        CustomAxios.get('/v1/show?showId=' + id)
-            .then(res => {
-                console.log(res.data);
-                dispatch(R_setId(id));
-                dispatch(R_setQuiz(res.data.data));
-                dispatch(R_setCurrentShow(1));
-                dispatch(R_setData({key : "command", value:"start"}));
-            })
-            .catch(err => {
-                console.log(err);
-            })*/
-        dispatch(R_setData({key : "command", value:"start"}));
-    }
-
     return (
         <div id={"content"}>
             <div className="sliderbar">
@@ -121,7 +105,7 @@ export const QuizHostReady = (props) => {
 
             <Link to="/QHost/play">
                 <Typography variant="h5" component="div" align='center' padding='20'>
-                    <Button variant="contained" onClick={handleStart}>시작</Button>
+                    <Button variant="contained" onClick={props.startCommand}>시작</Button>
                 </Typography>
             </Link>
 

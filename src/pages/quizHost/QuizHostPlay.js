@@ -12,7 +12,7 @@ import {Page_Gradiant} from "../../components/LayOuts/LayOuts";
 /*import SockJS from "sockjs-client";
 import {Stomp} from "@stomp/stompjs";*/
 import {QuizHostReady} from "./QuizHostReady";
-import {stompInit, stompSend, stompDisconnect} from "../../function/WebSocket";
+import {stompInit, stompSend, stompDisconnect, stompSubscribe} from "../../function/WebSocket";
 
 const Counter = styled(QuizStartCounter)({
     width: '100%',
@@ -34,9 +34,16 @@ export const QuizHostPlay = () => {
         // console.log(currentQuiz);
     }, []);
 
-    //이거 웹소캣이랑 연동
-    const handleCommand = () => {
-
+    const startCommand = () => {
+        dispatch(R_setData({key:"command", value:"START"}));
+        stompSend("START/"+quizPlay.pinNum, {
+            pinNum: quizPlay.pinNum,
+            command: quizPlay.command,
+            quizId:quizPlay.quizId,
+            quizNum:quizPlay.quizNum,
+            sender:"tester",
+            content:{}
+        });
     }
 
     // ready : 웹소켓 연결
@@ -47,49 +54,54 @@ export const QuizHostPlay = () => {
     // final : 최종 결과 표시
     useEffect(() => {
         switch (quizPlay.command) {
-            case "ready":
+            case "READY":
+                dispatch(R_setData({key:"quizId", value:quiz.id}))
                 stompInit(quizPlay.pinNum);
                 setTimeout(() => {
-                    dispatch(R_setData({key:"command", value:"wait"}));
-                }, 5);
+                    //stompSubscribe(quizPlay.pinNum);
+                    dispatch(R_setData({key:"command", value:"WAIT"}));
+                }, 50);
                 break;
-            case "start":
+            case "START":
                 setTimeout(() => {
-                    dispatch(R_setData({key:"command", value:"show"}));
-                    stompSend("/quiz/message", {
-                        pinNum: quizPlay.pinNum,
-                        command: quizPlay.command
-                    });
+                    dispatch(R_setData({key:"command", value:"SHOW"}));
                 }, 3000);
                 break;
-            case "show":
+            case "SHOW":
                 setTimeout(()=>{
-                    dispatch(R_setData({key:"command", value:"result"}));
+                    dispatch(R_setData({key:"command", value:"RESULT"}));
                 }, quiz.quizData[quizPlay.quizNum].time*1000);
                 break;
-            case "result":
+            case "RESULT":
                 if(quizPlay.quizNum === QuizCount)
                 {
-                    dispatch(R_setData({key:"command", value:"final"}));
+                    dispatch(R_setData({key:"command", value:"FINAL"}));
                 }
                 else{
                     dispatch(R_setData({key:"quizNum", value:quizPlay.quizNum + 1}));
-                    dispatch(R_setData({key:"command", value:"start"}));
                 }
                 break;
-            case "final":
-                stompSend("/quiz/message", {
+            case "FINAL":
+                stompSend(quizPlay.command+"/"+quizPlay.pinNum, {
                     pinNum: quizPlay.pinNum,
-                    command: quizPlay.command
+                    command: quizPlay.command,
+                    quizId:quizPlay.quizId,
+                    quizNum:quizPlay.quizNum,
+                    sender:"tester",
+                    content:{}
                 });
                 stompDisconnect();
                 break;
         }
-        if (quizPlay.command !== "ready" && quizPlay.command !== "final")
+        if (quizPlay.command !== "READY" && quizPlay.command !== "FINAL" && quizPlay.command !== "SHOW" && quizPlay.command !== "WAIT")
         {
-            stompSend("/quiz/message",{
-                pinNum:quizPlay.pinNum,
-                command : quizPlay.command
+            stompSend(quizPlay.command+"/"+quizPlay.pinNum,{
+                pinNum: quizPlay.pinNum,
+                command: quizPlay.command,
+                quizId:quizPlay.quizId,
+                quizNum:quizPlay.quizNum,
+                sender:"tester",
+                content:{}
             });
         }
     }, [quizPlay.command]);
@@ -97,7 +109,6 @@ export const QuizHostPlay = () => {
     return (
 
         <Page_Gradiant>
-
             {/*{quizPlay.command === "ready" && <QuizHostReady/>}
             {quizPlay.command === "wait" ? <Button onClick={handleCommand}>Start</Button> :
                 <Button onClick={handleCommand}>Next</Button>}
@@ -106,11 +117,11 @@ export const QuizHostPlay = () => {
             {quizPlay.command === "result" && <div>result</div>}
             {quizPlay.command === "final" && <div>final</div>}*/}
 
-            {quizPlay.command === "wait" && <QuizHostReady/>}
-            {quizPlay.command === "start" && <Counter/>}
-            {quizPlay.command === "show" && <QuizView currentQuiz={currentQuiz}/>}
-            {quizPlay.command === "result" && <div>result</div>}
-            {quizPlay.command === "final" && <div><Button variant={"contained"} onClick={()=>{history.push({pathname: '/'})}}>메인으로 돌아가기</Button></div>}
+            {quizPlay.command === "WAIT" && <QuizHostReady startCommand={startCommand}/>}
+            {quizPlay.command === "START" && <Counter/>}
+            {quizPlay.command === "SHOW" && <QuizView currentQuiz={currentQuiz}/>}
+            {quizPlay.command === "RESULT" && <div><Button variant={"contained"} onClick={startCommand}>다음문제</Button></div>}
+            {quizPlay.command === "FINAL" && <div><Button variant={"contained"} onClick={()=>{history.push({pathname: '/'})}}>메인으로 돌아가기</Button></div>}
 
             {/*<QuizView currentQuiz={currentQuiz}/>*/}
         </Page_Gradiant>

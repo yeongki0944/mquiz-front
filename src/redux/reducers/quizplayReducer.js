@@ -16,6 +16,7 @@ const initialState = {
         pinNum:0,
         command: '',
         sender: '',
+        quizId: '',
         quizNum : 1,
         content : {
             answer: '',
