@@ -100,7 +100,7 @@ export const QuizHostReady = (props) => {
                 <Typography variant="h5" component="div" align='center' padding='20'>
                     <Button variant="contained" onClick={
                         ()=>{
-                            dispatch(R_setData({key:"command", value:"start"}))
+                            dispatch(R_setData({key:"command", value:"START"}))
                             stompSend("start", {
                                 pinNum: quizPlay.pinNum,
                                 command: quizPlay.command,

@@ -31,10 +31,6 @@ export const QuizHostPlay = () => {
         // console.log(currentQuiz);
     }, []);
 
-    const startCommand = () => {
-
-    }
-
     // ready : 웹소켓 연결
     // wait : 퀴즈 대기방 대기, 호스트가 시작 버튼 누르면 start로 이동
     // start : 퀴즈 시작, 3초 카운트 후 퀴즈 표시
@@ -43,34 +39,34 @@ export const QuizHostPlay = () => {
     // final : 최종 결과 표시
     useEffect(() => {
         switch (quizPlay.command) {
-            case "ready":
+            case "READY":
                 dispatch(R_setData({key:"quizId", value:quiz.id}))
                 stompInit(quizPlay.pinNum);
                 setTimeout(() => {
                     //stompSubscribe(quizPlay.pinNum);
-                    dispatch(R_setData({key:"command", value:"wait"}));
+                    dispatch(R_setData({key:"command", value:"WAIT"}));
                 }, 50);
                 break;
-            case "start":
+            case "START":
                 setTimeout(() => {
-                    dispatch(R_setData({key:"command", value:"show"}));
+                    dispatch(R_setData({key:"command", value:"SHOW"}));
                 }, 3000);
                 break;
-            case "show":
+            case "SHOW":
                 setTimeout(()=>{
-                    dispatch(R_setData({key:"command", value:"result"}));
+                    dispatch(R_setData({key:"command", value:"RESULT"}));
                 }, quiz.quizData[quizPlay.quizNum].time*1000);
                 break;
-            case "result":
+            case "RESULT":
                 if(quizPlay.quizNum === QuizCount)
                 {
-                    dispatch(R_setData({key:"command", value:"final"}));
+                    dispatch(R_setData({key:"command", value:"FINAL"}));
                 }
                 else{
                     dispatch(R_setData({key:"quizNum", value:quizPlay.quizNum + 1}));
                 }
                 break;
-            case "final":
+            case "FINAL":
                 stompSend(quizPlay.command, {
                     pinNum: quizPlay.pinNum,
                     command: quizPlay.command,
@@ -82,7 +78,7 @@ export const QuizHostPlay = () => {
                 stompDisconnect();
                 break;
         }
-        if (quizPlay.command !== "ready" && quizPlay.command !== "final" && quizPlay.command !== "show" && quizPlay.command !== "wait")
+        if (quizPlay.command !== "READY" && quizPlay.command !== "FINAL" && quizPlay.command !== "SHOW" && quizPlay.command !== "WAIT")
         {
             stompSend(quizPlay.command,{
                 pinNum: quizPlay.pinNum,
@@ -106,13 +102,13 @@ export const QuizHostPlay = () => {
             {quizPlay.command === "result" && <div>result</div>}
             {quizPlay.command === "final" && <div>final</div>}*/}
 
-            {quizPlay.command === "wait" && <QuizHostReady startCommand={startCommand}/>}
-            {quizPlay.command === "start" && <Counter/>}
-            {quizPlay.command === "show" && <QuizView currentQuiz={currentQuiz}/>}
-            {quizPlay.command === "result" &&
+            {quizPlay.command === "WAIT" && <QuizHostReady/>}
+            {quizPlay.command === "START" && <Counter/>}
+            {quizPlay.command === "SHOW" && <QuizView currentQuiz={currentQuiz}/>}
+            {quizPlay.command === "RESULT" &&
                 <div>
                     <Button variant={"contained"} onClick={()=>{
-                            dispatch(R_setData({key:"command", value:"start"}))
+                            dispatch(R_setData({key:"command", value:"START"}))
                             stompSend("start", {
                                 pinNum: quizPlay.pinNum,
                                 command: quizPlay.command,
