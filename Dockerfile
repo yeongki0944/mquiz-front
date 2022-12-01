@@ -6,3 +6,4 @@ RUN mkdir ./build
 COPY ./build ./build
 
 ENTRYPOINT ["serve", "-s", "build"]
+
