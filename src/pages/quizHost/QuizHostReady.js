@@ -6,20 +6,13 @@ import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import {styled} from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import {createSvgIcon} from '@mui/material/utils';
-import Slider from '@mui/material/Slider';
-import Modal from "@mui/material/Modal";
-import CardMedia from "@mui/material/CardMedia";
 import {PinNum} from "../../components/PinNum";
 import {ClientTotalCount} from "../../components/quizClient/ClientTotalCount";
 import {ClientJoinList} from "../../components/quizClient/ClientJoinList";
 import {VolumeControlButton} from "../../components/VolumeControlButton";
-import {BasicModal} from "../../components/quizClient/ClientJoinList";
-import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import CustomAxios from "../../function/CustomAxios";
-import {R_setCurrentShow, R_setId, R_setQuiz} from "../../redux/reducers/quizInfoReducer";
 import {R_setData} from "../../redux/reducers/quizplayReducer";
+import {stompSend} from "../../function/WebSocket";
 
 // import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
 
@@ -105,7 +98,21 @@ export const QuizHostReady = (props) => {
 
             <Link to="/QHost/play">
                 <Typography variant="h5" component="div" align='center' padding='20'>
-                    <Button variant="contained" onClick={props.startCommand}>시작</Button>
+                    <Button variant="contained" onClick={
+                        ()=>{
+                            dispatch(R_setData({key:"command", value:"start"}))
+                            stompSend("start", {
+                                pinNum: quizPlay.pinNum,
+                                command: quizPlay.command,
+                                quizId:quizPlay.quizId,
+                                quizNum:quizPlay.quizNum,
+                                nickName:"tester",
+                                content:{}
+                            })
+                        }
+                    }>
+                        시작
+                    </Button>
                 </Typography>
             </Link>
 
