@@ -36,7 +36,7 @@ export const QuizHostPlay = () => {
 
     const startCommand = () => {
         dispatch(R_setData({key:"command", value:"START"}));
-        stompSend(quizPlay.pinNum, {
+        stompSend("START/"+quizPlay.pinNum, {
             pinNum: quizPlay.pinNum,
             command: quizPlay.command,
             quizId:quizPlay.quizId,
@@ -82,7 +82,7 @@ export const QuizHostPlay = () => {
                 }
                 break;
             case "FINAL":
-                stompSend(quizPlay.pinNum, {
+                stompSend(quizPlay.command+"/"+quizPlay.pinNum, {
                     pinNum: quizPlay.pinNum,
                     command: quizPlay.command,
                     quizId:quizPlay.quizId,
@@ -95,7 +95,7 @@ export const QuizHostPlay = () => {
         }
         if (quizPlay.command !== "READY" && quizPlay.command !== "FINAL" && quizPlay.command !== "SHOW" && quizPlay.command !== "WAIT")
         {
-            stompSend(quizPlay.pinNum,{
+            stompSend(quizPlay.command+"/"+quizPlay.pinNum,{
                 pinNum: quizPlay.pinNum,
                 command: quizPlay.command,
                 quizId:quizPlay.quizId,

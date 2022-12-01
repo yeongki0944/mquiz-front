@@ -25,9 +25,9 @@ export const stompSubscribe = (pinNum) => {
     });
 }
 
-export const stompSend = (pinNum, data) => {
+export const stompSend = (path, data) => {
     console.log(data);
-    stomp.send("/quiz/" + pinNum, {}, JSON.stringify(data));
+    stomp.send("/quiz/" + path, {}, JSON.stringify(data));
 }
 
 export const stompDisconnect = () => {
