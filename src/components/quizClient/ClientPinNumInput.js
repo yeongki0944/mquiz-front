@@ -42,7 +42,7 @@ export const PinNumCheck = () => {
                 dispatch(R_setQuiz(res.data.data));
                 dispatch(R_setCurrentShow(1));
                 dispatch(R_setData({key: 'pinNum', value: pinNum}));
-                dispatch(R_setData({key: 'command', value: 'NICKNAME'}));
+                // dispatch(R_setData({key: 'command', value: 'NICKNAME'}));
                 history.push({
                     pathname: '/QClient/play',
                 })

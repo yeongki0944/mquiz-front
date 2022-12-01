@@ -14,7 +14,7 @@ export const R_setContent = createAction(SET_CONTENT);
 const initialState = {
     quizPlay:{
         pinNum:0,
-        command: '',
+        command: null,
         sender: '',
         quizId: '',
         quizNum : 1,
