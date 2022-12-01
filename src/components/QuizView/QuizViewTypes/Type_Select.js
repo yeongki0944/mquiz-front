@@ -1,12 +1,10 @@
 import * as React from "react";
-import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
 import {useSelector, useDispatch} from "react-redux";
 import './QuizTypes.css';
-import {Type_OX} from "./Type_OX";
-import {Type_Reply} from "./Type_Reply";
-import {R_setContent} from "../../../redux/reducers/quizplayReducer";
 import styled from "styled-components";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import {R_setAnswer} from "../../../redux/reducers/quizplayReducer";
 
 const Card_Btn = styled.div`
     background-color: white;
@@ -35,30 +33,68 @@ const Card_Btn = styled.div`
 export const Type_Select = () => {
     const dispatch = useDispatch();
     const {quiz} = useSelector(state => state.quiz);
+    const {quizPlay} = useSelector(state => state.quizPlay);
     const currentQuiz = quiz.quizData.find(item => item.num === quiz.currentShow);
 
-        {console.log((currentQuiz))}
+
+
+    const setSelected = (e) => {
+        console.log(e.target.id);
+        if(e.target.id === "selected"){
+            e.target.id = "";
+            e.target.style.border = "none";
+        }else{
+            e.target.id = "selected";
+            e.target.style.border = "1px solid orange";
+        }
+    }
+
+        // dispatch(R_setAnswer({answer: quizPlay.submit.answer.concat(ans),answerTime: 0}));
+        // dispatch(R_setAnswer(answer.filter(item => item !== name)));
+
+    const handleSubmit = () => {
+        const selected = document.querySelectorAll("#selected");
+        const answers = [];
+        selected.forEach(item => {
+            answers.push(item.innerText);
+        })
+        dispatch(R_setAnswer({answer: answers,answerTime: 0}));
+    }
+
+
+    if(quizPlay.nickName === null){ //제작 시
+        return(
+            <div>
+                {currentQuiz.choiceList.num1 != "" && <Card_Btn>{currentQuiz.choiceList.num1}</Card_Btn>}
+                {currentQuiz.choiceList.num2 != "" && <Card_Btn>{currentQuiz.choiceList.num2}</Card_Btn>}
+                {currentQuiz.choiceList.num3 != "" && <Card_Btn>{currentQuiz.choiceList.num3}</Card_Btn>}
+                {currentQuiz.choiceList.num4 != "" && <Card_Btn>{currentQuiz.choiceList.num4}</Card_Btn>}
+            </div>
+
+        )
+    }else{
         return (
             <div>
-                <Card_Btn onClick={()=>{
-                    dispatch(R_setContent({key: "answer", value: "1"}));
-                    //console.log("1111");
-                }}>{currentQuiz.choiceList["1"]}</Card_Btn>
+                {currentQuiz.choiceList.num1 != "" &&
+                    <Card_Btn onClick={setSelected}>{currentQuiz.choiceList.num1}</Card_Btn>
+                }
+                {currentQuiz.choiceList.num2 != "" &&
+                    <Card_Btn onClick={setSelected}>{currentQuiz.choiceList.num2}</Card_Btn>
+                }
+                {currentQuiz.choiceList.num3 != "" &&
+                    <Card_Btn onClick={setSelected}>{currentQuiz.choiceList.num3}</Card_Btn>
+                }
+                {currentQuiz.choiceList.num4 != "" &&
+                    <Card_Btn onClick={setSelected}>{currentQuiz.choiceList.num4}</Card_Btn>
+                }
+                <Typography variant="h5" component="div" align='center'>
+                    <Button variant="contained" onClick={handleSubmit}>정답제출</Button>
+                </Typography>
 
-                <Card_Btn onClick={()=>{
-                    dispatch(R_setContent({key: "answer", value: "2"}));
-                    //console.log("2222");
-                }}>{currentQuiz.choiceList["2"]}</Card_Btn>
-
-                {<Card_Btn onClick={()=>{
-                    dispatch(R_setContent({key: "answer", value: "3"}));
-                    //console.log("333");
-                }}>{currentQuiz.choiceList["3"]}</Card_Btn>}
-
-                {<Card_Btn onClick={()=>{
-                    dispatch(R_setContent({key: "answer", value: "4"}));
-                    //console.log("444");
-                }}>{currentQuiz.choiceList["4"]}</Card_Btn>}
             </div>
         );
+    }
+
+
+
 }

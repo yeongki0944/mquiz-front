@@ -17,7 +17,7 @@ export const NickNameCheck = () => {
     const dispatch = useDispatch();
 
     const {quizPlay} = useSelector(state => state.quizPlay);
-    const [nickName, setNickName] = useState('');
+    const [nick_Name, setNickName] = useState('');
     const [error, setError] = useState('');
 
     const handleInput = (e) => {
@@ -39,11 +39,11 @@ export const NickNameCheck = () => {
 
         stompSend('setnickname', {
             pinNum: quizPlay.pinNum,
-            sender: nickName
+            nickName: nick_Name
         });
         //닉네임 중복 관련 기능 필요(반환값)
-        dispatch(R_setData({key:'sender', value:nickName}));
-        dispatch(R_setData({key:'command', value:'WAIT'}));
+        dispatch(R_setData({key:'nickName', value:nick_Name}));
+        // dispatch(R_setData({key:'command', value:'WAIT'}));
     }
 
     const handleEnterKey = (e) => {

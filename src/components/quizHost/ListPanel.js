@@ -12,7 +12,7 @@ import {Button} from "@mui/material";
 import FileCopyIcon from "@material-ui/icons/FileCopy";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import * as React from "react";
-import '../styles/ListPanel.css';
+import '../../styles/baseStyle.css';
 import {styled} from "@mui/system";
 
 const Item_card = styled(Paper)({

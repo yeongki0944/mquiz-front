@@ -3,9 +3,12 @@ import {createAction, handleActions} from "redux-actions";
 
 const SET_DATA = "SET_DATA";
 const SET_CONTENT = "SET_CONTENT";
+const SET_ANSWER = "SET_ANSWER";
 
 export const R_setData = createAction(SET_DATA);
 export const R_setContent = createAction(SET_CONTENT);
+export const R_setAnswer = createAction(SET_ANSWER);
+
 
 // 사용법
 // setData({key:'~', value:'~'})
@@ -15,12 +18,12 @@ const initialState = {
     quizPlay:{
         pinNum:0,
         command: null,
-        sender: '',
+        nickName: null,
         quizId: '',
         quizNum : 1,
-        content : {
-            answer: '',
-            solved_time: 0,
+        submit:{
+            answerTime: null,
+            answer: [],
         }
     }
 }
@@ -44,6 +47,18 @@ export const quizPlayReducer = handleActions({
                 content: {
                     ...state.quizPlay.content,
                     [action.payload.key]: action.payload.value
+                }
+            }
+        }
+    },
+    [SET_ANSWER]: (state, action) => {
+        console.log(action.payload);
+        return {
+            quizPlay: {
+                ...state.quizPlay,
+                submit: {
+                    answerTime: action.payload.answerTime,
+                    answer: action.payload.answer
                 }
             }
         }

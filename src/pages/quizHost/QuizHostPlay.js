@@ -68,9 +68,9 @@ export const QuizHostPlay = () => {
                 }, 3000);
                 break;
             case "SHOW":
-                setTimeout(()=>{
-                    dispatch(R_setData({key:"command", value:"RESULT"}));
-                }, quiz.quizData[quizPlay.quizNum].time*1000);
+                // setTimeout(()=>{
+                //     dispatch(R_setData({key:"command", value:"RESULT"}));
+                // }, quiz.quizData[quizPlay.quizNum].time*1000);
                 break;
             case "RESULT":
                 if(quizPlay.quizNum === QuizCount)

@@ -51,7 +51,7 @@ export const QuizClientPlay = () => {
         <Page_Gradiant>
             <Item_c>
                 {quizPlay.command === null && <NickNameCheck/>}
-                {quizPlay.command === "WAIT" && <ClientReady nickName={quizPlay.sender}/>}
+                {quizPlay.command === "WAIT" && <ClientReady nickName={quizPlay.nickName}/>}
                 {quizPlay.command === "START" && <Page_Gradiant><QuizStartCounter/></Page_Gradiant>}
                 {quizPlay.command === "SHOW" && <QuizView currentQuiz={currentQuiz}/>}
                 {quizPlay.command === "RESULT" && <div>result</div>}
