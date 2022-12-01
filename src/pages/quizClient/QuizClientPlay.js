@@ -10,7 +10,7 @@ import {ClientReady} from "../../components/quizClient/ClientReady";
 import {ClientCountOutModal} from "../../components/quizClient/ClientCountOutModal";
 import {useHistory} from "react-router-dom";
 import {Item_c, Page_Gradiant} from "../../components/LayOuts/LayOuts";
-import {stompInit} from "../../function/WebSocket";
+import {stompDisconnect, stompInit, stompSend} from "../../function/WebSocket";
 
 
 
@@ -46,9 +46,11 @@ export const QuizClientPlay = () => {
         }
     }, [quizPlay.command]);
 
+
     return (
         <Page_Gradiant>
             <Item_c>
+                {console.log(quiz)}
                 {quizPlay.command == "nickName" && <NickNameCheck/>}
                 {quizPlay.command == "wait" && <ClientReady nickName={quizPlay.sender}/>}
                 {quizPlay.command === "start" && <Page_Gradiant><QuizStartCounter/></Page_Gradiant>}

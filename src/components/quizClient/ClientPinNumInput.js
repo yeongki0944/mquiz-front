@@ -8,6 +8,9 @@ import {useState} from 'react';
 import styled from 'styled-components';
 import {useDispatch} from "react-redux";
 import {R_setData} from "../../redux/reducers/quizplayReducer";
+import CustomAxios from "../../function/CustomAxios";
+import {R_setQuizList} from "../../redux/reducers/quizListReducer";
+import {R_setCurrentShow, R_setId, R_setQuiz} from "../../redux/reducers/quizInfoReducer";
 
 export const PinNumCheck = () => {
     const dispatch = useDispatch();
@@ -31,60 +34,45 @@ export const PinNumCheck = () => {
         }
     };
 
-
-    const handleEnter = () => {
-        /**
-         * [참고]
-         * 여기 핀 감별 및 이동 코드 넣으시면 됩니다.
-         * success는 임시 값
-         * 1.핀 감별(방번호 존재 여부 확인)
-         * 2. 존재하면 dispatch ~~~ 하고 history.push
-         * 2-1. 방번호 존재하면 그에 해당하는 quiz id 받아와서 quizdata 세팅해야함
-         * 3. 존재안하면 틀림 출력
-         */
-
-        const success = true;
-        // if(success){
-        //     //핀번호가 맞으면
-        //     //여기서 핀에 따라 퀴즈 정보 세팅 후 퀴즈 페이지로 이동
-        //     //아래는 임시 세팅
-        //     let id = "637f4c8d9fee5769ac5026f2";
-        //     CustomAxios.get('/v1/show?showId=' + id)
-        //         .then(res => {
-        //             console.log(res.data);
-        //             dispatch(R_setId(id));
-        //             dispatch(R_setQuiz(res.data.data));
-        //             dispatch(R_setCurrentShow(1));
-        //             dispatch(setData({key: 'pinNum', value: pinNum}));
-        //             dispatch(setData({key: 'command', value: 'nickName'}));
-        //             // history.push({
-        //             //     pathname: '/QClient/play',})
-        //         })
-        //         .catch(err => {
-        //             console.log(err);
-        //         })
-        // }else{
-        //     //핀번호가 틀리면
-        //     //핀번호가 틀렸다는 메시지 출력
-        //     setError('핀번호가 틀렸습니다.');
-        // }
-
-        /**
-         * [참고]
-         * 임시로 성공부분만 출력해둔 상태
-         * 작성 완료 시 윗부분 주석 풀고 아래 삭제
-         */
-        dispatch(R_setData({key: 'pinNum', value: pinNum}));
-        dispatch(R_setData({key: 'command', value: 'nickName'}));
-        history.push({
-            pathname: '/QClient/play',
-        })
-
-
+    const setQuiz = async (id) => {
+        await CustomAxios.get('/v1/show?showId=' + id)
+            .then(res => {
+                console.log(res.data);
+                dispatch(R_setId(id));
+                dispatch(R_setQuiz(res.data.data));
+                dispatch(R_setCurrentShow(1));
+                dispatch(R_setData({key: 'pinNum', value: pinNum}));
+                dispatch(R_setData({key: 'command', value: 'nickName'}));
+                history.push({
+                    pathname: '/QClient/play',
+                })
+            })
+            .catch(err => {
+                console.log(err);
+            })
     }
+
+    const handleEnter = async () => {
+
+        //핀 검증
+        await CustomAxios.post('/joinroom', {'pinNum': pinNum})
+            .then((res) => {
+                if(res.data.statusCode === 200){
+                    const quizId = res.data.data.quizId.substring(1, res.data.data.quizId.length - 1);
+                    setQuiz(quizId);
+                }else{
+                    setError('핀번호가 틀렸습니다.');
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
+
 
     const handleEnterKey = (e) => {
         if (e.key === 'Enter') {
+            e.target.blur();
             handleSubmit();
         }
     }

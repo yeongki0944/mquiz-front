@@ -2,7 +2,8 @@ import SockJS from "sockjs-client";
 import {Stomp} from "@stomp/stompjs";
 
 //let sockJs = new SockJS("http://localhost:8080/stomp/quiz");
-let sockJs = new SockJS("http://15.152.42.217:8888/connect");
+// let sockJs = new SockJS("http://15.152.42.217:8888/connect");
+let sockJs = new SockJS("http://localhost:8080/connect");
 let stomp = Stomp.over(sockJs);
 
 export const stompInit = (pinNum) => {

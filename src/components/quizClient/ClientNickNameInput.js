@@ -7,13 +7,16 @@ import {Link} from "react-router-dom";
 import {useState} from 'react';
 import styled from 'styled-components';
 import {Container, FormControl, FormHelperText} from "@mui/material";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {R_setData} from "../../redux/reducers/quizplayReducer";
+import {stompSend} from "../../function/WebSocket";
+import CustomAxios from "../../function/CustomAxios";
 
 
-export const NickNameCheck = (props) => {
-    const dispatch = useDispatch();;
+export const NickNameCheck = () => {
+    const dispatch = useDispatch();
 
+    const {quizPlay} = useSelector(state => state.quizPlay);
     const [nickName, setNickName] = useState('');
     const [error, setError] = useState('');
 
@@ -33,20 +36,39 @@ export const NickNameCheck = (props) => {
     };
 
     const handleEnter = () => {
+
+        stompSend('/setnickname', {
+            pinNum: quizPlay.pinNum,
+            sender: nickName
+        });
         /**
          * [참고]
          * 여기 닉네임 중복 확인 코드 넣으시면 됩니다.
          * success는 임시 값
          */
         const success = true;
-        if(success){
+        // if(success){
             //아이디 중복 아니면
-            dispatch(R_setData({key: 'sender', value: nickName}));
-            dispatch(R_setData({key:'command', value:'wait'}));
-        }else{
+            // dispatch(R_setData({key: 'sender', value: nickName}));
+            // dispatch(R_setData({key:'command', value:'wait'}));
+            // console.log("TEST:"+quizPlay.pinNum.toString());
+            // stompSend("JOIN/"+quizPlay.pinNum.toString(), nickName);
+            // CustomAxios.post("/setnickname", {pinNum: quizPlay.pinNum, sender: nickName})
+            //     .then(res => {
+            //         if(res.data.statusCode === 200){
+            //             dispatch(R_setData({key:'sender', value:nickName}));
+            //             dispatch(R_setData({key:'command', value:'wait'}));
+            //         }else{
+            //             setError('중복된 닉네임 입니다.');
+            //         }
+            //     })
+            //     .catch(err => {
+            //         console.log(err);
+            //     })
+        // }else{
             //아이디 중복이면
-            setError('이미 존재하는 닉네임입니다.');
-        }
+            // setError('이미 존재하는 닉네임입니다.');
+        // }
     }
 
     const handleEnterKey = (e) => {
