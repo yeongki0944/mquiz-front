@@ -37,38 +37,13 @@ export const NickNameCheck = () => {
 
     const handleEnter = () => {
 
-        stompSend('/setnickname', {
+        stompSend('setnickname', {
             pinNum: quizPlay.pinNum,
             sender: nickName
         });
-        /**
-         * [참고]
-         * 여기 닉네임 중복 확인 코드 넣으시면 됩니다.
-         * success는 임시 값
-         */
-        const success = true;
-        // if(success){
-            //아이디 중복 아니면
-            // dispatch(R_setData({key: 'sender', value: nickName}));
-            // dispatch(R_setData({key:'command', value:'wait'}));
-            // console.log("TEST:"+quizPlay.pinNum.toString());
-            // stompSend("JOIN/"+quizPlay.pinNum.toString(), nickName);
-            // CustomAxios.post("/setnickname", {pinNum: quizPlay.pinNum, sender: nickName})
-            //     .then(res => {
-            //         if(res.data.statusCode === 200){
-            //             dispatch(R_setData({key:'sender', value:nickName}));
-            //             dispatch(R_setData({key:'command', value:'wait'}));
-            //         }else{
-            //             setError('중복된 닉네임 입니다.');
-            //         }
-            //     })
-            //     .catch(err => {
-            //         console.log(err);
-            //     })
-        // }else{
-            //아이디 중복이면
-            // setError('이미 존재하는 닉네임입니다.');
-        // }
+        //닉네임 중복 관련 기능 필요(반환값)
+        dispatch(R_setData({key:'sender', value:nickName}));
+        dispatch(R_setData({key:'command', value:'WAIT'}));
     }
 
     const handleEnterKey = (e) => {

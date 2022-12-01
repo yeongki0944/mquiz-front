@@ -1,18 +1,23 @@
 import SockJS from "sockjs-client";
 import {Stomp} from "@stomp/stompjs";
+import store from "../redux/store";
+import {R_setData} from "../redux/reducers/quizplayReducer";
 
 //let sockJs = new SockJS("http://localhost:8080/connect");
-//let sockJs = new SockJS("http://15.152.42.217:8888/connect");
-let stomp = Stomp.over(()=>{ return new SockJS("http://localhost:8080/connect") });
+// let sockJs = new SockJS("http://15.152.42.217:8888/connect");
+// let stomp = Stomp.over(()=>{ return new SockJS("http://localhost:8080/connect") });
+let stomp = Stomp.over(()=>{ return new SockJS("http://15.152.42.217:8888/connect") });
 
 export const stompInit = (pinNum) => {
-    console.log("test");
+    // console.log("test");
     stomp.connect({}, () => {
         console.log("STOMP Connection");
 
         // 나중에 destination 변경되면 바뀌야됨.
         stomp.subscribe("/pin/" + pinNum, (msg) => {
-            console.log(msg);
+            console.log(msg.body);
+            let data = JSON.parse(msg.body);
+            store.dispatch(R_setData({key: "command", value: data.command}));
         });
     },(error)=>{
         console.log("실패");

@@ -31,15 +31,15 @@ export const QuizClientPlay = () => {
 
     useEffect(() => {
         switch (quizPlay.command){
-            case "nickName":
+            case null:
                 stompInit(quizPlay.pinNum);
                 break;
-            case "start":
+            case "START":
                 setTimeout(() => {
-                    R_setData({key: "command", value: "show"});
+                    dispatch(R_setData({key: "command", value: "SHOW"}));
                 }, 3000);
                 break;
-            case "kick":
+            case "KICK":
                 setOpen(true);
                 break;
 
@@ -51,12 +51,12 @@ export const QuizClientPlay = () => {
         <Page_Gradiant>
             <Item_c>
                 {console.log(quiz)}
-                {quizPlay.command == "nickName" && <NickNameCheck/>}
-                {quizPlay.command == "wait" && <ClientReady nickName={quizPlay.sender}/>}
-                {quizPlay.command === "start" && <Page_Gradiant><QuizStartCounter/></Page_Gradiant>}
-                {quizPlay.command === "show" && <QuizView currentQuiz={currentQuiz}/>}
-                {quizPlay.command === "result" && <div>result</div>}
-                {quizPlay.command === "final" && <div>final</div>}
+                {quizPlay.command == "NICKNAME" && <NickNameCheck/>}
+                {quizPlay.command == "WAIT" && <ClientReady nickName={quizPlay.sender}/>}
+                {quizPlay.command === "START" && <Page_Gradiant><QuizStartCounter/></Page_Gradiant>}
+                {quizPlay.command === "SHOW" && <QuizView currentQuiz={currentQuiz}/>}
+                {quizPlay.command === "RESULT" && <div>result</div>}
+                {quizPlay.command === "FINAL" && <div>final</div>}
                 <ClientCountOutModal open ={open} setOpen={setOpen}/>
             </Item_c>
         </Page_Gradiant>

@@ -26,6 +26,7 @@ const initialState = {
 }
 
 export const quizPlayReducer = handleActions({
+
     //신버전
     [SET_DATA]: (state, action) => {
         return {
