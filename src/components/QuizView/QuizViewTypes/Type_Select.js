@@ -5,6 +5,7 @@ import styled from "styled-components";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import {R_setAnswer} from "../../../redux/reducers/quizplayReducer";
+import {stompSend} from "../../../function/WebSocket";
 
 const Card_Btn = styled.div`
     background-color: white;
@@ -59,6 +60,12 @@ export const Type_Select = () => {
             answers.push(className);
         })
         dispatch(R_setAnswer({answer: answers, answerTime: 0}));
+        stompSend("submit", {
+            pinNum: quizPlay.pinNum,
+            quizNum: quizPlay.quizNum,
+            nickName: quizPlay.nickName,
+            submit:{score: 100}
+        });
     }
 
 
