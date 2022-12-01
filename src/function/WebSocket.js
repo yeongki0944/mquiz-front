@@ -5,8 +5,8 @@ import {R_setData} from "../redux/reducers/quizplayReducer";
 
 //let sockJs = new SockJS("http://localhost:8080/connect");
 // let sockJs = new SockJS("http://15.152.42.217:8888/connect");
-// let stomp = Stomp.over(()=>{ return new SockJS("http://localhost:8080/connect") });
-let stomp = Stomp.over(()=>{ return new SockJS("http://15.152.42.217:8888/connect") });
+let stomp = Stomp.over(()=>{ return new SockJS("http://localhost:8080/connect") });
+// let stomp = Stomp.over(()=>{ return new SockJS("http://15.152.42.217:8888/connect") });
 
 export const stompInit = (pinNum) => {
     // console.log("test");
@@ -18,6 +18,7 @@ export const stompInit = (pinNum) => {
             console.log(msg.body);
             let data = JSON.parse(msg.body);
             store.dispatch(R_setData({key: "command", value: data.command}));
+            console.log(data.command);
         });
     },(error)=>{
         console.log("실패");

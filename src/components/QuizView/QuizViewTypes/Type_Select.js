@@ -37,33 +37,33 @@ export const Type_Select = () => {
     const currentQuiz = quiz.quizData.find(item => item.num === quiz.currentShow);
 
 
-
     const setSelected = (e) => {
         console.log(e.target.id);
-        if(e.target.id === "selected"){
+        if (e.target.id === "selected") {
             e.target.id = "";
             e.target.style.border = "none";
-        }else{
+        } else {
             e.target.id = "selected";
             e.target.style.border = "1px solid orange";
         }
     }
 
-        // dispatch(R_setAnswer({answer: quizPlay.submit.answer.concat(ans),answerTime: 0}));
-        // dispatch(R_setAnswer(answer.filter(item => item !== name)));
+    // dispatch(R_setAnswer({answer: quizPlay.submit.answer.concat(ans),answerTime: 0}));
+    // dispatch(R_setAnswer(answer.filter(item => item !== name)));
 
     const handleSubmit = () => {
         const selected = document.querySelectorAll("#selected");
         const answers = [];
         selected.forEach(item => {
-            answers.push(item.innerText);
+            const className = item.className.split(" ").find(item => item.startsWith("num"));
+            answers.push(className);
         })
-        dispatch(R_setAnswer({answer: answers,answerTime: 0}));
+        dispatch(R_setAnswer({answer: answers, answerTime: 0}));
     }
 
 
-    if(quizPlay.nickName === null){ //제작 시
-        return(
+    if (quizPlay.nickName === null) { //제작 시
+        return (
             <div>
                 {currentQuiz.choiceList.num1 != "" && <Card_Btn>{currentQuiz.choiceList.num1}</Card_Btn>}
                 {currentQuiz.choiceList.num2 != "" && <Card_Btn>{currentQuiz.choiceList.num2}</Card_Btn>}
@@ -72,20 +72,20 @@ export const Type_Select = () => {
             </div>
 
         )
-    }else{
+    } else {
         return (
             <div>
                 {currentQuiz.choiceList.num1 != "" &&
-                    <Card_Btn onClick={setSelected}>{currentQuiz.choiceList.num1}</Card_Btn>
+                    <Card_Btn onClick={setSelected} className="num1">{currentQuiz.choiceList.num1}</Card_Btn>
                 }
                 {currentQuiz.choiceList.num2 != "" &&
-                    <Card_Btn onClick={setSelected}>{currentQuiz.choiceList.num2}</Card_Btn>
+                    <Card_Btn onClick={setSelected} className="num2">{currentQuiz.choiceList.num2}</Card_Btn>
                 }
                 {currentQuiz.choiceList.num3 != "" &&
-                    <Card_Btn onClick={setSelected}>{currentQuiz.choiceList.num3}</Card_Btn>
+                    <Card_Btn onClick={setSelected} className="num3">{currentQuiz.choiceList.num3}</Card_Btn>
                 }
                 {currentQuiz.choiceList.num4 != "" &&
-                    <Card_Btn onClick={setSelected}>{currentQuiz.choiceList.num4}</Card_Btn>
+                    <Card_Btn onClick={setSelected} className="num4">{currentQuiz.choiceList.num4}</Card_Btn>
                 }
                 <Typography variant="h5" component="div" align='center'>
                     <Button variant="contained" onClick={handleSubmit}>정답제출</Button>
@@ -94,7 +94,6 @@ export const Type_Select = () => {
             </div>
         );
     }
-
 
 
 }

@@ -103,7 +103,7 @@ export const QuizHostReady = (props) => {
                             dispatch(R_setData({key:"command", value:"START"}))
                             stompSend("start", {
                                 pinNum: quizPlay.pinNum,
-                                command: quizPlay.command,
+                                command: "START",
                                 quizId:quizPlay.quizId,
                                 quizNum:quizPlay.quizNum,
                                 nickName:"tester",
