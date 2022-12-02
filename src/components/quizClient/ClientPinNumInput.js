@@ -12,54 +12,57 @@ import CustomAxios from "../../function/CustomAxios";
 import {R_setQuizList} from "../../redux/reducers/quizListReducer";
 import {R_setCurrentShow, R_setId, R_setQuiz} from "../../redux/reducers/quizInfoReducer";
 
+/**
+ * 핀 번호 입력 component
+ */
 export const PinNumCheck = () => {
     const dispatch = useDispatch();
     const history = useHistory();
     const [pinNum, setPinNum] = useState('');
     const [error, setError] = useState('');
 
+
+    /**
+     * blur 이벤트 발생시 Pin set
+     */
     const handleInput = (e) => {
         setPinNum(e.target.value);
     }
 
-    const handleSubmit = () => {
-        // console.log(pinNum);
+    /**
+     * 엔터키 입력 시 handleSubmit 실행
+     */
+    const handleEnterKey = (e) => {
+        if (e.key === 'Enter') {
+            handleSubmit(e.target.value);
+        }
+    }
+
+    /**
+     * 핀번호 유효성 체크
+     */
+    const handleSubmit = (pin) => {
         // pin 번호 유효성 체크
         const pinNumRegex = /^[0-9]{6,6}$/g;
-        if (!pinNumRegex.test(pinNum)) {
+        if (!pinNumRegex.test(pin)) {
             setError('전달받은 6자리 번호 입력해주세요!');
         } else {
             setError('');
-            handleEnter();
+            handleEnter(pin);
         }
     };
 
-    const setQuiz = async (id) => {
-        await CustomAxios.get('/v1/show?showId=' + id)
-            .then(res => {
-                console.log(res.data);
-                dispatch(R_setId(id));
-                dispatch(R_setQuiz(res.data.data));
-                dispatch(R_setCurrentShow(1));
-                dispatch(R_setData({key: 'pinNum', value: pinNum}));
-                // dispatch(R_setData({key: 'command', value: 'NICKNAME'}));
-                history.push({
-                    pathname: '/QClient/play',
-                })
-            })
-            .catch(err => {
-                console.log(err);
-            })
-    }
-
-    const handleEnter = async () => {
-
+    /**
+     * 핀번호 입력 후 존재여부 확인
+     * 방 존재 시 setQuiz 실행
+     */
+    const handleEnter = async (pin) => {
         //핀 검증
-        await CustomAxios.post('/joinroom', {'pinNum': pinNum})
+        await CustomAxios.post('/joinroom', {'pinNum': pin})
             .then((res) => {
                 if(res.data.statusCode === 200){
                     const quizId = res.data.data.quizId.substring(1, res.data.data.quizId.length - 1);
-                    setQuiz(quizId);
+                    setQuiz(quizId,pin);
                 }else{
                     setError('핀번호가 틀렸습니다.');
                 }
@@ -69,13 +72,28 @@ export const PinNumCheck = () => {
             });
     }
 
-
-    const handleEnterKey = (e) => {
-        if (e.key === 'Enter') {
-            e.target.blur();
-            handleSubmit();
-        }
+    /**
+     * 해당 방의 퀴즈 정보 가져오기
+     * 이후 play로 이동
+     */
+    const setQuiz = async (id,pin) => {
+        await CustomAxios.get('/v1/show?showId=' + id)
+            .then(res => {
+                console.log(res.data);
+                dispatch(R_setId(id));
+                dispatch(R_setQuiz(res.data.data));
+                dispatch(R_setCurrentShow(1));
+                dispatch(R_setData({key: 'pinNum', value: pin}));
+                history.push({
+                    pathname: '/QClient/play',
+                })
+            })
+            .catch(err => {
+                console.log(err);
+            })
     }
+
+
     return (
         <Box align='center' sx={{minWidth: 275}}>
             <Typography variant="h5" component="div" align='center'>
@@ -92,7 +110,7 @@ export const PinNumCheck = () => {
                        onKeyPress={handleEnterKey}
             />
             <Typography>
-                <Button variant="contained" onClick={handleSubmit}>참여확인</Button>
+                <Button variant="contained" onClick={()=>handleSubmit(pinNum)}>참여확인</Button>
             </Typography>
         </Box>
     );

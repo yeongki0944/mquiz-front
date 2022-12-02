@@ -11,7 +11,7 @@ import {useEffect, useRef, useState} from "react";
  * props:
  *  컴포넌트 내부에서 처리
  */
-export const QuizStartCounter = (props) => {
+export const QuizStartCounter = () => {
 
     const [count, setCount] = useState(3);
     const [delay, setDelay] = useState(1000);
