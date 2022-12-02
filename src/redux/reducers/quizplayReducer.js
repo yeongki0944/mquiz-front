@@ -16,15 +16,10 @@ export const R_setAnswer = createAction(SET_ANSWER);
 
 const initialState = {
     quizPlay:{
-        pinNum:0,
+        pinNum:null,
         command: null,
         nickName: null,
-        quizId: '',
-        quizNum : 1,
-        submit:{
-            answerTime: null,
-            answer: [],
-        }
+        quiz : null,
     }
 }
 

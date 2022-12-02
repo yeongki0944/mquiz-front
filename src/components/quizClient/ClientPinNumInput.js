@@ -61,8 +61,10 @@ export const PinNumCheck = () => {
         await CustomAxios.post('/joinroom', {'pinNum': pin})
             .then((res) => {
                 if(res.data.statusCode === 200){
-                    const quizId = res.data.data.quizId.substring(1, res.data.data.quizId.length - 1);
-                    setQuiz(quizId,pin);
+                    dispatch(R_setData({key: 'pinNum', value: res.data.data.pinNum}));
+                    history.push({
+                        pathname: '/QClient/play',
+                    })
                 }else{
                     setError('핀번호가 틀렸습니다.');
                 }
@@ -72,26 +74,6 @@ export const PinNumCheck = () => {
             });
     }
 
-    /**
-     * 해당 방의 퀴즈 정보 가져오기
-     * 이후 play로 이동
-     */
-    const setQuiz = async (id,pin) => {
-        await CustomAxios.get('/v1/show?showId=' + id)
-            .then(res => {
-                console.log(res.data);
-                dispatch(R_setId(id));
-                dispatch(R_setQuiz(res.data.data));
-                dispatch(R_setCurrentShow(1));
-                dispatch(R_setData({key: 'pinNum', value: pin}));
-                history.push({
-                    pathname: '/QClient/play',
-                })
-            })
-            .catch(err => {
-                console.log(err);
-            })
-    }
 
 
     return (

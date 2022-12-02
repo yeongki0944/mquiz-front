@@ -3,14 +3,11 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import {Link} from "react-router-dom";
 import {useState} from 'react';
-import styled from 'styled-components';
-import {Container, FormControl, FormHelperText} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import {R_setData} from "../../redux/reducers/quizplayReducer";
 import {stompSend} from "../../function/WebSocket";
-import CustomAxios from "../../function/CustomAxios";
+import {chk_special} from "../../function/RegularExpression";
 
 /**
  * 닉네임 입력 component
@@ -42,14 +39,13 @@ export const NickNameCheck = () => {
      * 닉네임 유효성 체크
      */
     const handleSubmit = (nick) => {
-        // 닉네임 번호 유효성 체크
-        // const nickNameRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,12}$/;
-        // if (!nickNameRegex.test(nickName)) {
-        //     setError('특수문자는 입력할 수 없습니다.');
-        // } else {
-        //     setError('');
+        if(chk_special(nick)){
+            setError('특수문자는 사용할 수 없습니다.');
+            return;
+        }else{
+            setError('');
             handleEnter(nick);
-        // }
+        }
     };
 
     /**
