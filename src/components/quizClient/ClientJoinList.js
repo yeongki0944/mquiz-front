@@ -4,19 +4,9 @@ import Modal from "@mui/material/Modal";
 import CardMedia from "@mui/material/CardMedia";
 import Chip from "@mui/material/Chip";
 import {useState} from "react";
-import {Item_c_basic, Item_Modal} from "../LayOuts/LayOuts";
+import {Item_c, Item_Modal} from "../LayOuts/LayOuts";
 
-export const ClientJoinList = (props) => {
-    const [open, setOpen] = useState(false);
-    return (
-        <div>
-            <UserList pinNum={props.pinNum} setOpen={setOpen}></UserList>
-            <HostCountOutModal open={open} setOpen={setOpen}></HostCountOutModal>
-        </div>
-    )
-}
-
-const UserList = (props) => {
+export const UserList = (props) => {
     // 나중에 레디스로 참여 유저 현황 가져오기
     const [client, setClient] = useState([
         {key: '123123', nickName: '갑시다'},
@@ -43,7 +33,7 @@ const UserList = (props) => {
 }
 
 
-const HostCountOutModal = (props) => {
+export const HostCountOutModal = (props) => {
     const handleClose = () => props.setOpen(false);
     return (
         <Modal
@@ -62,8 +52,8 @@ const HostCountOutModal = (props) => {
                     image="/img/logo192.png"
                     alt="green iguana"
                 />
-                <Item_c_basic>선택한 참여자를 내보냅니다.</Item_c_basic>
-                <Item_c_basic>
+                <Item_c>선택한 참여자를 내보냅니다.</Item_c>
+                <Item_c>
                     <Button variant="contained" onClick={() => {
                         //     stompSend("ban", {
                         //         pinNum: props.pinNum,
@@ -71,7 +61,7 @@ const HostCountOutModal = (props) => {
                         //     });
                     }}>확인</Button>
                     <Button variant="contained" color="primary" onClick={handleClose}>취소</Button>
-                </Item_c_basic>
+                </Item_c>
             </Item_Modal>
         </Modal>
     );

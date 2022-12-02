@@ -16,21 +16,41 @@ export const Page_Gradiant = styled.div`
     background: linear-gradient(to right, rebeccapurple, salmon);
 `;
 
-export const Item_c_basic = styled.div`
+export const Item_c = styled.div`
     margin :auto;
     display: flex;
     justify-content: center;
     align-items: center;
 `;
 
-export const Item_c = styled.div`
+export const Item_l = styled.div`
     margin :auto;
-    width: 100%;
-    height: 100%;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: left;
+    align-items: left;
 `;
+
+export const Item_r = styled.div`
+    margin :auto;
+    display: flex;
+    justify-content: right;
+    align-items: right;
+`;
+
+export const Item_t = styled.div`
+    margin :auto;
+    display: flex;
+    justify-content: top;
+    align-items: top;
+`;
+
+export const Item_b = styled.div`
+    margin :auto;
+    display: flex;
+    justify-content: bottom;
+    align-items: bottom;
+`;
+
 
 export const Item_Modal = styled.div`
     background: #fff;

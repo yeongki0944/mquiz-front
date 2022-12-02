@@ -25,7 +25,7 @@ export const stompInit = (pinNum) => {
  */
 const stompSubscribe = (pinNum) => {
     stomp.subscribe("/pin/" + pinNum, (msg) => {
-        console.log(msg);
+        console.log(msg.body);
         playFunction(JSON.parse(msg.body));
     });
 }
