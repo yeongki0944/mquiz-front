@@ -81,7 +81,7 @@ export const QuizView = (props) => {
                 return (<AudioShow/>);
                 break;
             default:
-                return (<>media</>);
+                return (<></>);
         }
     }
 

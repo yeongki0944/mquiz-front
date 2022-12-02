@@ -1,10 +1,8 @@
 import * as React from "react";
 import {useSelector, useDispatch} from "react-redux";
-import './QuizTypes.css';
 import styled from "styled-components";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import {R_setAnswer} from "../../../redux/reducers/quizplayReducer";
 import {stompSend} from "../../../function/WebSocket";
 
 const Card_Btn = styled.div`
@@ -59,13 +57,18 @@ export const Type_Select = () => {
             const className = item.className.split(" ").find(item => item.startsWith("num"));
             answers.push(className);
         })
-        dispatch(R_setAnswer({answer: answers, answerTime: 0}));
+        // dispatch(R_setAnswer({answer: answers, answerTime: 0}));
         stompSend("submit", {
             pinNum: quizPlay.pinNum,
-            quizNum: quizPlay.quizNum,
+            action: "SUBMIT",
             nickName: quizPlay.nickName,
-            submit:{score: 100}
+            submit:{
+                answer: answers,
+                answerTime: 0,
+                quizNum: quizPlay.quiz.num
+            }
         });
+
     }
 
 

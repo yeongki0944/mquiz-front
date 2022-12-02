@@ -1,4 +1,3 @@
-
 import {useEffect, useState} from "react";
 import {R_setData} from "../../redux/reducers/quizplayReducer";
 import {QuizStartCounter} from "../../components/QuizStartCounter";
@@ -8,7 +7,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {NickNameCheck} from "../../components/quizClient/ClientNickNameInput";
 import {ClientReady} from "../../components/quizClient/ClientReady";
 import {ClientCountOutModal} from "../../components/quizClient/ClientCountOutModal";
-import {useHistory} from "react-router-dom";
 import {Item_c, Page_Gradiant} from "../../components/LayOuts/LayOuts";
 import {stompDisconnect, stompInit, stompSend} from "../../function/WebSocket";
 
@@ -17,8 +15,6 @@ import {stompDisconnect, stompInit, stompSend} from "../../function/WebSocket";
 export const QuizClientPlay = () => {
     const dispatch = useDispatch();
     const {quizPlay} = useSelector(state => state.quizPlay);
-    const {quiz} = useSelector(state => state.quiz);
-    const currentQuiz = (quiz.quizData.find(item => item.num === quizPlay.quizNum));
     const [open, setOpen] = useState(false);
 
 
@@ -56,8 +52,9 @@ export const QuizClientPlay = () => {
             <Item_c>
                 {quizPlay.command === null && <NickNameCheck/>}
                 {quizPlay.command === "WAIT" && <ClientReady/>}
-                {quizPlay.command === "START" && <Page_Gradiant><QuizStartCounter/></Page_Gradiant>}
-                {quizPlay.command === "SHOW" && <QuizView currentQuiz={currentQuiz}/>}
+                {quizPlay.command === "START" && <Page_Gradiant><Item_c><QuizStartCounter/></Item_c></Page_Gradiant>}
+                {quizPlay.command === "SHOW" && <QuizView currentQuiz={quizPlay.quiz}/>}
+                {quizPlay.command === "SUBMIT" && <div>답변전달완료</div>}
                 {quizPlay.command === "RESULT" && <div>result</div>}
                 {quizPlay.command === "FINAL" && <div>final</div>}
                 <ClientCountOutModal open ={open} setOpen={setOpen}/>
