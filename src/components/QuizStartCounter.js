@@ -9,9 +9,15 @@ import styled from "styled-components";
 */
 
 const CountText = styled.div`
-  font-size: 500px;
-  font-weight: bold;
-  color: #000;
+    
+    font-weight: bold;
+    color: #000;
+    @media (min-width: 300px) and (max-width: 767px) {
+        font-size: 200px;
+    }
+    @media (min-width: 767px) {
+        font-size: 300px;
+    }
 `;
 /**
  * props:

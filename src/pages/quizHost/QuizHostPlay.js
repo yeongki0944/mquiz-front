@@ -9,11 +9,6 @@ import {Page_Gradiant} from "../../components/LayOuts/LayOuts";
 import {QuizHostReady} from "./QuizHostReady";
 import {stompInit, stompSend, stompDisconnect, stompSubscribe} from "../../function/WebSocket";
 
-const Counter = styled(QuizStartCounter)({
-    width: '100%',
-    height: '100vh',
-});
-
 export const QuizHostPlay = () => {
     const dispatch = useDispatch();
     const {quizPlay} = useSelector(state => state.quizPlay);
@@ -52,7 +47,7 @@ export const QuizHostPlay = () => {
 
         <Page_Gradiant>
             {quizPlay.command === "WAIT" && <QuizHostReady/>}
-            {quizPlay.command === "START" && <Counter/>}
+            {quizPlay.command === "START" && <QuizStartCounter/>}
             {quizPlay.command === "SHOW" && <QuizView currentQuiz={quizPlay.quiz}/>}
             {quizPlay.command === "RESULT" && <div>중간결과창</div>}
             {quizPlay.command === "FINAL" && <div>최종결과창</div>}

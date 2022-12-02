@@ -9,8 +9,13 @@ import {ClientReady} from "../../components/quizClient/ClientReady";
 import {ClientCountOutModal} from "../../components/quizClient/ClientCountOutModal";
 import {Item_c, Page_Gradiant} from "../../components/LayOuts/LayOuts";
 import {stompDisconnect, stompInit, stompSend} from "../../function/WebSocket";
+import styled from "styled-components";
+import Button from "@mui/material/Button";
 
-
+const Item_c_full = styled(Item_c)`
+    width: 100%;
+    height: 100%;
+`;
 
 export const QuizClientPlay = () => {
     const dispatch = useDispatch();
@@ -52,16 +57,17 @@ export const QuizClientPlay = () => {
      */
     return (
         <Page_Gradiant>
-            <Item_c>
+            <Button onClick={()=>{dispatch(R_setData({key: "command", value: "START"}))}}>START</Button>
+            <Item_c_full>
                 {quizPlay.command === null && <NickNameCheck/>}
                 {quizPlay.command === "WAIT" && <ClientReady/>}
-                {quizPlay.command === "START" && <Page_Gradiant><Item_c><QuizStartCounter/></Item_c></Page_Gradiant>}
+                {quizPlay.command === "START" && <QuizStartCounter/>}
                 {quizPlay.command === "SHOW" && <QuizView currentQuiz={quizPlay.quiz}/>}
                 {quizPlay.command === "SUBMIT" && <div>답변전달완료</div>}
                 {quizPlay.command === "RESULT" && <div>result</div>}
                 {quizPlay.command === "FINAL" && <div>final</div>}
                 <ClientCountOutModal open ={open} setOpen={setOpen}/>
-            </Item_c>
+            </Item_c_full>
         </Page_Gradiant>
     );
 }
