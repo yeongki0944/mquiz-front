@@ -5,7 +5,7 @@ import {R_setData} from "../redux/reducers/quizplayReducer";
 
 //let sockJs = new SockJS("http://localhost:8080/connect");
 // let sockJs = new SockJS("http://15.152.42.217:8888/connect");
-let stomp = Stomp.over(()=>{ return new SockJS("http://localhost:8080/connect") });
+let stomp = Stomp.over(()=>{ return new SockJS("http://localhost:8080/connect") }); // stomp를 통해 보다 편리하게 소켓 활용, sockJS(연결하고자 하는 경로 설정)
 // let stomp = Stomp.over(()=>{ return new SockJS("http://15.152.42.217:8888/connect") });
 
 export const stompInit = (pinNum) => {

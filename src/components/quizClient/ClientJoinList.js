@@ -43,9 +43,11 @@ const UserList = (props) => {
                             sx={{marginLeft: 1, marginRight: 1}}
                             onDelete={
                                 () => {
-                                    stompSend("/quiz/message",{
+                                    //stompSend("/quiz/message",{
+                                        stompSend("/quiz/message",{
                                         pinNum:props.pinNum,
-                                        command:"ban"
+                                            command:"ban"
+                                        //command:"BAN"
                                     });
                                     setClient((users) => users.filter((user) => user.key !== item.key));
                                 }
