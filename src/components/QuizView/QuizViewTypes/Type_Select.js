@@ -64,7 +64,7 @@ export const Type_Select = () => {
             nickName: quizPlay.nickName,
             submit:{
                 answer: answers,
-                answerTime: 0,
+                answerTime: 1,
                 quizNum: quizPlay.quiz.num
             }
         });

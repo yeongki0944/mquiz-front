@@ -32,6 +32,13 @@ export const QuizHostReady = (props) => {
     const {quizPlay} = useSelector(state => state.quizPlay);
     const [open, setOpen] = useState(false);
 
+    const handleCopy = (e) => {
+        navigator.clipboard.writeText(e.target.innerText).then(function() {
+            alert("복사되었습니다.");
+        }, function(err) {
+            alert("복사에 실패하였습니다.");
+        });
+    }
 
     return (
         <div>
@@ -46,7 +53,7 @@ export const QuizHostReady = (props) => {
                 />
             </Item_c>
             <Item_c>
-                localhost:3000/QClient?pinNum={quizPlay.pinNum}
+                <div onClick={handleCopy}>localhost:3000/QClient?pinNum={quizPlay.pinNum}</div>
             </Item_c>
 
             <Item_c><PinNum pinNum={quizPlay.pinNum}/></Item_c>
