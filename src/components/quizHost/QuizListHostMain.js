@@ -161,23 +161,12 @@ export const QuizListHostMain = (props) => {
     }
 
     const handlePlay = (id) => {
-        // CustomAxios.get('/v1/show?showId=' + id)
-        //     .then(res => {
-        //         console.log(res.data);
-        //         dispatch(R_setId(id));
-        //         dispatch(R_setQuiz(res.data.data));
-        //         dispatch(R_setCurrentShow(1));
-        //     })
-        //     .catch(err => {
-        //         console.log(err);
-        //     });
 
         CustomAxios.post('/v1/host/createPlay', {'id':id})
             .then(res =>{
                 dispatch(R_setData({key:"command", value:"READY"})); // 최초 세팅
                 dispatch(R_setData({key:"pinNum", value:res.data.data}))
                 history.push({
-                    //pathname: '/QHost/ready',
                     pathname: '/QHost/play',
                 })
             })

@@ -50,18 +50,3 @@ export const Item_b = styled.div`
     justify-content: bottom;
     align-items: bottom;
 `;
-
-
-export const Item_Modal = styled.div`
-    background: #fff;
-    border-radius: 10px;
-    border: 1px solid #ccc;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.5);
-    margin: auto;
-    width: 400px;
-    height: 250px;
-    display: block;
-    justify-content: center;
-    align-items: center;
-`;

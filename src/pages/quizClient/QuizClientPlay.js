@@ -15,11 +15,14 @@ import {stompDisconnect, stompInit, stompSend} from "../../function/WebSocket";
 export const QuizClientPlay = () => {
     const dispatch = useDispatch();
     const {quizPlay} = useSelector(state => state.quizPlay);
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(false); // 추방 확인 모달창 제어
 
 
     /**
      * 퀴즈 진행 command 시 페이지 변경용 useEffect
+     * null: 웹소켓 시작
+     * START: 퀴즈 시작 카운트 다운 이후 퀴즈 시작
+     * KICK: 추방
      */
     useEffect(() => {
         switch (quizPlay.command){

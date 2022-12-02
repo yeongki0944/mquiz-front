@@ -56,14 +56,9 @@ export const QuizHostReady = (props) => {
                 <Link to="/QHost/play">
                     <Button variant="contained" onClick={
                         () => {
-                            dispatch(R_setData({key: "command", value: "START"}))
                             stompSend("start", {
                                 pinNum: quizPlay.pinNum,
                                 command: "START",
-                                quizId: quizPlay.quizId,
-                                quizNum: quizPlay.quizNum,
-                                nickName: "tester",
-                                content: {}
                             })
                         }
                     }>
