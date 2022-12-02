@@ -2,10 +2,9 @@ import SockJS from "sockjs-client";
 import {Stomp} from "@stomp/stompjs";
 import {playFunction} from "./PlayFunction";
 
-//let sockJs = new SockJS("http://localhost:8080/connect");
-// let sockJs = new SockJS("http://15.152.42.217:8888/connect");
-let stomp = Stomp.over(()=>{ return new SockJS("http://localhost:8080/connect") });
-// let stomp = Stomp.over(()=>{ return new SockJS("http://15.152.42.217:8888/connect") });
+
+const URL = process.env.REACT_APP_BACKEND_SERVER;
+let stomp = Stomp.over(()=>{ return new SockJS(URL+"/connect") });
 
 /**
  * Stomp 연결
