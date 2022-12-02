@@ -1,40 +1,40 @@
 import * as React from 'react';
-import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import CardMedia from "@mui/material/CardMedia";
 import Chip from "@mui/material/Chip";
 import {useState} from "react";
-import {stompSend} from "../../function/WebSocket";
+import {Item_c_basic, Item_Modal} from "../LayOuts/LayOuts";
+
+export const ClientJoinList = (props) => {
+    const [open, setOpen] = useState(false);
+    return (
+        <div>
+            <UserList pinNum={props.pinNum} setOpen={setOpen}></UserList>
+            <HostCountOutModal open={open} setOpen={setOpen}></HostCountOutModal>
+        </div>
+    )
+}
 
 const UserList = (props) => {
     // 나중에 레디스로 참여 유저 현황 가져오기
-    const [client,setClient] = useState([
-        {key : '123123', nickName : '갑시다'},
-        {key : '123456', nickName : 'gogo'},
+    const [client, setClient] = useState([
+        {key: '123123', nickName: '갑시다'},
+        {key: '123456', nickName: 'gogo'},
     ])
 
     return (
         <div>
-            {client.map((item)=>{
+            {client.map((item) => {
                 return (
                     <div key={item.key} style={{display: "inline-block"}}>
                         <Chip
                             label={item.nickName}
                             sx={{marginLeft: 1, marginRight: 1}}
-                            onDelete={
-                                () => {
-                                    //stompSend("/quiz/message",{
-                                        stompSend("/quiz/message",{
-                                        pinNum:props.pinNum,
-                                            command:"ban"
-                                        //command:"BAN"
-                                    });
-                                    setClient((users) => users.filter((user) => user.key !== item.key));
-                                }
-                            }/>
+                            onDelete={() => {
+                                props.setOpen(true)
+                            }}
+                        />
                     </div>
                 )
             })}
@@ -42,65 +42,38 @@ const UserList = (props) => {
     )
 }
 
-export const ClientJoinList = (props) => {
+
+const HostCountOutModal = (props) => {
+    const handleClose = () => props.setOpen(false);
     return (
-        <>
-            <Paper><UserList pinNum={props.pinNum}></UserList></Paper>
-            <HostCountOutModal></HostCountOutModal>
-        </>
-    )
-}
-
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-};
-
-export function HostCountOutModal() {
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
-
-    return (
-        <div>
-            <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box sx={style}>
-                    <AlterImg></AlterImg>
-                    <Typography align='center' id="modal-modal-title" variant="h6" component="h2">
-                        선택한 참여자를 내보냅니다.
-                    </Typography>
-
-                    {/*<Link to="/QClient">*/}
-                    <Typography variant="h5" component="div" align='center'>
-                        <Button variant="contained" color="primary">취소</Button>
-                        <Button variant="contained">확인</Button>
-                    </Typography>
-                    {/*</Link>*/}
-                </Box>
-            </Modal>
-        </div>
+        <Modal
+            open={props.open}
+            onClose={() => {
+                props.setOpen(false)
+            }}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+        >
+            <Item_Modal>
+                <CardMedia
+                    component="img"
+                    height="150"
+                    width="50"
+                    image="/img/logo192.png"
+                    alt="green iguana"
+                />
+                <Item_c_basic>선택한 참여자를 내보냅니다.</Item_c_basic>
+                <Item_c_basic>
+                    <Button variant="contained" onClick={() => {
+                        //     stompSend("ban", {
+                        //         pinNum: props.pinNum,
+                        //         nickName: props.nickName
+                        //     });
+                    }}>확인</Button>
+                    <Button variant="contained" color="primary" onClick={handleClose}>취소</Button>
+                </Item_c_basic>
+            </Item_Modal>
+        </Modal>
     );
 }
 
-export function AlterImg() {
-    return (
-        <CardMedia
-            component="img"
-            height="150"
-            image="/img/logo192.png"
-            alt="green iguana"
-        />
-    );
-}

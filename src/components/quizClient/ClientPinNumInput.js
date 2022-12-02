@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import {useHistory} from "react-router-dom";
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import {useDispatch} from "react-redux";
 import {R_setData} from "../../redux/reducers/quizplayReducer";
@@ -20,7 +20,6 @@ export const PinNumCheck = () => {
     const history = useHistory();
     const [pinNum, setPinNum] = useState('');
     const [error, setError] = useState('');
-
 
     /**
      * blur 이벤트 발생시 Pin set
@@ -63,7 +62,7 @@ export const PinNumCheck = () => {
                 if(res.data.statusCode === 200){
                     dispatch(R_setData({key: 'pinNum', value: res.data.data.pinNum}));
                     history.push({
-                        pathname: '/QClient/play',
+                        pathname: '/QClient/play'
                     })
                 }else{
                     setError('핀번호가 틀렸습니다.');
@@ -74,7 +73,12 @@ export const PinNumCheck = () => {
             });
     }
 
-
+    useEffect(() => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const pin = urlParams.get('pinNum');
+            if (pin) {handleEnter(pin);}
+        }, []
+    );
 
     return (
         <Box align='center' sx={{minWidth: 275}}>

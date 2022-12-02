@@ -8,7 +8,7 @@ import {VolumeControlButton} from "../../components/VolumeControlButton";
 import {useDispatch, useSelector} from "react-redux";
 import {R_setData} from "../../redux/reducers/quizplayReducer";
 import {stompSend} from "../../function/WebSocket";
-import {Item_c} from "../../components/LayOuts/LayOuts";
+import {Item_c, Item_c_basic} from "../../components/LayOuts/LayOuts";
 
 export const QuizHostReady = (props) => {
     const dispatch = useDispatch();
@@ -17,9 +17,11 @@ export const QuizHostReady = (props) => {
     return (
         <div>
             <VolumeControlButton/>
-            MegaQuiz.show/p 접속해 주세요
-            <Button variant="contained">QR code</Button>
-            <Button variant="contained">URL copy</Button>
+            <Item_c_basic>MegaQuiz.show/p 접속해 주세요</Item_c_basic>
+            <Item_c_basic><Button variant="contained">QR code</Button></Item_c_basic>
+            <Item_c_basic>
+                localhost:3000/QClient?quizNum={quizPlay.pinNum}
+            </Item_c_basic>
 
             <Item_c><PinNum pinNum={quizPlay.pinNum}/></Item_c>
             <Item_c><ClientTotalCount ClientTotalCount={"2"}/></Item_c>
