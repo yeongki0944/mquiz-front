@@ -1,41 +1,48 @@
 import SockJS from "sockjs-client";
 import {Stomp} from "@stomp/stompjs";
-import store from "../redux/store";
-import {R_setData} from "../redux/reducers/quizplayReducer";
+import {playFunction} from "./PlayFunction";
 
-//let sockJs = new SockJS("http://localhost:8080/connect");
-// let sockJs = new SockJS("http://15.152.42.217:8888/connect");
-let stomp = Stomp.over(()=>{ return new SockJS("http://localhost:8080/connect") }); // stomp를 통해 보다 편리하게 소켓 활용, sockJS(연결하고자 하는 경로 설정)
-// let stomp = Stomp.over(()=>{ return new SockJS("http://15.152.42.217:8888/connect") });
 
+const URL = process.env.REACT_APP_BACKEND_SERVER;
+let stomp = Stomp.over(()=>{ return new SockJS(URL+"/connect") });
+
+/**
+ * Stomp 연결
+ * Stomp 연결 후, subscribe를 통해 메시지를 받는다.
+ */
 export const stompInit = (pinNum) => {
-    // console.log("test");
     stomp.connect({}, () => {
         console.log("STOMP Connection");
-
-        // 나중에 destination 변경되면 바뀌야됨.
-        stomp.subscribe("/pin/" + pinNum, (msg) => {
-            console.log(msg.body);
-            let data = JSON.parse(msg.body);
-            store.dispatch(R_setData({key: "command", value: data.command}));
-            console.log(data.command);
-        });
+        stompSubscribe(pinNum);
     },(error)=>{
         console.log("실패");
     });
 }
 
-export const stompSubscribe = (pinNum) => {
+/**
+ * Stomp subscribe
+ * 받은 메시지를 처리
+ */
+const stompSubscribe = (pinNum) => {
     stomp.subscribe("/pin/" + pinNum, (msg) => {
         console.log(msg);
+        playFunction(JSON.parse(msg.body));
     });
 }
 
+/**
+ * Stomp send
+ * 서버로 메시지를 보낸다.
+ */
 export const stompSend = (path, data) => {
     console.log(data);
     stomp.send("/quiz/" + path, {}, JSON.stringify(data));
 }
 
+/**
+ * Stomp disconnect
+ * Stomp 연결을 끊는다.
+ */
 export const stompDisconnect = () => {
     stomp.disconnect(() => {
         console.log("소켓 연결 해제");

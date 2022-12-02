@@ -1,4 +1,3 @@
-
 import * as React from 'react';
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
@@ -9,22 +8,6 @@ import CardMedia from "@mui/material/CardMedia";
 import Chip from "@mui/material/Chip";
 import {useState} from "react";
 import {stompSend} from "../../function/WebSocket";
-
-/*const User = ({userData}) => {
-    let nickName = null;
-    for(let i = 0; i<userData.length;i++){
-        nickName = userData.nickName[i];
-        console.log(userData.nickName);
-    }
-
-    return (
-        <tr>
-            {/!* <td>핀번호 : {userData.pinNum}</td> *!/}
-            <td>닉네임 : {userData.nickName}</td>
-        </tr>
-
-    )
-}*/
 
 const UserList = (props) => {
     // 나중에 레디스로 참여 유저 현황 가져오기
@@ -56,17 +39,6 @@ const UserList = (props) => {
                 )
             })}
         </div>
-        /*
-        <table>
-            <thead>
-            <tr>
-            </tr>
-            </thead>
-            <tbody>
-            {users.map(user => <User key={user.nickName} userData={user}/>)}
-            </tbody>
-        </table>
-        */
     )
 }
 
