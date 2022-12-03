@@ -13,6 +13,8 @@ import {R_setCurrentShow, R_setId, R_setQuiz} from "../../redux/reducers/quizInf
 import styled from "styled-components";
 import {R_setData} from "../../redux/reducers/quizplayReducer";
 import {Item_c, Item_t} from "../LayOuts/LayOuts";
+import {QuizView} from "../QuizView/QuizView";
+import {QuizPreView} from "../QuizView/QuizPreView";
 
 /**
  * props:
@@ -40,6 +42,8 @@ const Item_t_Info = styled(Item_t)`
 
 const Item_c_Data = styled(Item_c)`
     border: 1px solid black;
+    max-width:1000px;
+    max-height:600px;
 `;
 
 export const QuizPreviewHostMain = () => {
@@ -50,16 +54,15 @@ export const QuizPreviewHostMain = () => {
         return (
             <Content>
                 {/* eslint-disable-next-line react/jsx-no-undef */}
-                <Item_c>
+                <Item_t>
                     퀴즈: {quiz.quizData.length}문제
-                </Item_c>
+                </Item_t>
                 <Item_t_Info>
                 {quiz.quizData.map(
                     (item, index) => {
                         return (
                             <Item_c_Data key={index}>
-                                [퀴즈{item.num}]
-                                문제: {item.question}
+                                <QuizPreView currentQuiz={item} />
                             </Item_c_Data>
                         )
                     }
