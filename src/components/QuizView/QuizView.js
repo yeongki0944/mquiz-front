@@ -101,16 +101,17 @@ const Item_c_Answer = styled(Item_c)`
 export const QuizView = (props) => {
     const currentQuiz = props.currentQuiz;
     const {quizPlay} = useSelector(state => state.quizPlay);
+
     const AnswerSheet = () => {
         switch (currentQuiz.type) {
             case "선택형":
-                return (<Type_Select/>);
+                return (<Type_Select currentQuiz = {currentQuiz}/>);
                 break;
             case "OX":
-                return (<Type_OX/>);
+                return (<Type_OX currentQuiz = {currentQuiz}/>);
                 break;
             case "단답형":
-                return (<Type_Reply/>);
+                return (<Type_Reply currentQuiz = {currentQuiz}/>);
                 break;
         }
     }
@@ -118,13 +119,13 @@ export const QuizView = (props) => {
     const Media = () => {
         switch (currentQuiz.media.type) {
             case "Image":
-                return (<ImageShow/>);
+                return (<ImageShow currentQuiz = {currentQuiz}/>);
                 break;
             case "Youtube":
-                return (<YoutubeShow/>);
+                return (<YoutubeShow currentQuiz = {currentQuiz}/>);
                 break;
             case "Audio":
-                return (<AudioShow/>);
+                return (<AudioShow currentQuiz = {currentQuiz}/>);
                 break;
             default:
                 return (<div></div>);

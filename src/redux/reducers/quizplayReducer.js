@@ -20,7 +20,7 @@ const initialState = {
         command: null,
         nickName: null,
         quiz : null,
-        
+
     }
 }
 export const quizPlayReducer = handleActions({

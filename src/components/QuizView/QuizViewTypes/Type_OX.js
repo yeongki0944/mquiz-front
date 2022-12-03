@@ -31,9 +31,11 @@ const Card_Btn = styled.div`
         justify-content: center;
     }
 `;
-export const Type_OX = () => {
+export const Type_OX = (props) => {
     const dispatch = useDispatch();
     const quizPlay = useSelector(state => state.quizPlay);
+    const currentQuiz = props.currentQuiz;
+
     if(quizPlay === ""){
         return (
             <div>

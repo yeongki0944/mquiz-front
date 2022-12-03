@@ -44,10 +44,9 @@ const Card_Btn = styled(Item_c)`
     }
 `
 
-export const Type_Select = () => {
-    const {quiz} = useSelector(state => state.quiz);
+export const Type_Select = (props) => {
     const {quizPlay} = useSelector(state => state.quizPlay);
-    const currentQuiz = quiz.quizData.find(item => item.num === quiz.currentShow);
+    const currentQuiz = props.currentQuiz;
 
 
     const setSelected = (e) => {

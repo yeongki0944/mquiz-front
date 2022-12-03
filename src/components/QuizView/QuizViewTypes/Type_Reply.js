@@ -9,11 +9,12 @@ import Typography from "@mui/material/Typography";
 import {useEffect, useState} from "react";
 import {R_setContent, R_setData} from "../../../redux/reducers/quizplayReducer";
 
-export const Type_Reply = () => {
+export const Type_Reply = (props) => {
     const dispatch = useDispatch();
     const quizPlay = useSelector(state => state.quizPlay);
     const [quizAnswer, setquizAnswer] = useState('');
     const [error, setError] = useState('');
+    const currentQuiz = props.currentQuiz;
 
     const handleInput = (e) => {
         setquizAnswer(e.target.value);

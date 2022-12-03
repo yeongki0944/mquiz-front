@@ -7,9 +7,9 @@ const Img = styled("img")({
   height: "100%",
   objectFit: "cover",
 });
-export const ImageShow = () =>{
+export const ImageShow = (props) =>{
     const {quiz} = useSelector(state => state.quiz);
-    const currentQuiz = quiz.quizData.find(item => item.num === quiz.currentShow);
+    const currentQuiz = props.currentQuiz;
     return(
             <Img src={currentQuiz.media.url} alt=""/>
     )

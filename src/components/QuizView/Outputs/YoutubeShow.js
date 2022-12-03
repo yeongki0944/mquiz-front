@@ -5,9 +5,8 @@ import styled from "@mui/material/styles/styled";
 import Paper from "@mui/material/Paper";
 
 
-export const YoutubeShow = () => {
-    const {quiz} = useSelector(state => state.quiz);
-    const currentQuiz = quiz.quizData.find(item => item.num === quiz.currentShow);
+export const YoutubeShow = (props) => {
+    const currentQuiz = props.currentQuiz;
     useEffect(() => {
         console.log(currentQuiz.media.url);
     }, []);
