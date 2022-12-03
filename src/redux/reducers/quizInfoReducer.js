@@ -30,7 +30,7 @@ export const R_setId = createAction(SET_ID);
 const initialState = {
     quiz: {
         id: "",
-        quizInfo: {},
+        quizInfo: null,
         currentShow: 1,
         quizData: [
             {
@@ -42,14 +42,14 @@ const initialState = {
                     "url": "",
                 },
                 "choiceList": {
-                    "num1": "답을 입력해 주세요",
-                    "num2": "답을 입력해 주세요",
+                    "num1": "",
+                    "num2": "",
                     "num3": "",
                     "num4": ""
                 },
                 "answer": [],
                 "time": 0,
-                "useScore": true,
+                "useScore": false,
                 "rate": 0
             },
         ],

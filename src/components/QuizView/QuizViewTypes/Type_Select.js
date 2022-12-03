@@ -2,7 +2,6 @@ import * as React from "react";
 import {useSelector, useDispatch} from "react-redux";
 import styled from "styled-components";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import {stompSend} from "../../../function/WebSocket";
 import {Item_c} from "../../LayOuts/LayOuts";
 
@@ -39,7 +38,7 @@ const Card_Btn = styled(Item_c)`
     @media (min-width: 767px) {
         height: 90%;
         width: 90%;
-        min-height: 150px;
+        min-height: 100px;
         margin-bottom: 10px;
     }
 `

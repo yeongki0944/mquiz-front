@@ -7,57 +7,103 @@ import Paper from "@mui/material/Paper";
 
 import styled from "styled-components";
 import {R_setContent} from "../../../redux/reducers/quizplayReducer";
+import {Item_c} from "../../LayOuts/LayOuts";
+import Button from "@mui/material/Button";
+import {stompSend} from "../../../function/WebSocket";
 
-const Card_Btn = styled.div`
-    background-color: white;
-    box-shadow: 0 0 10px 0 rgba(0,0,0,0.5);
-    border-radius: 5px;
-        
+const Content = styled(Item_c)`
+  display: block;
+  height: 85%;
+`;
+const Answers = styled(Item_c)`
+    height: 95%;
+    display: block;
+`;
+
+const AnswerArea = styled(Item_c)`
+    float:left;
     @media (min-width: 300px) and (max-width: 767px) {
-        margin: 5px;
-        width:45%;
-        height: 15vh;
-        float:left;
+        height: 45%;
+        width: 50%;
     }
     @media (min-width: 767px) {
-        margin : 10px;
-        width:45%;
-        height: 15vh;
-        display: block;
-        float: left;
-        flex-direction: column;
-        text-align: center;
-        align-items: center;
-        justify-content: center;
+        width: 50%;
     }
-`;
-export const Type_OX = (props) => {
-    const dispatch = useDispatch();
-    const quizPlay = useSelector(state => state.quizPlay);
-    const currentQuiz = props.currentQuiz;
+`
 
-    if(quizPlay === ""){
+const Card_Btn = styled(Item_c)`
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+    
+    @media (min-width: 300px) and (max-width: 767px) {
+        height: 90%;
+        width: 90%;
+        min-height: 120px;
+    }
+    @media (min-width: 767px) {
+        height: 90%;
+        width: 90%;
+        min-height: 100px;
+        margin-bottom: 10px;
+    }
+`
+
+export const Type_OX = () => {
+    const {quizPlay} = useSelector(state => state.quizPlay);
+
+    const setSelected = (e) => {
+        if (e.target.id === "selected") {
+            e.target.id = "";
+            e.target.style.border = "none";
+        } else {
+            //delete all selected
+            const selected = document.querySelectorAll("#selected");
+            selected.forEach(item => {
+                item.id = "";
+                item.style.border = "none";
+            })
+            e.target.id = "selected";
+            e.target.style.border = "1px solid orange";
+        }
+    }
+    const handleSubmit = () => {
+        const selected = document.getElementById("selected");
+        const answers = [selected.innerText];
+        stompSend("submit", {
+            pinNum: quizPlay.pinNum,
+            action: "SUBMIT",
+            nickName: quizPlay.nickName,
+            submit: {
+                answer: answers,
+                answerTime: 1,
+                quizNum: quizPlay.quiz.num
+            }
+        });
+
+    }
+
+    if (quizPlay.nickName === null) { //제작 시
         return (
-            <div>
-                <Card_Btn>O</Card_Btn>
-                <Card_Btn>X</Card_Btn>
-            </div>
+            <Content>
+                <Answers>
+                    <AnswerArea><Card_Btn>O</Card_Btn></AnswerArea>
+                    <AnswerArea><Card_Btn>X</Card_Btn></AnswerArea>
+                </Answers>
+            </Content>
+
         )
-    }else{
+    } else {
         return (
-            <div>
-                {console.log(quizPlay)}
-                <Card_Btn
-                    onClick={() => {
-                        dispatch(R_setContent({key: "answer", value: "O"}));
-                    }}
-                >O</Card_Btn>
-                <Card_Btn
-                    onClick={() => {
-                        dispatch(R_setContent({key: "answer", value: "X"}));
-                    }}
-                >X</Card_Btn>
-            </div>
-        )
+            <Content>
+                <Answers>
+                    {console.log(quizPlay.quiz)}
+                    <AnswerArea><Card_Btn onClick={setSelected}>O</Card_Btn></AnswerArea>
+                    <AnswerArea><Card_Btn onClick={setSelected}>X</Card_Btn></AnswerArea>
+                </Answers>
+                <Item_c><Button variant="contained" onClick={handleSubmit}>정답제출</Button></Item_c>
+
+            </Content>
+        );
     }
 }
