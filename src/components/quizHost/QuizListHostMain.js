@@ -13,6 +13,7 @@ import {R_setCurrentShow, R_setId, R_setQuiz} from "../../redux/reducers/quizInf
 import styled from "styled-components";
 import {R_setData} from "../../redux/reducers/quizplayReducer";
 import {Item_c} from "../LayOuts/LayOuts";
+import {useState} from "react";
 
 /**
  * props:
@@ -74,6 +75,8 @@ export const QuizListHostMain = (props) => {
     const history = useHistory();
     const quizList = props.quizList;
 
+    const [buttonDisabled, setButtonDisabled] = useState(false);
+
     const list = quizList.map(
         (item) => (
             <Item key={item.id}
@@ -119,17 +122,17 @@ export const QuizListHostMain = (props) => {
                                     <Button onClick={(e) => {
                                         e.stopPropagation();
                                         handleEdit(item.id)
-                                    }}><EditIcon_Styled/></Button>
+                                    }} disabled={buttonDisabled}><EditIcon_Styled/></Button>
                                     : null
                                 }
                                 <Button onClick={(e) => {
                                     e.stopPropagation();
                                     handlePlay(item.id)
-                                }}><PlayArrow/></Button>
+                                }} disabled={buttonDisabled}><PlayArrow/></Button>
                                 <Button onClick={(e) => {
                                     e.stopPropagation();
                                     handledelete(item.id)
-                                }}><DeleteForeverIcon/></Button>
+                                }} disabled={buttonDisabled}><DeleteForeverIcon/></Button>
                             </Typography>
                         </Grid>
                     </Grid>
@@ -139,6 +142,7 @@ export const QuizListHostMain = (props) => {
     );
 
     function handledelete(id) {
+        setButtonDisabled(true);
         CustomAxios.delete(`/v1/show?showId=${id}`)
             .then(res => {
                 console.log(res);
@@ -147,9 +151,13 @@ export const QuizListHostMain = (props) => {
             .catch(err => {
                 console.log(err);
             })
+            .finally(()=>{
+                setButtonDisabled(false);
+            })
     }
 
     const handleEdit = (id) => {
+        setButtonDisabled(true);
         CustomAxios.get('/v1/show?showId=' + id)
             .then(res => {
                 console.log(res.data);
@@ -160,13 +168,16 @@ export const QuizListHostMain = (props) => {
             .catch(err => {
                 console.log(err);
             })
+            .finally(()=>{
+                setButtonDisabled(false);
+            })
         history.push({
             pathname: '/QHost/create',
         })
     }
 
     const handlePlay = (id) => {
-
+        setButtonDisabled(true);
         CustomAxios.post('/v1/host/createPlay', {'id':id})
             .then(res =>{
                 dispatch(R_setData({key:"command", value:"READY"})); // 최초 세팅
@@ -177,7 +188,10 @@ export const QuizListHostMain = (props) => {
             })
             .catch(()=>{
                 console.log("오류 발생");
-            });
+            })
+            .finally(()=>{
+                setButtonDisabled(false);
+            })
     }
 
     function handleCreate() {
