@@ -28,6 +28,11 @@ const stompSubscribe = (pinNum) => {
         console.log(msg.body);
         playFunction(JSON.parse(msg.body));
     });
+    stomp.subscribe("/user/queue/" + pinNum, (msg) => {
+        console.log(msg.body);
+        playFunction(JSON.parse(msg.body));
+    });
+
 }
 
 /**
