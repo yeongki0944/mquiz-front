@@ -134,15 +134,15 @@ export const FormPanel = (props) => {
                         checked={currentQuiz.useScore}
                         onChange={(event) => {
                             setQuiz("base", "useScore", event.target.checked);
-                            if(!event.target.checked){
+                            if (!event.target.checked) {
                                 setQuiz("base", "rate", 0);
-                            }else {
+                            } else {
                                 setQuiz("base", "rate", 1);
                             }
                         }}
                     />
                 </Item_c>
-                <Item_c >
+                <Item_c>
                     <Rating
                         id="rate"
                         name="simple-controlled"
@@ -150,7 +150,7 @@ export const FormPanel = (props) => {
                         value={currentQuiz.rate}
                         onChange={(event, newValue) => {
                             setQuiz("base", "rate", newValue);
-                            if(event.target.value>0){
+                            if (event.target.value > 0) {
                                 setQuiz("base", "useScore", true);
                             }
                         }}
@@ -183,31 +183,61 @@ export const FormPanel = (props) => {
 
     const MediaBox = () => {
         return (
-            <Box>
+            <div>
                 <FormControl>
                     <RadioGroup
-                        row
-                        aria-labelledby="demo-row-radio-buttons-group-label"
-                        name="row-radio-buttons-group"
+                        aria-labelledby="demo-radio-buttons-group-label"
+                        value={currentQuiz.media.type}
+                        name="radio-buttons-group"
                     >
-                        <FormControlLabel value="Image" control={<Radio/>} onClick={() => {
-                            setQuiz("media", "type", 'Image');
-                            setQuiz("media", "url", '');
-                        }} label="Image"/>
-                        <FormControlLabel value="Youtube" control={<Radio/>} onClick={() => {
-                            setQuiz("media", "type", 'Youtube');
-                            setQuiz("media", "url", '');
-                        }} label="Youtube"/>
-                        <FormControlLabel value="Audio" control={<Radio/>} onClick={() => {
-                            setQuiz("media", "type", 'Audio');
-                            setQuiz("media", "url", '');
-                        }} label="Audio"/>
+                        <Item_c>
+                            <FormControlLabel value="Image" control={<Radio/>} label="Image"
+                                              onClick={() => {
+                                                  setQuiz("media", "type", 'Image');
+                                                  setQuiz("media", "url", '');
+                                              }}/>
+                            <FormControlLabel value="Youtube" control={<Radio/>} label="Youtube"
+                                              onClick={() => {
+                                                  setQuiz("media", "type", 'Youtube');
+                                                  setQuiz("media", "url", '');
+                                              }}/>
+                            <FormControlLabel value="Audio" control={<Radio/>} label="Audio"
+                                              onClick={() => {
+                                                  setQuiz("media", "type", 'Audio');
+                                                  setQuiz("media", "url", '');
+                                              }}/>
+                        </Item_c>
                     </RadioGroup>
                 </FormControl>
                 {currentQuiz.media.type === 'Image' && <ImageBox/>}
                 {currentQuiz.media.type === 'Youtube' && <YoutubeBox/>}
                 {currentQuiz.media.type === 'Audio' && <AudioBox/>}
-            </Box>
+            </div>
+            // <Box>
+            //     <FormControl>
+            //         <RadioGroup
+            //             row
+            //             aria-labelledby="demo-row-radio-buttons-group-label"
+            //             name="row-radio-buttons-group"
+            //         >
+            //             <FormControlLabel value="Image" control={<Radio/>} onClick={() => {
+            //                 setQuiz("media", "type", 'Image');
+            //                 setQuiz("media", "url", '');
+            //             }} label="Image"/>
+            //             <FormControlLabel value="Youtube" control={<Radio/>} onClick={() => {
+            //                 setQuiz("media", "type", 'Youtube');
+            //                 setQuiz("media", "url", '');
+            //             }} label="Youtube"/>
+            //             <FormControlLabel value="Audio" control={<Radio/>} onClick={() => {
+            //                 setQuiz("media", "type", 'Audio');
+            //                 setQuiz("media", "url", '');
+            //             }} label="Audio"/>
+            //         </RadioGroup>
+            //     </FormControl>
+            //     {currentQuiz.media.type === 'Image' && <ImageBox/>}
+            //     {currentQuiz.media.type === 'Youtube' && <YoutubeBox/>}
+            //     {currentQuiz.media.type === 'Audio' && <AudioBox/>}
+            // </Box>
         );
 
     }

@@ -139,7 +139,6 @@ export const QuizView = (props) => {
     const Content = () => {
         return (
             <div>
-                <Item_r_Volume><VolumeControlButton/></Item_r_Volume>
                 <Item_c_Content>
                     <Item_c_Info>
                         <Item_c><PinNum pinNum={quizPlay.pinNum}/></Item_c>
@@ -169,6 +168,7 @@ export const QuizView = (props) => {
         case "play":
             return (
                 <Page_Default>
+                    <Item_r_Volume><VolumeControlButton/></Item_r_Volume>
                     <Content/>
                 </Page_Default>
             );
