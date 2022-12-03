@@ -20,9 +20,9 @@ const initialState = {
         command: null,
         nickName: null,
         quiz : null,
+        
     }
 }
-
 export const quizPlayReducer = handleActions({
 
     //신버전

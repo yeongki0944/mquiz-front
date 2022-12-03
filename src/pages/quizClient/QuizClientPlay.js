@@ -57,12 +57,11 @@ export const QuizClientPlay = () => {
      */
     return (
         <Page_Gradiant>
-            <Button onClick={()=>{dispatch(R_setData({key: "command", value: "START"}))}}>START</Button>
             <Item_c_full>
                 {quizPlay.command === null && <NickNameCheck/>}
                 {quizPlay.command === "WAIT" && <ClientReady/>}
                 {quizPlay.command === "START" && <QuizStartCounter/>}
-                {quizPlay.command === "SHOW" && <QuizView currentQuiz={quizPlay.quiz}/>}
+                {quizPlay.command === "SHOW" && <QuizView currentQuiz={quizPlay.quiz} state={"play"}/>}
                 {quizPlay.command === "SUBMIT" && <div>답변전달완료</div>}
                 {quizPlay.command === "RESULT" && <div>result</div>}
                 {quizPlay.command === "FINAL" && <div>final</div>}

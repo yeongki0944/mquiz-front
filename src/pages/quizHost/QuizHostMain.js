@@ -7,39 +7,40 @@ import {R_setQuizList} from "../../redux/reducers/quizListReducer";
 import {QuizListHostMain} from "../../components/quizHost/QuizListHostMain";
 import HostProfile from "../../components/quizHost/HostProfile";
 import {NavBar} from "../../components/quizHost/NavBar";
-import {Page_Default} from "../../components/LayOuts/LayOuts";
+import {Item_c, Item_l, Item_t, Page_Default} from "../../components/LayOuts/LayOuts";
 import styled from "styled-components";
-import {useHistory} from "react-router-dom";
 import {QuizPreviewHostMain} from "../../components/quizHost/QuizPreviewHostMain";
 
-const Profile = styled(HostProfile)`
-    width: 100%;
-`;
-const Content= styled.div`
+const Item_l_Profile = styled(Item_l)`
+    height: 15vh;
+    width: 70%;
+`
+const Item_c_Content = styled(Item_c)`
+    height: 75vh;
     @media (min-width: 767px) {
         display: flex;
         width: 100%;
     }
-
     @media (min-width: 300px) and (max-width: 767px) {
         display: block;
         width: 100%;
     }
-`;
-const QuizList = styled.div`
+`
+const Item_t_QuizList = styled(Item_t)`
+    height: 75vh;
     @media (min-width: 767px) {
-        width: 50%;
+        width: 45%;
     }
 
     @media (min-width: 300px) and (max-width: 767px) {
-        width: 100%;
+        width: 80%;
         height: 100%;
     }
-`;
-const QuizPreviewList = styled.div`
+`
+const Item_c_QuizPreviewList = styled(Item_c)`
+    height: 75vh;
     @media (min-width: 767px) {
-        height: 70vh;
-        width: 50%;
+        width: 45%;
         overflow-y: scroll;
         overflow-x: hidden;
     }
@@ -71,12 +72,11 @@ export const QuizHostMain = () => {
     return (
         <Page_Default>
             <NavBar/>
-            <Profile name={"test"} info={"info"}/>
-            <hr/>
-            <Content>
-                <QuizList><QuizListHostMain quizList={quizList} setModalOpen={setModalOpen}/></QuizList>
-                <QuizPreviewList><QuizPreviewHostMain/></QuizPreviewList>
-            </Content>
+            <Item_l_Profile><HostProfile name={"test"} info={"info"}/></Item_l_Profile>
+            <Item_c_Content>
+                <Item_t_QuizList><QuizListHostMain quizList={quizList} setModalOpen={setModalOpen}/></Item_t_QuizList>
+                <Item_c_QuizPreviewList><QuizPreviewHostMain/></Item_c_QuizPreviewList>
+            </Item_c_Content>
             <QuizModal open={modalOpen} setOpen={setModalOpen}/>
         </Page_Default>
     );

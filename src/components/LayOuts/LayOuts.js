@@ -40,13 +40,13 @@ export const Item_r = styled.div`
 export const Item_t = styled.div`
     margin :auto;
     display: flex;
-    justify-content: top;
+    justify-content: center;
     align-items: top;
 `;
 
 export const Item_b = styled.div`
     margin :auto;
     display: flex;
-    justify-content: bottom;
+    justify-content: center;
     align-items: bottom;
 `;

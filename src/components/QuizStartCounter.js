@@ -2,6 +2,7 @@ import * as React from "react";
 import 'bootstrap/dist/css/bootstrap.css';
 import {useEffect, useRef, useState} from "react";
 import styled from "styled-components";
+import {Page_Default} from "./LayOuts/LayOuts";
 
 
 /*
@@ -9,15 +10,19 @@ import styled from "styled-components";
 */
 
 const CountText = styled.div`
-    
+   
     font-weight: bold;
-    color: #000;
+    color: #fff;
     @media (min-width: 300px) and (max-width: 767px) {
         font-size: 200px;
     }
     @media (min-width: 767px) {
         font-size: 300px;
     }
+`;
+
+const Page_Colored = styled(Page_Default)`
+    background-color: transparent;
 `;
 /**
  * props:
@@ -57,7 +62,9 @@ export const QuizStartCounter = () => {
 
     return (
         <div>
-            <CountText>{count > 0 ? count : "GO!"}</CountText>
+            <Page_Colored>
+                <CountText>{count > 0 ? count : "GO!"}</CountText>
+            </Page_Colored>
         </div>
     )
 }

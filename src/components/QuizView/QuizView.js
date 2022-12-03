@@ -11,6 +11,8 @@ import {PinNum} from "../PinNum";
 import {VolumeControlButton} from "../VolumeControlButton";
 import {useEffect} from "react";
 import styled from "styled-components";
+import {useSelector} from "react-redux";
+import {Item_c, Item_l, Item_r, Page_Default, Page_Gradiant} from "../LayOuts/LayOuts";
 
 
 const View = styled.div`
@@ -25,36 +27,80 @@ const View = styled.div`
 
 `;
 
-const Volume = styled.div`
-    width: 20%;
-    padding: 10px;
-    border-radius: 20px;
+
+const Item_r_Volume = styled(Item_r)`
+    @media (min-width: 300px) and (max-width: 767px) {
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 40%;
+    }
+    @media (min-width: 767px) {
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+`;
+const Item_c_Content = styled(Item_c)`
+    display: block;
+    @media (min-width: 300px) and (max-width: 767px) {
+        margin-top: 5vh;
+        height: 90vh;
+    }
+    @media (min-width: 767px) {
+        height: 95vh;
+    }
+`;
+
+const Item_c_Info = styled(Item_c)`
+    display: block;
+    @media (min-width: 300px) and (max-width: 767px) {
+        margin-top: 5vh;
+        height: 10%;
+    }
+    @media (min-width: 767px) {
+        height: 20%;
+    }
+`;
+const Item_c_Question = styled(Item_c)`
+    @media (min-width: 300px) and (max-width: 767px) {
+        display: block;
+        margin-top: 5vh;
+        height: 45%;
+    }
+    @media (min-width: 767px) {
+        height: 30%;
+    }
+`;
+const Item_c_QBox = styled(Item_c)`
+    background-color: #ffffff;
+    border-radius: 10px;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+    @media (min-width: 300px) and (max-width: 767px) {
+        margin-bottom: 5px;
+        width: 90%;
+        height: 50%;
+    }
+    @media (min-width: 767px) {
+        width: 45%;
+        height: 100%;
+    }
 `;
 
-const QArea = styled.div`
-    width: 100%;
-    height: 30%;
-    display: flex;
-    float: left;
-`;
-
-const AArea = styled.div`
-    width: 100%;
-    height: 40%;
-    margin : auto;
-`;
-
-const QBox = styled.div`
-    width: 50%;
-    height: 90%;
-    margin : 5px;
-    padding: 10px;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+const Item_c_Answer = styled(Item_c)`
+    display: block;
+    margin-top: 5%;
+    @media (min-width: 300px) and (max-width: 767px) {
+        height: 45%;
+    }
+    @media (min-width: 767px) {
+        height: 50%;
+    }
 `;
 
 export const QuizView = (props) => {
     const currentQuiz = props.currentQuiz;
+    const {quizPlay} = useSelector(state => state.quizPlay);
     const AnswerSheet = () => {
         switch (currentQuiz.type) {
             case "선택형":
@@ -81,7 +127,7 @@ export const QuizView = (props) => {
                 return (<AudioShow/>);
                 break;
             default:
-                return (<></>);
+                return (<div></div>);
         }
     }
 
@@ -89,25 +135,50 @@ export const QuizView = (props) => {
         console.log(currentQuiz.media);
     }, [])
 
-    return (
-        <View>
-            <Volume><VolumeControlButton/></Volume>
-            <PinNum pinNum={55555}/>
-            <Gauge
-                Qnum={currentQuiz.num}
-                TotalQcnt={10}
-                timeprogress={10}
-                timeleft={currentQuiz.time}
-            />
+    const Content = () => {
+        return (
+            <div>
+                <Item_r_Volume><VolumeControlButton/></Item_r_Volume>
+                <Item_c_Content>
+                    <Item_c_Info>
+                        <Item_c><PinNum pinNum={quizPlay.pinNum}/></Item_c>
+                        <Item_c>
+                            <Gauge
+                                Qnum={currentQuiz.num}
+                                TotalQcnt={10}
+                                timeprogress={10}
+                                timeleft={currentQuiz.time}
+                            />
+                        </Item_c>
+                    </Item_c_Info>
+                    <Item_c_Question>
+                        <Item_c_QBox><QuizQuestion question={currentQuiz.question}/></Item_c_QBox>
+                        <Item_c_QBox><Media/></Item_c_QBox>
+                    </Item_c_Question>
+                    <Item_c_Answer>
+                        <AnswerSheet/>
+                    </Item_c_Answer>
+                </Item_c_Content>
+            </div>
 
-            <QArea>
-                <QBox><QuizQuestion question={currentQuiz.question}/></QBox>
-                <QBox><Media/></QBox>
-            </QArea>
-            <AArea>
-                <AnswerSheet/>
-            </AArea>
-        </View>
+        )
+    }
 
-    )
+    switch (props.state) {
+        case "play":
+            return (
+                <Page_Default>
+                    <Content/>
+                </Page_Default>
+            );
+            break;
+        case "create":
+            return (
+                <View>
+                    <Content/>
+                </View>
+            );
+            break;
+    }
+
 }

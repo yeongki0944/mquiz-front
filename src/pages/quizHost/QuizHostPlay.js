@@ -5,10 +5,14 @@ import {useEffect} from "react";
 import {QuizStartCounter} from "../../components/QuizStartCounter";
 import {styled} from "@mui/system";
 import {R_setData, R_setContent} from "../../redux/reducers/quizplayReducer";
-import {Page_Gradiant} from "../../components/LayOuts/LayOuts";
+import {Item_c, Page_Gradiant} from "../../components/LayOuts/LayOuts";
 import {QuizHostReady} from "./QuizHostReady";
 import {stompInit, stompSend, stompDisconnect, stompSubscribe} from "../../function/WebSocket";
 
+const Item_c_full = styled(Item_c)`
+    width: 100%;
+    height: 100%;
+`;
 export const QuizHostPlay = () => {
     const dispatch = useDispatch();
     const {quizPlay} = useSelector(state => state.quizPlay);
@@ -24,12 +28,12 @@ export const QuizHostPlay = () => {
             case "READY":
                 stompInit(quizPlay.pinNum);
                 setTimeout(() => {
-                    dispatch(R_setData({key:"command", value:"WAIT"}));
+                    dispatch(R_setData({key: "command", value: "WAIT"}));
                 }, 50);
                 break;
             case "START":
                 setTimeout(() => {
-                    dispatch(R_setData({key:"command", value:"SHOW"}));
+                    dispatch(R_setData({key: "command", value: "SHOW"}));
                 }, 3000);
                 break;
         }
@@ -46,11 +50,13 @@ export const QuizHostPlay = () => {
     return (
 
         <Page_Gradiant>
-            {quizPlay.command === "WAIT" && <QuizHostReady/>}
-            {quizPlay.command === "START" && <QuizStartCounter/>}
-            {quizPlay.command === "SHOW" && <QuizView currentQuiz={quizPlay.quiz}/>}
-            {quizPlay.command === "RESULT" && <div>중간결과창</div>}
-            {quizPlay.command === "FINAL" && <div>최종결과창</div>}
+            <Item_c_full>
+                {quizPlay.command === "WAIT" && <QuizHostReady/>}
+                {quizPlay.command === "START" && <QuizStartCounter/>}
+                {quizPlay.command === "SHOW" && <QuizView currentQuiz={quizPlay.quiz} state={"play"}/>}
+                {quizPlay.command === "RESULT" && <div>중간결과창</div>}
+                {quizPlay.command === "FINAL" && <div>최종결과창</div>}
+            </Item_c_full>
         </Page_Gradiant>
     );
 }

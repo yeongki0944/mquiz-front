@@ -4,33 +4,47 @@ import styled from "styled-components";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import {stompSend} from "../../../function/WebSocket";
+import {Item_c} from "../../LayOuts/LayOuts";
 
-const Card_Btn = styled.div`
-    background-color: white;
-    box-shadow: 0 0 10px 0 rgba(0,0,0,0.5);
-    border-radius: 5px;
-        
-    @media (min-width: 300px) and (max-width: 767px) {
-        margin: 5px;
-        width:45%;
-        height: 15vh;
-        float:left;
-    }
-    @media (min-width: 767px) {
-        margin : 10px;
-        width:45%;
-        height: 15vh;
-        display: block;
-        float: left;
-        flex-direction: column;
-        text-align: center;
-        align-items: center;
-        justify-content: center;
-    }
+const Content = styled(Item_c)`
+  display: block;
+  height: 85%;
+`;
+const Answers = styled(Item_c)`
+    height: 95%;
+    display: block;
 `;
 
+const AnswerArea = styled(Item_c)`
+    float:left;
+    @media (min-width: 300px) and (max-width: 767px) {
+        height: 45%;
+        width: 50%;
+    }
+    @media (min-width: 767px) {
+        width: 50%;
+    }
+`
+
+const Card_Btn = styled(Item_c)`
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+    
+    @media (min-width: 300px) and (max-width: 767px) {
+        height: 90%;
+        width: 90%;
+        min-height: 120px;
+    }
+    @media (min-width: 767px) {
+        height: 90%;
+        width: 90%;
+        min-height: 150px;
+        margin-bottom: 10px;
+    }
+`
+
 export const Type_Select = () => {
-    const dispatch = useDispatch();
     const {quiz} = useSelector(state => state.quiz);
     const {quizPlay} = useSelector(state => state.quizPlay);
     const currentQuiz = quiz.quizData.find(item => item.num === quiz.currentShow);
@@ -62,7 +76,7 @@ export const Type_Select = () => {
             pinNum: quizPlay.pinNum,
             action: "SUBMIT",
             nickName: quizPlay.nickName,
-            submit:{
+            submit: {
                 answer: answers,
                 answerTime: 1,
                 quizNum: quizPlay.quiz.num
@@ -74,34 +88,36 @@ export const Type_Select = () => {
 
     if (quizPlay.nickName === null) { //제작 시
         return (
-            <div>
-                {currentQuiz.choiceList.num1 != "" && <Card_Btn>{currentQuiz.choiceList.num1}</Card_Btn>}
-                {currentQuiz.choiceList.num2 != "" && <Card_Btn>{currentQuiz.choiceList.num2}</Card_Btn>}
-                {currentQuiz.choiceList.num3 != "" && <Card_Btn>{currentQuiz.choiceList.num3}</Card_Btn>}
-                {currentQuiz.choiceList.num4 != "" && <Card_Btn>{currentQuiz.choiceList.num4}</Card_Btn>}
-            </div>
+            <Content>
+                <Answers>
+                    {currentQuiz.choiceList.num1 != "" && <AnswerArea><Card_Btn>{currentQuiz.choiceList.num1}</Card_Btn></AnswerArea>}
+                    {currentQuiz.choiceList.num2 != "" && <AnswerArea><Card_Btn>{currentQuiz.choiceList.num2}</Card_Btn></AnswerArea>}
+                    {currentQuiz.choiceList.num3 != "" && <AnswerArea><Card_Btn>{currentQuiz.choiceList.num3}</Card_Btn></AnswerArea>}
+                    {currentQuiz.choiceList.num4 != "" && <AnswerArea><Card_Btn>{currentQuiz.choiceList.num4}</Card_Btn></AnswerArea>}
+                </Answers>
+            </Content>
 
         )
     } else {
         return (
-            <div>
-                {currentQuiz.choiceList.num1 != "" &&
-                    <Card_Btn onClick={setSelected} className="num1">{currentQuiz.choiceList.num1}</Card_Btn>
-                }
-                {currentQuiz.choiceList.num2 != "" &&
-                    <Card_Btn onClick={setSelected} className="num2">{currentQuiz.choiceList.num2}</Card_Btn>
-                }
-                {currentQuiz.choiceList.num3 != "" &&
-                    <Card_Btn onClick={setSelected} className="num3">{currentQuiz.choiceList.num3}</Card_Btn>
-                }
-                {currentQuiz.choiceList.num4 != "" &&
-                    <Card_Btn onClick={setSelected} className="num4">{currentQuiz.choiceList.num4}</Card_Btn>
-                }
-                <Typography variant="h5" component="div" align='center'>
-                    <Button variant="contained" onClick={handleSubmit}>정답제출</Button>
-                </Typography>
+            <Content>
+                <Answers>
+                    {currentQuiz.choiceList.num1 != "" &&
+                        <AnswerArea onClick={setSelected} className="num1"><Card_Btn>{currentQuiz.choiceList.num1}</Card_Btn></AnswerArea>
+                    }
+                    {currentQuiz.choiceList.num2 != "" &&
+                        <AnswerArea onClick={setSelected} className="num2"><Card_Btn>{currentQuiz.choiceList.num2}</Card_Btn></AnswerArea>
+                    }
+                    {currentQuiz.choiceList.num3 != "" &&
+                        <AnswerArea onClick={setSelected} className="num3"><Card_Btn>{currentQuiz.choiceList.num3}</Card_Btn></AnswerArea>
+                    }
+                    {currentQuiz.choiceList.num4 != "" &&
+                        <AnswerArea onClick={setSelected} className="num4"><Card_Btn>{currentQuiz.choiceList.num4}</Card_Btn></AnswerArea>
+                    }
+                </Answers>
+                <Item_c><Button variant="contained" onClick={handleSubmit}>정답제출</Button></Item_c>
 
-            </div>
+            </Content>
         );
     }
 

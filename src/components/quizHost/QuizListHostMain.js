@@ -12,16 +12,21 @@ import CustomAxios from "../../function/CustomAxios";
 import {R_setCurrentShow, R_setId, R_setQuiz} from "../../redux/reducers/quizInfoReducer";
 import styled from "styled-components";
 import {R_setData} from "../../redux/reducers/quizplayReducer";
+import {Item_c} from "../LayOuts/LayOuts";
 
 /**
  * props:
  *  - quizList: 퀴즈 목록
  *  - setModalOpen: 모달 오픈 상태 변경 함수
  */
-
+const Item_c_Content = styled(Item_c)`
+    width: 100%;
+    height: 100%;
+    display: block;
+`
 const Item = styled.div`
     @media (min-width: 767px) {
-        width: 70%;
+        width: 100%;
         border: 3px solid orange;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         border-radius: 5px;
@@ -33,7 +38,7 @@ const Item = styled.div`
     }
 
     @media (min-width: 300px) and (max-width: 767px) {
-        width: 70%;
+        width: 100%;
         border: 3px solid orange;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         border-radius: 5px;
@@ -52,7 +57,7 @@ const EditIcon_Styled = styled(EditIcon)`
 `
 
 const AddBtn = styled.div`
-    width: 70%;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 10px;
@@ -180,12 +185,12 @@ export const QuizListHostMain = (props) => {
     }
 
     return (
-        <div>
+        <Item_c_Content>
             <AddBtn>
                 <Button fullWidth={true} onClick={handleCreate}><Add/></Button>
             </AddBtn>
             {list}
-        </div>
+        </Item_c_Content>
     );
 
 

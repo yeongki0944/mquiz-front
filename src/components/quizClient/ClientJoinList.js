@@ -4,7 +4,7 @@ import Modal from "@mui/material/Modal";
 import CardMedia from "@mui/material/CardMedia";
 import Chip from "@mui/material/Chip";
 import {useState} from "react";
-import {Item_c} from "../LayOuts/LayOuts";
+import {Item_c, Page_Default} from "../LayOuts/LayOuts";
 import styled from "styled-components";
 const Item_c_paper = styled(Item_c)`
     background: #fff;
@@ -32,7 +32,7 @@ export const UserList = (props) => {
                     <div key={item.key} style={{display: "inline-block"}}>
                         <Chip
                             label={item.nickName}
-                            sx={{marginLeft: 1, marginRight: 1}}
+                            sx={{marginLeft: 1, marginRight: 1,backgroundColor: 'green', color: '#fff',opacity: 0.9}}
                             onDelete={() => {
                                 props.setOpen(true)
                             }}

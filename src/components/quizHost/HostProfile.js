@@ -1,22 +1,24 @@
-import Grid from "@mui/material/Grid";
 import {Avatar, Card, CardContent} from "@mui/material";
 import * as React from "react";
+import {Item_c, Item_l, Item_r} from "../LayOuts/LayOuts";
+import styled from "styled-components";
 
+const Item_c_Content = styled(Item_c)`
+    width: 100%;
+    height: 100%;
+`
+const Item_l_Info = styled(Item_l)`
+    width: 100%;
+`
 export default function HostProfile(props) {
 
     return (
-        <Card>
-            <CardContent>
-                <Grid container spacing={5}>
-                    <Grid item xs={3}>
-                        <Avatar sx={{width: 56, height: 56}}>H</Avatar>
-                    </Grid>
-                    <Grid item xs={9}>
-                        <p>{props.name}</p>
-                        {props.info}
-                    </Grid>
-                </Grid>
-            </CardContent>
-        </Card>
+        <Item_c_Content>
+            <Item_l_Info>
+                <Avatar sx={{width: 100, height: 100}}>H</Avatar>
+                <p>{props.name}</p>
+                {props.info}
+            </Item_l_Info>
+        </Item_c_Content>
     )
 }
