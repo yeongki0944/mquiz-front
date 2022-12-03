@@ -16,7 +16,7 @@ export const ControlPanel = (props) => {
     const dispatch = useDispatch();
     const quiz = props.quiz;
     const save = async () => {
-        console.log(quiz.quizData);
+        console.log(quiz);
         await CustomAxios.post('/v1/show', quiz)
             .then(res => {
                 console.log(res.data)

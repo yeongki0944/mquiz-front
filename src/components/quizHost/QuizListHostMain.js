@@ -101,9 +101,12 @@ export const QuizListHostMain = (props) => {
                         <Grid item xs container direction="column" spacing={2}>
                             <Grid item xs>
                                 <Typography variant="subtitle1" gutterBottom>
+                                    {item.quizInfo.title}
+                                </Typography>
+                                <Typography variant="subtitle1" gutterBottom>
                                     {item.quizInfo.state === "작성중" ?
                                         <span style={{color: "white", backgroundColor: "orange"}}>작성중</span> : <span
-                                            style={{color: "white", backgroundColor: "green"}}>사용가능</span>} {item.title}
+                                            style={{color: "white", backgroundColor: "green"}}>사용가능</span>}
                                 </Typography>
                                 <Typography variant="body2" color="text.secondary">
                                     Q.{item.quizInfo.qcnt}문제 카운터 추가 필요
@@ -118,17 +121,17 @@ export const QuizListHostMain = (props) => {
                         </Grid>
                         <Grid item>
                             <Typography variant="subtitle1" component="div">
-                                {item.quizInfo.state === "작성중" ?
-                                    <Button onClick={(e) => {
-                                        e.stopPropagation();
-                                        handleEdit(item.id)
-                                    }} disabled={buttonDisabled}><EditIcon_Styled/></Button>
-                                    : null
-                                }
                                 <Button onClick={(e) => {
                                     e.stopPropagation();
-                                    handlePlay(item.id)
-                                }} disabled={buttonDisabled}><PlayArrow/></Button>
+                                    handleEdit(item.id)
+                                }} disabled={buttonDisabled}><EditIcon_Styled/></Button>
+
+                                {item.quizInfo.state === "완성" &&
+                                    <Button onClick={(e) => {
+                                        e.stopPropagation();
+                                        handlePlay(item.id)
+                                    }} disabled={buttonDisabled}><PlayArrow/></Button>
+                                }
                                 <Button onClick={(e) => {
                                     e.stopPropagation();
                                     handledelete(item.id)
@@ -151,7 +154,7 @@ export const QuizListHostMain = (props) => {
             .catch(err => {
                 console.log(err);
             })
-            .finally(()=>{
+            .finally(() => {
                 setButtonDisabled(false);
             })
     }
@@ -168,7 +171,7 @@ export const QuizListHostMain = (props) => {
             .catch(err => {
                 console.log(err);
             })
-            .finally(()=>{
+            .finally(() => {
                 setButtonDisabled(false);
             })
         history.push({
@@ -178,18 +181,18 @@ export const QuizListHostMain = (props) => {
 
     const handlePlay = (id) => {
         setButtonDisabled(true);
-        CustomAxios.post('/v1/host/createPlay', {'id':id})
-            .then(res =>{
-                dispatch(R_setData({key:"command", value:"READY"})); // 최초 세팅
-                dispatch(R_setData({key:"pinNum", value:res.data.data}))
+        CustomAxios.post('/v1/host/createPlay', {'id': id})
+            .then(res => {
+                dispatch(R_setData({key: "command", value: "READY"})); // 최초 세팅
+                dispatch(R_setData({key: "pinNum", value: res.data.data}))
                 history.push({
                     pathname: '/QHost/play',
                 })
             })
-            .catch(()=>{
+            .catch(() => {
                 console.log("오류 발생");
             })
-            .finally(()=>{
+            .finally(() => {
                 setButtonDisabled(false);
             })
     }
