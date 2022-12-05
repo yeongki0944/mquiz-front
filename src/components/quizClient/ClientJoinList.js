@@ -6,6 +6,11 @@ import Chip from "@mui/material/Chip";
 import {useState} from "react";
 import {Item_c, Page_Default} from "../LayOuts/LayOuts";
 import styled from "styled-components";
+import {useSelector} from "react-redux";
+import store from "../../redux/store";
+import {R_setData} from "../../redux/reducers/quizplayReducer";
+import {stompSend} from "../../function/WebSocket";
+
 const Item_c_paper = styled(Item_c)`
     background: #fff;
     border-radius: 10px;
@@ -20,21 +25,27 @@ const Item_c_paper = styled(Item_c)`
 
 export const UserList = (props) => {
     // 나중에 레디스로 참여 유저 현황 가져오기
-    const [client, setClient] = useState([
-        {key: '123123', nickName: '갑시다'},
-        {key: '123456', nickName: 'gogo'},
-    ])
+    // const [client, setClient] = useState([
+    //     {key: '123123', nickName: '갑시다'},
+    //     {key: '123456', nickName: 'gogo'},
+    // ])
+    const {quizPlay} = useSelector(state => state.quizPlay)
+
+    console.log(quizPlay)
 
     return (
         <div>
-            {client.map((item) => {
+            {quizPlay.userList.map((item) => {
                 return (
-                    <div key={item.key} style={{display: "inline-block"}}>
+                    <div key={item} style={{display: "inline-block"}}>
                         <Chip
-                            label={item.nickName}
-                            sx={{marginLeft: 1, marginRight: 1,backgroundColor: 'green', color: '#fff',opacity: 0.9}}
+                            label={item}
+                            id={item}
+                            sx={{margin: 1, backgroundColor: '#61DAFB', color: '#202123'}}
                             onDelete={() => {
                                 props.setOpen(true)
+                                console.log("nickname : " + item)
+                                store.dispatch(R_setData({key: "bannedNickName", value: item}))
                             }}
                         />
                     </div>
@@ -47,6 +58,8 @@ export const UserList = (props) => {
 
 export const HostCountOutModal = (props) => {
     const handleClose = () => props.setOpen(false);
+    const {quizPlay} = useSelector(state => state.quizPlay)
+    console.log("Modal : " + quizPlay.bannedNickName)
     return (
         <Modal
             open={props.open}
@@ -64,13 +77,14 @@ export const HostCountOutModal = (props) => {
                     image="/img/logo192.png"
                     alt="green iguana"
                 />
-                <Item_c>선택한 참여자를 내보냅니다.</Item_c>
+                <Item_c> {quizPlay.bannedNickName} 선택한 참여자를 내보냅니다.</Item_c>
                 <Item_c>
                     <Button variant="contained" onClick={() => {
-                        //     stompSend("ban", {
-                        //         pinNum: props.pinNum,
-                        //         nickName: props.nickName
-                        //     });
+                            stompSend("ban", {
+                                pinNum: quizPlay.pinNum,
+                                nickName: quizPlay.bannedNickName
+                            });
+                            props.setOpen(false);
                     }}>확인</Button>
                     <Button variant="contained" color="primary" onClick={handleClose}>취소</Button>
                 </Item_c>

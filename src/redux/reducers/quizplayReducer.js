@@ -4,10 +4,11 @@ import {createAction, handleActions} from "redux-actions";
 const SET_DATA = "SET_DATA";
 const SET_CONTENT = "SET_CONTENT";
 const SET_ANSWER = "SET_ANSWER";
-
+const SET_BAN = "SET_BAN";
 export const R_setData = createAction(SET_DATA);
 export const R_setContent = createAction(SET_CONTENT);
 export const R_setAnswer = createAction(SET_ANSWER);
+export const R_setBan = createAction(SET_BAN);
 
 // 사용법
 // setData({key:'~', value:'~'})
@@ -19,6 +20,8 @@ const initialState = {
         command: null,
         nickName: null,
         quiz : null,
+        userList : [],
+        bannedNickName: null,
         rank : null,
     }
 }
@@ -55,6 +58,27 @@ export const quizPlayReducer = handleActions({
                     answer: action.payload.answer
                 }
             }
+        }
+    },
+    [SET_BAN]: (state, action) => {
+        console.log(action.payload);
+        const curNickName =state.quizPlay.nickName;
+        const selectedBanNickName = action.payload.value;
+        let curCommand = state.quizPlay.command;
+        console.log("current NickName : " + curNickName);
+        console.log("banned NickName : " + selectedBanNickName);
+        console.log("Cur Command : " + curCommand);
+        if(curNickName === selectedBanNickName){
+            // COMMAND = KICK
+            curCommand = "KICK"
+        }
+        state.quizPlay.command= curCommand
+        console.log("after Cur Command : " + curCommand);
+        return {
+            quizPlay: {
+                ...state.quizPlay,
+            }
+
         }
     },
 }, initialState);
