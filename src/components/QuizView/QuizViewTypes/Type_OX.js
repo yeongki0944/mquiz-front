@@ -83,14 +83,14 @@ export const Type_OX = () => {
         });
         dispatch(R_setData({key:"command", value:"SUBMIT"}));
     }
-    const handleNext = () => {
+    const handleSkip = () => {
         stompSend("skip", {
             pinNum: quizPlay.pinNum,
             action:"COMMAND",
             command:"START"
         });
     }
-    const handleSkip = () => {
+    const handleNext = () => {
         stompSend("result", {
             pinNum: quizPlay.pinNum,
             action: "COMMAND",

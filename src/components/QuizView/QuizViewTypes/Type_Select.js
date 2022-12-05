@@ -86,14 +86,14 @@ export const Type_Select = (props) => {
 
     }
 
-    const handleNext = () => {
+    const handleSkip = () => {
         stompSend("skip", {
             pinNum: quizPlay.pinNum,
             action:"COMMAND",
             command:"START"
         });
     }
-    const handleSkip = () => {
+    const handleNext = () => {
         stompSend("result", {
             pinNum: quizPlay.pinNum,
             action: "COMMAND",

@@ -70,14 +70,14 @@ export const Type_Reply = () => {
             handleSubmit(e.target.value);
         }
     }
-    const handleNext = () => {
+    const handleSkip = () => {
         stompSend("skip", {
             pinNum: quizPlay.pinNum,
             action:"COMMAND",
             command:"START"
         });
     }
-    const handleSkip = () => {
+    const handleNext = () => {
         stompSend("result", {
             pinNum: quizPlay.pinNum,
             action: "COMMAND",
@@ -103,7 +103,6 @@ export const Type_Reply = () => {
     } else {
         return (
             <Content>
-                {console.log(quizPlay)}
                 <Answers>
                     <AnswerArea>
                             <TextField id="quizAnswer" name="quizAnswer" type="quizAnswer" label="정답을 입력해 주세요"
