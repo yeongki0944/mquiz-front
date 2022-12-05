@@ -11,7 +11,7 @@ import {Item_c, Page_Gradiant} from "../../components/LayOuts/LayOuts";
 import {stompDisconnect, stompInit, stompSend} from "../../function/WebSocket";
 import styled from "styled-components";
 import Button from "@mui/material/Button";
-import {Rank_Page} from "../../components/RankBox";
+import {Rank_Page} from "../../components/Result/Rank_Page";
 
 const Item_c_full = styled(Item_c)`
     width: 100%;

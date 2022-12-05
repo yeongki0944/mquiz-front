@@ -8,7 +8,7 @@ import {R_setData, R_setContent} from "../../redux/reducers/quizplayReducer";
 import {Item_c, Page_Gradiant} from "../../components/LayOuts/LayOuts";
 import {QuizHostReady} from "./QuizHostReady";
 import {stompInit, stompSend, stompDisconnect, stompSubscribe} from "../../function/WebSocket";
-import {Rank_Page} from "../../components/RankBox";
+import {Rank_Page} from "../../components/Result/Rank_Page";
 
 const Item_c_full = styled(Item_c)`
     width: 100%;
