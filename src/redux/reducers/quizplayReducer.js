@@ -9,7 +9,6 @@ export const R_setData = createAction(SET_DATA);
 export const R_setContent = createAction(SET_CONTENT);
 export const R_setAnswer = createAction(SET_ANSWER);
 
-
 // 사용법
 // setData({key:'~', value:'~'})
 // setContent({key:'~', value:'~'})
@@ -20,24 +19,7 @@ const initialState = {
         command: null,
         nickName: null,
         quiz : null,
-        rank : [
-            {
-                nickName: "test1",
-                score: 100,
-                rank: 1
-            },
-            {
-                nickName: "test2",
-                score: 90,
-                rank: 2
-            },
-            {
-                nickName: "test3",
-                score: 70,
-                rank: 3
-            }
-        ]
-
+        rank : null,
     }
 }
 export const quizPlayReducer = handleActions({
