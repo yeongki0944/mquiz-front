@@ -61,19 +61,10 @@ export const quizPlayReducer = handleActions({
         }
     },
     [SET_BAN]: (state, action) => {
-        console.log(action.payload);
-        const curNickName =state.quizPlay.nickName;
-        const selectedBanNickName = action.payload.value;
-        let curCommand = state.quizPlay.command;
-        console.log("current NickName : " + curNickName);
-        console.log("banned NickName : " + selectedBanNickName);
-        console.log("Cur Command : " + curCommand);
-        if(curNickName === selectedBanNickName){
-            // COMMAND = KICK
-            curCommand = "KICK"
+        if(state.quizPlay.nickName === action.payload.value){
+            state.quizPlay.command = "KICK";
         }
-        state.quizPlay.command= curCommand
-        console.log("after Cur Command : " + curCommand);
+
         return {
             quizPlay: {
                 ...state.quizPlay,

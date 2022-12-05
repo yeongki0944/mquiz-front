@@ -35,7 +35,7 @@ export function BasicModal() {
            진행자에 의해 강퇴 되었습니다.
           </Typography>
 
-          <Link to="/QClient">
+          <Link to="/">
           <Typography variant="h5" component="div" align='center'>
           <Button variant="contained">확인</Button>
           </Typography>

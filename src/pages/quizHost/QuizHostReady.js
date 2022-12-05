@@ -93,7 +93,7 @@ export const QuizHostReady = () => {
                     <Btn onClick={handleCopy}>URL copy</Btn>
                 </Item_c>
                 <Item_c><PinNum pinNum={quizPlay.pinNum}/></Item_c>
-                <Item_c><ClientTotalCount ClientTotalCount={"2"}/></Item_c>
+                <Item_c><ClientTotalCount ClientTotalCount={quizPlay.userList.length}/></Item_c>
                 <Item_c_PlayerList><UserList pinNum={quizPlay.pinNum} setOpen={setOpenBan}/></Item_c_PlayerList>
             </Item_c_Content>
             <Item_c>

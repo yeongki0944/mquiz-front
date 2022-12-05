@@ -9,6 +9,7 @@ import {styled} from '@mui/material/styles';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import CardMedia from '@mui/material/CardMedia';
+import { useHistory } from 'react-router-dom';
 
 const style = {
     position: 'absolute',
@@ -25,7 +26,12 @@ const style = {
 export function ClientCountOutModal(props) {
     const open = props.open;
     const setOpen = props.setOpen;
-    const handleClose = () => setOpen(false);
+    const handleClose = () => {
+        setOpen(false);
+        history.push('/');
+        history.go(0)
+    }
+    const history = useHistory();
 
     return (
         <Modal
@@ -40,11 +46,16 @@ export function ClientCountOutModal(props) {
                     진행자에 의해 강퇴 되었습니다.
                 </Typography>
 
-                <Link to="/QClient">
+                {/*<Link to="/QClient">*/}
+                    {/*확인 누르면 새로고침해서 리덕스가 가지고 있는 데이터 날리기 */}
                     <Typography variant="h5" component="div" align='center'>
-                        <Button variant="contained">확인</Button>
+                        <Button onClick={() =>{
+                            console.log("forceRefresh");
+                            history.push('/');
+                            history.go(0)
+                        }} variant="contained">확인</Button>
                     </Typography>
-                </Link>
+                {/*</Link>*/}
             </Box>
         </Modal>
     );
