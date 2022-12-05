@@ -1,102 +1,19 @@
 import * as React from "react";
 import {Gauge} from "./Gauge";
-import {QuizQuestion} from "./QuizQuestion";
 import {Type_Select} from "./QuizViewTypes/Type_Select";
 import {Type_OX} from "./QuizViewTypes/Type_OX";
 import {Type_Reply} from "./QuizViewTypes/Type_Reply";
 import {ImageShow} from "./Outputs/ImageShow";
 import {AudioShow} from "./Outputs/AudioShow";
 import {YoutubeShow} from "./Outputs/YoutubeShow";
-import {PinNum} from "../PinNum";
 import {VolumeControlButton} from "../VolumeControlButton";
-import {useEffect} from "react";
-import styled from "styled-components";
 import {useSelector} from "react-redux";
-import {Item_c, Item_l, Item_r, Page_Default, Page_Gradiant} from "../LayOuts/LayOuts";
+import {Content, Item} from "../LayOuts/LayOuts";
 
 
-const View = styled.div`
-    display: block;
-    background-color: #ffffff;
-    width: 90%;
-    height: 90%;
-    margin: auto;
-    margin-top: 5%;
-    padding: 10px;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
-
-`;
 
 
-const Item_r_Volume = styled(Item_r)`
-    @media (min-width: 300px) and (max-width: 767px) {
-        position: absolute;
-        right: 0;
-        top: 0;
-        width: 40%;
-    }
-    @media (min-width: 767px) {
-        position: absolute;
-        right: 0;
-        top: 0;
-    }
-`;
-const Item_c_Content = styled(Item_c)`
-    display: block;
-    @media (min-width: 300px) and (max-width: 767px) {
-        margin-top: 5vh;
-        height: 90vh;
-    }
-    @media (min-width: 767px) {
-        height: 95vh;
-    }
-`;
 
-const Item_c_Info = styled(Item_c)`
-    display: block;
-    @media (min-width: 300px) and (max-width: 767px) {
-        margin-top: 5vh;
-        height: 10%;
-    }
-    @media (min-width: 767px) {
-        height: 20%;
-    }
-`;
-const Item_c_Question = styled(Item_c)`
-    @media (min-width: 300px) and (max-width: 767px) {
-        display: block;
-        margin-top: 5vh;
-        height: 45%;
-    }
-    @media (min-width: 767px) {
-        height: 30%;
-    }
-`;
-const Item_c_QBox = styled(Item_c)`
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
-    @media (min-width: 300px) and (max-width: 767px) {
-        margin-bottom: 5px;
-        width: 90%;
-        height: 50%;
-    }
-    @media (min-width: 767px) {
-        width: 45%;
-        height: 100%;
-    }
-`;
-
-const Item_c_Answer = styled(Item_c)`
-    display: block;
-    margin-top: 5%;
-    @media (min-width: 300px) and (max-width: 767px) {
-        height: 45%;
-    }
-    @media (min-width: 767px) {
-        height: 50%;
-    }
-`;
 
 export const QuizView = (props) => {
     const currentQuiz = props.currentQuiz;
@@ -105,13 +22,13 @@ export const QuizView = (props) => {
     const AnswerSheet = () => {
         switch (currentQuiz.type) {
             case "선택형":
-                return (<Type_Select currentQuiz = {currentQuiz}/>);
+                return (<Type_Select currentQuiz={currentQuiz}/>);
                 break;
             case "OX":
-                return (<Type_OX currentQuiz = {currentQuiz}/>);
+                return (<Type_OX currentQuiz={currentQuiz}/>);
                 break;
             case "단답형":
-                return (<Type_Reply currentQuiz = {currentQuiz}/>);
+                return (<Type_Reply currentQuiz={currentQuiz}/>);
                 break;
         }
     }
@@ -119,47 +36,48 @@ export const QuizView = (props) => {
     const Media = () => {
         switch (currentQuiz.media.type) {
             case "Image":
-                return (<ImageShow currentQuiz = {currentQuiz}/>);
+                return (<ImageShow currentQuiz={currentQuiz}/>);
                 break;
             case "Youtube":
-                return (<YoutubeShow currentQuiz = {currentQuiz}/>);
+                return (<YoutubeShow currentQuiz={currentQuiz}/>);
                 break;
             case "Audio":
-                return (<AudioShow currentQuiz = {currentQuiz}/>);
+                return (<AudioShow currentQuiz={currentQuiz}/>);
                 break;
             default:
                 return (<div></div>);
         }
     }
 
-    useEffect(() => {
-        console.log(currentQuiz.media);
-    }, [])
 
-    const Content = () => {
+    const View = () => {
         return (
-            <div>
-                <Item_c_Content>
-                    <Item_c_Info>
-                        <Item_c><PinNum pinNum={quizPlay.pinNum}/></Item_c>
-                        <Item_c>
-                            <Gauge
-                                Qnum={currentQuiz.num}
-                                TotalQcnt={10}
-                                timeprogress={10}
-                                timeleft={currentQuiz.time}
-                            />
-                        </Item_c>
-                    </Item_c_Info>
-                    <Item_c_Question>
-                        <Item_c_QBox><QuizQuestion question={currentQuiz.question}/></Item_c_QBox>
-                        <Item_c_QBox><Media/></Item_c_QBox>
-                    </Item_c_Question>
-                    <Item_c_Answer>
-                        <AnswerSheet/>
-                    </Item_c_Answer>
-                </Item_c_Content>
-            </div>
+            <Content sx={{display: 'block', height: '95vh'}} sm={{marginTop: '5vh', height: '90vh'}}>
+                <Item sx={{display:'block',height:'20%'}} sm={{marginTop:'5vh',height:'10%'}}>
+                    <Item sx={{place:'center',width:'100%',margin:'auto',fontSize:'2.5rem'}}>Pin:{quizPlay.pinNum}</Item>
+                    <Item sx={{width:'100%',margin:'auto'}}>
+                        <Gauge
+                            Qnum={currentQuiz.num}
+                            TotalQcnt={10}
+                            timeprogress={10}
+                            timeleft={currentQuiz.time}
+                        />
+                    </Item>
+                </Item>
+                <Item sx={{place:'center',margin:'auto',width:'100%',height:'30%'}} sm={{height:'45%',display:'block',marginTop:'5vh'}}>
+                    <Item
+                        sx={{place:'center',width:'45%',height:'100%',margin:'auto',bg:'#fff',borderRadius:'10px',boxShadow:'0 0 10px 0 rgba(0,0,0, 0.2)'}}
+                        sm={{marginBottom:'5px',width:'90%',height:'50%'}}
+                    >{currentQuiz.question}</Item>
+                    <Item
+                        sx={{place:'center',width:'45%',height:'100%',margin:'auto',bg:'#fff',borderRadius:'10px',boxShadow:'0 0 10px 0 rgba(0,0,0, 0.2)'}}
+                        sm={{marginBottom:'5px',width:'90%',height:'50%'}}
+                    ><Media/></Item>
+                </Item>
+                <Item sx={{width:'100%',height:'50%',display:'block',margin:'auto'}} sm={{height:'45%'}}>
+                    <AnswerSheet/>
+                </Item>
+            </Content>
 
         )
     }
@@ -167,17 +85,27 @@ export const QuizView = (props) => {
     switch (props.state) {
         case "play":
             return (
-                <Page_Default>
-                    <Item_r_Volume><VolumeControlButton/></Item_r_Volume>
-                    <Content/>
-                </Page_Default>
+                <Content sx={props.sx}>
+                    <VolumeControlButton sx={{position: 'absolute', right: '0', top: '0', width: '40%'}}/>
+                    <View/>
+                </Content>
             );
             break;
         case "create":
             return (
-                <View>
-                    <Content/>
-                </View>
+                <Content sx={props.sx}>
+                    <Item sx={{
+                        display: 'block',
+                        background: '#fff',
+                        width: '90%',
+                        height: '90%',
+                        margin: 'auto',
+                        padding: '10px',
+                        boxShadow: ' 0 0 10px 0 rgba(0, 0, 0, 0.2)'
+                    }}>
+                        <View/>
+                    </Item>
+                </Content>
             );
             break;
     }

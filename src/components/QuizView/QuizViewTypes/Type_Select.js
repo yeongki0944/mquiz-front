@@ -1,48 +1,11 @@
 import * as React from "react";
 import {useSelector, useDispatch} from "react-redux";
-import styled from "styled-components";
 import Button from "@mui/material/Button";
 import {stompSend} from "../../../function/WebSocket";
-import {Item_c} from "../../LayOuts/LayOuts";
+import {Content, Item, Item_c} from "../../LayOuts/LayOuts";
 import {R_setData} from "../../../redux/reducers/quizplayReducer";
+import {AnswerBox} from "./AnswerBox";
 
-const Content = styled(Item_c)`
-  display: block;
-  height: 85%;
-`;
-const Answers = styled(Item_c)`
-    height: 95%;
-    display: block;
-`;
-
-const AnswerArea = styled(Item_c)`
-    float:left;
-    @media (min-width: 300px) and (max-width: 767px) {
-        height: 45%;
-        width: 50%;
-    }
-    @media (min-width: 767px) {
-        width: 50%;
-    }
-`
-
-const Card_Btn = styled(Item_c)`
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
-    
-    @media (min-width: 300px) and (max-width: 767px) {
-        height: 90%;
-        width: 90%;
-        min-height: 120px;
-    }
-    @media (min-width: 767px) {
-        height: 90%;
-        width: 90%;
-        min-height: 100px;
-        margin-bottom: 10px;
-    }
-`
 
 export const Type_Select = (props) => {
     const dispatch = useDispatch();
@@ -60,9 +23,6 @@ export const Type_Select = (props) => {
             e.target.style.border = "1px solid orange";
         }
     }
-
-    // dispatch(R_setAnswer({answer: quizPlay.submit.answer.concat(ans),answerTime: 0}));
-    // dispatch(R_setAnswer(answer.filter(item => item !== name)));
 
     const handleSubmit = () => {
         const selected = document.querySelectorAll("#selected");
@@ -82,15 +42,15 @@ export const Type_Select = (props) => {
                 quizNum: quizPlay.quiz.num
             }
         });
-        dispatch(R_setData({key:"command", value:"SUBMIT"}));
+        dispatch(R_setData({key: "command", value: "SUBMIT"}));
 
     }
 
     const handleSkip = () => {
         stompSend("skip", {
             pinNum: quizPlay.pinNum,
-            action:"COMMAND",
-            command:"START"
+            action: "COMMAND",
+            command: "START"
         });
     }
     const handleNext = () => {
@@ -101,50 +61,40 @@ export const Type_Select = (props) => {
         });
     }
 
-
-    if(quizPlay.command == "RESULT"){
+    if (!quizPlay.nickName) {
         return (
-            <Content sx={{display:"block"}}>
-                {currentQuiz.choiceList.num1 != "" && <AnswerArea><Card_Btn>{currentQuiz.choiceList.num1}</Card_Btn></AnswerArea>}
-                {currentQuiz.choiceList.num2 != "" && <AnswerArea><Card_Btn>{currentQuiz.choiceList.num2}</Card_Btn></AnswerArea>}
-                {currentQuiz.choiceList.num3 != "" && <AnswerArea><Card_Btn>{currentQuiz.choiceList.num3}</Card_Btn></AnswerArea>}
-                {currentQuiz.choiceList.num4 != "" && <AnswerArea><Card_Btn>{currentQuiz.choiceList.num4}</Card_Btn></AnswerArea>}
+            <Content sx={{display: 'block', height: '85%'}}>
+                <Item sx={{place: 'center', display: 'block', height: '95%', width: '100%'}}>
+                    {
+                        Object.keys(currentQuiz.choiceList).map((item, index) => {
+                            if (currentQuiz.choiceList[item] != "") {
+                                return (
+                                    <AnswerBox key={index} answer={currentQuiz.choiceList[item]}/>
+                                )
+                            }
+                        })
+                    }
+                </Item>
+                <Item sx={{place: 'center', width: '100%'}}><Button variant="contained" onClick={handleNext}>다음</Button></Item>
+                <Item sx={{place: 'center', width: '100%'}}><Button variant="contained"
+                                                                    onClick={handleSkip}>건너뛰기</Button></Item>
             </Content>
-        )
-    }
-    else if (quizPlay.nickName === null) { //제작 시
-        return (
-            <Content>
-                <Answers>
-                    {currentQuiz.choiceList.num1 != "" && <AnswerArea><Card_Btn>{currentQuiz.choiceList.num1}</Card_Btn></AnswerArea>}
-                    {currentQuiz.choiceList.num2 != "" && <AnswerArea><Card_Btn>{currentQuiz.choiceList.num2}</Card_Btn></AnswerArea>}
-                    {currentQuiz.choiceList.num3 != "" && <AnswerArea><Card_Btn>{currentQuiz.choiceList.num3}</Card_Btn></AnswerArea>}
-                    {currentQuiz.choiceList.num4 != "" && <AnswerArea><Card_Btn>{currentQuiz.choiceList.num4}</Card_Btn></AnswerArea>}
-                </Answers>
-                <Item_c><Button variant="contained" onClick={handleNext}>다음</Button></Item_c>
-                <Item_c><Button variant="contained" onClick={handleSkip}>건너뛰기</Button></Item_c>
-            </Content>
-
         )
     } else {
         return (
-            <Content>
-                <Answers>
-                    {currentQuiz.choiceList.num1 != "" &&
-                        <AnswerArea onClick={setSelected} className="num1"><Card_Btn>{currentQuiz.choiceList.num1}</Card_Btn></AnswerArea>
+            <Content xs={{width: '100%'}}>
+                <Item sx={{place: 'center', display: 'block', height: '95%', width: '100%'}}>
+                    {
+                        Object.keys(currentQuiz.choiceList).map((item, index) => {
+                            if (currentQuiz.choiceList[item] != "") {
+                                return (
+                                    <AnswerBox key={index} answer={currentQuiz.choiceList[item]} onClick={setSelected}/>
+                                )
+                            }
+                        })
                     }
-                    {currentQuiz.choiceList.num2 != "" &&
-                        <AnswerArea onClick={setSelected} className="num2"><Card_Btn>{currentQuiz.choiceList.num2}</Card_Btn></AnswerArea>
-                    }
-                    {currentQuiz.choiceList.num3 != "" &&
-                        <AnswerArea onClick={setSelected} className="num3"><Card_Btn>{currentQuiz.choiceList.num3}</Card_Btn></AnswerArea>
-                    }
-                    {currentQuiz.choiceList.num4 != "" &&
-                        <AnswerArea onClick={setSelected} className="num4"><Card_Btn>{currentQuiz.choiceList.num4}</Card_Btn></AnswerArea>
-                    }
-                </Answers>
-                <Item_c><Button variant="contained" onClick={handleSubmit}>정답제출</Button></Item_c>
-
+                </Item>
+                <Item sx={{width: '100%'}}><Button variant="contained" onClick={handleSubmit}>정답제출</Button></Item>
             </Content>
         );
     }
