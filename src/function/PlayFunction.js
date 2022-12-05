@@ -24,7 +24,9 @@ const command = (props) => {
         case "START":
             store.dispatch(R_setData({key: "quiz", value: props.quiz}));
             break;
-        case "STOP":
+        case "RESULT":
+            console.log(props.quiz);
+            store.dispatch(R_setData({key: "quiz", value: props.quiz}));
             break;
         default:
             break;

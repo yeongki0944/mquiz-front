@@ -43,6 +43,7 @@ const Card_Btn = styled(Item_c)`
 `
 
 export const Type_Reply = () => {
+    const dispatch = useDispatch();
     const {quizPlay} = useSelector(state => state.quizPlay);
     const [quizAnswer, setquizAnswer] = useState('');
 
@@ -61,6 +62,7 @@ export const Type_Reply = () => {
                 quizNum: quizPlay.quiz.num
             }
         });
+        dispatch(R_setData({key:"command", value:"SUBMIT"}));
     };
 
     const handleEnterKey = (e) => {
@@ -68,7 +70,20 @@ export const Type_Reply = () => {
             handleSubmit(e.target.value);
         }
     }
-
+    const handleNext = () => {
+        stompSend("skip", {
+            pinNum: quizPlay.pinNum,
+            action:"COMMAND",
+            command:"START"
+        });
+    }
+    const handleSkip = () => {
+        stompSend("result", {
+            pinNum: quizPlay.pinNum,
+            action: "COMMAND",
+            command: "RESULT"
+        });
+    }
     if (quizPlay.nickName === null) { //제작 시
         return (
             <Content>
@@ -80,6 +95,8 @@ export const Type_Reply = () => {
                         />
                     </AnswerArea>
                 </Answers>
+                <Item_c><Button variant="contained" onClick={handleNext}>다음</Button></Item_c>
+                <Item_c><Button variant="contained" onClick={handleSkip}>건너뛰기</Button></Item_c>
             </Content>
 
         )

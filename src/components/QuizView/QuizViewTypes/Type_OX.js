@@ -6,7 +6,7 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 
 import styled from "styled-components";
-import {R_setContent} from "../../../redux/reducers/quizplayReducer";
+import {R_setContent, R_setData} from "../../../redux/reducers/quizplayReducer";
 import {Item_c} from "../../LayOuts/LayOuts";
 import Button from "@mui/material/Button";
 import {stompSend} from "../../../function/WebSocket";
@@ -50,6 +50,7 @@ const Card_Btn = styled(Item_c)`
 `
 
 export const Type_OX = () => {
+    const dispatch = useDispatch();
     const {quizPlay} = useSelector(state => state.quizPlay);
 
     const setSelected = (e) => {
@@ -80,9 +81,22 @@ export const Type_OX = () => {
                 quizNum: quizPlay.quiz.num
             }
         });
-
+        dispatch(R_setData({key:"command", value:"SUBMIT"}));
     }
-
+    const handleNext = () => {
+        stompSend("skip", {
+            pinNum: quizPlay.pinNum,
+            action:"COMMAND",
+            command:"START"
+        });
+    }
+    const handleSkip = () => {
+        stompSend("result", {
+            pinNum: quizPlay.pinNum,
+            action: "COMMAND",
+            command: "RESULT"
+        });
+    }
     if (quizPlay.nickName === null) { //제작 시
         return (
             <Content>
@@ -90,6 +104,8 @@ export const Type_OX = () => {
                     <AnswerArea><Card_Btn>O</Card_Btn></AnswerArea>
                     <AnswerArea><Card_Btn>X</Card_Btn></AnswerArea>
                 </Answers>
+                <Item_c><Button variant="contained" onClick={handleNext}>다음</Button></Item_c>
+                <Item_c><Button variant="contained" onClick={handleSkip}>건너뛰기</Button></Item_c>
             </Content>
 
         )

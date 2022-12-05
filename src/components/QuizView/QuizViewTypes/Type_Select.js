@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Button from "@mui/material/Button";
 import {stompSend} from "../../../function/WebSocket";
 import {Item_c} from "../../LayOuts/LayOuts";
+import {R_setData} from "../../../redux/reducers/quizplayReducer";
 
 const Content = styled(Item_c)`
   display: block;
@@ -44,6 +45,7 @@ const Card_Btn = styled(Item_c)`
 `
 
 export const Type_Select = (props) => {
+    const dispatch = useDispatch();
     const {quizPlay} = useSelector(state => state.quizPlay);
     const currentQuiz = props.currentQuiz;
 
@@ -80,7 +82,23 @@ export const Type_Select = (props) => {
                 quizNum: quizPlay.quiz.num
             }
         });
+        dispatch(R_setData({key:"command", value:"SUBMIT"}));
 
+    }
+
+    const handleNext = () => {
+        stompSend("skip", {
+            pinNum: quizPlay.pinNum,
+            action:"COMMAND",
+            command:"START"
+        });
+    }
+    const handleSkip = () => {
+        stompSend("result", {
+            pinNum: quizPlay.pinNum,
+            action: "COMMAND",
+            command: "RESULT"
+        });
     }
 
 
@@ -93,6 +111,8 @@ export const Type_Select = (props) => {
                     {currentQuiz.choiceList.num3 != "" && <AnswerArea><Card_Btn>{currentQuiz.choiceList.num3}</Card_Btn></AnswerArea>}
                     {currentQuiz.choiceList.num4 != "" && <AnswerArea><Card_Btn>{currentQuiz.choiceList.num4}</Card_Btn></AnswerArea>}
                 </Answers>
+                <Item_c><Button variant="contained" onClick={handleNext}>다음</Button></Item_c>
+                <Item_c><Button variant="contained" onClick={handleSkip}>건너뛰기</Button></Item_c>
             </Content>
 
         )
