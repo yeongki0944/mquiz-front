@@ -20,6 +20,23 @@ const initialState = {
         command: null,
         nickName: null,
         quiz : null,
+        rank : [
+            {
+                nickName: "test1",
+                score: 100,
+                rank: 1
+            },
+            {
+                nickName: "test2",
+                score: 90,
+                rank: 2
+            },
+            {
+                nickName: "test3",
+                score: 70,
+                rank: 3
+            }
+        ]
 
     }
 }

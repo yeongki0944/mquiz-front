@@ -1,13 +1,13 @@
 import * as React from 'react'
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import {Box, Button} from "@mui/material";
+import {Button} from "@mui/material";
 import EditIcon from "@material-ui/icons/Edit";
 import PlayArrow from "@material-ui/icons/PlayArrow";
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import Add from "@material-ui/icons/Add";
-import {Link, useHistory} from "react-router-dom";
+import { useHistory} from "react-router-dom";
 import CustomAxios from "../../function/CustomAxios";
 import {R_setCurrentShow, R_setId, R_setQuiz} from "../../redux/reducers/quizInfoReducer";
 import styled from "styled-components";
