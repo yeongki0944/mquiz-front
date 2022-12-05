@@ -3,7 +3,7 @@ import {R_setCurrentShow, R_setId, R_setQuiz} from "../redux/reducers/quizInfoRe
 import {useDispatch} from "react-redux";
 
 const session = window.sessionStorage
-const URL = "http://localhost:8080/"//process.env.REACT_APP_BACKEND_SERVER;
+const URL = process.env.REACT_APP_BACKEND_SERVER;
 
 const CustomAxios = axios.create({
     baseURL: URL,
