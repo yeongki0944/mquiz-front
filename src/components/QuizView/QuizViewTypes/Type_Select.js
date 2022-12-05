@@ -102,7 +102,17 @@ export const Type_Select = (props) => {
     }
 
 
-    if (quizPlay.nickName === null) { //제작 시
+    if(quizPlay.command == "RESULT"){
+        return (
+            <Content sx={{display:"block"}}>
+                {currentQuiz.choiceList.num1 != "" && <AnswerArea><Card_Btn>{currentQuiz.choiceList.num1}</Card_Btn></AnswerArea>}
+                {currentQuiz.choiceList.num2 != "" && <AnswerArea><Card_Btn>{currentQuiz.choiceList.num2}</Card_Btn></AnswerArea>}
+                {currentQuiz.choiceList.num3 != "" && <AnswerArea><Card_Btn>{currentQuiz.choiceList.num3}</Card_Btn></AnswerArea>}
+                {currentQuiz.choiceList.num4 != "" && <AnswerArea><Card_Btn>{currentQuiz.choiceList.num4}</Card_Btn></AnswerArea>}
+            </Content>
+        )
+    }
+    else if (quizPlay.nickName === null) { //제작 시
         return (
             <Content>
                 <Answers>

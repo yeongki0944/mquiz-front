@@ -62,7 +62,7 @@ export const Type_Reply = () => {
                 quizNum: quizPlay.quiz.num
             }
         });
-        dispatch(R_setData({key:"command", value:"SUBMIT"}));
+        dispatch(R_setData({key: "command", value: "SUBMIT"}));
     };
 
     const handleEnterKey = (e) => {
@@ -73,8 +73,8 @@ export const Type_Reply = () => {
     const handleSkip = () => {
         stompSend("skip", {
             pinNum: quizPlay.pinNum,
-            action:"COMMAND",
-            command:"START"
+            action: "COMMAND",
+            command: "START"
         });
     }
     const handleNext = () => {
@@ -84,7 +84,18 @@ export const Type_Reply = () => {
             command: "RESULT"
         });
     }
-    if (quizPlay.nickName === null) { //제작 시
+
+    if (quizPlay.command === "RESULT") {
+        return (
+            <Content>
+                <Answers>
+                    <AnswerArea>
+                        {quizPlay.quiz.answer}
+                    </AnswerArea>
+                </Answers>
+            </Content>
+        )
+    } else if (quizPlay.nickName === null) { //제작 시
         return (
             <Content>
                 <Answers>
@@ -105,14 +116,16 @@ export const Type_Reply = () => {
             <Content>
                 <Answers>
                     <AnswerArea>
-                            <TextField id="quizAnswer" name="quizAnswer" type="quizAnswer" label="정답을 입력해 주세요"
-                                       variant="outlined"
-                                       onBlur={handleInput}
-                                       onKeyPress={handleEnterKey}
-                            />
+                        <TextField id="quizAnswer" name="quizAnswer" type="quizAnswer" label="정답을 입력해 주세요"
+                                   variant="outlined"
+                                   onBlur={handleInput}
+                                   onKeyPress={handleEnterKey}
+                        />
                     </AnswerArea>
                 </Answers>
-                <Item_c><Button variant="contained" onClick={()=>{handleSubmit(quizAnswer)}}>정답제출</Button></Item_c>
+                <Item_c><Button variant="contained" onClick={() => {
+                    handleSubmit(quizAnswer)
+                }}>정답제출</Button></Item_c>
             </Content>
         );
     }

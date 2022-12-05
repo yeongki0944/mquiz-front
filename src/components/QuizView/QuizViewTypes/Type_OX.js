@@ -97,7 +97,16 @@ export const Type_OX = () => {
             command: "RESULT"
         });
     }
-    if (quizPlay.nickName === null) { //제작 시
+
+    if(quizPlay.command === "RESULT"){
+        return(
+            <Answers>
+                <AnswerArea><Card_Btn>O</Card_Btn></AnswerArea>
+                <AnswerArea><Card_Btn>X</Card_Btn></AnswerArea>
+            </Answers>
+        )
+    }
+    else if (quizPlay.nickName === null) { //제작 시
         return (
             <Content>
                 <Answers>
