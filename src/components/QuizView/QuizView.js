@@ -144,6 +144,7 @@ export const QuizView = (props) => {
                         <Item_c><PinNum pinNum={quizPlay.pinNum}/></Item_c>
                         <Item_c>
                             <Gauge
+                                quizPlay={quizPlay}
                                 Qnum={currentQuiz.num}
                                 TotalQcnt={10}
                                 timeprogress={10}
