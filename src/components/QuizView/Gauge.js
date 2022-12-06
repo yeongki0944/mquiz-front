@@ -53,13 +53,9 @@ export const Gauge = (props) => {
 
     const [count, setCount] = useState(0);
     const [delay, setDelay] = useState(100); // 0.1초
-    const [countValue, setCountValue] = useState(1);
 
     function useInterval(callback, delay) {
         const savedCallback = useRef();
-        if(countValue === 1){
-            setCountValue(100 / quizPlay.quiz.time * 0.1);
-        }
 
         useEffect(() => {
             savedCallback.current = callback;
@@ -80,7 +76,7 @@ export const Gauge = (props) => {
     useInterval(
         () => {
             // Your custom logic here
-            setCount(count + countValue);
+            setCount(count + 100 / props.timeleft * 0.1);
         },
         count < 100 ? delay : null
     );
@@ -94,6 +90,7 @@ export const Gauge = (props) => {
                     
                 }
                 else{ // 클라이언트
+                    dispatch(R_setData({key: "command", value: "SUBMIT"}));
                     stompSend("submit", {
                         pinNum: quizPlay.pinNum,
                         action: "SUBMIT",
@@ -104,7 +101,6 @@ export const Gauge = (props) => {
                             quizNum: quizPlay.quiz.num
                         }
                     });
-                    dispatch(R_setData({key: "command", value: "SUBMIT"}));
                 }
                 setCount(101)
             }
@@ -113,12 +109,12 @@ export const Gauge = (props) => {
     return (
         <div className={classes.content}>
             <div>
-                문제 {quizPlay.quiz.num} / {props.TotalQcnt}
+                문제 {props.Qnum} / {props.TotalQcnt}
             </div>
             <div>
                 <ProgressBar animated
                              now={count < 100 ? count : 100}
-                             label={parseInt(count / countValue * 0.1)}/>
+                             label={parseInt((count / (100 / props.timeleft * 0.1)))*0.1}/>
             </div>
         </div>
     )
