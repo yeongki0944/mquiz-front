@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import {useEffect, useState} from "react";
 import {R_setContent, R_setData} from "../../../redux/reducers/quizplayReducer";
 import styled from "styled-components";
-import {Item, Item_c} from "../../LayOuts/LayOuts";
+import {Btn, Card, Item, Item_c} from "../../LayOuts/LayOuts";
 import {TextField} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import {stompSend} from "../../../function/WebSocket";
@@ -21,24 +21,6 @@ const AnswerArea = styled(Item_c)`
     @media (min-width: 300px) and (max-width: 767px) {
     }
     @media (min-width: 767px) {
-    }
-`
-
-const Card_Btn = styled(Item_c)`
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
-    
-    @media (min-width: 300px) and (max-width: 767px) {
-        height: 90%;
-        width: 90%;
-        min-height: 120px;
-    }
-    @media (min-width: 767px) {
-        height: 90%;
-        width: 90%;
-        min-height: 100px;
-        margin-bottom: 10px;
     }
 `
 
@@ -86,58 +68,44 @@ export const Type_Reply = () => {
         });
     }
 
-    if(quizPlay.command === "RESULT"){
-        return (
-            <Content>
-                <Answers>
-                    <AnswerArea>
+    return (
+        <Item sx={{place: 'center', display: 'block'}}>
+            <Item sx={{place: 'center', display: 'block', height: '90%'}}>
+                {quizPlay.command === "RESULT" ?  //정답화면 정답일 시
+                    <Card sx={{place: 'center', background: 'orange'}}>
                         {quizPlay.quiz.answer}
-                    </AnswerArea>
-                </Answers>
-            </Content>
-        )
-    }
-    else if (quizPlay.nickName === null) { //제작 시
-        return (
-            <Content>
-                <Answers>
-                    <AnswerArea>
-                        {
-                            quizPlay.command === "SHOW" ? <TextField id="quizAnswer" name="quizAnswer" type="quizAnswer" label="정답을 입력해 주세요"
-                                    variant="outlined"
-                                    aria-readonly={true}
-                                    disabled={true}
-                            /> : <TextField id="quizAnswer" name="quizAnswer" type="quizAnswer" label="정답을 입력해 주세요"
-                                        variant="outlined"
-                                        aria-readonly={true}
-                            />
-                        }
-                    </AnswerArea>
-                </Answers>
-                <Item sx={{display: 'flex'}}>
-                    <Item_c><Button variant="contained" onClick={handleNext}>다음</Button></Item_c>
-                    <Item_c><Button variant="contained" onClick={handleSkip}>건너뛰기</Button></Item_c>
-                </Item>
-            </Content>
-
-        )
-    } else {
-        return (
-            <Content>
-                <Answers>
-                    <AnswerArea>
+                    </Card>
+                    :
+                    quizPlay.nickName === null && //호스트 화면
+                    quizPlay.command === "SHOW" &&
                         <TextField id="quizAnswer" name="quizAnswer" type="quizAnswer" label="정답을 입력해 주세요"
                                    variant="outlined"
-                                   onBlur={handleInput}
-                                   onKeyPress={handleEnterKey}
+                                   aria-readonly={true}
+                                   disabled={true}
                         />
-                    </AnswerArea>
-                </Answers>
-                <Item_c><Button variant="contained" onClick={() => {
-                    handleSubmit(quizAnswer)
-                }}>정답제출</Button></Item_c>
-            </Content>
-        );
-    }
+                }
+                {quizPlay.command != "RESULT" && quizPlay.nickName != null && //클라이언트
+                    <TextField id="quizAnswer" name="quizAnswer" type="quizAnswer" label="정답을 입력해 주세요"
+                               variant="outlined"
+                               onBlur={handleInput}
+                               onKeyPress={handleEnterKey}
+                    />
+                }
+            </Item>
+            <Item sx={{place: 'center', display: 'block', height: '10%'}}>
+                {quizPlay.command === "RESULT" ? null :
+                    quizPlay.nickName === null ?
+                        <Item sx={{place: 'center', display: 'flex', margin: 'auto'}}>
+                            <Btn sx={{place: 'center', height: '100%', width: '10%'}} onClick={handleNext}>다음</Btn>
+                            <Btn sx={{place: 'center', height: '100%', width: '10%'}} onClick={handleSkip}>건너뛰기</Btn>
+                        </Item>
+                        :
+                        <Btn sx={{place: 'center', height: '100%', width: '10%', margin: 'auto'}}
+                             onClick={handleSubmit}>정답제출</Btn>
+                }
+            </Item>
+        </Item>
+    )
+
 }
 

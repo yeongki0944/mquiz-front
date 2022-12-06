@@ -7,7 +7,7 @@ import Paper from "@mui/material/Paper";
 
 import styled from "styled-components";
 import {R_setContent, R_setData} from "../../../redux/reducers/quizplayReducer";
-import {Item, Item_c} from "../../LayOuts/LayOuts";
+import {Btn, Card, Item, Item_c} from "../../LayOuts/LayOuts";
 import Button from "@mui/material/Button";
 import {stompSend} from "../../../function/WebSocket";
 
@@ -71,7 +71,7 @@ export const Type_OX = () => {
     const handleSubmit = () => {
         const selected = document.getElementById("selected");
         const answers = [selected.innerText];
-        console.log(answers);
+        // console.log(answers);
         stompSend("submit", {
             pinNum: quizPlay.pinNum,
             action: "SUBMIT",
@@ -99,54 +99,49 @@ export const Type_OX = () => {
         });
     }
 
-    const chkAnswer = (item) => {
-        let chk = false;
-        quizPlay.quiz.answer.forEach(ans => {
-            if (ans == item) {
-                chk = true;
-            }
-        })
-        return chk;
-    }
 
-    if (quizPlay.command === "RESULT") {
-        return (
-            <Answers>
-                {
-                    quizPlay.quiz.answer[0] === "O" ?
-                        <AnswerArea><Card_Btn>O</Card_Btn></AnswerArea>
+    return (
+        <Item sx={{place: 'center', display: 'block'}}>
+            <Item sx={{place: 'center', display: 'flex', height: '80%', width: '100%'}}>
+                {quizPlay.command === "RESULT" && quizPlay.quiz.answer[0] === "O" ?  //정답화면 정답일 시
+                    <Item sx={{place: 'center', width: '100%', height: '100%', display: 'flex'}} sm={{display:'block'}}>
+                        <Card sx={{place: 'center', minWidth: '45%',fontSize:'10rem',background:'orange'}} sm={{minHeight:'45%',fontSize:'5rem'}}>O</Card>
+                        <Card sx={{place: 'center', minWidth: '45%',fontSize:'10rem'}} sm={{minHeight:'45%',fontSize:'5rem'}}>X</Card>
+                    </Item>
+                    :
+                    quizPlay.command === "RESULT" && quizPlay.quiz.answer[0] === "O" ?
+                        <Item sx={{place: 'center', width: '100%', height: '100%', display: 'flex'}} sm={{display:'block'}}>
+                            <Card sx={{place: 'center', minWidth: '45%',fontSize:'10rem'}} sm={{minHeight:'45%',fontSize:'5rem'}}>O</Card>
+                            <Card sx={{place: 'center', minWidth: '45%',fontSize:'10rem',background:'orange'}} sm={{minHeight:'45%',fontSize:'5rem'}}>X</Card>
+                        </Item>
                         :
-                        <AnswerArea><Card_Btn>X</Card_Btn></AnswerArea>
-
+                        quizPlay.nickName === null && //호스트 화면
+                        <Item sx={{place: 'center', width: '100%', height: '100%', display: 'flex'}} sm={{display:'block'}}>
+                            <Card sx={{place: 'center', minWidth: '45%',fontSize:'10rem'}} sm={{minHeight:'45%',fontSize:'5rem'}}>O</Card>
+                            <Card sx={{place: 'center', minWidth: '45%',fontSize:'10rem'}} sm={{minHeight:'45%',fontSize:'5rem'}}>X</Card>
+                        </Item>
                 }
-            </Answers>
-        )
-    } else if (quizPlay.nickName === null) { //제작 시
-        return (
-            <Content>
-                <Answers>
-                    <AnswerArea><Card_Btn>O</Card_Btn></AnswerArea>
-                    <AnswerArea><Card_Btn>X</Card_Btn></AnswerArea>
-                </Answers>
+                {quizPlay.command != "RESULT" && quizPlay.nickName != null && //클라이언트 화면
+                    <Item sx={{place: 'center', width: '100%', height: '100%', display: 'flex'}} sm={{display:'block'}}
+                          onClick={setSelected}>
+                        <Card sx={{place: 'center', minWidth: '45%',fontSize:'10rem'}} sm={{minHeight:'45%',fontSize:'5rem'}}>O</Card>
+                        <Card sx={{place: 'center', minWidth: '45%',fontSize:'10rem'}} sm={{minHeight:'45%',fontSize:'5rem'}}>X</Card>
+                    </Item>
+                }
 
-                <Item sx={{display: 'flex'}}>
-                    <Item_c><Button variant="contained" onClick={handleNext}>다음</Button></Item_c>
-                    <Item_c><Button variant="contained" onClick={handleSkip}>건너뛰기</Button></Item_c>
-                </Item>
-            </Content>
-
-        )
-    } else {
-        return (
-            <Content>
-                <Answers>
-                    {console.log(quizPlay.quiz)}
-                    <AnswerArea><Card_Btn onClick={setSelected}>O</Card_Btn></AnswerArea>
-                    <AnswerArea><Card_Btn onClick={setSelected}>X</Card_Btn></AnswerArea>
-                </Answers>
-                <Item_c><Button variant="contained" onClick={handleSubmit}>정답제출</Button></Item_c>
-
-            </Content>
-        );
-    }
+            </Item>
+            <Item sx={{place: 'center', display: 'block', height: '10%'}} sm={{height:'20%'}}>
+                {quizPlay.command === "RESULT" ? null :
+                    quizPlay.nickName === null ?
+                        <Item sx={{place: 'center', display: 'flex', margin: 'auto'}}>
+                            <Btn sx={{place: 'center', height: '100%', width: '10%'}} sm={{width:'50%',height:'50%'}} onClick={handleNext}>다음</Btn>
+                            <Btn sx={{place: 'center', height: '100%', width: '10%'}} sm={{width:'50%',height:'50%'}} onClick={handleSkip}>건너뛰기</Btn>
+                        </Item>
+                        :
+                        <Btn sx={{place: 'center', height: '100%', width: '10%', margin: 'auto'}} sm={{width:'50%',height:'50%'}}
+                             onClick={handleSubmit}>정답제출</Btn>
+                }
+            </Item>
+        </Item>
+    )
 }

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {Content, Item} from "../LayOuts/LayOuts";
+import {Card, Content, Item} from "../LayOuts/LayOuts";
 import {Type_Select} from "../QuizView/QuizViewTypes/Type_Select";
 import {Type_OX} from "../QuizView/QuizViewTypes/Type_OX";
 import {Type_Reply} from "../QuizView/QuizViewTypes/Type_Reply";
@@ -11,9 +11,9 @@ import {QuizQuestion} from "../QuizView/QuizQuestion";
 
 export const Answer = (props) => {
     const currentQuiz = props.currentQuiz;
-    console.log(currentQuiz);
-    console.log(currentQuiz.question);
-    console.log(currentQuiz.num);
+    // console.log(currentQuiz);
+    // console.log(currentQuiz.question);
+    // console.log(currentQuiz.num);
     const AnswerSheet = () => {
         switch (currentQuiz.type) {
             case "선택형":
@@ -45,31 +45,21 @@ export const Answer = (props) => {
     }
 
     return (
-        <Content sx={{width: 800, height: 800, margin: 2, display: "block"}}>
-            <Item sx={{width: 800, marginBottom: 100}}>
-                <h1>Answer</h1>
+        <Item sx={{place:'center',width:'100%',display:'block'}}>
+            <Item sx={{
+                place: 'center',
+                height: '20%',
+                fontSize: '2em',
+                fontWeight: 'bold'
+            }}>Answer</Item>
+            <Item sx={{place: 'center', height: '30%', display: 'flex'}} sm={{display: 'block', height: '45%'}}>
+                <Card sx={{place: 'center', minWidth:'400px',minHeight:'200px',margin:'auto'}} sm={{minWidth:'300px',minHeight:'150px'}}>{currentQuiz.question}</Card>
+                <Card sx={{place: 'center', minWidth:'400px',minHeight:'200px',margin:'auto'}} sm={{minWidth:'300px',minHeight:'150px'}}><Media/></Card>
             </Item>
-            <Item sx={{place: "left", width: 200, display: "inline"}}>
-                <h2>Quiz.{currentQuiz.num}</h2>
-                <Item sx={{
-                    width: 100,
-                    place: "center",
-                    border: "1px solid black",
-                    backgroundColor: "#ffffff",
-                    borderRadius: 10
-                }}>
-                    {currentQuiz.type}
-                </Item>
+            <Item sx={{place: 'center', height: '50%', display: 'block'}} sm={{height: '45%'}}>
+                <AnswerSheet/>
             </Item>
-            <Item sx={{display:'flex'}}>
-                <Item sx={{width:360, height:300, margin:20,place: "center", border: "1px solid black", backgroundColor:"#ffffff", borderRadius:10}}>
-                    <QuizQuestion question={currentQuiz.question}/>
-                </Item>
-                <Item sx={{width:360, height:300, margin:20,place: "center", border: "1px solid black", backgroundColor:"#ffffff", borderRadius:10}}>
-                    <Media/>
-                </Item>
-            </Item>
-            <AnswerSheet/>
-        </Content>
+        </Item>
+
     )
 }

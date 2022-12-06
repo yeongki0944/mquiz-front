@@ -77,7 +77,7 @@ export const Page = styled.div`
 `;
 
 export const Content = styled.div`
-    border: 1px solid blue;
+    // border: 1px solid blue;
     margin: auto;
     ${(props) => props.sx}
     @media (min-width: 768px) {
@@ -90,7 +90,7 @@ export const Content = styled.div`
 `;
 
 export const Item = styled.div`
-    border: 1px solid red;
+    // border: 1px solid red;
     display:flex;
     width:100%;
     height:100%;
@@ -115,6 +115,8 @@ export const Card = styled.div`
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     padding: 20px;
+    min-width: 90%;
+    min-height: 90%;
     ${(props) => props.sx};
     ${(props) => props.sx.place === "center" && "justify-content: center; align-items: center;"}
     ${(props) => props.sx.place === "left" && "justify-content: left; align-items: left;"}
@@ -126,6 +128,7 @@ export const Card = styled.div`
     ${(props) => props.sx.place === "bottom-left" && "justify-content: left; align-items: bottom;"}
     ${(props) => props.sx.place === "bottom-right" && "justify-content: right; align-items: bottom;"}
     @media (min-width: 300px) and (max-width: 767px) {
+        min-width: 100%;
         ${(props) => props.sm} 
     }
 `

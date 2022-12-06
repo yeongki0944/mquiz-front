@@ -1,13 +1,5 @@
-import {Item_c, Item_l, Item_r, Page_Default} from "../LayOuts/LayOuts";
+import {Content, Item, Item_c, Item_l, Item_r, Page_Default} from "../LayOuts/LayOuts";
 import styled from "styled-components";
-import {useSelector} from "react-redux";
-
-
-const Content = styled(Item_c)`
-    display: block;
-    width: 100%;
-    height: 100%;
-`;
 
 const Rank_sheet = styled(Item_c)`
     width: 100%;
@@ -58,7 +50,7 @@ const Img_text = styled(Item_c)`
 `;
 export const Rank = (props) => {
     return (
-        <Content>
+        <Item sx={{place:'center',display:'block',maxWidth:'1200px',margin:'auto'}}>
             <Rank_sheet>
                 <Rank_Container>
                     <Img_container>
@@ -75,7 +67,7 @@ export const Rank = (props) => {
                     {props.score}점
                 </Score_Container>
             </Rank_sheet>
-        </Content>
+        </Item>
     )
 }
 

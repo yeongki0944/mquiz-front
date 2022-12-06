@@ -78,18 +78,18 @@ export const QuizView = (props) => {
                         fontWeight: 'bold'
                     }}>PIN: {quizPlay.pinNum}</Item>
                     <Item sx={{place: 'center', height: '50%'}}>
-                        <Gauge
-                            quizPlay={quizPlay}
-                            Qnum={currentQuiz.num}
-                            TotalQcnt={10}
-                            timeprogress={10}
-                            timeleft={currentQuiz.time}
-                        />
+                        {/*<Gauge*/}
+                        {/*    quizPlay={quizPlay}*/}
+                        {/*    Qnum={currentQuiz.num}*/}
+                        {/*    TotalQcnt={10}*/}
+                        {/*    timeprogress={10}*/}
+                        {/*    timeleft={currentQuiz.time}*/}
+                        {/*/>*/}
                     </Item>
                 </Item>
                 <Item sx={{place: 'center', height: '30%', display: 'flex'}} sm={{display: 'block', height: '45%'}}>
-                    <Card sx={{place: 'center', minWidth:'400px',minHeight:'200px',margin:'auto'}} sm={{minWidth:'300px',minHeight:'150px'}}>{currentQuiz.question}</Card>
-                    <Card sx={{place: 'center', minWidth:'400px',minHeight:'200px',margin:'auto'}} sm={{minWidth:'300px',minHeight:'150px'}}><Media/></Card>
+                    <Card sx={{place: 'center', minWidth:'45%',minHeight:'90%',margin:'auto'}} sm={{minWidth:'100%',minHeight:'150px'}}>{currentQuiz.question}</Card>
+                    <Card sx={{place: 'center', minWidth:'45%',minHeight:'90%',margin:'auto'}} sm={{minWidth:'100%',minHeight:'150px'}}><Media/></Card>
                 </Item>
                 <Item sx={{place: 'center', height: '50%', display: 'block'}} sm={{height: '45%'}}>
                     <AnswerSheet/>
