@@ -1,5 +1,6 @@
 import {useDispatch} from "react-redux";
 import {useEffect, useRef, useState} from "react";
+import Paper from "@mui/material/Paper";
 import {
     R_copyQuiz,
     R_deleteQuiz,
@@ -7,12 +8,24 @@ import {
     R_setCurrentShow,
     R_setQuiz, R_setQuizData
 } from "../../redux/reducers/quizInfoReducer";
+import {Button} from "@mui/material";
 import FileCopyIcon from "@material-ui/icons/FileCopy";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import * as React from "react";
 import '../../styles/baseStyle.css';
-import {Content, Item} from "../LayOuts/LayOuts";
+import {styled} from "@mui/system";
 
+const Item_card = styled(Paper)({
+    backgroundColor: "#ffffff",
+    color: "#000000",
+    padding: "10px",
+    margin: "10px",
+    borderRadius: "10px",
+    boxShadow: "0 0 10px 0 rgba(0,0,0,0.2)",
+    '&:hover': {
+        border: "1px solid lightblue",
+    }
+})
 
 export const ListPanel = (props) => {
     const quiz = props.quiz;
@@ -57,38 +70,20 @@ export const ListPanel = (props) => {
 
 
     return (
-        <Content sx={props.sx}>
+        <div>
             {quiz.quizData.map((item,index) =>
-                <div
-                    key={index}
-                    onDragStart={(e) => dragStart(e, index)}
-                    onDragEnter={(e) => dragEnter(e, index)}
-                    onDragEnd={drop}
-                    draggable
-                >
+                <div key={index}
+                     onDragStart={(e) => dragStart(e, index)}
+                     onDragEnter={(e) => dragEnter(e, index)}
+                     onDragEnd={drop}
+                     draggable>
                     <div>{item.num}P</div>
-                    <Item
-                        sx={{
-                            display:'block',
-                            width:'100%',
-                            margin:'auto',
-                            bg:'#ffffff',
-                            color:'#000000',
-                            borderRadius:'10px',
-                            boxShadow:'0 0 10px 0 rgba(0,0,0,0.2)',
-                            minWidth:'200px',
-                            maxWidth:'250px',
-                            minHeight:'100px',
-                            maxHeight:'150px',
-                        }}
-                        className={"item_card"}
-                        key={item.num}
-                        id={item.num}
-                        onClick={() => {
-                            dispatch(R_setCurrentShow(item.num));
-                        }}
+                    <Item_card className={"item_card"} key={item.num} id={item.num}
+                               onClick={() => {
+                                   dispatch(R_setCurrentShow(item.num));
+                               }}
                     >
-                        [{item.type}]
+                        Status [{item.type}]
                         <div>
                             <FileCopyIcon onClick={() => {
                                 dispatch(R_copyQuiz(item.num));
@@ -107,9 +102,9 @@ export const ListPanel = (props) => {
                                 }}
                             />
                         </div>
-                    </Item>
+                    </Item_card>
                 </div>
             )}
-        </Content>
+        </div>
     )
 }

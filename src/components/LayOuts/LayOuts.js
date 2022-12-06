@@ -90,10 +90,9 @@ export const Content = styled.div`
 `;
 
 export const Item = styled.div`
-    ${(props) => props.sx};
-    margin: ${(props) => props.sx.width || "auto"};
-    display:${(props) => props.sx.display || "flex"};
-    width: ${(props) => props.sx.width || "100%"};
+    ${(props) => props.sx}
+    margin : ${(props) => props.sx.margin || "auto"};
+    display: ${(props) => props.sx.display || "flex"};
     ${(props) => props.sx.place === "center" && "justify-content: center; align-items: center;"}
     ${(props) => props.sx.place === "left" && "justify-content: left; align-items: left;"}
     ${(props) => props.sx.place === "right" && "justify-content: right; align-items: right;"}

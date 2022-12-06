@@ -7,12 +7,12 @@ import PlayArrow from "@material-ui/icons/PlayArrow";
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import {useDispatch} from "react-redux";
 import Add from "@material-ui/icons/Add";
-import {useHistory} from "react-router-dom";
+import { useHistory} from "react-router-dom";
 import CustomAxios from "../../function/CustomAxios";
 import {R_setCurrentShow, R_setId, R_setQuiz} from "../../redux/reducers/quizInfoReducer";
 import styled from "styled-components";
 import {R_setData} from "../../redux/reducers/quizplayReducer";
-import {Content, Item, Item_c} from "../LayOuts/LayOuts";
+import {Item_c} from "../LayOuts/LayOuts";
 import {useState} from "react";
 
 /**
@@ -20,7 +20,12 @@ import {useState} from "react";
  *  - quizList: 퀴즈 목록
  *  - setModalOpen: 모달 오픈 상태 변경 함수
  */
-const Item_test = styled.div`
+const Item_c_Content = styled(Item_c)`
+    width: 100%;
+    height: 100%;
+    display: block;
+`
+const Item = styled.div`
     @media (min-width: 767px) {
         width: 100%;
         border: 3px solid orange;
@@ -65,36 +70,28 @@ const AddBtn = styled.div`
     }
 `
 
-export const QuizList = (props) => {
+export const QuizListHostMain = (props) => {
     const dispatch = useDispatch();
     const history = useHistory();
     const quizList = props.quizList;
 
     const [buttonDisabled, setButtonDisabled] = useState(false);
-    const setPreview = (id) => {
-        CustomAxios.get('/v1/show?showId=' + id)
-            .then(res => {
-                console.log(res.data);
-                dispatch(R_setId(id));
-                dispatch(R_setQuiz(res.data.data));
-                dispatch(R_setCurrentShow(1));
-            })
-            .catch(err => {
-                console.log(err);
-            })
-    }
+
     const list = quizList.map(
         (item) => (
-            <Item sx={{
-                width:'100%',
-                border:'3px solid orange',
-                boxShadow:'0 0 10px rgba(0, 0, 0, 0.5)',
-                borderRadius:'5px',
-                margin : '10px auto',
-                padding:'10px',
-                backgroundColor:'white'}}
-                  key={item.id} onClick={() => {setPreview(item.id)}}
-            >
+            <Item key={item.id}
+                  onClick={() => {
+                      CustomAxios.get('/v1/show?showId=' + item.id)
+                          .then(res => {
+                              console.log(res.data);
+                              dispatch(R_setId(item.id));
+                              dispatch(R_setQuiz(res.data.data));
+                              dispatch(R_setCurrentShow(1));
+                          })
+                          .catch(err => {
+                              console.log(err);
+                          })
+                  }}>
                 <Grid container spacing={2}>
                     <Grid item>
                         <img alt="complex"
@@ -205,12 +202,12 @@ export const QuizList = (props) => {
     }
 
     return (
-        <Content sx={props.sx} sm={props.sm}>
+        <Item_c_Content>
             <AddBtn>
                 <Button fullWidth={true} onClick={handleCreate}><Add/></Button>
             </AddBtn>
             {list}
-        </Content>
+        </Item_c_Content>
     );
 
 

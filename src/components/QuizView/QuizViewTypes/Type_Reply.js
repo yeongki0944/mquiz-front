@@ -4,12 +4,43 @@ import Button from "@mui/material/Button";
 import {useEffect, useState} from "react";
 import {R_setContent, R_setData} from "../../../redux/reducers/quizplayReducer";
 import styled from "styled-components";
-import {Content, Item, Item_c} from "../../LayOuts/LayOuts";
+import {Item_c} from "../../LayOuts/LayOuts";
 import {TextField} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import {stompSend} from "../../../function/WebSocket";
-import {AnswerBox} from "./AnswerBox";
 
+const Content = styled(Item_c)`
+  display: block;
+  height: 85%;
+`;
+const Answers = styled(Item_c)`
+    height: 95%;
+    display: block;
+`;
+const AnswerArea = styled(Item_c)`
+    @media (min-width: 300px) and (max-width: 767px) {
+    }
+    @media (min-width: 767px) {
+    }
+`
+
+const Card_Btn = styled(Item_c)`
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+    
+    @media (min-width: 300px) and (max-width: 767px) {
+        height: 90%;
+        width: 90%;
+        min-height: 120px;
+    }
+    @media (min-width: 767px) {
+        height: 90%;
+        width: 90%;
+        min-height: 100px;
+        margin-bottom: 10px;
+    }
+`
 
 export const Type_Reply = () => {
     const dispatch = useDispatch();
@@ -66,35 +97,35 @@ export const Type_Reply = () => {
         )
     } else if (quizPlay.nickName === null) { //제작 시
         return (
-            <Content sx={{display: 'block', height: '85%'}}>
-                <Item sx={{place: 'center', display: 'block', height: '95%', width: '100%'}}>
-                    <Item sx={{width: '100%', place: 'center'}}>
+            <Content>
+                <Answers>
+                    <AnswerArea>
                         <TextField id="quizAnswer" name="quizAnswer" type="quizAnswer" label="정답을 입력해 주세요"
                                    variant="outlined"
-                                   onBlur={handleInput}
-                                   onKeyPress={handleEnterKey}
+                                   aria-readonly={true}
                         />
-                    </Item>
-                </Item>
-                <Item sx={{place: 'center', width: '100%'}}><Button variant="contained" onClick={handleNext}>다음</Button></Item>
-                <Item sx={{place: 'center', width: '100%'}}><Button variant="contained"
-                                                                    onClick={handleSkip}>건너뛰기</Button></Item>
+                    </AnswerArea>
+                </Answers>
+                <Item_c><Button variant="contained" onClick={handleNext}>다음</Button></Item_c>
+                <Item_c><Button variant="contained" onClick={handleSkip}>건너뛰기</Button></Item_c>
             </Content>
 
         )
     } else {
         return (
-            <Content sx={{display: 'block', height: '85%'}}>
-                <Item sx={{place: 'center', display: 'block', height: '95%', width: '100%'}}>
-                    <Item sx={{width: '100%', place: 'center'}}>
+            <Content>
+                <Answers>
+                    <AnswerArea>
                         <TextField id="quizAnswer" name="quizAnswer" type="quizAnswer" label="정답을 입력해 주세요"
                                    variant="outlined"
                                    onBlur={handleInput}
                                    onKeyPress={handleEnterKey}
                         />
-                    </Item>
-                </Item>
-                <Item sx={{width: '100%'}}><Button variant="contained" onClick={handleSubmit}>정답제출</Button></Item>
+                    </AnswerArea>
+                </Answers>
+                <Item_c><Button variant="contained" onClick={() => {
+                    handleSubmit(quizAnswer)
+                }}>정답제출</Button></Item_c>
             </Content>
         );
     }

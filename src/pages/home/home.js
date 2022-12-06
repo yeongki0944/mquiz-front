@@ -1,51 +1,71 @@
 import {Link} from "react-router-dom";
 import React from "react";
-import {Item,Page} from "../../components/LayOuts/LayOuts";
+import {Item_b, Item_c, Item_t, Page_Gradiant} from "../../components/LayOuts/LayOuts";
+import styled from "styled-components";
+
+export const Item_b_Logo = styled(Item_b)`
+    width: 100%;
+    @media (min-width: 300px) and (max-width: 767px) {
+        height:20vh;
+    }
+    @media (min-width: 767px) {
+        height:30vh;
+    }
+`
+
+export const Item_t_Content = styled(Item_t)`
+    width: 100%;
+    @media (min-width: 300px) and (max-width: 767px) {
+        display: block;
+        height: 80vh;
+    }
+    @media (min-width: 767px) {
+        height: 60vh;
+    }
+`
+
+const Card_Btn = styled(Item_c)`
+    background: linear-gradient(50deg, #FF8B6A, #A5AEFF);
+    border : 1px solid #FFD2BB;
+    border-radius: 5px;
+    border-shadow: 10 10 10px #D6F8B8;
+    font-size: 2.5rem;
+    font-weight: 600;
+    display: flex;
+    color: #fff;
+    
+    @media (min-width: 300px) and (max-width: 767px) {
+        min-width: 350px;
+        min-height: 250px;
+        margin: 0 1rem;
+        margin-top: 5rem; 
+        
+    }
+    @media (min-width: 767px) {
+        min-width: 350px;
+        min-height: 250px;
+        margin: 0 1rem;
+    }
+`;
 
 export default function Home() {
     return (
-        <Page sx={{bg:'grad-right',grad1:'rebeccapurple',grad2:'salmon'}}>
-            <Item sx={{place:'bottom',width:'100%',height:'30vh',margin:'auto'}} sm={{height:'20vh'}}>
+        <Page_Gradiant>
+            <Item_b_Logo>
                 <img alt="complex" src="/img/logo.png"></img>
-            </Item>
-            <Item sx={{place:'top',width:'100%',height:'50vh'}} sm={{height:'70vh',display:'block'}}>
+            </Item_b_Logo>
+            <Item_t_Content>
                 <Link to="/QHost">
-                    <Item
-                        sx={{
-                            place:'center',
-                            background : 'linear-gradient(50deg, #FF8B6A, #A5AEFF)',
-                            border : '1px solid #FFD2BB',
-                            borderRadius: '5px',
-                            boxShadow: '10 10 10px #D6F8B8',
-                            fontSize: '2.5rem',
-                            fontWeight: '600',
-                            display: 'flex',
-                            color: '#fff',
-                            minWidth:'350px',
-                            minHeight:'250px',
-                            margin:'auto',
-                        }}
-                    >퀴즈 만들기</Item>
+                    <Card_Btn className={"btn"}>
+                        퀴즈 만들기
+                    </Card_Btn>
                 </Link>
                 <Link to="/QClient">
-                    <Item
-                        sx={{
-                            place:'center',
-                            background : 'linear-gradient(50deg, #FF8B6A, #A5AEFF)',
-                            border : '1px solid #FFD2BB',
-                            borderRadius: '5px',
-                            boxShadow: '10 10 10px #D6F8B8',
-                            fontSize: '2.5rem',
-                            fontWeight: '600',
-                            display: 'flex',
-                            color: '#fff',
-                            minWidth:'350px',
-                            minHeight:'250px',
-                            margin:'auto',
-                        }}
-                    >퀴즈 풀기</Item>
+                    <Card_Btn className={"btn"}>
+                        퀴즈 풀기
+                    </Card_Btn>
                 </Link>
-            </Item>
-        </Page>
+            </Item_t_Content>
+        </Page_Gradiant>
     );
 }

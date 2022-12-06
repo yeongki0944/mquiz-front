@@ -1,57 +1,84 @@
 import * as React from 'react';
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import QuizModal from '../../components/quizHost/Quiz_Make_modal';
 import {useDispatch, useSelector} from "react-redux";
 import CustomAxios from "../../function/CustomAxios";
 import {R_setQuizList} from "../../redux/reducers/quizListReducer";
-import {QuizList} from "../../components/quizHost/QuizList";
-import {HostProfile} from "../../components/quizHost/HostProfile";
+import {QuizListHostMain} from "../../components/quizHost/QuizListHostMain";
+import HostProfile from "../../components/quizHost/HostProfile";
 import {NavBar} from "../../components/quizHost/NavBar";
-import {Content, Page} from "../../components/LayOuts/LayOuts";
-import {QuizPreview} from "../../components/quizHost/QuizPreview";
+import {Item_c, Item_l, Item_t, Page_Default} from "../../components/LayOuts/LayOuts";
+import styled from "styled-components";
+import {QuizPreviewHostMain} from "../../components/quizHost/QuizPreviewHostMain";
 
+const Item_l_Profile = styled(Item_l)`
+    height: 15vh;
+    width: 70%;
+`
+const Item_c_Content = styled(Item_c)`
+    height: 75vh;
+    @media (min-width: 767px) {
+        display: flex;
+        width: 100%;
+    }
+    @media (min-width: 300px) and (max-width: 767px) {
+        display: block;
+        width: 100%;
+    }
+`
+const Item_t_QuizList = styled(Item_t)`
+    height: 75vh;
+    @media (min-width: 767px) {
+        width: 45%;
+    }
+
+    @media (min-width: 300px) and (max-width: 767px) {
+        width: 80%;
+        height: 100%;
+    }
+`
+const Item_c_QuizPreviewList = styled(Item_c)`
+    height: 75vh;
+    @media (min-width: 767px) {
+        width: 45%;
+        overflow-y: scroll;
+        overflow-x: hidden;
+    }
+
+    @media (min-width: 300px) and (max-width: 767px) {
+        display: none;
+    }
+`;
 
 export const QuizHostMain = () => {
     const dispatch = useDispatch();
-    const {quizList} = useSelector(state => state.quizList);
-
-    //퀴즈 생성 모달 관리
     const [modalOpen, setModalOpen] = useState(false);
-
-    //유저 이메일 아이디 임시 삽입
+    const {quizList} = useSelector(state => state.quizList);
     const email = "test@gmail.com";
-
-    //퀴즈 리스트 가져오기 함수
     const setQuizList = async () => {
         await CustomAxios.get("/v1/show/List?email=" + email)
             .then((res) => {
-                // console.log(res.data);
+                console.log(res.data)
                 dispatch(R_setQuizList(res.data.data))
             }).catch((err) => {
-                // console.log(err)
+                console.log(err)
             })
     }
 
-    //랜더링 시최초 1회 실행(퀴즈 리스트 가져오기)
     useEffect(() => {
         setQuizList();
     }, []);
 
-
     return (
-        <Page sx={{bg:'default'}}>
-            <NavBar sx={{background:'white',width:'100vw',height:'5vh'}} sm={{position:'absolute',bottom:'0'}}/>
-            <HostProfile name={"test"} info={"info"} sx={{width:'70%',height:'15vh'}}/>
-            <Content sx={{height:'75vh',width:'100vw',display:'flex'}}>
-                <QuizList sx={{width:'45vw',display:'block',overflow:'auto'}}
-                          sm={{width:'90vw',display:'block'}}
-                          quizList={quizList}
-                          setModalOpen={setModalOpen}
-                />
-                <QuizPreview sx={{width:'45vw',overflowY:'auto',overflowX:'hidden'}} sm={{display:'none'}}/>
-            </Content>
+        <Page_Default>
+            <NavBar/>
+            <Item_l_Profile><HostProfile name={"test"} info={"info"}/></Item_l_Profile>
+            <Item_c_Content>
+                <Item_t_QuizList><QuizListHostMain quizList={quizList} setModalOpen={setModalOpen}/></Item_t_QuizList>
+                <Item_c_QuizPreviewList><QuizPreviewHostMain/></Item_c_QuizPreviewList>
+            </Item_c_Content>
             <QuizModal open={modalOpen} setOpen={setModalOpen}/>
-        </Page>
+        </Page_Default>
     );
 }
 

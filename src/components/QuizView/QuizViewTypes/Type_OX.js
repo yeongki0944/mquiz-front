@@ -7,11 +7,47 @@ import Paper from "@mui/material/Paper";
 
 import styled from "styled-components";
 import {R_setContent, R_setData} from "../../../redux/reducers/quizplayReducer";
-import {Content, Item, Item_c} from "../../LayOuts/LayOuts";
+import {Item_c} from "../../LayOuts/LayOuts";
 import Button from "@mui/material/Button";
 import {stompSend} from "../../../function/WebSocket";
-import {AnswerBox} from "./AnswerBox";
 
+const Content = styled(Item_c)`
+  display: block;
+  height: 85%;
+`;
+const Answers = styled(Item_c)`
+    height: 95%;
+    display: block;
+`;
+
+const AnswerArea = styled(Item_c)`
+    float:left;
+    @media (min-width: 300px) and (max-width: 767px) {
+        height: 45%;
+        width: 50%;
+    }
+    @media (min-width: 767px) {
+        width: 50%;
+    }
+`
+
+const Card_Btn = styled(Item_c)`
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+    
+    @media (min-width: 300px) and (max-width: 767px) {
+        height: 90%;
+        width: 90%;
+        min-height: 120px;
+    }
+    @media (min-width: 767px) {
+        height: 90%;
+        width: 90%;
+        min-height: 100px;
+        margin-bottom: 10px;
+    }
+`
 
 export const Type_OX = () => {
     const dispatch = useDispatch();
@@ -45,13 +81,13 @@ export const Type_OX = () => {
                 quizNum: quizPlay.quiz.num
             }
         });
-        dispatch(R_setData({key: "command", value: "SUBMIT"}));
+        dispatch(R_setData({key:"command", value:"SUBMIT"}));
     }
     const handleSkip = () => {
         stompSend("skip", {
             pinNum: quizPlay.pinNum,
-            action: "COMMAND",
-            command: "START"
+            action:"COMMAND",
+            command:"START"
         });
     }
     const handleNext = () => {
@@ -61,27 +97,37 @@ export const Type_OX = () => {
             command: "RESULT"
         });
     }
-    if (quizPlay.nickName === null) { //제작 시
+
+    if(quizPlay.command === "RESULT"){
+        return(
+            <Answers>
+                <AnswerArea><Card_Btn>O</Card_Btn></AnswerArea>
+                <AnswerArea><Card_Btn>X</Card_Btn></AnswerArea>
+            </Answers>
+        )
+    }
+    else if (quizPlay.nickName === null) { //제작 시
         return (
-            <Content sx={{display: 'block', height: '85%'}}>
-                <Item sx={{place: 'center', display: 'block', height: '95%', width: '100%'}}>
-                    <AnswerBox answer={"O"}/>
-                    <AnswerBox answer={"X"}/>
-                </Item>
-                <Item sx={{place: 'center', width: '100%'}}><Button variant="contained" onClick={handleNext}>다음</Button></Item>
-                <Item sx={{place: 'center', width: '100%'}}><Button variant="contained"
-                                                                    onClick={handleSkip}>건너뛰기</Button></Item>
+            <Content>
+                <Answers>
+                    <AnswerArea><Card_Btn>O</Card_Btn></AnswerArea>
+                    <AnswerArea><Card_Btn>X</Card_Btn></AnswerArea>
+                </Answers>
+                <Item_c><Button variant="contained" onClick={handleNext}>다음</Button></Item_c>
+                <Item_c><Button variant="contained" onClick={handleSkip}>건너뛰기</Button></Item_c>
             </Content>
 
         )
     } else {
         return (
-            <Content sx={{display: 'block', height: '85%'}}>
-                <Item sx={{place: 'center', display: 'block', height: '95%', width: '100%'}}>
-                    <AnswerBox answer={"O"} onClick={setSelected}/>
-                    <AnswerBox answer={"X"} onClick={setSelected}/>
-                </Item>
-                <Item sx={{width: '100%'}}><Button variant="contained" onClick={handleSubmit}>정답제출</Button></Item>
+            <Content>
+                <Answers>
+                    {console.log(quizPlay.quiz)}
+                    <AnswerArea><Card_Btn onClick={setSelected}>O</Card_Btn></AnswerArea>
+                    <AnswerArea><Card_Btn onClick={setSelected}>X</Card_Btn></AnswerArea>
+                </Answers>
+                <Item_c><Button variant="contained" onClick={handleSubmit}>정답제출</Button></Item_c>
+
             </Content>
         );
     }

@@ -5,9 +5,24 @@ import {ControlPanel} from "../../components/quizHost/ControlPanel";
 import {useSelector} from "react-redux";
 import {QuizView} from "../../components/QuizView/QuizView";
 import {NavBar} from "../../components/quizHost/NavBar";
-import {Content, Page, Page_Default} from "../../components/LayOuts/LayOuts";
+import {Page_Default} from "../../components/LayOuts/LayOuts";
 import styled from "styled-components";
 
+const Panel = styled.div`
+    border: 1px solid black;
+    display: flex;
+    float: left;
+    width: 100%;
+    height: 90%;
+    margin : auto;
+`;
+
+
+const List = styled('div')`
+    width: 15%;
+    overflow: scroll;
+    overflow-x: hidden;
+`;
 
 const QuizView_styled = styled('div')`
     width: 60%;
@@ -27,16 +42,14 @@ export const QuizHostCreate = () => {
     const currentQuiz = (quiz.quizData.find(item => item.num === quiz.currentShow));
 
     return (
-        <Page sx={{bg:'default'}}>
-            <NavBar sx={{background:'white',width:'100vw',height:'5vh'}} sm={{position:'absolute',bottom:'0'}}/>
-            <Content sx={{width:'100vw',height:'90vh',float:'left',margin:'auto'}}>
-                <ListPanel sx={{width:'15%',float:'left',height:'90vh',overflowY:'auto',overflowX:'hidden'}}
-                    quiz={quiz}
-                />
-                <QuizView sx={{width:'60%',overflow:'none'}} currentQuiz={currentQuiz} state={"create"}/>
+        <Page_Default>
+            <NavBar/>
+            <Panel>
+                <List><ListPanel quiz={quiz}/></List>
+                <QuizView_styled><QuizView currentQuiz={currentQuiz} state={"create"}/></QuizView_styled>
                 <Form><FormPanel currentQuiz={currentQuiz}/></Form>
-            </Content>
+            </Panel>
             <ControlPanel quiz={quiz}/>
-        </Page>
+        </Page_Default>
     )
 }
