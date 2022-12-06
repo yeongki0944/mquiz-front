@@ -22,7 +22,7 @@ const Page_Content = styled(Item_c)`
     height: 60%;
 `
 const RankBox = (props) => {
-    //const {quizPlay} = useSelector(state => state.quizPlay);
+    // const {quizPlay} = useSelector(state => state.quizPlay);
 
     return (
         <div>
@@ -35,7 +35,7 @@ const RankBox = (props) => {
                                     key={index}
                                     rank={item.rank}
                                     nickName={item.nickName}
-                                    score={item.score}
+                                    score={item.rankScore}
                                 />
                             )
                         }
@@ -51,7 +51,7 @@ const RankBox = (props) => {
                                 key={index}
                                 rank={item.rank}
                                 nickName={item.nickName}
-                                score={item.score}
+                                score={item.rankScore}
                             />
                         )
                     }
