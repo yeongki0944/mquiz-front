@@ -51,7 +51,6 @@ export const Type_Select = (props) => {
 
 
     const setSelected = (e) => {
-        console.log(e.target.id);
         if (e.target.id === "selected") {
             e.target.id = "";
             e.target.style.border = "none";
@@ -67,11 +66,10 @@ export const Type_Select = (props) => {
     const handleSubmit = () => {
         const selected = document.querySelectorAll("#selected");
         const answers = [];
+
         selected.forEach(item => {
-            const className = item.className.split(" ").find(item => item.startsWith("num"));
-            answers.push(className);
+            answers.push("num"+item.innerHTML[0]);
         })
-        // dispatch(R_setAnswer({answer: answers, answerTime: 0}));
         stompSend("submit", {
             pinNum: quizPlay.pinNum,
             action: "SUBMIT",
@@ -131,16 +129,16 @@ export const Type_Select = (props) => {
             <Content>
                 <Answers>
                     {currentQuiz.choiceList.num1 != "" &&
-                        <AnswerArea onClick={setSelected} className="num1"><Card_Btn>{currentQuiz.choiceList.num1}</Card_Btn></AnswerArea>
+                        <AnswerArea onClick={setSelected}><Card_Btn id={"num1"}>1.{currentQuiz.choiceList.num1}</Card_Btn></AnswerArea>
                     }
                     {currentQuiz.choiceList.num2 != "" &&
-                        <AnswerArea onClick={setSelected} className="num2"><Card_Btn>{currentQuiz.choiceList.num2}</Card_Btn></AnswerArea>
+                        <AnswerArea onClick={setSelected}><Card_Btn id={"num2"}>2.{currentQuiz.choiceList.num2}</Card_Btn></AnswerArea>
                     }
                     {currentQuiz.choiceList.num3 != "" &&
-                        <AnswerArea onClick={setSelected} className="num3"><Card_Btn>{currentQuiz.choiceList.num3}</Card_Btn></AnswerArea>
+                        <AnswerArea onClick={setSelected}><Card_Btn id={"num3"}>3.{currentQuiz.choiceList.num3}</Card_Btn></AnswerArea>
                     }
                     {currentQuiz.choiceList.num4 != "" &&
-                        <AnswerArea onClick={setSelected} className="num4"><Card_Btn>{currentQuiz.choiceList.num4}</Card_Btn></AnswerArea>
+                        <AnswerArea onClick={setSelected}><Card_Btn id={"num4"}>4.{currentQuiz.choiceList.num4}</Card_Btn></AnswerArea>
                     }
                 </Answers>
                 <Item_c><Button variant="contained" onClick={handleSubmit}>정답제출</Button></Item_c>

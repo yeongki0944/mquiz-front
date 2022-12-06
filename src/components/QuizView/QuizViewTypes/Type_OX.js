@@ -71,6 +71,7 @@ export const Type_OX = () => {
     const handleSubmit = () => {
         const selected = document.getElementById("selected");
         const answers = [selected.innerText];
+        console.log(answers);
         stompSend("submit", {
             pinNum: quizPlay.pinNum,
             action: "SUBMIT",

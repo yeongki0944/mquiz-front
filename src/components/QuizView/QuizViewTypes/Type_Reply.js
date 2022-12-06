@@ -52,6 +52,7 @@ export const Type_Reply = () => {
     }
 
     const handleSubmit = (answer) => {
+        console.log(answer);
         stompSend("submit", {
             pinNum: quizPlay.pinNum,
             action: "SUBMIT",
