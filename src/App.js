@@ -49,7 +49,11 @@ const App = () =>{
 
                             <Route path="/QClient/play" component={QuizClientPlay} exact/>
 
+                            {/* 404 페이지, 테스트 페이지*/}
+
                             <Route path="*" component={NotFound404} />
+
+
                         </Switch>
                     </div>
                 </Router>

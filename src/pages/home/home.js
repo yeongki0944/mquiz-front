@@ -1,32 +1,36 @@
 import {Link} from "react-router-dom";
 import React from "react";
-import {Item_c, Page_Gradiant} from "../../components/LayOuts/LayOuts";
+import {Item_b, Item_c, Item_t, Page_Gradiant} from "../../components/LayOuts/LayOuts";
 import styled from "styled-components";
 
-export const Item = styled.div`
-    margin :auto;
+export const Item_b_Logo = styled(Item_b)`
     width: 100%;
-    height: 100%;
-    justify-content: center;
-    align-items: center;
     @media (min-width: 300px) and (max-width: 767px) {
-        display: block;
+        height:20vh;
     }
     @media (min-width: 767px) {
-        display: flex;    
+        height:30vh;
     }
 `
 
-const Card_Btn = styled.div`
+export const Item_t_Content = styled(Item_t)`
+    width: 100%;
+    @media (min-width: 300px) and (max-width: 767px) {
+        display: block;
+        height: 80vh;
+    }
+    @media (min-width: 767px) {
+        height: 60vh;
+    }
+`
+
+const Card_Btn = styled(Item_c)`
     background: linear-gradient(50deg, #FF8B6A, #A5AEFF);
     border : 1px solid #FFD2BB;
     border-radius: 5px;
     border-shadow: 10 10 10px #D6F8B8;
-    margin: auto;
     font-size: 2.5rem;
     font-weight: 600;
-    justify-content: center;
-    align-items: center;
     display: flex;
     color: #fff;
     
@@ -47,7 +51,10 @@ const Card_Btn = styled.div`
 export default function Home() {
     return (
         <Page_Gradiant>
-            <Item>
+            <Item_b_Logo>
+                <img alt="complex" src="/img/logo.png"></img>
+            </Item_b_Logo>
+            <Item_t_Content>
                 <Link to="/QHost">
                     <Card_Btn className={"btn"}>
                         퀴즈 만들기
@@ -58,7 +65,7 @@ export default function Home() {
                         퀴즈 풀기
                     </Card_Btn>
                 </Link>
-            </Item>
+            </Item_t_Content>
         </Page_Gradiant>
     );
 }

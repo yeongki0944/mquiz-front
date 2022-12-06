@@ -1,132 +1,95 @@
-
 import * as React from 'react';
-import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import CardMedia from "@mui/material/CardMedia";
 import Chip from "@mui/material/Chip";
 import {useState} from "react";
+import {Item_c, Page_Default} from "../LayOuts/LayOuts";
+import styled from "styled-components";
+import {useSelector} from "react-redux";
+import store from "../../redux/store";
+import {R_setData} from "../../redux/reducers/quizplayReducer";
 import {stompSend} from "../../function/WebSocket";
 
-/*const User = ({userData}) => {
-    let nickName = null;
-    for(let i = 0; i<userData.length;i++){
-        nickName = userData.nickName[i];
-        console.log(userData.nickName);
-    }
+const Item_c_paper = styled(Item_c)`
+    background: #fff;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    margin: auto;
+    width: 400px;
+    height: 250px;
+    display: block;
+`
 
-    return (
-        <tr>
-            {/!* <td>핀번호 : {userData.pinNum}</td> *!/}
-            <td>닉네임 : {userData.nickName}</td>
-        </tr>
-
-    )
-}*/
-
-const UserList = (props) => {
+export const UserList = (props) => {
     // 나중에 레디스로 참여 유저 현황 가져오기
-    const [client,setClient] = useState([
-        {key : '123123', nickName : '갑시다'},
-        {key : '123456', nickName : 'gogo'},
-    ])
+    // const [client, setClient] = useState([
+    //     {key: '123123', nickName: '갑시다'},
+    //     {key: '123456', nickName: 'gogo'},
+    // ])
+    const {quizPlay} = useSelector(state => state.quizPlay)
+
+    console.log(quizPlay)
 
     return (
         <div>
-            {client.map((item)=>{
+            {quizPlay.userList.map((item) => {
                 return (
-                    <div key={item.key} style={{display: "inline-block"}}>
+                    <div key={item} style={{display: "inline-block"}}>
                         <Chip
-                            label={item.nickName}
-                            sx={{marginLeft: 1, marginRight: 1}}
-                            onDelete={
-                                () => {
-                                    stompSend("/quiz/message",{
-                                        pinNum:props.pinNum,
-                                        command:"ban"
-                                    });
-                                    setClient((users) => users.filter((user) => user.key !== item.key));
-                                }
-                            }/>
+                            label={item}
+                            id={item}
+                            sx={{margin: 1, backgroundColor: '#61DAFB', color: '#202123'}}
+                            onDelete={() => {
+                                props.setOpen(true)
+                                console.log("nickname : " + item)
+                                store.dispatch(R_setData({key: "bannedNickName", value: item}))
+                            }}
+                        />
                     </div>
                 )
             })}
         </div>
-        /*
-        <table>
-            <thead>
-            <tr>
-            </tr>
-            </thead>
-            <tbody>
-            {users.map(user => <User key={user.nickName} userData={user}/>)}
-            </tbody>
-        </table>
-        */
     )
 }
 
-export const ClientJoinList = (props) => {
+
+export const HostCountOutModal = (props) => {
+    const handleClose = () => props.setOpen(false);
+    const {quizPlay} = useSelector(state => state.quizPlay)
+    console.log("Modal : " + quizPlay.bannedNickName)
     return (
-        <>
-            <Paper><UserList pinNum={props.pinNum}></UserList></Paper>
-            <HostCountOutModal></HostCountOutModal>
-        </>
-    )
-}
-
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-};
-
-export function HostCountOutModal() {
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
-
-    return (
-        <div>
-            <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box sx={style}>
-                    <AlterImg></AlterImg>
-                    <Typography align='center' id="modal-modal-title" variant="h6" component="h2">
-                        선택한 참여자를 내보냅니다.
-                    </Typography>
-
-                    {/*<Link to="/QClient">*/}
-                    <Typography variant="h5" component="div" align='center'>
-                        <Button variant="contained" color="primary">취소</Button>
-                        <Button variant="contained">확인</Button>
-                    </Typography>
-                    {/*</Link>*/}
-                </Box>
-            </Modal>
-        </div>
+        <Modal
+            open={props.open}
+            onClose={() => {
+                props.setOpen(false)
+            }}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+        >
+            <Item_c_paper>
+                <CardMedia
+                    component="img"
+                    height="150"
+                    width="50"
+                    image="/img/logo192.png"
+                    alt="green iguana"
+                />
+                <Item_c> {quizPlay.bannedNickName} 선택한 참여자를 내보냅니다.</Item_c>
+                <Item_c>
+                    <Button variant="contained" onClick={() => {
+                            stompSend("ban", {
+                                pinNum: quizPlay.pinNum,
+                                nickName: quizPlay.bannedNickName
+                            });
+                            props.setOpen(false);
+                    }}>확인</Button>
+                    <Button variant="contained" color="primary" onClick={handleClose}>취소</Button>
+                </Item_c>
+            </Item_c_paper>
+        </Modal>
     );
 }
 
-export function AlterImg() {
-    return (
-        <CardMedia
-            component="img"
-            height="150"
-            image="/img/logo192.png"
-            alt="green iguana"
-        />
-    );
-}

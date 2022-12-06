@@ -1,4 +1,3 @@
-
 import {useEffect, useState} from "react";
 import {R_setData} from "../../redux/reducers/quizplayReducer";
 import {QuizStartCounter} from "../../components/QuizStartCounter";
@@ -8,55 +7,67 @@ import {useDispatch, useSelector} from "react-redux";
 import {NickNameCheck} from "../../components/quizClient/ClientNickNameInput";
 import {ClientReady} from "../../components/quizClient/ClientReady";
 import {ClientCountOutModal} from "../../components/quizClient/ClientCountOutModal";
-import {useHistory} from "react-router-dom";
 import {Item_c, Page_Gradiant} from "../../components/LayOuts/LayOuts";
-import {stompInit} from "../../function/WebSocket";
+import {stompDisconnect, stompInit, stompSend} from "../../function/WebSocket";
+import styled from "styled-components";
+import Button from "@mui/material/Button";
+import {Rank_Page} from "../../components/Result/Rank_Page";
 
-
+const Item_c_full = styled(Item_c)`
+    width: 100%;
+    height: 100%;
+`;
 
 export const QuizClientPlay = () => {
     const dispatch = useDispatch();
-    const history = useHistory();
-    // pinNum -> nickName -> wait-> (count -> play ->result -> count) -> result
     const {quizPlay} = useSelector(state => state.quizPlay);
-    const {quiz} = useSelector(state => state.quiz);
-    const currentQuiz = (quiz.quizData.find(item => item.num === quizPlay.quizNum));
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(false); // 추방 확인 모달창 제어
 
 
     /**
-     * 여기 시현님 하시던거 연결해서 하면 끝납니다.(Host랑 거의 동일)
-     * 대신 문제 입력부분은 완성 후 연결해야할듯..?합니다.
+     * 퀴즈 진행 command 시 페이지 변경용 useEffect
+     * null: 웹소켓 시작
+     * START: 퀴즈 시작 카운트 다운 이후 퀴즈 시작
+     * KICK: 추방
      */
-
     useEffect(() => {
         switch (quizPlay.command){
-            case "nickName":
+            case null: //최초 세팅
                 stompInit(quizPlay.pinNum);
                 break;
-            case "start":
+            case "START": //시작 시 3초 카운터 실행
                 setTimeout(() => {
-                    R_setData({key: "command", value: "show"});
+                    dispatch(R_setData({key: "command", value: "SHOW"}));
                 }, 3000);
                 break;
-            case "kick":
+            case "KICK": //추방
                 setOpen(true);
                 break;
 
         }
     }, [quizPlay.command]);
 
+    /**
+     * null: 닉네임 입력창
+     * WAIT: 닉네임 입력 후 대기방
+     * READY: 대기방
+     * START: 시작 카운터
+     * SHOW: 문제 표시
+     * RESULT: 결과 표시
+     * FINAL: 최종 결과 표시
+     */
     return (
         <Page_Gradiant>
-            <Item_c>
-                {quizPlay.command == "nickName" && <NickNameCheck/>}
-                {quizPlay.command == "wait" && <ClientReady nickName={quizPlay.sender}/>}
-                {quizPlay.command === "start" && <Page_Gradiant><QuizStartCounter/></Page_Gradiant>}
-                {quizPlay.command === "show" && <QuizView currentQuiz={currentQuiz}/>}
-                {quizPlay.command === "result" && <div>result</div>}
-                {quizPlay.command === "final" && <div>final</div>}
+            <Item_c_full>
+                {quizPlay.command === null && <NickNameCheck/>}
+                {quizPlay.command === "WAIT" && <ClientReady/>}
+                {quizPlay.command === "START" && <QuizStartCounter/>}
+                {quizPlay.command === "SHOW" && <QuizView currentQuiz={quizPlay.quiz} state={"play"}/>}
+                {quizPlay.command === "SUBMIT" && <div>답변전달완료</div>}
+                {quizPlay.command === "RESULT" && <Rank_Page/>}
+                {quizPlay.command === "FINAL" && <div>final</div>}
                 <ClientCountOutModal open ={open} setOpen={setOpen}/>
-            </Item_c>
+            </Item_c_full>
         </Page_Gradiant>
     );
 }

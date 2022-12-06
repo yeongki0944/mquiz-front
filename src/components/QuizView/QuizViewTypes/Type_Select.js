@@ -1,64 +1,153 @@
 import * as React from "react";
-import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
 import {useSelector, useDispatch} from "react-redux";
-import './QuizTypes.css';
-import {Type_OX} from "./Type_OX";
-import {Type_Reply} from "./Type_Reply";
-import {R_setContent} from "../../../redux/reducers/quizplayReducer";
 import styled from "styled-components";
+import Button from "@mui/material/Button";
+import {stompSend} from "../../../function/WebSocket";
+import {Item_c} from "../../LayOuts/LayOuts";
+import {R_setData} from "../../../redux/reducers/quizplayReducer";
 
-const Card_Btn = styled.div`
-    background-color: white;
-    box-shadow: 0 0 10px 0 rgba(0,0,0,0.5);
-    border-radius: 5px;
-        
-    @media (min-width: 300px) and (max-width: 767px) {
-        margin: 5px;
-        width:45%;
-        height: 15vh;
-        float:left;
-    }
-    @media (min-width: 767px) {
-        margin : 10px;
-        width:45%;
-        height: 15vh;
-        display: block;
-        float: left;
-        flex-direction: column;
-        text-align: center;
-        align-items: center;
-        justify-content: center;
-    }
+const Content = styled(Item_c)`
+  display: block;
+  height: 85%;
+`;
+const Answers = styled(Item_c)`
+    height: 95%;
+    display: block;
 `;
 
-export const Type_Select = () => {
+const AnswerArea = styled(Item_c)`
+    float:left;
+    @media (min-width: 300px) and (max-width: 767px) {
+        height: 45%;
+        width: 50%;
+    }
+    @media (min-width: 767px) {
+        width: 50%;
+    }
+`
+
+const Card_Btn = styled(Item_c)`
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+    
+    @media (min-width: 300px) and (max-width: 767px) {
+        height: 90%;
+        width: 90%;
+        min-height: 120px;
+    }
+    @media (min-width: 767px) {
+        height: 90%;
+        width: 90%;
+        min-height: 100px;
+        margin-bottom: 10px;
+    }
+`
+
+export const Type_Select = (props) => {
     const dispatch = useDispatch();
-    const {quiz} = useSelector(state => state.quiz);
-    const currentQuiz = quiz.quizData.find(item => item.num === quiz.currentShow);
+    const {quizPlay} = useSelector(state => state.quizPlay);
+    const currentQuiz = props.currentQuiz;
 
-        {console.log((currentQuiz))}
+
+    const setSelected = (e) => {
+        console.log(e.target.id);
+        if (e.target.id === "selected") {
+            e.target.id = "";
+            e.target.style.border = "none";
+        } else {
+            e.target.id = "selected";
+            e.target.style.border = "1px solid orange";
+        }
+    }
+
+    // dispatch(R_setAnswer({answer: quizPlay.submit.answer.concat(ans),answerTime: 0}));
+    // dispatch(R_setAnswer(answer.filter(item => item !== name)));
+
+    const handleSubmit = () => {
+        const selected = document.querySelectorAll("#selected");
+        const answers = [];
+        selected.forEach(item => {
+            const className = item.className.split(" ").find(item => item.startsWith("num"));
+            answers.push(className);
+        })
+        // dispatch(R_setAnswer({answer: answers, answerTime: 0}));
+        stompSend("submit", {
+            pinNum: quizPlay.pinNum,
+            action: "SUBMIT",
+            nickName: quizPlay.nickName,
+            submit: {
+                answer: answers,
+                answerTime: 1,
+                quizNum: quizPlay.quiz.num
+            }
+        });
+        dispatch(R_setData({key:"command", value:"SUBMIT"}));
+
+    }
+
+    const handleSkip = () => {
+        stompSend("skip", {
+            pinNum: quizPlay.pinNum,
+            action:"COMMAND",
+            command:"START"
+        });
+    }
+    const handleNext = () => {
+        stompSend("result", {
+            pinNum: quizPlay.pinNum,
+            action: "COMMAND",
+            command: "RESULT"
+        });
+    }
+
+
+    if(quizPlay.command == "RESULT"){
         return (
-            <div>
-                <Card_Btn onClick={()=>{
-                    dispatch(R_setContent({key: "answer", value: "1"}));
-                    //console.log("1111");
-                }}>{currentQuiz.choiceList["1"]}</Card_Btn>
+            <Content sx={{display:"block"}}>
+                {currentQuiz.choiceList.num1 != "" && <AnswerArea><Card_Btn>{currentQuiz.choiceList.num1}</Card_Btn></AnswerArea>}
+                {currentQuiz.choiceList.num2 != "" && <AnswerArea><Card_Btn>{currentQuiz.choiceList.num2}</Card_Btn></AnswerArea>}
+                {currentQuiz.choiceList.num3 != "" && <AnswerArea><Card_Btn>{currentQuiz.choiceList.num3}</Card_Btn></AnswerArea>}
+                {currentQuiz.choiceList.num4 != "" && <AnswerArea><Card_Btn>{currentQuiz.choiceList.num4}</Card_Btn></AnswerArea>}
+            </Content>
+        )
+    }
+    else if (quizPlay.nickName === null) { //제작 시
+        return (
+            <Content>
+                <Answers>
+                    {currentQuiz.choiceList.num1 != "" && <AnswerArea><Card_Btn>{currentQuiz.choiceList.num1}</Card_Btn></AnswerArea>}
+                    {currentQuiz.choiceList.num2 != "" && <AnswerArea><Card_Btn>{currentQuiz.choiceList.num2}</Card_Btn></AnswerArea>}
+                    {currentQuiz.choiceList.num3 != "" && <AnswerArea><Card_Btn>{currentQuiz.choiceList.num3}</Card_Btn></AnswerArea>}
+                    {currentQuiz.choiceList.num4 != "" && <AnswerArea><Card_Btn>{currentQuiz.choiceList.num4}</Card_Btn></AnswerArea>}
+                </Answers>
+                <Item_c><Button variant="contained" onClick={handleNext}>다음</Button></Item_c>
+                <Item_c><Button variant="contained" onClick={handleSkip}>건너뛰기</Button></Item_c>
+            </Content>
 
-                <Card_Btn onClick={()=>{
-                    dispatch(R_setContent({key: "answer", value: "2"}));
-                    //console.log("2222");
-                }}>{currentQuiz.choiceList["2"]}</Card_Btn>
+        )
+    } else {
+        return (
+            <Content>
+                <Answers>
+                    {currentQuiz.choiceList.num1 != "" &&
+                        <AnswerArea onClick={setSelected} className="num1"><Card_Btn>{currentQuiz.choiceList.num1}</Card_Btn></AnswerArea>
+                    }
+                    {currentQuiz.choiceList.num2 != "" &&
+                        <AnswerArea onClick={setSelected} className="num2"><Card_Btn>{currentQuiz.choiceList.num2}</Card_Btn></AnswerArea>
+                    }
+                    {currentQuiz.choiceList.num3 != "" &&
+                        <AnswerArea onClick={setSelected} className="num3"><Card_Btn>{currentQuiz.choiceList.num3}</Card_Btn></AnswerArea>
+                    }
+                    {currentQuiz.choiceList.num4 != "" &&
+                        <AnswerArea onClick={setSelected} className="num4"><Card_Btn>{currentQuiz.choiceList.num4}</Card_Btn></AnswerArea>
+                    }
+                </Answers>
+                <Item_c><Button variant="contained" onClick={handleSubmit}>정답제출</Button></Item_c>
 
-                {<Card_Btn onClick={()=>{
-                    dispatch(R_setContent({key: "answer", value: "3"}));
-                    //console.log("333");
-                }}>{currentQuiz.choiceList["3"]}</Card_Btn>}
-
-                {<Card_Btn onClick={()=>{
-                    dispatch(R_setContent({key: "answer", value: "4"}));
-                    //console.log("444");
-                }}>{currentQuiz.choiceList["4"]}</Card_Btn>}
-            </div>
+            </Content>
         );
+    }
+
+
 }

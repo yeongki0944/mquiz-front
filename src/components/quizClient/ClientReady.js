@@ -10,6 +10,7 @@ import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import CardMedia from '@mui/material/CardMedia';
 import TextField from "@mui/material/TextField";
+import {useSelector} from "react-redux";
 
 const Img = styled('img')({
     margin: 'auto',
@@ -18,14 +19,18 @@ const Img = styled('img')({
     maxHeight: '100%',
 });
 
-export function ClientReady(props) {
+/**
+ * 대기방 component
+ */
+export function ClientReady() {
+    const {quizPlay} = useSelector(state => state.quizPlay);
 
     return (
 
         <Box align='center' sx={{minWidth: 275}}>
             <Img alt="complex" src="/img/logo192.png"></Img>
             <Typography variant="h5" component="div" align='center'>
-                {props.nickName} 님이
+                {quizPlay.nickName} 님이
             </Typography>
             <Typography variant="h5" component="div" align='center'>
                 입장하였습니다.

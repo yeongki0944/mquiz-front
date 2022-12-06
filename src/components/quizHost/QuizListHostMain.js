@@ -1,27 +1,33 @@
 import * as React from 'react'
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import {Box, Button} from "@mui/material";
+import {Button} from "@mui/material";
 import EditIcon from "@material-ui/icons/Edit";
 import PlayArrow from "@material-ui/icons/PlayArrow";
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import Add from "@material-ui/icons/Add";
-import {Link, useHistory} from "react-router-dom";
+import { useHistory} from "react-router-dom";
 import CustomAxios from "../../function/CustomAxios";
 import {R_setCurrentShow, R_setId, R_setQuiz} from "../../redux/reducers/quizInfoReducer";
 import styled from "styled-components";
 import {R_setData} from "../../redux/reducers/quizplayReducer";
+import {Item_c} from "../LayOuts/LayOuts";
+import {useState} from "react";
 
 /**
  * props:
  *  - quizList: 퀴즈 목록
  *  - setModalOpen: 모달 오픈 상태 변경 함수
  */
-
+const Item_c_Content = styled(Item_c)`
+    width: 100%;
+    height: 100%;
+    display: block;
+`
 const Item = styled.div`
     @media (min-width: 767px) {
-        width: 70%;
+        width: 100%;
         border: 3px solid orange;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         border-radius: 5px;
@@ -33,7 +39,7 @@ const Item = styled.div`
     }
 
     @media (min-width: 300px) and (max-width: 767px) {
-        width: 70%;
+        width: 100%;
         border: 3px solid orange;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         border-radius: 5px;
@@ -52,7 +58,7 @@ const EditIcon_Styled = styled(EditIcon)`
 `
 
 const AddBtn = styled.div`
-    width: 70%;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 10px;
@@ -68,6 +74,8 @@ export const QuizListHostMain = (props) => {
     const dispatch = useDispatch();
     const history = useHistory();
     const quizList = props.quizList;
+
+    const [buttonDisabled, setButtonDisabled] = useState(false);
 
     const list = quizList.map(
         (item) => (
@@ -93,9 +101,12 @@ export const QuizListHostMain = (props) => {
                         <Grid item xs container direction="column" spacing={2}>
                             <Grid item xs>
                                 <Typography variant="subtitle1" gutterBottom>
+                                    {item.quizInfo.title}
+                                </Typography>
+                                <Typography variant="subtitle1" gutterBottom>
                                     {item.quizInfo.state === "작성중" ?
                                         <span style={{color: "white", backgroundColor: "orange"}}>작성중</span> : <span
-                                            style={{color: "white", backgroundColor: "green"}}>사용가능</span>} {item.title}
+                                            style={{color: "white", backgroundColor: "green"}}>사용가능</span>}
                                 </Typography>
                                 <Typography variant="body2" color="text.secondary">
                                     Q.{item.quizInfo.qcnt}문제 카운터 추가 필요
@@ -110,21 +121,21 @@ export const QuizListHostMain = (props) => {
                         </Grid>
                         <Grid item>
                             <Typography variant="subtitle1" component="div">
-                                {item.quizInfo.state === "작성중" ?
+                                <Button onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleEdit(item.id)
+                                }} disabled={buttonDisabled}><EditIcon_Styled/></Button>
+
+                                {item.quizInfo.state === "완성" &&
                                     <Button onClick={(e) => {
                                         e.stopPropagation();
-                                        handleEdit(item.id)
-                                    }}><EditIcon_Styled/></Button>
-                                    : null
+                                        handlePlay(item.id)
+                                    }} disabled={buttonDisabled}><PlayArrow/></Button>
                                 }
                                 <Button onClick={(e) => {
                                     e.stopPropagation();
-                                    handlePlay(item.id)
-                                }}><PlayArrow/></Button>
-                                <Button onClick={(e) => {
-                                    e.stopPropagation();
                                     handledelete(item.id)
-                                }}><DeleteForeverIcon/></Button>
+                                }} disabled={buttonDisabled}><DeleteForeverIcon/></Button>
                             </Typography>
                         </Grid>
                     </Grid>
@@ -134,6 +145,7 @@ export const QuizListHostMain = (props) => {
     );
 
     function handledelete(id) {
+        setButtonDisabled(true);
         CustomAxios.delete(`/v1/show?showId=${id}`)
             .then(res => {
                 console.log(res);
@@ -142,9 +154,13 @@ export const QuizListHostMain = (props) => {
             .catch(err => {
                 console.log(err);
             })
+            .finally(() => {
+                setButtonDisabled(false);
+            })
     }
 
     const handleEdit = (id) => {
+        setButtonDisabled(true);
         CustomAxios.get('/v1/show?showId=' + id)
             .then(res => {
                 console.log(res.data);
@@ -154,6 +170,9 @@ export const QuizListHostMain = (props) => {
             })
             .catch(err => {
                 console.log(err);
+            })
+            .finally(() => {
+                setButtonDisabled(false);
             })
         history.push({
             pathname: '/QHost/create',
@@ -161,29 +180,21 @@ export const QuizListHostMain = (props) => {
     }
 
     const handlePlay = (id) => {
-        CustomAxios.get('/v1/show?showId=' + id)
+        setButtonDisabled(true);
+        CustomAxios.post('/v1/host/createPlay', {'id': id})
             .then(res => {
-                console.log(res.data);
-                dispatch(R_setId(id));
-                dispatch(R_setQuiz(res.data.data));
-                dispatch(R_setCurrentShow(1));
-            })
-            .catch(err => {
-                console.log(err);
-            });
-
-        CustomAxios.post('/v1/host/createPlay')
-            .then(res =>{
-                dispatch(R_setData({key:"command", value:"ready"})); // 최초 세팅
-                dispatch(R_setData({key:"pinNum", value:res.data.data}))
+                dispatch(R_setData({key: "command", value: "READY"})); // 최초 세팅
+                dispatch(R_setData({key: "pinNum", value: res.data.data}))
                 history.push({
-                    //pathname: '/QHost/ready',
                     pathname: '/QHost/play',
                 })
             })
-            .catch(()=>{
+            .catch(() => {
                 console.log("오류 발생");
-            });
+            })
+            .finally(() => {
+                setButtonDisabled(false);
+            })
     }
 
     function handleCreate() {
@@ -191,12 +202,12 @@ export const QuizListHostMain = (props) => {
     }
 
     return (
-        <div>
+        <Item_c_Content>
             <AddBtn>
                 <Button fullWidth={true} onClick={handleCreate}><Add/></Button>
             </AddBtn>
             {list}
-        </div>
+        </Item_c_Content>
     );
 
 

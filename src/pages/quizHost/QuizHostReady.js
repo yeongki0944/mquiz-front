@@ -1,131 +1,119 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import {Link} from "react-router-dom";
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-import {styled} from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import {createSvgIcon} from '@mui/material/utils';
-import Slider from '@mui/material/Slider';
-import Modal from "@mui/material/Modal";
-import CardMedia from "@mui/material/CardMedia";
 import {PinNum} from "../../components/PinNum";
 import {ClientTotalCount} from "../../components/quizClient/ClientTotalCount";
-import {ClientJoinList} from "../../components/quizClient/ClientJoinList";
 import {VolumeControlButton} from "../../components/VolumeControlButton";
-import {BasicModal} from "../../components/quizClient/ClientJoinList";
-import {useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import CustomAxios from "../../function/CustomAxios";
-import {R_setCurrentShow, R_setId, R_setQuiz} from "../../redux/reducers/quizInfoReducer";
-import {R_setData} from "../../redux/reducers/quizplayReducer";
+import {useSelector} from "react-redux";
+import {stompSend} from "../../function/WebSocket";
+import {Item_b, Item_c, Item_r, Page_Gradiant} from "../../components/LayOuts/LayOuts";
+import QRCode from "react-qr-code";
+import styled from "styled-components";
+import {useState} from "react";
+import {HostCountOutModal, UserList} from "../../components/quizClient/ClientJoinList";
+import Modal from "@mui/material/Modal";
+import {QR_Modal} from "../../components/QR_Modal";
 
-// import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
+const Item_r_Volume = styled(Item_r)`
+    @media (min-width: 300px) and (max-width: 767px) {
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 40%;
+    }
+    @media (min-width: 767px) {
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+`;
+const Item_c_Content = styled(Item_c)`
+    margin-top: 10vh;
+    display: block;
+    @media (min-width: 300px) and (max-width: 767px) {
+        height: 80vh;
+    }
+    @media (min-width: 767px) {
+        height: 80vh;
+    }
+`;
+const Item_c_PlayerList = styled(Item_c)`
+    display: block;
+    height: 40vh; 
+    overflow-y: scroll;
+    overflow-x: hidden;
+    background-color: #fff;
+    opacity: .3;
+    border-radius: 10px;
+    @media (min-width: 300px) and (max-width: 767px) {
+        width: 100%;
+    }
+    @media (min-width: 767px) {
+        width: 70%;
+    }
+`;
 
-// export function ColorSlider() {
-//   return (
-//     <Box sx={{ width: 80 }}>
-//       <Slider
-//         aria-label="Temperature"
-//         defaultValue={30}
-//         color="secondary"
-//       />
-//     </Box>
-//
-//   );
-// }
-
-// 아이콘
-// const HomeIcon = createSvgIcon(
-//     <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />,
-//     'Home',
-// );
-
-// Grid Item 설정
-const Item = styled(Paper)(({theme}) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-}));
+const Btn = styled.button`
+    background-color: #a84ba6;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.5rem;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+    margin: 0 10px;
+    cursor: pointer;
+    outline: none;
+    &:hover {
+        opacity: .5;
+    }
+`;
 
 
-export const QuizHostReady = (props) => {
-    const dispatch = useDispatch();
-    const {quiz} = useSelector(state => state.quiz);
+export const QuizHostReady = () => {
     const {quizPlay} = useSelector(state => state.quizPlay);
+    const [openBan, setOpenBan] = useState(false);
+    const [openQR, setOpenQR] = useState(false);
+    const URL = "localhost:3000/QClient?pinNum=" + quizPlay.pinNum;
 
-    const handleStart = () => {
-        /*let id = "637f4c8d9fee5769ac5026f2";
-        CustomAxios.get('/v1/show?showId=' + id)
-            .then(res => {
-                console.log(res.data);
-                dispatch(R_setId(id));
-                dispatch(R_setQuiz(res.data.data));
-                dispatch(R_setCurrentShow(1));
-                dispatch(R_setData({key : "command", value:"start"}));
-            })
-            .catch(err => {
-                console.log(err);
-            })*/
-        dispatch(R_setData({key : "command", value:"start"}));
+    const handleCopy = (e) => {
+        navigator.clipboard.writeText(URL).then(function () {
+            alert("복사되었습니다.");
+        }, function (err) {
+            alert("복사에 실패하였습니다.");
+        });
     }
 
     return (
-        <div id={"content"}>
-            <div className="sliderbar">
-                {/*<ColorSlider></ColorSlider><HomeIcon />*/}
-                <VolumeControlButton/>
-            </div>
-
-            <Typography align='center' id="modal-modal-title" variant="h6" component="h2" margin="70px">
-                MegaQuiz.show/p 접속해 주세요
-            </Typography>
-
-            <Box sx={{flexGrow: 1}}>
-                <Grid container spacing={4}>
-
-                    <Grid item xs={6} md={6}>
-                        <Typography variant="h5" component="div" align='center' padding='20'>
-                            <Button variant="contained">QR code</Button>
-                        </Typography>
-                    </Grid>
-
-                    <Grid item xs={6} md={6}>
-                        <Typography variant="h5" component="div" align='center' padding='20'>
-                            <Button variant="contained">URL copy</Button>
-                        </Typography>
-                    </Grid>
-
-                    <PinNum pinNum={quizPlay.pinNum}></PinNum>
-                    <ClientTotalCount></ClientTotalCount>
-
-                </Grid>
-            </Box>
-
-            <Box
-                sx={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    '& > :not(style)': {
-                        m: 1,
-                        width: 500,
-                        height: 300,
-                    },
-                }}
-            >
-                <ClientJoinList pinNum={quizPlay.pinNum}></ClientJoinList>
-            </Box>
-
-            <Link to="/QHost/play">
-                <Typography variant="h5" component="div" align='center' padding='20'>
-                    <Button variant="contained" onClick={handleStart}>시작</Button>
-                </Typography>
-            </Link>
-
-        </div>
+        <Page_Gradiant>
+            <Item_r_Volume><VolumeControlButton/></Item_r_Volume>
+            <Item_c_Content>
+                <Item_c><h2>~~~~/p 접속해 주세요.</h2></Item_c>
+                <Item_c>
+                    <Btn onClick={()=>{setOpenQR(true)}}>QR code</Btn>
+                    <Btn onClick={handleCopy}>URL copy</Btn>
+                </Item_c>
+                <Item_c><PinNum pinNum={quizPlay.pinNum}/></Item_c>
+                <Item_c><ClientTotalCount ClientTotalCount={quizPlay.userList.length}/></Item_c>
+                <Item_c_PlayerList><UserList pinNum={quizPlay.pinNum} setOpen={setOpenBan}/></Item_c_PlayerList>
+            </Item_c_Content>
+            <Item_c>
+                <Link to="/QHost/play">
+                    <Btn variant="contained" onClick={
+                        () => {
+                            stompSend("start", {
+                                pinNum: quizPlay.pinNum,
+                                command: "START",
+                            })
+                        }
+                    }>
+                        시작
+                    </Btn>
+                </Link>
+            </Item_c>
+            <HostCountOutModal open={openBan} setOpen={setOpenBan}></HostCountOutModal>
+            <QR_Modal open={openQR} setOpen={setOpenQR} url={URL}></QR_Modal>
+        </Page_Gradiant>
     );
 }
+
 

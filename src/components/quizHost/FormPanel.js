@@ -31,6 +31,7 @@ import {styled} from "@mui/material/styles";
 import {Type_Reply} from "./QuizFormTypes/Type_Reply";
 import {Type_OX} from "./QuizFormTypes/Type_OX";
 import {Type_Select} from "./QuizFormTypes/Type_Select";
+import {Item_c} from "../LayOuts/LayOuts";
 
 
 const Img = styled('img')({
@@ -46,7 +47,6 @@ export const FormPanel = (props) => {
     const currentQuiz = props.currentQuiz;
 
 
-
     const setQuiz = (keytype, key, value) => {
         dispatch(R_modifyQuiz({keytype: keytype, key: key, value: value}));
     }
@@ -55,19 +55,30 @@ export const FormPanel = (props) => {
         const types = ['선택형', 'OX', '단답형'];
 
         return (
-            <Box>
-                <Grid container spacing={1}>
+            <div>
+                <Item_c>
                     {types.map((type) => (
                         <Button key={type}
                                 onClick={() => {
                                     setQuiz('base', 'type', type);
                                     setQuiz('base', 'answer', []);
-                                    switch(type){
+                                    switch (type) {
                                         case '선택형':
-                                            setQuiz('base', 'choiceList', {"num1": '', "num2": '', "num3": '', "num4": ''});
+                                            setQuiz('base', 'choiceList', {
+                                                "num1": '',
+                                                "num2": '',
+                                                "num3": '',
+                                                "num4": ''
+                                            });
                                             break;
                                         case 'OX':
-                                            setQuiz('base', 'choiceList', {"num1": 'O', "num2": '', "num3": '', "num4": ''});
+                                            setQuiz('base', 'choiceList', {
+                                                "num1": '',
+                                                "num2": '',
+                                                "num3": '',
+                                                "num4": ''
+                                            });
+                                            setQuiz('base', 'answer', ['O']);
                                             break;
                                         case '단답형':
                                             setQuiz('base', '', {"num1": '', "num2": '', "num3": '', "nu4": ''});
@@ -75,6 +86,7 @@ export const FormPanel = (props) => {
                                     }
                                 }}
                         >
+
                             <Card>
                                 <CardContent>
                                     <Img alt="complex"
@@ -84,8 +96,8 @@ export const FormPanel = (props) => {
                             </Card>
                         </Button>
                     ))}
-                </Grid>
-            </Box>
+                </Item_c>
+            </div>
         )
     }
 
@@ -96,8 +108,7 @@ export const FormPanel = (props) => {
 
     const Question = () => {
         return (
-            <Box>
-                <h3>Question</h3>
+            <div>
                 <TextField
                     multiline
                     rows={4}
@@ -107,82 +118,126 @@ export const FormPanel = (props) => {
                     onBlur={handleChangeText}
                     name={"Question"}
                 />
-            </Box>
+            </div>
         )
     }
     const Options = () => {
-        const times = [{value: 0, label: '0초'}, {value: 10, label: '10초'}, {value: 20, label: '20초'}, {value: 30, label: '30초'}, {value: 40, label: '40초'}, {value: 50, label: '50초'}, {value: 60, label: '60초'}];
+        const times = [{value: 0, label: '0초'}, {value: 10, label: '10초'}, {value: 20, label: '20초'}, {
+            value: 30,
+            label: '30초'
+        }, {value: 40, label: '40초'}, {value: 50, label: '50초'}, {value: 60, label: '60초'}];
         return (
-            <Box>
-                <h3>Options</h3>
-                시간제한
-                <TextField
-                    select
-                    value={currentQuiz.time}
-                    onChange={(event) => {
-                        setQuiz("base", "time", event.target.value);
-                    }}
-                    SelectProps={{
-                        native: true,
-                    }}
-                >
-                    {times.map((time) => (
-                        <option
-                            key={time.value}
-                            value={time.value}
-                        >
-                            {time.label}
-                        </option>
-                    ))}
-                </TextField>[초]
-                점수 사용
-                <Switch
-                    checked={currentQuiz.useScore}
-                    onChange={(event) => {
-                        setQuiz("base", "useScore", event.target.checked);
-                    }}
-                />
-
-                <Rating
-                    name="simple-controlled"
-                    max={3}
-                    value={currentQuiz.rate}
-                    onChange={(event, newValue) => {
-                        setQuiz("base", "rate", newValue);
-                    }}
-                />
-            </Box>
+            <div>
+                <Item_c>
+                    점수 사용
+                    <Switch
+                        checked={currentQuiz.useScore}
+                        onChange={(event) => {
+                            setQuiz("base", "useScore", event.target.checked);
+                            if (!event.target.checked) {
+                                setQuiz("base", "rate", 0);
+                            } else {
+                                setQuiz("base", "rate", 1);
+                            }
+                        }}
+                    />
+                </Item_c>
+                <Item_c>
+                    <Rating
+                        id="rate"
+                        name="simple-controlled"
+                        max={3}
+                        value={currentQuiz.rate}
+                        onChange={(event, newValue) => {
+                            setQuiz("base", "rate", newValue);
+                            if (event.target.value > 0) {
+                                setQuiz("base", "useScore", true);
+                            }
+                        }}
+                    />
+                </Item_c>
+                <Item_c>시간제한
+                    <TextField
+                        select
+                        value={currentQuiz.time}
+                        onChange={(event) => {
+                            setQuiz("base", "time", event.target.value);
+                        }}
+                        SelectProps={{
+                            native: true,
+                        }}
+                    >
+                        {times.map((time) => (
+                            <option
+                                key={time.value}
+                                value={time.value}
+                            >
+                                {time.label}
+                            </option>
+                        ))}
+                    </TextField>[초]
+                </Item_c>
+            </div>
         );
     }
 
     const MediaBox = () => {
         return (
-            <Box>
+            <div>
                 <FormControl>
-                    <FormLabel id="demo-row-radio-buttons-group-label">Media</FormLabel>
                     <RadioGroup
-                        row
-                        aria-labelledby="demo-row-radio-buttons-group-label"
-                        name="row-radio-buttons-group"
+                        aria-labelledby="demo-radio-buttons-group-label"
+                        value={currentQuiz.media.type}
+                        name="radio-buttons-group"
                     >
-                        <FormControlLabel value="Image" control={<Radio/>} onClick={() => {
-                            setQuiz("media", "type", 'Image');
-                            setQuiz("media", "url", '');
-                        }} label="Image"/>
-                        <FormControlLabel value="Youtube" control={<Radio/>} onClick={() => {
-                            setQuiz("media", "type", 'Youtube');
-                            setQuiz("media", "url", '');
-                        }} label="Youtube"/>
-                        <FormControlLabel value="Audio" control={<Radio/>} onClick={() => {
-                            setQuiz("media", "type", 'Audio');
-                            setQuiz("media", "url", '');
-                        }} label="Audio"/>
+                        <Item_c>
+                            <FormControlLabel value="Image" control={<Radio/>} label="Image"
+                                              onClick={() => {
+                                                  setQuiz("media", "type", 'Image');
+                                                  setQuiz("media", "url", '');
+                                              }}/>
+                            <FormControlLabel value="Youtube" control={<Radio/>} label="Youtube"
+                                              onClick={() => {
+                                                  setQuiz("media", "type", 'Youtube');
+                                                  setQuiz("media", "url", '');
+                                              }}/>
+                            <FormControlLabel value="Audio" control={<Radio/>} label="Audio"
+                                              onClick={() => {
+                                                  setQuiz("media", "type", 'Audio');
+                                                  setQuiz("media", "url", '');
+                                              }}/>
+                        </Item_c>
                     </RadioGroup>
                 </FormControl>
                 {currentQuiz.media.type === 'Image' && <ImageBox/>}
                 {currentQuiz.media.type === 'Youtube' && <YoutubeBox/>}
                 {currentQuiz.media.type === 'Audio' && <AudioBox/>}
-            </Box>
+            </div>
+            // <Box>
+            //     <FormControl>
+            //         <RadioGroup
+            //             row
+            //             aria-labelledby="demo-row-radio-buttons-group-label"
+            //             name="row-radio-buttons-group"
+            //         >
+            //             <FormControlLabel value="Image" control={<Radio/>} onClick={() => {
+            //                 setQuiz("media", "type", 'Image');
+            //                 setQuiz("media", "url", '');
+            //             }} label="Image"/>
+            //             <FormControlLabel value="Youtube" control={<Radio/>} onClick={() => {
+            //                 setQuiz("media", "type", 'Youtube');
+            //                 setQuiz("media", "url", '');
+            //             }} label="Youtube"/>
+            //             <FormControlLabel value="Audio" control={<Radio/>} onClick={() => {
+            //                 setQuiz("media", "type", 'Audio');
+            //                 setQuiz("media", "url", '');
+            //             }} label="Audio"/>
+            //         </RadioGroup>
+            //     </FormControl>
+            //     {currentQuiz.media.type === 'Image' && <ImageBox/>}
+            //     {currentQuiz.media.type === 'Youtube' && <YoutubeBox/>}
+            //     {currentQuiz.media.type === 'Audio' && <AudioBox/>}
+            // </Box>
         );
 
     }
@@ -201,15 +256,21 @@ export const FormPanel = (props) => {
 
     return (
         <div>
-            <TypeButton/>
             <hr/>
-            <Question/>
+            <FormLabel component="legend">유형</FormLabel>
+            <Item_c><TypeButton/></Item_c>
             <hr/>
-            <MediaBox/>
+            <FormLabel component="legend">질문</FormLabel>
+            <Item_c><Question/></Item_c>
             <hr/>
-            <FormType/>
+            <FormLabel component="legend">미디어</FormLabel>
+            <Item_c><MediaBox/></Item_c>
             <hr/>
-            <Options/>
+            <FormLabel component="legend">정답</FormLabel>
+            <Item_c><FormType/></Item_c>
+            <hr/>
+            <FormLabel component="legend">옵션</FormLabel>
+            <Item_c><Options/></Item_c>
         </div>
     );
 }

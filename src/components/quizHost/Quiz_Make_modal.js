@@ -16,23 +16,20 @@ import {makeStyles} from "@material-ui/core/styles";
 import {R_makeQuizShow, R_modifyQuiz, R_setId} from "../../redux/reducers/quizInfoReducer";
 import CustomAxios from "../../function/CustomAxios";
 import {useHistory} from "react-router-dom";
+import styled from "styled-components";
 
-const useStyles = makeStyles(() => ({
-        imageStyle: {
-            marginTop: 15,
-            width: 323,
-            height: 200
-        },
-        textFieldStyle: {
-            width: 790,
-            height: 50
-        },
-        tagTextFieldStyle: {
-            width: 790,
-            height: 50
-        }
-    }
-));
+const ThumbnailImg = styled.img`
+    width: 100%;
+    height: 100%;
+    max-width:280;
+    max-height:200;
+`
+
+const InputTextFiled = styled(TextField)`
+    width: 100%;
+    height: 50;
+    max-width:740;
+`
 
 // useStyles에 넣으면 이상해짐 ㅎㄷㄷ
 const boxstyle = {
@@ -47,7 +44,6 @@ const boxstyle = {
     boxShadow: 24,
     p: 4
 }
-
 const imageItemData = [
     {
         img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
@@ -119,18 +115,12 @@ const currencies = [
 
 export default function BasicModal(props) {
     const dispatch = useDispatch();
-    const classes = useStyles();
     const {quiz} = useSelector(state => state.quiz);
 
-    // Show 제목
-    const [titleTextData, setTitleTextData] = useState('');
-    // 카테고리
-    const [currency, setCurrency] = useState('카테고리1');
     // chip
     const [chipData, setChipData] = useState([]);
     const [chipCount, setChipCount] = useState(0);
     // 공개 비공개
-    const [isPublic, setIsPublic] = useState(true);
     const [label, setLabel] = useState("공개");
     // 이미지 변경
     const [imageUrl, setImageUrl] = useState(imageItemData[0].img);
@@ -148,8 +138,8 @@ export default function BasicModal(props) {
             console.log(res.data)
             props.setOpen(false);
             history.push({
-                pathname:"/QHost/create",
-                state:{ id : res.data.data}
+                pathname: "/QHost/create",
+                state: {id: res.data.data}
             })
         }).catch((err) => {
             console.log(err)
@@ -183,17 +173,39 @@ export default function BasicModal(props) {
         // let dateDataString = JSON.stringify(dateData);
 
 
+        dispatch(R_makeQuizShow({key: 'email', value: "test@gmail.com"}))
+        dispatch(R_makeQuizShow({key: 'state', value: "작성중"}))
+        dispatch(R_makeQuizShow({key: 'public', value: true}))
 
-
-        dispatch(R_makeQuizShow({key:'email', value: "test@gmail.com"}))
-        dispatch(R_makeQuizShow({key:'state', value: "작성중"}))
-
-        dispatch(R_makeQuizShow({key:'createDate', value: "2022-01-01"}))
-        dispatch(R_makeQuizShow({key:'lastModifyDate', value: "2022-01-01"}))
-        dispatch(R_makeQuizShow({key:'titleimg_origin', value: "https://images.unsplash.com/photo-1522770179533-24471fcdba45"}))
-        dispatch(R_makeQuizShow({key:'titleimg_thumb', value: "https://images.unsplash.com/photo-1522770179533-24471fcdba45"}))
+        dispatch(R_makeQuizShow({key: 'createDate', value: "2022-01-01"}))
+        dispatch(R_makeQuizShow({key: 'lastModifyDate', value: "2022-01-01"}))
+        dispatch(R_makeQuizShow({
+            key: 'titleimg_origin',
+            value: "https://images.unsplash.com/photo-1522770179533-24471fcdba45"
+        }))
+        dispatch(R_makeQuizShow({
+            key: 'titleimg_thumb',
+            value: "https://images.unsplash.com/photo-1522770179533-24471fcdba45"
+        }))
     }, [])
 
+    /**
+     * chipData에 변화가 있을 때 리덕스에 저장
+     */
+    useEffect(()=>{
+        // 리덕스에 저장할 태그명 리스트 세팅
+        let inputTagData = [];
+        for (let i = 0; i < chipData.length; i++) {
+            inputTagData.push(chipData[i].label);
+        }
+
+        // 리덕스에 저장
+        dispatch(R_makeQuizShow({key: 'tags', value: inputTagData}))
+    },[chipData])
+
+    // useEffect(()=>{
+    //     console.log(quiz.quizInfo);
+    // })
     return (
         <div>
             <Modal
@@ -245,17 +257,23 @@ export default function BasicModal(props) {
         );
     }
 
+    /**
+     * 클라이언트가 기본 이미지에서 선택한 대표 이미지
+     */
     function ModalThumbnail() {
         return (
             <div>
                 <Typography align={"left"} variant={"h6"}>
                     <b>대표 이미지</b>
                 </Typography>
-                <img src={imageUrl} className={classes.imageStyle} alt="대표 이미지"></img>
+                <ThumbnailImg src={imageUrl} alt="대표 이미지"></ThumbnailImg>
             </div>
         );
     }
 
+    /**
+     * 기본 이미지 리스트
+     */
     function ModalBasicThumbnail() {
         return (
             <div>
@@ -263,10 +281,11 @@ export default function BasicModal(props) {
                     <b>기본 이미지</b>
                 </Typography>
                 <ImageList
-                    sx={{width: 450, height: 200}}
+                    sx={{width: 430, height: 200}}
                     cols={3}
                     rowHeight={164}
                 >
+
                     {imageItemData.map((item) => (
                         <ImageListItem key={item.img}>
                             <img
@@ -288,18 +307,20 @@ export default function BasicModal(props) {
         )
     }
 
+    /**
+     * Quiz 제목 작성
+     * - 포커스 나가면 작성한 내용 사라지는거 수정해야함.
+     */
     function ModalInputShowTitle() {
-        const [titleText, setTitleText] = useState(titleTextData);
         return (
             <div>
                 <Typography align={"left"} variant="h5">
                     <b>Show 제목</b>
                 </Typography>
-                <TextField
+                <InputTextFiled
                     id="standard-basic"
                     variant="standard"
-                    className={classes.textFieldStyle}
-                    // value={titleText}
+                    //value={titleText}
                     helperText={helperText}
                     // onChange={
                     //     (event) => {
@@ -308,8 +329,7 @@ export default function BasicModal(props) {
                     // }
                     onBlur={
                         (event) => {
-                            // setTitleTextData(titleText);
-                            dispatch(R_makeQuizShow({key:'title', value: event.target.value}))
+                            dispatch(R_makeQuizShow({key: 'title', value: event.target.value}))
                         }
                     }
                 />
@@ -317,6 +337,14 @@ export default function BasicModal(props) {
         );
     }
 
+    /**
+     * 카테고리 선택
+     * - 처음에 카테고리 선택이 안되있어서
+     *   You have provided an out-of-range value `undefined` for the select component.
+     *   Consider providing a value that matches one of the available options or ''.
+     *   The available values are `카테고리1`, `카테고리2`, `카테고리3`, `카테고리4`.
+     *   이 오류가 발생, 클라이언트가 선택하면 발생안함.
+     */
     function ModalSelectCategory() {
         return (
             <div>
@@ -326,12 +354,10 @@ export default function BasicModal(props) {
                 <TextField
                     id="standard-select-currency"
                     select
-                    label="카테고리 선택"
-                    value={currency}
+                    value={"카테고리1"}
                     onChange={
                         (event) => {
-                            setCurrency(event.target.value);
-                            dispatch(R_makeQuizShow({key:'category', value: event.target.value}))
+                            dispatch(R_makeQuizShow({key: 'category', value: event.target.value}))
                         }
                     }
                     helperText="카테고리를 선택하세요!"
@@ -347,6 +373,9 @@ export default function BasicModal(props) {
         );
     }
 
+    /**
+     * 공개/비공개 설정
+     */
     function ModalShowIsPublic() {
         return (
             <div>
@@ -355,17 +384,16 @@ export default function BasicModal(props) {
                 </Typography>
                 <FormGroup>
                     <FormControlLabel
-                        control={<Switch checked={isPublic}/>}
+                        control={<Switch checked={quiz.quizInfo.public}/>}
                         label={label}
                         onChange={
                             (event) => {
-                                // setIsPublic(event.target.checked);
-                                if (isPublic) {
+                                if (quiz.quizInfo.public) {
                                     setLabel("비공개");
-                                    dispatch(R_makeQuizShow({key:'public', value: event.target.checked}))
+                                    dispatch(R_makeQuizShow({key: 'public', value: event.target.checked}))
                                 } else {
                                     setLabel("공개");
-                                    dispatch(R_makeQuizShow({key:'public', value: event.target.checked}))
+                                    dispatch(R_makeQuizShow({key: 'public', value: event.target.checked}))
                                 }
                             }
                         }
@@ -382,22 +410,20 @@ export default function BasicModal(props) {
         // 태그 입력
         const [chipText, setChipText] = useState('');
         const [chipErrorMsg, setChipErrorMsg] = useState('');
-        const [chipTextField, setChipTextField] = useState('standard-basic');
 
         return (
             <div>
                 <Typography align={"left"} variant="h5">
                     <b>태그</b>
                 </Typography>
-                <TextField
-                    id={chipTextField}
+                <InputTextFiled
+                    id="standard-basic"
                     variant="standard"
-                    className={classes.tagTextFieldStyle}
+                    //className={classes.tagTextFieldStyle}
                     helperText={chipErrorMsg}
                     value={chipText}
                     onChange={
                         (event) => {
-                            setChipTextField("standard-basic");
                             setChipErrorMsg('');
                             setChipText(event.target.value);
                         }
@@ -406,27 +432,21 @@ export default function BasicModal(props) {
                         (event) => {
                             if (event.keyCode === 13) {
                                 if (chipText !== '') {
+                                    // 중복 태그 체크
                                     let tagList = [];
                                     for (let i = 0; i < chipData.length; i++) {
                                         if (chipData[i].label !== chipText) {
                                             tagList.push({key: chipData[i].key, label: chipData[i].label})
                                         } else {
                                             setChipText('');
-                                            setChipTextField("standard-error-helper-text");
                                             setChipErrorMsg("현재 동일한 태그가 존재합니다.");
                                             return;
                                         }
                                     }
+                                    // 새로 등록한 태그 추가
                                     tagList.push({key: chipCount, label: chipText});
-                                    //Tag값 정리
 
-                                    let tagList2 = [];
-                                    for (let i = 0; i < chipData.length; i++) {
-                                        tagList2.push(chipData[i].label);
-                                    }
-
-                                    dispatch(R_makeQuizShow({key:'tags', value: tagList2}))
-                                    //
+                                    // chipData 설정
                                     setChipData(tagList);
                                     setChipText('');
                                     setChipCount(chipCount + 1);
@@ -435,7 +455,7 @@ export default function BasicModal(props) {
                         }
                     }
                 >
-                </TextField>
+                </InputTextFiled>
             </div>
         );
     }

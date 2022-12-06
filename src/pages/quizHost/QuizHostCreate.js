@@ -46,7 +46,7 @@ export const QuizHostCreate = () => {
             <NavBar/>
             <Panel>
                 <List><ListPanel quiz={quiz}/></List>
-                <QuizView_styled><QuizView currentQuiz={currentQuiz}/></QuizView_styled>
+                <QuizView_styled><QuizView currentQuiz={currentQuiz} state={"create"}/></QuizView_styled>
                 <Form><FormPanel currentQuiz={currentQuiz}/></Form>
             </Panel>
             <ControlPanel quiz={quiz}/>
