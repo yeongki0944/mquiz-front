@@ -86,7 +86,7 @@ export const Type_Reply = () => {
         });
     }
 
-    if (quizPlay.command === "RESULT") {
+    if(quizPlay.command === "RESULT"){
         return (
             <Content>
                 <Answers>
@@ -96,15 +96,22 @@ export const Type_Reply = () => {
                 </Answers>
             </Content>
         )
-    } else if (quizPlay.nickName === null) { //제작 시
+    }
+    else if (quizPlay.nickName === null) { //제작 시
         return (
             <Content>
                 <Answers>
                     <AnswerArea>
-                        <TextField id="quizAnswer" name="quizAnswer" type="quizAnswer" label="정답을 입력해 주세요"
-                                   variant="outlined"
-                                   aria-readonly={true}
-                        />
+                        {
+                            quizPlay.command === "SHOW" ? <TextField id="quizAnswer" name="quizAnswer" type="quizAnswer" label="정답을 입력해 주세요"
+                                    variant="outlined"
+                                    aria-readonly={true}
+                                    disabled={true}
+                            /> : <TextField id="quizAnswer" name="quizAnswer" type="quizAnswer" label="정답을 입력해 주세요"
+                                        variant="outlined"
+                                        aria-readonly={true}
+                            />
+                        }
                     </AnswerArea>
                 </Answers>
                 <Item_c><Button variant="contained" onClick={handleNext}>다음</Button></Item_c>
