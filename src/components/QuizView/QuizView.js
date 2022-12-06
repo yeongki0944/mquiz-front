@@ -77,14 +77,14 @@ export const QuizView = (props) => {
                         fontSize: '2em',
                         fontWeight: 'bold'
                     }}>PIN: {quizPlay.pinNum}</Item>
-                    <Item sx={{place: 'center', height: '50%'}}>PIN: {quizPlay.pinNum}
-                        {/*<Gauge*/}
-                        {/*    quizPlay={quizPlay}*/}
-                        {/*    Qnum={currentQuiz.num}*/}
-                        {/*    TotalQcnt={10}*/}
-                        {/*    timeprogress={10}*/}
-                        {/*    timeleft={currentQuiz.time}*/}
-                        {/*/>*/}
+                    <Item sx={{place: 'center', height: '50%'}}>
+                        <Gauge
+                            quizPlay={quizPlay}
+                            Qnum={currentQuiz.num}
+                            TotalQcnt={10}
+                            timeprogress={10}
+                            timeleft={currentQuiz.time}
+                        />
                     </Item>
                 </Item>
                 <Item sx={{place: 'center', height: '30%', display: 'flex'}} sm={{display: 'block', height: '45%'}}>
