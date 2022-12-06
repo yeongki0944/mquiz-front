@@ -74,20 +74,25 @@ export const Rank_Page = () => {
                     {view === 'answer' && <Answer currentQuiz={quizPlay.quiz}/>}
                 </Item_c>
                 <Item_c>
-                    <Button variant={"contained"} onClick={()=>{
-                        setView("rank");
-                    }}>결과보기</Button>
-                    <Button variant={"contained"} onClick={()=>{
+                    {view === 'rank' && <Button variant={"contained"} onClick={()=>{
                         setView("answer");
                     }}>정답보기</Button>
-                    <Button variant={"contained"} onClick={()=>{
-                        stompSend("start", {
-                            pinNum: quizPlay.pinNum,
-                            command: "START",
-                        })
-                    }}>
-                        다음문제
-                    </Button>
+                    }
+                    {view === 'answer' &&
+                        <Button variant={"contained"} onClick={()=>{
+                            setView("rank");
+                        }}>결과보기</Button>
+                    }
+                    {quizPlay.nickName === null &&
+                        <Button variant={"contained"} onClick={() => {
+                            stompSend("start", {
+                                pinNum: quizPlay.pinNum,
+                                command: "START",
+                            })
+                        }}>
+                            다음문제
+                        </Button>
+                    }
                 </Item_c>
             </Page_Content>
         </Page_Default>

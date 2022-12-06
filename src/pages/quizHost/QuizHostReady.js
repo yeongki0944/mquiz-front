@@ -87,7 +87,7 @@ export const QuizHostReady = () => {
         <Page_Gradiant>
             <Item_r_Volume><VolumeControlButton/></Item_r_Volume>
             <Item_c_Content>
-                <Item_c><h2>~~~~/p 접속해 주세요.</h2></Item_c>
+                <Item_c><h2>mquiz.site/p 접속해 주세요.</h2></Item_c>
                 <Item_c>
                     <Btn onClick={()=>{setOpenQR(true)}}>QR code</Btn>
                     <Btn onClick={handleCopy}>URL copy</Btn>

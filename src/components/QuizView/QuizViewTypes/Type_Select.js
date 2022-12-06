@@ -3,7 +3,7 @@ import {useSelector, useDispatch} from "react-redux";
 import styled from "styled-components";
 import Button from "@mui/material/Button";
 import {stompSend} from "../../../function/WebSocket";
-import {Item_c} from "../../LayOuts/LayOuts";
+import {Item, Item_c} from "../../LayOuts/LayOuts";
 import {R_setData} from "../../../redux/reducers/quizplayReducer";
 
 const Content = styled(Item_c)`
@@ -68,7 +68,7 @@ export const Type_Select = (props) => {
         const answers = [];
 
         selected.forEach(item => {
-            answers.push("num"+item.innerHTML[0]);
+            answers.push("num" + item.innerHTML[0]);
         })
         stompSend("submit", {
             pinNum: quizPlay.pinNum,
@@ -80,15 +80,15 @@ export const Type_Select = (props) => {
                 quizNum: quizPlay.quiz.num
             }
         });
-        dispatch(R_setData({key:"command", value:"SUBMIT"}));
+        dispatch(R_setData({key: "command", value: "SUBMIT"}));
 
     }
 
     const handleSkip = () => {
         stompSend("skip", {
             pinNum: quizPlay.pinNum,
-            action:"COMMAND",
-            command:"START"
+            action: "COMMAND",
+            command: "START"
         });
     }
     const handleNext = () => {
@@ -99,28 +99,64 @@ export const Type_Select = (props) => {
         });
     }
 
+    const chkAnswer = (item) => {
+        let chk = false;
+        quizPlay.quiz.answer.forEach(ans => {
+            console.log(item);
+            console.log(ans);
+            if (ans == item) {
+                console.log("true");
+                chk = true;
+            }
+        })
+        console.log(chk);
+        return chk;
+    }
 
-    if(quizPlay.command == "RESULT"){
+
+    if (quizPlay.command == "RESULT") {
         return (
-            <Content sx={{display:"block"}}>
-                {currentQuiz.choiceList.num1 != "" && <AnswerArea><Card_Btn>{currentQuiz.choiceList.num1}</Card_Btn></AnswerArea>}
-                {currentQuiz.choiceList.num2 != "" && <AnswerArea><Card_Btn>{currentQuiz.choiceList.num2}</Card_Btn></AnswerArea>}
-                {currentQuiz.choiceList.num3 != "" && <AnswerArea><Card_Btn>{currentQuiz.choiceList.num3}</Card_Btn></AnswerArea>}
-                {currentQuiz.choiceList.num4 != "" && <AnswerArea><Card_Btn>{currentQuiz.choiceList.num4}</Card_Btn></AnswerArea>}
+            <Content sx={{display: "block"}}>
+                {
+                    Object.keys(currentQuiz.choiceList).map((item, index) => {
+                        return (
+                            <AnswerArea key={index}>
+                                {
+                                    chkAnswer(item) ?
+                                        <Card_Btn>
+                                            <Item sx={{color: 'red'}}>
+                                                {currentQuiz.choiceList[item]}
+                                            </Item>
+                                        </Card_Btn>
+                                        :
+                                        <Card_Btn>
+                                            {currentQuiz.choiceList[item]}
+                                        </Card_Btn>
+                                }
+                            </AnswerArea>
+                        )
+                    })
+                }
             </Content>
         )
-    }
-    else if (quizPlay.nickName === null) { //제작 시
+    } else if (quizPlay.nickName === null) { //제작 시
         return (
             <Content>
                 <Answers>
-                    {currentQuiz.choiceList.num1 != "" && <AnswerArea><Card_Btn>{currentQuiz.choiceList.num1}</Card_Btn></AnswerArea>}
-                    {currentQuiz.choiceList.num2 != "" && <AnswerArea><Card_Btn>{currentQuiz.choiceList.num2}</Card_Btn></AnswerArea>}
-                    {currentQuiz.choiceList.num3 != "" && <AnswerArea><Card_Btn>{currentQuiz.choiceList.num3}</Card_Btn></AnswerArea>}
-                    {currentQuiz.choiceList.num4 != "" && <AnswerArea><Card_Btn>{currentQuiz.choiceList.num4}</Card_Btn></AnswerArea>}
+                    {currentQuiz.choiceList.num1 != "" &&
+                        <AnswerArea><Card_Btn>{currentQuiz.choiceList.num1}</Card_Btn></AnswerArea>}
+                    {currentQuiz.choiceList.num2 != "" &&
+                        <AnswerArea><Card_Btn>{currentQuiz.choiceList.num2}</Card_Btn></AnswerArea>}
+                    {currentQuiz.choiceList.num3 != "" &&
+                        <AnswerArea><Card_Btn>{currentQuiz.choiceList.num3}</Card_Btn></AnswerArea>}
+                    {currentQuiz.choiceList.num4 != "" &&
+                        <AnswerArea><Card_Btn>{currentQuiz.choiceList.num4}</Card_Btn></AnswerArea>}
                 </Answers>
-                <Item_c><Button variant="contained" onClick={handleNext}>다음</Button></Item_c>
-                <Item_c><Button variant="contained" onClick={handleSkip}>건너뛰기</Button></Item_c>
+                <Item sx={{display: 'flex'}}>
+                    <Item_c><Button variant="contained" onClick={handleNext}>다음</Button></Item_c>
+                    <Item_c><Button variant="contained" onClick={handleSkip}>건너뛰기</Button></Item_c>
+                </Item>
+
             </Content>
 
         )
@@ -129,16 +165,20 @@ export const Type_Select = (props) => {
             <Content>
                 <Answers>
                     {currentQuiz.choiceList.num1 != "" &&
-                        <AnswerArea onClick={setSelected}><Card_Btn id={"num1"}>1.{currentQuiz.choiceList.num1}</Card_Btn></AnswerArea>
+                        <AnswerArea onClick={setSelected}><Card_Btn
+                            id={"num1"}>1.{currentQuiz.choiceList.num1}</Card_Btn></AnswerArea>
                     }
                     {currentQuiz.choiceList.num2 != "" &&
-                        <AnswerArea onClick={setSelected}><Card_Btn id={"num2"}>2.{currentQuiz.choiceList.num2}</Card_Btn></AnswerArea>
+                        <AnswerArea onClick={setSelected}><Card_Btn
+                            id={"num2"}>2.{currentQuiz.choiceList.num2}</Card_Btn></AnswerArea>
                     }
                     {currentQuiz.choiceList.num3 != "" &&
-                        <AnswerArea onClick={setSelected}><Card_Btn id={"num3"}>3.{currentQuiz.choiceList.num3}</Card_Btn></AnswerArea>
+                        <AnswerArea onClick={setSelected}><Card_Btn
+                            id={"num3"}>3.{currentQuiz.choiceList.num3}</Card_Btn></AnswerArea>
                     }
                     {currentQuiz.choiceList.num4 != "" &&
-                        <AnswerArea onClick={setSelected}><Card_Btn id={"num4"}>4.{currentQuiz.choiceList.num4}</Card_Btn></AnswerArea>
+                        <AnswerArea onClick={setSelected}><Card_Btn
+                            id={"num4"}>4.{currentQuiz.choiceList.num4}</Card_Btn></AnswerArea>
                     }
                 </Answers>
                 <Item_c><Button variant="contained" onClick={handleSubmit}>정답제출</Button></Item_c>

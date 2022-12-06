@@ -61,12 +61,14 @@ export const Answer = (props) => {
                     {currentQuiz.type}
                 </Item>
             </Item>
-            <Item sx={{width:360, height:300, margin:20,place: "center", border: "1px solid black", backgroundColor:"#ffffff", borderRadius:10}}>
-                <QuizQuestion question={currentQuiz.question}/>
+            <Item sx={{display:'flex'}}>
+                <Item sx={{width:360, height:300, margin:20,place: "center", border: "1px solid black", backgroundColor:"#ffffff", borderRadius:10}}>
+                    <QuizQuestion question={currentQuiz.question}/>
+                </Item>
+                <Item sx={{width:360, height:300, margin:20,place: "center", border: "1px solid black", backgroundColor:"#ffffff", borderRadius:10}}>
+                    <Media/>
+                </Item>
             </Item>
-            {/*<Item sx={{width:360, height:300, margin:20,place: "center", border: "1px solid black", backgroundColor:"#ffffff", borderRadius:10}}>*/}
-            {/*    <Media/>*/}
-            {/*</Item>*/}
             <AnswerSheet/>
         </Content>
     )
