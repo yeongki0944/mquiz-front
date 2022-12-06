@@ -52,12 +52,13 @@ export const Item_b = styled.div`
 `;
 
 export const Page = styled.div`
-    ${(props)=>props.sx}
+    ${(props) => props.sx}
     width: 100%;
     height: 100vh;
     overflow-x: hidden;
     overflow-y: hidden;
-    background: ${(props)=>props.sx.bg};
+    background: ${(props) => props.sx.bg};
+    display:block;
     ${props => props.sx.bg === "default" && `
         background: #f5f5f5;
     `}
@@ -76,23 +77,23 @@ export const Page = styled.div`
 `;
 
 export const Content = styled.div`
-    ${(props)=>props.sx}
-    width : ${(props)=>props.sx.width||"100%"};
-    height : ${(props)=>props.sx.height||"100%"};
-    margin : ${(props) => props.sx.margin || "auto"};
-    display: ${(props) => props.sx.display || "flex"};
-    justify-content: ${(props) => props.sx.justify || "center"};
-    align-items: ${(props) => props.sx.align || "top"};
-    
+    border: 1px solid blue;
+    ${(props) => props.sx}
+    @media (min-width: 768px) {
+        max-width: 1920px;
+        max-height: 1080px;
+    }
     @media (min-width: 300px) and (max-width: 767px) {
-        ${(props)=>props.sm}
+        ${(props) => props.sm}
     }
 `;
 
 export const Item = styled.div`
-    ${(props) => props.sx}
-    margin : ${(props) => props.sx.margin || "auto"};
-    display: ${(props) => props.sx.display || "flex"};
+    border: 1px solid red;
+    display:flex;
+    width:100%;
+    height:100%;
+    ${(props) => props.sx};
     ${(props) => props.sx.place === "center" && "justify-content: center; align-items: center;"}
     ${(props) => props.sx.place === "left" && "justify-content: left; align-items: left;"}
     ${(props) => props.sx.place === "right" && "justify-content: right; align-items: right;"}
@@ -104,6 +105,34 @@ export const Item = styled.div`
     ${(props) => props.sx.place === "bottom-right" && "justify-content: right; align-items: bottom;"}
     
     @media (min-width: 300px) and (max-width: 767px) {
-        ${(props)=>props.sm} 
+        ${(props) => props.sm} 
+    }
+`;
+
+export const Btn = styled.div`
+    background-color: #a84ba6;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.5rem;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+    margin: 0 10px;
+    cursor: pointer;
+    outline: none;
+    color: #fff;
+    &:hover {
+        opacity: .5;
+    }
+    ${(props) => props.sx}
+    ${(props) => props.sx.place === "center" && "justify-content: center; align-items: center;"}
+    ${(props) => props.sx.place === "left" && "justify-content: left; align-items: left;"}
+    ${(props) => props.sx.place === "right" && "justify-content: right; align-items: right;"}
+    ${(props) => props.sx.place === "top" && "justify-content: center; align-items: top;"}
+    ${(props) => props.sx.place === "top-left" && "justify-content: left; align-items: top;"}
+    ${(props) => props.sx.place === "top-right" && "justify-content: right; align-items: top;"}
+    ${(props) => props.sx.place === "bottom" && "justify-content: center; align-items: bottom;"}
+    ${(props) => props.sx.place === "bottom-left" && "justify-content: left; align-items: bottom;"}
+    ${(props) => props.sx.place === "bottom-right" && "justify-content: right; align-items: bottom;"}
+    @media (min-width: 300px) and (max-width: 767px) {
+        ${(props) => props.sm} 
     }
 `;

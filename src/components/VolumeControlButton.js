@@ -6,21 +6,15 @@ import 'bootstrap/dist/css/bootstrap.css';
 import {VolumeUp} from "@material-ui/icons";
 import VolumeOffIcon from '@mui/icons-material/VolumeOff';
 import {useState} from "react";
+import {Item} from "./LayOuts/LayOuts";
 
 
-const makeStyle = makeStyles({
-    root: {
-        alignItems: 'center',
-        width: 200,
-    },
-});
 
 /**
  * props:
  *  이게 필요한가??
  */
 export const VolumeControlButton = (props) => {
-    const classes = makeStyle();
     // 음량 데이터
     const [volumeData, setVolumeData] = useState(50);
     const [beforeVolumeData, setBeforeVolumeData] = useState();
@@ -28,7 +22,7 @@ export const VolumeControlButton = (props) => {
     const [muteState, setMuteState] = useState(false);
 
     return (
-        <Box className={classes.root} variant={"outlined"}>
+        <Item sx={props.sx} sm={props.sm}>
             {/*
             오디오 어떻게하죠?? 방법을 모르겠넹;;
             <audio controls autoPlay loop>
@@ -64,6 +58,6 @@ export const VolumeControlButton = (props) => {
                     }
                 </Button>
             </Stack>
-        </Box>
+        </Item>
     )
 }
