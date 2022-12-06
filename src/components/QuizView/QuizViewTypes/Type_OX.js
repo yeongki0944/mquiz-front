@@ -7,7 +7,7 @@ import Paper from "@mui/material/Paper";
 
 import styled from "styled-components";
 import {R_setContent, R_setData} from "../../../redux/reducers/quizplayReducer";
-import {Item_c} from "../../LayOuts/LayOuts";
+import {Item, Item_c} from "../../LayOuts/LayOuts";
 import Button from "@mui/material/Button";
 import {stompSend} from "../../../function/WebSocket";
 
@@ -82,13 +82,13 @@ export const Type_OX = () => {
                 quizNum: quizPlay.quiz.num
             }
         });
-        dispatch(R_setData({key:"command", value:"SUBMIT"}));
+        dispatch(R_setData({key: "command", value: "SUBMIT"}));
     }
     const handleSkip = () => {
         stompSend("skip", {
             pinNum: quizPlay.pinNum,
-            action:"COMMAND",
-            command:"START"
+            action: "COMMAND",
+            command: "START"
         });
     }
     const handleNext = () => {
@@ -99,23 +99,40 @@ export const Type_OX = () => {
         });
     }
 
-    if(quizPlay.command === "RESULT"){
-        return(
+    const chkAnswer = (item) => {
+        let chk = false;
+        quizPlay.quiz.answer.forEach(ans => {
+            if (ans == item) {
+                chk = true;
+            }
+        })
+        return chk;
+    }
+
+    if (quizPlay.command === "RESULT") {
+        return (
             <Answers>
-                <AnswerArea><Card_Btn>O</Card_Btn></AnswerArea>
-                <AnswerArea><Card_Btn>X</Card_Btn></AnswerArea>
+                {
+                    quizPlay.quiz.answer[0] === "O" ?
+                        <AnswerArea><Card_Btn>O</Card_Btn></AnswerArea>
+                        :
+                        <AnswerArea><Card_Btn>X</Card_Btn></AnswerArea>
+
+                }
             </Answers>
         )
-    }
-    else if (quizPlay.nickName === null) { //제작 시
+    } else if (quizPlay.nickName === null) { //제작 시
         return (
             <Content>
                 <Answers>
                     <AnswerArea><Card_Btn>O</Card_Btn></AnswerArea>
                     <AnswerArea><Card_Btn>X</Card_Btn></AnswerArea>
                 </Answers>
-                <Item_c><Button variant="contained" onClick={handleNext}>다음</Button></Item_c>
-                <Item_c><Button variant="contained" onClick={handleSkip}>건너뛰기</Button></Item_c>
+
+                <Item sx={{display: 'flex'}}>
+                    <Item_c><Button variant="contained" onClick={handleNext}>다음</Button></Item_c>
+                    <Item_c><Button variant="contained" onClick={handleSkip}>건너뛰기</Button></Item_c>
+                </Item>
             </Content>
 
         )
