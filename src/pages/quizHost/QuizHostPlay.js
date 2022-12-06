@@ -9,6 +9,7 @@ import {Item_c, Page_Gradiant} from "../../components/LayOuts/LayOuts";
 import {QuizHostReady} from "./QuizHostReady";
 import {stompInit, stompSend, stompDisconnect, stompSubscribe} from "../../function/WebSocket";
 import {Rank_Page} from "../../components/Result/Rank_Page";
+import {FinalRankPage} from "../../components/Result/FinalRankPage"
 
 const Item_c_full = styled(Item_c)`
     width: 100%;
@@ -56,7 +57,7 @@ export const QuizHostPlay = () => {
                 {quizPlay.command === "START" && <QuizStartCounter/>}
                 {quizPlay.command === "SHOW" && <QuizView currentQuiz={quizPlay.quiz} state={"play"}/>}
                 {quizPlay.command === "RESULT" && <Rank_Page/>}
-                {quizPlay.command === "FINAL" && <div>최종결과창</div>}
+                {quizPlay.command === "FINAL" && <FinalRankPage/>}
             </Item_c_full>
         </Page_Gradiant>
     );

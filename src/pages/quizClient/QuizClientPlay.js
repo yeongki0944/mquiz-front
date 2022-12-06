@@ -12,6 +12,7 @@ import {stompDisconnect, stompInit, stompSend} from "../../function/WebSocket";
 import styled from "styled-components";
 import Button from "@mui/material/Button";
 import {Rank_Page} from "../../components/Result/Rank_Page";
+import {FinalRankPage} from "../../components/Result/FinalRankPage";
 
 const Item_c_full = styled(Item_c)`
     width: 100%;
@@ -65,7 +66,7 @@ export const QuizClientPlay = () => {
                 {quizPlay.command === "SHOW" && <QuizView currentQuiz={quizPlay.quiz} state={"play"}/>}
                 {quizPlay.command === "SUBMIT" && <div>답변전달완료</div>}
                 {quizPlay.command === "RESULT" && <Rank_Page/>}
-                {quizPlay.command === "FINAL" && <div>final</div>}
+                {quizPlay.command === "FINAL" && <FinalRankPage/>}
                 <ClientCountOutModal open ={open} setOpen={setOpen}/>
             </Item_c_full>
         </Page_Gradiant>
