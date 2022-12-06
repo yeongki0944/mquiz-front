@@ -174,7 +174,7 @@ export default function BasicModal(props) {
 
 
         dispatch(R_makeQuizShow({key: 'email', value: "test@gmail.com"}))
-        dispatch(R_makeQuizShow({key: 'state', value: "작성중"}))
+        dispatch(R_makeQuizShow({key: 'state', value: "완성"}))
         dispatch(R_makeQuizShow({key: 'public', value: true}))
 
         dispatch(R_makeQuizShow({key: 'createDate', value: "2022-01-01"}))

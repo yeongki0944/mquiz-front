@@ -36,7 +36,7 @@ const initialState = {
             {
                 "num": 1,
                 "type": "선택형",
-                "question": " ",
+                "question": "",
                 "media": {
                     "type": "image",
                     "url": "",
@@ -140,8 +140,8 @@ export const quizInfoReducer = handleActions({
                             "url": "",
                         },
                         "choiceList": {
-                            "num1": "답을 입력해 주세요",
-                            "num2": "답을 입력해 주세요",
+                            "num1": "",
+                            "num2": "",
                             "num3": "",
                             "num4": ""
                         },

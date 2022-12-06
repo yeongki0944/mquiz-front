@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import {useEffect, useState} from "react";
 import {R_setContent, R_setData} from "../../../redux/reducers/quizplayReducer";
 import styled from "styled-components";
-import {Item_c} from "../../LayOuts/LayOuts";
+import {Item, Item_c} from "../../LayOuts/LayOuts";
 import {TextField} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import {stompSend} from "../../../function/WebSocket";
@@ -114,8 +114,10 @@ export const Type_Reply = () => {
                         }
                     </AnswerArea>
                 </Answers>
-                <Item_c><Button variant="contained" onClick={handleNext}>다음</Button></Item_c>
-                <Item_c><Button variant="contained" onClick={handleSkip}>건너뛰기</Button></Item_c>
+                <Item sx={{display: 'flex'}}>
+                    <Item_c><Button variant="contained" onClick={handleNext}>다음</Button></Item_c>
+                    <Item_c><Button variant="contained" onClick={handleSkip}>건너뛰기</Button></Item_c>
+                </Item>
             </Content>
 
         )
