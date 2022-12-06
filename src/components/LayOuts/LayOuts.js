@@ -78,6 +78,7 @@ export const Page = styled.div`
 
 export const Content = styled.div`
     border: 1px solid blue;
+    margin: auto;
     ${(props) => props.sx}
     @media (min-width: 768px) {
         max-width: 1920px;
