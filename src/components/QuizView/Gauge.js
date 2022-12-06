@@ -89,7 +89,7 @@ export const Gauge = (props) => {
             if(count === 101){
                 return;
             }
-            else if(count > 100){
+            else if(count >= 100){
                 if(quizPlay.nickName === null ){ // 호스트
                     
                 }
@@ -100,8 +100,8 @@ export const Gauge = (props) => {
                         nickName: quizPlay.nickName,
                         submit: {
                             answer: [],
-                            answerTime: quizPlay.time,
-                            quizNum: quizPlay.num
+                            answerTime: quizPlay.quiz.time,
+                            quizNum: quizPlay.quiz.num
                         }
                     });
                     dispatch(R_setData({key: "command", value: "SUBMIT"}));
