@@ -131,15 +131,20 @@ export const Card = styled.div`
 `
 
 export const Btn = styled.div`
-    background-color: #a84ba6;
-    border: none;
-    border-radius: 10px;
-    font-size: 1.5rem;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
-    margin: 0 10px;
-    cursor: pointer;
-    outline: none;
+    width: 130px;
+    height: 40px;
     color: #fff;
+    border-radius: 5px;
+    padding: 10px 25px;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
+    background: orange;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+    7px 7px 20px 0px rgba(0,0,0,.1),
+    4px 4px 5px 0px rgba(0,0,0,.1);
+    outline: none;
     &:hover {
         opacity: .5;
     }
