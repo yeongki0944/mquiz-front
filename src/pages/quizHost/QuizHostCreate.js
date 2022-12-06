@@ -24,13 +24,6 @@ const List = styled('div')`
     overflow-x: hidden;
 `;
 
-const QuizView_styled = styled('div')`
-    width: 60%;
-    overflow: scroll;
-    overflow-x: hidden;
-    overflow-y: hidden;
-`;
-
 const Form = styled('div')`
     width: 25%;
     overflow: scroll;
@@ -46,7 +39,10 @@ export const QuizHostCreate = () => {
             <NavBar/>
             <Panel>
                 <List><ListPanel quiz={quiz}/></List>
-                <QuizView_styled><QuizView currentQuiz={currentQuiz} state={"create"}/></QuizView_styled>
+                <QuizView sx={{place:'center',width:'60%',height:'90vh',overflow:'hidden'}}
+                          currentQuiz={currentQuiz}
+                          state={"create"}
+                />
                 <Form><FormPanel currentQuiz={currentQuiz}/></Form>
             </Panel>
             <ControlPanel quiz={quiz}/>

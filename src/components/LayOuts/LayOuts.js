@@ -110,6 +110,26 @@ export const Item = styled.div`
     }
 `;
 
+export const Card = styled.div`
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    ${(props) => props.sx};
+    ${(props) => props.sx.place === "center" && "justify-content: center; align-items: center;"}
+    ${(props) => props.sx.place === "left" && "justify-content: left; align-items: left;"}
+    ${(props) => props.sx.place === "right" && "justify-content: right; align-items: right;"}
+    ${(props) => props.sx.place === "top" && "justify-content: center; align-items: top;"}
+    ${(props) => props.sx.place === "top-left" && "justify-content: left; align-items: top;"}
+    ${(props) => props.sx.place === "top-right" && "justify-content: right; align-items: top;"}
+    ${(props) => props.sx.place === "bottom" && "justify-content: center; align-items: bottom;"}
+    ${(props) => props.sx.place === "bottom-left" && "justify-content: left; align-items: bottom;"}
+    ${(props) => props.sx.place === "bottom-right" && "justify-content: right; align-items: bottom;"}
+    @media (min-width: 300px) and (max-width: 767px) {
+        ${(props) => props.sm} 
+    }
+`
+
 export const Btn = styled.div`
     background-color: #a84ba6;
     border: none;

@@ -12,21 +12,7 @@ import {VolumeControlButton} from "../VolumeControlButton";
 import {useEffect} from "react";
 import styled from "styled-components";
 import {useSelector} from "react-redux";
-import {Item_c, Item_l, Item_r, Page_Default, Page_Gradiant} from "../LayOuts/LayOuts";
-
-
-const View = styled.div`
-    display: block;
-    background-color: #ffffff;
-    width: 90%;
-    height: 90%;
-    margin: auto;
-    margin-top: 5%;
-    padding: 10px;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
-
-`;
-
+import {Card, Content, Item, Item_c, Item_l, Item_r, Page_Default, Page_Gradiant} from "../LayOuts/LayOuts";
 
 const Item_r_Volume = styled(Item_r)`
     @media (min-width: 300px) and (max-width: 767px) {
@@ -41,62 +27,7 @@ const Item_r_Volume = styled(Item_r)`
         top: 0;
     }
 `;
-const Item_c_Content = styled(Item_c)`
-    display: block;
-    @media (min-width: 300px) and (max-width: 767px) {
-        margin-top: 5vh;
-        height: 90vh;
-    }
-    @media (min-width: 767px) {
-        height: 95vh;
-    }
-`;
 
-const Item_c_Info = styled(Item_c)`
-    display: block;
-    @media (min-width: 300px) and (max-width: 767px) {
-        margin-top: 5vh;
-        height: 10%;
-    }
-    @media (min-width: 767px) {
-        height: 20%;
-    }
-`;
-const Item_c_Question = styled(Item_c)`
-    @media (min-width: 300px) and (max-width: 767px) {
-        display: block;
-        margin-top: 5vh;
-        height: 45%;
-    }
-    @media (min-width: 767px) {
-        height: 30%;
-    }
-`;
-const Item_c_QBox = styled(Item_c)`
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
-    @media (min-width: 300px) and (max-width: 767px) {
-        margin-bottom: 5px;
-        width: 90%;
-        height: 50%;
-    }
-    @media (min-width: 767px) {
-        width: 45%;
-        height: 100%;
-    }
-`;
-
-const Item_c_Answer = styled(Item_c)`
-    display: block;
-    margin-top: 5%;
-    @media (min-width: 300px) and (max-width: 767px) {
-        height: 45%;
-    }
-    @media (min-width: 767px) {
-        height: 50%;
-    }
-`;
 
 export const QuizView = (props) => {
     const currentQuiz = props.currentQuiz;
@@ -105,13 +36,13 @@ export const QuizView = (props) => {
     const AnswerSheet = () => {
         switch (currentQuiz.type) {
             case "선택형":
-                return (<Type_Select currentQuiz = {currentQuiz}/>);
+                return (<Type_Select currentQuiz={currentQuiz}/>);
                 break;
             case "OX":
-                return (<Type_OX currentQuiz = {currentQuiz}/>);
+                return (<Type_OX currentQuiz={currentQuiz}/>);
                 break;
             case "단답형":
-                return (<Type_Reply currentQuiz = {currentQuiz}/>);
+                return (<Type_Reply currentQuiz={currentQuiz}/>);
                 break;
         }
     }
@@ -119,13 +50,13 @@ export const QuizView = (props) => {
     const Media = () => {
         switch (currentQuiz.media.type) {
             case "Image":
-                return (<ImageShow currentQuiz = {currentQuiz}/>);
+                return (<ImageShow currentQuiz={currentQuiz}/>);
                 break;
             case "Youtube":
-                return (<YoutubeShow currentQuiz = {currentQuiz}/>);
+                return (<YoutubeShow currentQuiz={currentQuiz}/>);
                 break;
             case "Audio":
-                return (<AudioShow currentQuiz = {currentQuiz}/>);
+                return (<AudioShow currentQuiz={currentQuiz}/>);
                 break;
             default:
                 return (<div></div>);
@@ -136,31 +67,35 @@ export const QuizView = (props) => {
         console.log(currentQuiz.media);
     }, [])
 
-    const Content = () => {
+    const View = () => {
         return (
-            <div>
-                <Item_c_Content>
-                    <Item_c_Info>
-                        <Item_c><PinNum pinNum={quizPlay.pinNum}/></Item_c>
-                        <Item_c>
-                            <Gauge
-                                quizPlay={quizPlay}
-                                Qnum={currentQuiz.num}
-                                TotalQcnt={10}
-                                timeprogress={10}
-                                timeleft={currentQuiz.time}
-                            />
-                        </Item_c>
-                    </Item_c_Info>
-                    <Item_c_Question>
-                        <Item_c_QBox><QuizQuestion question={currentQuiz.question}/></Item_c_QBox>
-                        <Item_c_QBox><Media/></Item_c_QBox>
-                    </Item_c_Question>
-                    <Item_c_Answer>
-                        <AnswerSheet/>
-                    </Item_c_Answer>
-                </Item_c_Content>
-            </div>
+            <Item sx={{place: 'center', display: 'block', height: '90%', background: '#fff'}}>
+                <Item sx={{place: 'center', display: 'block', height: '20%'}} sm={{height: '10%'}}>
+                    <Item sx={{
+                        place: 'center',
+                        height: '50%',
+                        fontSize: '2em',
+                        fontWeight: 'bold'
+                    }}>PIN: {quizPlay.pinNum}</Item>
+                    <Item sx={{place: 'center', height: '50%'}}>PIN: {quizPlay.pinNum}
+                        {/*<Gauge*/}
+                        {/*    quizPlay={quizPlay}*/}
+                        {/*    Qnum={currentQuiz.num}*/}
+                        {/*    TotalQcnt={10}*/}
+                        {/*    timeprogress={10}*/}
+                        {/*    timeleft={currentQuiz.time}*/}
+                        {/*/>*/}
+                    </Item>
+                </Item>
+                <Item sx={{place: 'center', height: '30%', display: 'flex'}} sm={{display: 'block', height: '45%'}}>
+                    <Card sx={{place: 'center', minWidth:'400px',minHeight:'200px',margin:'auto'}} sm={{minWidth:'300px',minHeight:'150px'}}>{currentQuiz.question}</Card>
+                    <Card sx={{place: 'center', minWidth:'400px',minHeight:'200px',margin:'auto'}} sm={{minWidth:'300px',minHeight:'150px'}}><Media/></Card>
+                </Item>
+                <Item sx={{place: 'center', height: '50%', display: 'block'}} sm={{height: '45%'}}>
+                    <AnswerSheet/>
+                </Item>
+            </Item>
+
 
         )
     }
@@ -168,17 +103,17 @@ export const QuizView = (props) => {
     switch (props.state) {
         case "play":
             return (
-                <Page_Default>
-                    <Item_r_Volume><VolumeControlButton/></Item_r_Volume>
-                    <Content/>
-                </Page_Default>
+                <Item sx={{place:'center',display:'block',maxWidth:'1200px',margin:'auto'}}>
+                    <VolumeControlButton sx={{place: 'top-right', height: '5vh'}}/>
+                    <View/>
+                </Item>
             );
             break;
         case "create":
             return (
-                <View>
-                    <Content/>
-                </View>
+                <Item sx={props.sx}>
+                    <View/>
+                </Item>
             );
             break;
     }
