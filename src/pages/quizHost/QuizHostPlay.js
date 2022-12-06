@@ -5,7 +5,7 @@ import {useEffect} from "react";
 import {QuizStartCounter} from "../../components/QuizStartCounter";
 import {styled} from "@mui/system";
 import {R_setData, R_setContent} from "../../redux/reducers/quizplayReducer";
-import {Item_c, Page_Gradiant} from "../../components/LayOuts/LayOuts";
+import {Item_c, Page, Page_Gradiant} from "../../components/LayOuts/LayOuts";
 import {QuizHostReady} from "./QuizHostReady";
 import {stompInit, stompSend, stompDisconnect, stompSubscribe} from "../../function/WebSocket";
 import {Rank_Page} from "../../components/Result/Rank_Page";
@@ -51,14 +51,12 @@ export const QuizHostPlay = () => {
      */
     return (
 
-        <Page_Gradiant>
-            <Item_c_full>
-                {quizPlay.command === "WAIT" && <QuizHostReady/>}
-                {quizPlay.command === "START" && <QuizStartCounter/>}
-                {quizPlay.command === "SHOW" && <QuizView currentQuiz={quizPlay.quiz} state={"play"}/>}
-                {quizPlay.command === "RESULT" && <Rank_Page/>}
-                {quizPlay.command === "FINAL" && <FinalRankPage/>}
-            </Item_c_full>
-        </Page_Gradiant>
+        <Page sx={{bg: 'grad-right', grad1: 'rebeccapurple', grad2: 'salmon'}}>
+            {quizPlay.command === "WAIT" && <QuizHostReady/>}
+            {quizPlay.command === "START" && <QuizStartCounter/>}
+            {quizPlay.command === "SHOW" && <QuizView currentQuiz={quizPlay.quiz} state={"play"}/>}
+            {quizPlay.command === "RESULT" && <Rank_Page/>}
+            {quizPlay.command === "FINAL" && <FinalRankPage/>}
+        </Page>
     );
 }

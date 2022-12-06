@@ -4,7 +4,7 @@ import Modal from "@mui/material/Modal";
 import CardMedia from "@mui/material/CardMedia";
 import Chip from "@mui/material/Chip";
 import {useState} from "react";
-import {Item_c, Page_Default} from "../LayOuts/LayOuts";
+import {Item, Item_c, Page_Default} from "../LayOuts/LayOuts";
 import styled from "styled-components";
 import {useSelector} from "react-redux";
 import store from "../../redux/store";
@@ -24,17 +24,10 @@ const Item_c_paper = styled(Item_c)`
 `
 
 export const UserList = (props) => {
-    // 나중에 레디스로 참여 유저 현황 가져오기
-    // const [client, setClient] = useState([
-    //     {key: '123123', nickName: '갑시다'},
-    //     {key: '123456', nickName: 'gogo'},
-    // ])
     const {quizPlay} = useSelector(state => state.quizPlay)
 
-    console.log(quizPlay)
-
     return (
-        <div>
+        <Item sx={props.sx} sm={props.sm}>
             {quizPlay.userList.map((item) => {
                 return (
                     <div key={item} style={{display: "inline-block"}}>
@@ -51,7 +44,7 @@ export const UserList = (props) => {
                     </div>
                 )
             })}
-        </div>
+        </Item>
     )
 }
 
