@@ -3,7 +3,8 @@ import {Stomp} from "@stomp/stompjs";
 import {playFunction} from "./PlayFunction";
 
 
-const URL = process.env.REACT_APP_BACKEND_SERVER;
+// const URL = process.env.REACT_APP_BACKEND_SERVER;
+const URL = "http://15.152.42.217:8888";
 let stomp = Stomp.over(()=>{ return new SockJS(URL+"/connect") });
 
 /**
