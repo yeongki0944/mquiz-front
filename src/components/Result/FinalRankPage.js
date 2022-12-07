@@ -1,35 +1,16 @@
-import styled from "styled-components";
-import {Btn, Content, Item, Item_c, Item_l, Page, Page_Default} from "../LayOuts/LayOuts";
+import {Btn, Item} from "../LayOuts/LayOuts";
 import {useSelector} from "react-redux";
 import {Rank} from "./Rank";
 import {useEffect, useState} from "react";
-import {Answer} from "./Answer";
-import {Avatar, Button} from "@mui/material";
-import {stompSend} from "../../function/WebSocket";
+import {Avatar} from "@mui/material";
+import {stompDisconnect} from "../../function/WebSocket";
 import {PinNum} from "../PinNum";
 import * as React from "react";
+import {useHistory} from "react-router-dom";
+import html2canvas from "html2canvas";
 
-const Top_text = styled(Item_l)`
-    display: block;
-    width: 90%;
-    height: 100%;
-    // font-size: 4vw;
-    font-weight: 600;
-    line-height: 2.5rem;
-`;
-
-const Page_Content = styled(Item_c)`
-    display: block;
-    width: 60%;
-    height: 60%;
-`
-const RankBox = (props) => {
-
-}
-
-
-
-export const FinalRankPage = (props) => {
+export const FinalRankPage = () => {
+    const history = useHistory();
     const {quizPlay} = useSelector(state => state.quizPlay);
 
     const [rank, setRank] = useState();
@@ -45,7 +26,9 @@ export const FinalRankPage = (props) => {
     },[]);
 
     return (
-        <Item sx={{
+        <Item
+            id={"capture"}
+            sx={{
             display: "block",
             maxWidth: "1200px",
             width: "100%",
@@ -109,12 +92,25 @@ export const FinalRankPage = (props) => {
 
             <Item sx={{place: "bottom", height: "10%"}}>
                 <Btn sx={{place: "center"}} onClick={()=>{
-
+                    html2canvas(document.querySelector("#capture")).then(canvas => {
+                        let link = document.createElement('a');
+                        if(typeof link.download === 'string'){
+                            link.href = canvas.toDataURL('image/png');
+                            link.download = "capture-test.png";
+                            document.body.appendChild(link);
+                            link.click();
+                            document.body.removeChild(link);
+                        }else{
+                            window.open(canvas.toDataURL('image/png'));
+                        }
+                    })
                 }}>
                     화면 캡처
                 </Btn>
                 <Btn sx={{place: "center"}} onClick={()=>{
-
+                    stompDisconnect();
+                    history.push('/');
+                    history.go(0);
                 }}>
                     확인
                 </Btn>
