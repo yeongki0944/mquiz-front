@@ -39,6 +39,10 @@ const command = (props) => {
             store.dispatch(R_setData({key: "quiz", value: props.quiz}));
             store.dispatch(R_setData({key: "rank", value: props.rank}));
             break;
+        case "FINAL":
+            console.log(props.quiz);
+            store.dispatch(R_setData({key: "quiz", value: props.quiz}));
+            store.dispatch(R_setData({key: "rank", value: props.rank}));
         default:
             break;
     }

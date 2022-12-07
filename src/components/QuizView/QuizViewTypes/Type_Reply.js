@@ -42,7 +42,7 @@ export const Type_Reply = () => {
             action: "SUBMIT",
             nickName: quizPlay.nickName,
             submit: {
-                answer: [],
+                answer: [answer_text],
                 answerTime: 1,
                 quizNum: quizPlay.quiz.num
             }
