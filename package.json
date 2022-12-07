@@ -22,6 +22,7 @@
     "@types/stompjs": "^2.3.5",
     "axios": "^1.1.3",
     "bootstrap": "^5.2.2",
+    "html2canvas": "^1.4.1",
     "immutable": "^4.1.0",
     "node-sass": "^8.0.0",
     "react": "^18.2.0",
