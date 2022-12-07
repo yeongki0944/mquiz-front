@@ -31,8 +31,6 @@ const RankBox = (props) => {
 
 export const FinalRankPage = (props) => {
     const {quizPlay} = useSelector(state => state.quizPlay);
-    const {quiz} = useSelector(state => state.quiz);
-    const {quizList} = useSelector(state => state.quizList);
 
     const [rank, setRank] = useState();
     const [rankScore, setRankScore] = useState();
@@ -110,7 +108,9 @@ export const FinalRankPage = (props) => {
 
 
             <Item sx={{place: "bottom", height: "10%"}}>
-                <Btn sx={{place: "center"}}>
+                <Btn sx={{place: "center"}} onClick={()=>{
+
+                }}>
                     화면 캡처
                 </Btn>
                 <Btn sx={{place: "center"}} onClick={()=>{
