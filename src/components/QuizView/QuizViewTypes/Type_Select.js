@@ -59,22 +59,28 @@ export const Type_Select = (props) => {
             <Item sx={{place: 'center', display: 'block', height: '80%'}}>
                 {Object.keys(currentQuiz.choiceList).map((item, index) => {
                     return (
-                        <Item sx={{place: 'center', width: '25%', height: '100%',float:'left'}}
+                        <Item sx={{place: 'center', width: '25%', height: '100%', float: 'left'}}
                               sm={{width: '50%', height: '50%'}}
                               key={index}
                               >
                             {quizPlay.command === "RESULT" && chkAnswer(item) ?  //정답화면 정답일 시
-                                <Card sx={{place: 'center',background:'orange'}} id={item}>
-                                    {index + 1}.{currentQuiz.choiceList[item]}
-                                </Card>
+                                currentQuiz.choiceList[item] != "" ?
+                                    <Card sx={{place: 'center', background: 'orange'}}
+                                          id={item}>{index + 1}.{currentQuiz.choiceList[item]}</Card>
+                                    : null
                                 :
                                 quizPlay.nickName === null && //호스트 화면
-                                <Card sx={{place: 'center'}} id={item}>{index + 1}.{currentQuiz.choiceList[item]}</Card>
+                                currentQuiz.choiceList[item] != "" ?
+                                    <Card sx={{place: 'center'}}
+                                          id={item}>{index + 1}.{currentQuiz.choiceList[item]}</Card>
+                                    : null
 
                             }
 
                             {quizPlay.command != "RESULT" && quizPlay.nickName != null && //클라이언트
-                                <Card sx={{place: 'center'}} id={item} onClick={setSelected} >{index + 1}.{currentQuiz.choiceList[item]}</Card>
+                            currentQuiz.choiceList[item] != "" ?
+                                <Card sx={{place: 'center'}} id={item} onClick={setSelected}>{index + 1}.{currentQuiz.choiceList[item]}</Card>
+                                : null
                             }
                         </Item>
                     )
