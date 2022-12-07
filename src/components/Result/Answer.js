@@ -52,11 +52,11 @@ export const Answer = (props) => {
                 fontSize: '2em',
                 fontWeight: 'bold'
             }}>Answer</Item>
-            <Item sx={{place: 'center', height: '30%', display: 'flex'}} sm={{display: 'block', height: '45%'}}>
-                <Card sx={{place: 'center', minWidth:'400px',minHeight:'200px',margin:'auto'}} sm={{minWidth:'300px',minHeight:'150px'}}>{currentQuiz.question}</Card>
-                <Card sx={{place: 'center', minWidth:'400px',minHeight:'200px',margin:'auto'}} sm={{minWidth:'300px',minHeight:'150px'}}><Media/></Card>
+            <Item sx={{place: 'center', height: '40%', display: 'flex'}} sm={{display: 'block', height: '45%'}}>
+                <Card sx={{place: 'center', minWidth:'45%',minHeight:'90%',margin:'auto',maxHeight:'90%'}} sm={{minWidth:'100%',minHeight:'150px'}}>{currentQuiz.question}</Card>
+                <Card sx={{place: 'center', minWidth:'45%',minHeight:'90%',margin:'auto',maxHeight:'90%',overflow:'hidden'}} sm={{minWidth:'100%',minHeight:'150px'}}><Media/></Card>
             </Item>
-            <Item sx={{place: 'center', height: '50%', display: 'block'}} sm={{height: '45%'}}>
+            <Item sx={{place: 'center', height: '40%', display: 'block'}} sm={{height: '45%'}}>
                 <AnswerSheet/>
             </Item>
         </Item>

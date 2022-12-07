@@ -8,6 +8,7 @@ import {Btn, Card, Item, Item_c} from "../../LayOuts/LayOuts";
 import {TextField} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import {stompSend} from "../../../function/WebSocket";
+import {PlayActionBar} from "../PlayActionBar";
 
 const Content = styled(Item_c)`
   display: block;
@@ -33,14 +34,15 @@ export const Type_Reply = () => {
         setquizAnswer(e.target.value);
     }
 
-    const handleSubmit = (answer) => {
-        console.log(answer);
+    const handleSubmit = () => {
+        let answer_text = document.getElementById('quizAnswer').value;
+        console.log(answer_text);
         stompSend("submit", {
             pinNum: quizPlay.pinNum,
             action: "SUBMIT",
             nickName: quizPlay.nickName,
             submit: {
-                answer: [answer],
+                answer: [],
                 answerTime: 1,
                 quizNum: quizPlay.quiz.num
             }
@@ -50,60 +52,40 @@ export const Type_Reply = () => {
 
     const handleEnterKey = (e) => {
         if (e.key === 'Enter') {
-            handleSubmit(e.target.value);
+            handleSubmit();
         }
-    }
-    const handleSkip = () => {
-        stompSend("skip", {
-            pinNum: quizPlay.pinNum,
-            action: "COMMAND",
-            command: "START"
-        });
-    }
-    const handleNext = () => {
-        stompSend("result", {
-            pinNum: quizPlay.pinNum,
-            action: "COMMAND",
-            command: "RESULT"
-        });
     }
 
     return (
         <Item sx={{place: 'center', display: 'block'}}>
             <Item sx={{place: 'center', display: 'block', height: '90%'}}>
                 {quizPlay.command === "RESULT" ?  //정답화면 정답일 시
-                    <Card sx={{place: 'center', background: 'orange'}}>
-                        {quizPlay.quiz.answer}
-                    </Card>
+                    <Item sx={{place: 'center'}}>
+                        <Card sx={{place: 'center', background: 'orange'}}>
+                            {quizPlay.quiz.answer}
+                        </Card>
+                    </Item>
                     :
                     quizPlay.nickName === null && //호스트 화면
-                    quizPlay.command === "SHOW" &&
+                    <Item sx={{place: 'center'}}>
                         <TextField id="quizAnswer" name="quizAnswer" type="quizAnswer" label="정답을 입력해 주세요"
                                    variant="outlined"
                                    aria-readonly={true}
                                    disabled={true}
                         />
+                    </Item>
                 }
                 {quizPlay.command != "RESULT" && quizPlay.nickName != null && //클라이언트
-                    <TextField id="quizAnswer" name="quizAnswer" type="quizAnswer" label="정답을 입력해 주세요"
-                               variant="outlined"
-                               onBlur={handleInput}
-                               onKeyPress={handleEnterKey}
-                    />
+                    <Item sx={{place: 'center'}}>
+                        <TextField id="quizAnswer" name="quizAnswer" type="quizAnswer" label="정답을 입력해 주세요"
+                                   variant="outlined"
+                                   onBlur={handleInput}
+                                   onKeyPress={handleEnterKey}
+                        />
+                    </Item>
                 }
             </Item>
-            <Item sx={{place: 'center', display: 'block', height: '10%'}}>
-                {quizPlay.command === "RESULT" ? null :
-                    quizPlay.nickName === null ?
-                        <Item sx={{place: 'center', display: 'flex', margin: 'auto'}}>
-                            <Btn sx={{place: 'center', height: '100%', width: '10%'}} onClick={handleNext}>다음</Btn>
-                            <Btn sx={{place: 'center', height: '100%', width: '10%'}} onClick={handleSkip}>건너뛰기</Btn>
-                        </Item>
-                        :
-                        <Btn sx={{place: 'center', height: '100%', width: '10%', margin: 'auto'}}
-                             onClick={handleSubmit}>정답제출</Btn>
-                }
-            </Item>
+            <PlayActionBar sx={{place: 'center', display: 'block', height: '20%'}} handleSubmit={handleSubmit}/>
         </Item>
     )
 
