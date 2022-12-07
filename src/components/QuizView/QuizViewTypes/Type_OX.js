@@ -71,10 +71,9 @@ export const Type_OX = () => {
                         </Item>
                 }
                 {quizPlay.command != "RESULT" && quizPlay.nickName != null && //클라이언트 화면
-                    <Item sx={{place: 'center', width: '100%', height: '100%', display: 'flex'}} sm={{}}
-                          onClick={setSelected}>
-                        <Card sx={{place: 'center',minWidth: '45%',margin:'auto'}} sm={{minHeight:'45%',minWidth:'45%'}}>O</Card>
-                        <Card sx={{place: 'center',minWidth: '45%',margin:'auto'}} sm={{minHeight:'45%',minWidth:'45%'}}>X</Card>
+                    <Item sx={{place: 'center', width: '100%', height: '100%', display: 'flex'}} sm={{}}>
+                        <Card sx={{place: 'center',minWidth: '45%',margin:'auto'}} sm={{minHeight:'45%',minWidth:'45%'}} onClick={setSelected}>O</Card>
+                        <Card sx={{place: 'center',minWidth: '45%',margin:'auto'}} sm={{minHeight:'45%',minWidth:'45%'}} onClick={setSelected}>X</Card>
                     </Item>
                 }
 

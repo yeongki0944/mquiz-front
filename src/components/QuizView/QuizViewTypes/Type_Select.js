@@ -62,7 +62,7 @@ export const Type_Select = (props) => {
                         <Item sx={{place: 'center', width: '25%', height: '100%',float:'left'}}
                               sm={{width: '50%', height: '50%'}}
                               key={index}
-                              onClick={setSelected}>
+                              >
                             {quizPlay.command === "RESULT" && chkAnswer(item) ?  //정답화면 정답일 시
                                 <Card sx={{place: 'center',background:'orange'}} id={item}>
                                     {index + 1}.{currentQuiz.choiceList[item]}
@@ -74,7 +74,7 @@ export const Type_Select = (props) => {
                             }
 
                             {quizPlay.command != "RESULT" && quizPlay.nickName != null && //클라이언트
-                                <Card sx={{place: 'center'}} id={item}>{index + 1}.{currentQuiz.choiceList[item]}</Card>
+                                <Card sx={{place: 'center'}} id={item} onClick={setSelected} >{index + 1}.{currentQuiz.choiceList[item]}</Card>
                             }
                         </Item>
                     )

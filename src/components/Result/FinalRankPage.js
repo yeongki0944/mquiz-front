@@ -47,7 +47,7 @@ export const FinalRankPage = (props) => {
     },[]);
 
     return (
-        <Content sx={{
+        <Item sx={{
             display: "block",
             maxWidth: "1200px",
             width: "100%",
@@ -64,14 +64,13 @@ export const FinalRankPage = (props) => {
                     <Avatar sx={{width: 300, height: 300}}><h2>{quizPlay.nickName}</h2></Avatar>
                 </Item>
             ) : (
-                <Item sx={{place: "center", display: "block", height: '80vh', margin: "auto"}}>
+                <Item sx={{place: "center", display: "block", height: '', margin: "auto"}}>
                     {quizPlay.rank.map(
                         (item, index) => {
                             if (item.rank === 1 || item.rank === 2 || item.rank === 3) {
                                 return (
-                                    <Item sx={{place: "center", height: "30%", margin: "30px"}}>
+                                    <Item key={index} sx={{place: "center", height: "30%", margin: "30px"}}>
                                         <Rank
-                                            key={index}
                                             rank={item.rank}
                                             nickName={item.nickName}
                                             score={item.rankScore}
@@ -114,10 +113,12 @@ export const FinalRankPage = (props) => {
                 <Btn sx={{place: "center"}}>
                     화면 캡처
                 </Btn>
-                <Btn sx={{place: "center", onclick}}>
+                <Btn sx={{place: "center"}} onClick={()=>{
+
+                }}>
                     확인
                 </Btn>
             </Item>
-        </Content>
+        </Item>
     )
 }
