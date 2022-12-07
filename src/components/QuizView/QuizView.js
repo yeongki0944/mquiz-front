@@ -81,7 +81,7 @@ export const QuizView = (props) => {
                         <Gauge
                             quizPlay={quizPlay}
                             Qnum={currentQuiz.num}
-                            TotalQcnt={10}
+                            TotalQcnt={"N"}
                             timeprogress={10}
                             timeleft={currentQuiz.time}
                         />

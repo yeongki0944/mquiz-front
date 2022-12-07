@@ -114,7 +114,7 @@ export const Gauge = (props) => {
             <div>
                 <ProgressBar animated
                              now={count < 100 ? count : 100}
-                             label={parseInt((count / (100 / props.timeleft * 0.1)))*0.1}/>
+                             label={parseInt((count / (100 / props.timeleft * 0.1))*0.1)}/>
             </div>
         </div>
     )
