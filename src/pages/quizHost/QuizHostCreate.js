@@ -38,6 +38,7 @@ export const QuizHostCreate = () => {
         <Page_Default>
             <NavBar/>
             <Panel>
+                {/*퀴즈 복제 및 생성할 때 기본 시간 제한을 30초로 변경 필요*/}
                 <List><ListPanel quiz={quiz}/></List>
                 <QuizView sx={{place:'center',width:'60%',height:'90vh',overflow:'hidden'}}
                           currentQuiz={currentQuiz}
