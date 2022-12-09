@@ -147,6 +147,10 @@ export default function BasicModal(props) {
         })
     }
 
+    const handleInputTitle = (e) =>{
+        dispatch(R_makeQuizShow({key: 'title', value: e.target.value}))
+    }
+
     // 모달창 닫기
     const handleClose = () => {
         // setTitleTextData('');
@@ -318,20 +322,10 @@ export default function BasicModal(props) {
                     <b>Show 제목</b>
                 </Typography>
                 <InputTextFiled
-                    id="standard-basic"
-                    variant="standard"
-                    //value={titleText}
-                    helperText={helperText}
-                    // onChange={
-                    //     (event) => {
-                    //         setTitleText(event.target.value);
-                    //     }
-                    // }
-                    onBlur={
-                        (event) => {
-                            dispatch(R_makeQuizShow({key: 'title', value: event.target.value}))
-                        }
-                    }
+                    placeholder={"제목을 입력해주세요."}
+                    variant="outlined"
+                    defaultValue={quiz.quizInfo.title}
+                    onBlur={handleInputTitle}
                 />
             </div>
         );
