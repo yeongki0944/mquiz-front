@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import {useEffect, useState} from "react";
 import {R_setContent, R_setData} from "../../../redux/reducers/quizplayReducer";
 import styled from "styled-components";
-import {Btn, Card, Item, Item_c} from "../../LayOuts/LayOuts";
+import {Btn, Card, Item, Item_c} from "../../../LayOuts/LayOuts";
 import {TextField} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import {stompSend} from "../../../function/WebSocket";

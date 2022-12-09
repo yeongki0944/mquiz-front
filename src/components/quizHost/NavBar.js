@@ -2,7 +2,7 @@ import * as React from "react";
 import {BottomNavigation, BottomNavigationAction} from "@mui/material";
 import styled from "styled-components";
 import {useHistory} from "react-router-dom";
-import {Item_c} from "../LayOuts/LayOuts";
+import {Item_c} from "../../LayOuts/LayOuts";
 
 const Styled_NavBar = styled(BottomNavigation)`
     width: 100%;

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {Btn, Content, Item, Item_c, Item_l, Page_Default} from "../LayOuts/LayOuts";
+import {Btn, Content, Item, Item_c, Item_l, Page_Default} from "../../LayOuts/LayOuts";
 import {useSelector} from "react-redux";
 import {Rank} from "./Rank";
 import {useState} from "react";

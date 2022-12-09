@@ -1,4 +1,4 @@
-import {Btn, Item} from "../LayOuts/LayOuts";
+import {Btn, Item} from "../../LayOuts/LayOuts";
 import {useSelector} from "react-redux";
 import {Rank} from "./Rank";
 import {useEffect, useState} from "react";

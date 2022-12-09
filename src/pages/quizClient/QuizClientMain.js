@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Item_c, Page_Gradiant} from "../../components/LayOuts/LayOuts";
+import {Item_c, Page_Gradiant} from "../../LayOuts/LayOuts";
 import {PinNumCheck} from "../../components/quizClient/ClientPinNumInput";
 
 

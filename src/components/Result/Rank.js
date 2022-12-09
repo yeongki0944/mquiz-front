@@ -1,4 +1,4 @@
-import {Content, Item, Item_c, Item_l, Item_r, Page_Default} from "../LayOuts/LayOuts";
+import {Content, Item, Item_c, Item_l, Item_r, Page_Default} from "../../LayOuts/LayOuts";
 import styled from "styled-components";
 
 const Rank_sheet = styled(Item_c)`

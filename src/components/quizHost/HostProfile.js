@@ -1,6 +1,6 @@
 import {Avatar, Card, CardContent} from "@mui/material";
 import * as React from "react";
-import {Item_c, Item_l, Item_r} from "../LayOuts/LayOuts";
+import {Item_c, Item_l, Item_r} from "../../LayOuts/LayOuts";
 import styled from "styled-components";
 
 const Item_c_Content = styled(Item_c)`

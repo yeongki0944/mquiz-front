@@ -12,7 +12,7 @@ import {VolumeControlButton} from "../VolumeControlButton";
 import {useEffect} from "react";
 import styled from "styled-components";
 import {useSelector} from "react-redux";
-import {Card, Content, Item, Item_c, Item_l, Item_r, Page_Default, Page_Gradiant} from "../LayOuts/LayOuts";
+import {Card, Content, Item, Item_c, Item_l, Item_r, Page_Default, Page_Gradiant} from "../../LayOuts/LayOuts";
 
 const Item_r_Volume = styled(Item_r)`
     @media (min-width: 300px) and (max-width: 767px) {

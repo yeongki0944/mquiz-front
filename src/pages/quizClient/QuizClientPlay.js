@@ -7,7 +7,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {NickNameCheck} from "../../components/quizClient/ClientNickNameInput";
 import {ClientReady} from "../../components/quizClient/ClientReady";
 import {ClientCountOutModal} from "../../components/quizClient/ClientCountOutModal";
-import {Item_c, Page_Gradiant} from "../../components/LayOuts/LayOuts";
+import {Item_c, Page_Gradiant} from "../../LayOuts/LayOuts";
 import {stompDisconnect, stompInit, stompSend} from "../../function/WebSocket";
 import styled from "styled-components";
 import Button from "@mui/material/Button";

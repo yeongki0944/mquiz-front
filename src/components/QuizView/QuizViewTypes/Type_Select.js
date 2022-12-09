@@ -1,7 +1,7 @@
 import * as React from "react";
 import {useSelector, useDispatch} from "react-redux";
 import {stompSend} from "../../../function/WebSocket";
-import {Btn, Card, Item, Item_c} from "../../LayOuts/LayOuts";
+import {Btn, Card, Item, Item_c} from "../../../LayOuts/LayOuts";
 import {R_setData} from "../../../redux/reducers/quizplayReducer";
 import {PlayActionBar} from "../PlayActionBar";
 

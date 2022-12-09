@@ -7,7 +7,7 @@ import Paper from "@mui/material/Paper";
 
 import styled from "styled-components";
 import {R_setContent, R_setData} from "../../../redux/reducers/quizplayReducer";
-import {Btn, Card, Item, Item_c} from "../../LayOuts/LayOuts";
+import {Btn, Card, Item, Item_c} from "../../../LayOuts/LayOuts";
 import Button from "@mui/material/Button";
 import {stompSend} from "../../../function/WebSocket";
 import {PlayActionBar} from "../PlayActionBar";

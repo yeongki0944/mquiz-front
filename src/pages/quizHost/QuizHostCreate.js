@@ -5,7 +5,7 @@ import {ControlPanel} from "../../components/quizHost/ControlPanel";
 import {useSelector} from "react-redux";
 import {QuizView} from "../../components/QuizView/QuizView";
 import {NavBar} from "../../components/quizHost/NavBar";
-import {Page_Default} from "../../components/LayOuts/LayOuts";
+import {Page_Default} from "../../LayOuts/LayOuts";
 import styled from "styled-components";
 
 const Panel = styled.div`

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {Card, Content, Item} from "../LayOuts/LayOuts";
+import {Card, Content, Item} from "../../LayOuts/LayOuts";
 import {Type_Select} from "../QuizView/QuizViewTypes/Type_Select";
 import {Type_OX} from "../QuizView/QuizViewTypes/Type_OX";
 import {Type_Reply} from "../QuizView/QuizViewTypes/Type_Reply";

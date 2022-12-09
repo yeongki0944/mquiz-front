@@ -7,7 +7,7 @@ import {R_setQuizList} from "../../redux/reducers/quizListReducer";
 import {QuizListHostMain} from "../../components/quizHost/QuizListHostMain";
 import HostProfile from "../../components/quizHost/HostProfile";
 import {NavBar} from "../../components/quizHost/NavBar";
-import {Item_c, Item_l, Item_t, Page_Default} from "../../components/LayOuts/LayOuts";
+import {Item_c, Item_l, Item_t, Page_Default} from "../../LayOuts/LayOuts";
 import styled from "styled-components";
 import {QuizPreviewHostMain} from "../../components/quizHost/QuizPreviewHostMain";
 

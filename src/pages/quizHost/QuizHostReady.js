@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 import {VolumeControlButton} from "../../components/VolumeControlButton";
 import {useSelector} from "react-redux";
 import {stompSend} from "../../function/WebSocket";
-import {Btn, Content, Item, Item_b, Item_c, Item_r, Page, Page_Gradiant} from "../../components/LayOuts/LayOuts";
+import {Btn, Content, Item, Item_b, Item_c, Item_r, Page, Page_Gradiant} from "../../LayOuts/LayOuts";
 import {useState} from "react";
 import {HostCountOutModal, UserList} from "../../components/quizClient/ClientJoinList";
 import {createSvgIcon} from "@mui/material/utils";

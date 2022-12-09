@@ -8,7 +8,7 @@ import Box from "@mui/material/Box";
 import {useState, useEffect} from "react";
 import {AllQuizListCard} from "../../components/AllQuizListCard"
 import {QuizSearchBox} from "../../components/QuizSearchBox"
-import {Page_Default} from "../../components/LayOuts/LayOuts";
+import {Page_Default} from "../../LayOuts/LayOuts";
 import {NavBar} from "../../components/quizHost/NavBar";
 
 export const QuizHostFind = () => {

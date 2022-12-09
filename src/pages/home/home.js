@@ -1,6 +1,6 @@
 import {Link} from "react-router-dom";
 import React from "react";
-import {Item_b, Item_c, Item_t, Page_Gradiant} from "../../components/LayOuts/LayOuts";
+import {Item_b, Item_c, Item_t, Page_Gradiant} from "../../LayOuts/LayOuts";
 import styled from "styled-components";
 
 export const Item_b_Logo = styled(Item_b)`

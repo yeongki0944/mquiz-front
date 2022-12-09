@@ -12,7 +12,7 @@ import CustomAxios from "../../function/CustomAxios";
 import {R_setCurrentShow, R_setId, R_setQuiz} from "../../redux/reducers/quizInfoReducer";
 import styled from "styled-components";
 import {R_setData} from "../../redux/reducers/quizplayReducer";
-import {Item_c} from "../LayOuts/LayOuts";
+import {Item_c} from "../../LayOuts/LayOuts";
 import {useState} from "react";
 
 /**

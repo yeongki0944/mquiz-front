@@ -1,5 +1,5 @@
 import Modal from "@mui/material/Modal";
-import {Item_c} from "./LayOuts/LayOuts";
+import {Item_c} from "../LayOuts/LayOuts";
 import QRCode from "react-qr-code";
 import * as React from "react";
 import Button from "@mui/material/Button";

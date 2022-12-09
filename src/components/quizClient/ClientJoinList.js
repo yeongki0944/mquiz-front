@@ -4,7 +4,7 @@ import Modal from "@mui/material/Modal";
 import CardMedia from "@mui/material/CardMedia";
 import Chip from "@mui/material/Chip";
 import {useState} from "react";
-import {Item, Item_c, Page_Default} from "../LayOuts/LayOuts";
+import {Item, Item_c, Page_Default} from "../../LayOuts/LayOuts";
 import styled from "styled-components";
 import {useSelector} from "react-redux";
 import store from "../../redux/store";

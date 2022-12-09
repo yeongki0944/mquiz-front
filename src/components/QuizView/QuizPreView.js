@@ -10,7 +10,7 @@ import {YoutubeShow} from "./Outputs/YoutubeShow";
 import {useEffect} from "react";
 import styled from "styled-components";
 import {useSelector} from "react-redux";
-import {Item_c, Item_l, Item_r, Item_t, Page_Default, Page_Gradiant} from "../LayOuts/LayOuts";
+import {Item_c, Item_l, Item_r, Item_t, Page_Default, Page_Gradiant} from "../../LayOuts/LayOuts";
 
 const imageItemData = [
     {

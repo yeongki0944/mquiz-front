@@ -5,7 +5,7 @@ import {useEffect} from "react";
 import {QuizStartCounter} from "../../components/QuizStartCounter";
 import {styled} from "@mui/system";
 import {R_setData, R_setContent} from "../../redux/reducers/quizplayReducer";
-import {Item_c, Page, Page_Gradiant} from "../../components/LayOuts/LayOuts";
+import {Item_c, Page, Page_Gradiant} from "../../LayOuts/LayOuts";
 import {QuizHostReady} from "./QuizHostReady";
 import {stompInit, stompSend, stompDisconnect, stompSubscribe} from "../../function/WebSocket";
 import {Rank_Page} from "../../components/Result/Rank_Page";

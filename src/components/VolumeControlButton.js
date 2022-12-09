@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import {VolumeUp} from "@material-ui/icons";
 import VolumeOffIcon from '@mui/icons-material/VolumeOff';
 import {useState} from "react";
-import {Item} from "./LayOuts/LayOuts";
+import {Item} from "../LayOuts/LayOuts";
 
 
 
