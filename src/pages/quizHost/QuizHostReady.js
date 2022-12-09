@@ -18,7 +18,7 @@ export const QuizHostReady = () => {
     const {quizPlay} = useSelector(state => state.quizPlay);
     const [openBan, setOpenBan] = useState(false);
     const [openQR, setOpenQR] = useState(false);
-    const URL = "http://15.152.42.217/:3000/QClient?pinNum=" + quizPlay.pinNum;
+    const URL = "http://15.152.42.217:3000/QClient?pinNum=" + quizPlay.pinNum;
 
     const handleCopy = () => {
         navigator.clipboard.writeText(URL).then(function () {
