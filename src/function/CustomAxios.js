@@ -1,8 +1,7 @@
 import axios from 'axios'
 
 const session = window.sessionStorage
-// const URL = process.env.REACT_APP_BACKEND_SERVER;
-const URL = "http://15.152.42.217:8888";
+const URL = process.env.REACT_APP_BACKEND_SERVER;
 
 
 const CustomAxios = axios.create({
