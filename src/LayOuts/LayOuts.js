@@ -62,17 +62,9 @@ export const Page = styled.div`
     ${props => props.sx.bg === "default" && `
         background: #f5f5f5;
     `}
-    ${props => props.sx.bg === "grad-right" && `
-        background: linear-gradient(to right,${props.sx.grad1}, ${props.sx.grad2});
-    `}
-    ${props => props.sx.bg === "grad-left" && `
-        background: linear-gradient(to left, ${props.sx.grad1}, ${props.sx.grad2});
-    `}
-    ${props => props.sx.bg === "grad-top" && `
-        background: linear-gradient(to top, ${props.sx.grad1}, ${props.sx.grad2});
-    `}
-    ${props => props.sx.bg === "grad-bottom" && `
-        background: linear-gradient(to bottom, ${props.sx.grad1}, ${props.sx.grad2});
+    ${props => props.sx.bg === "img" && `
+        background: url(${props.sx.img}) no-repeat center center fixed;
+        background-size: cover;
     `}
 `;
 
@@ -90,7 +82,7 @@ export const Content = styled.div`
 `;
 
 export const Item = styled.div`
-    // border: 1px solid red;
+    border: 1px solid red;
     display:flex;
     width:100%;
     height:100%;
@@ -109,6 +101,28 @@ export const Item = styled.div`
         ${(props) => props.sm} 
     }
 `;
+
+export const New_Card = styled.div`
+    background: #000;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    opacity: 0.5;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    &:hover {
+        opacity: 0.7;
+        transform: scale(1.05);
+    }
+    
+    
+    ${(props) => props.sx}
+    @media (min-width: 768px) {
+    }
+    @media (min-width: 300px) and (max-width: 767px) {
+        ${(props) => props.sm}
+    }
+`
 
 export const Card = styled.div`
     background: #fff;
