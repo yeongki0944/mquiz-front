@@ -7,7 +7,7 @@ export default function Home() {
     const history = useHistory();
 
     const handleHost = () => {
-        history.push("/Qhost");
+        history.push("/Auth");
     }
     const handleClient = () => {
         history.push("/Qclient");

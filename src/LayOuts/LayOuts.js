@@ -120,9 +120,8 @@ export const Card = styled.div`
     &:hover {
         transform: scale(1.05);
         background: rgba(0,0,0,0.7);
+        color: #fff;
     }
-    
-    
     ${(props) => props.sx}
     @media (min-width: 768px) {
     }
@@ -130,6 +129,22 @@ export const Card = styled.div`
         ${(props) => props.sm}
     }
 `
+
+export const Card_panel = styled.div`
+    font-family: 'Jazz LET', fantasy;
+    background: rgba(255,255,255,0.7);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    transition: all 0.3s ease-in-out;
+    ${(props) => props.sx}
+    @media (min-width: 768px) {
+    }
+    @media (min-width: 300px) and (max-width: 767px) {
+        ${(props) => props.sm}
+    }
+`
+
 
 export const Img = styled.img`
     ${(props) => props.sx}
@@ -146,6 +161,7 @@ export const Btn = styled.div`
     padding: 10px 25px;
     font-family: 'Lato', sans-serif;
     font-weight: bold;
+    align-text: center;
     background: #FF4C29;
     cursor: pointer;
     transition: all 0.3s ease;

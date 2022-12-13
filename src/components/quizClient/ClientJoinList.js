@@ -29,9 +29,10 @@ export const UserList = (props) => {
     return (
         <Item sx={props.sx} sm={props.sm}>
             <Item sx={{place:'center',display:'block'}}>
-            {quizPlay.userList.map((item) => {
+            {quizPlay.userList.map((item,index) => {
                 return (
                         <Chip
+                            key={index}
                             label={item}
                             id={item}
                             sx={{margin: 1, backgroundColor: '#61DAFB', color: '#202123'}}

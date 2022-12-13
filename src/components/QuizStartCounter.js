@@ -2,7 +2,7 @@ import * as React from "react";
 import 'bootstrap/dist/css/bootstrap.css';
 import {useEffect, useRef, useState} from "react";
 import styled from "styled-components";
-import {Content, Item, Page_Default} from "../LayOuts/LayOuts";
+import {Content, Img, Item, Page_Default} from "../LayOuts/LayOuts";
 
 
 /*
@@ -48,7 +48,29 @@ export const QuizStartCounter = () => {
 
     return (
         <Content sx={{width: '100vw', height: '100vh'}}>
-            <Item sx={{place:'center',fontWeight:'bold',color:'#fff',fontSize:'10rem'}} sm={{fontSize:'5rem'}}>{count > 0 ? count : "GO!"}</Item>
+            <Item sx={{place: 'center'}}>
+                {count === 3 &&
+                    <Img
+                        alt="complex"
+                        src="/img/count3.png"
+                        sx={{width: '15vw', height: '15vw', position: 'absolute'}}
+                        sm={{width: '30vw', height: '30vw'}}
+                    />}
+                {count === 2 &&
+                    <Img
+                        alt="complex"
+                        src="/img/count2.png"
+                        sx={{width: '15vw', height: '15vw', position: 'absolute'}}
+                        sm={{width: '30vw', height: '30vw'}}
+                    />}
+                {count === 1 &&
+                    <Img
+                        alt="complex"
+                        src="/img/count1.png"
+                        sx={{width: '15vw', height: '15vw', position: 'absolute'}}
+                        sm={{width: '30vw', height: '30vw'}}
+                    />}
+            </Item>
         </Content>
     )
 }

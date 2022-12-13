@@ -5,7 +5,7 @@ import {useEffect, useRef, useState} from "react";
 import {stompSend} from "../../function/WebSocket";
 import {R_setData} from "../../redux/reducers/quizplayReducer";
 import {useDispatch, useSelector} from "react-redux";
-import {Content, Item} from "../../LayOuts/LayOuts";
+import {Content, Item, Text} from "../../LayOuts/LayOuts";
 
 /**
  * props:
@@ -55,7 +55,7 @@ export const Gauge = (props) => {
             }
             else if(count >= 100){
                 if(quizPlay.nickName === null ){ // 호스트
-                    
+
                 }
                 else{ // 클라이언트
                     dispatch(R_setData({key: "command", value: "SUBMIT"}));
@@ -76,9 +76,9 @@ export const Gauge = (props) => {
 
     return (
         <Content sx={{width:'100%'}}>
-            <Item sx={{place:'center'}}>
-                <h5>문제 {props.Qnum} / {props.TotalQcnt}</h5>
-            </Item>
+            <Text sx={{color:'#FFC107',fontSize:'2vw'}} sm={{fontSize:'5vw'}}>
+                문제 {props.Qnum} / {props.TotalQcnt}
+            </Text>
             <Item sx={{place:'center', width:'100%'}}>
                 <ProgressBar
                     style={{width:'95%'}}

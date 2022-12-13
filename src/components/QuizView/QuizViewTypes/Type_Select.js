@@ -18,7 +18,7 @@ export const Type_Select = (props) => {
             e.target.style.border = "none";
         } else {
             e.target.id = "selected";
-            e.target.style.border = "1px solid orange";
+            e.target.style.border = "3px solid orange";
         }
     }
 
@@ -65,13 +65,13 @@ export const Type_Select = (props) => {
                               >
                             {quizPlay.command === "RESULT" && chkAnswer(item) ?  //정답화면 정답일 시
                                 currentQuiz.choiceList[item] != "" ?
-                                    <Card sx={{place: 'center', background: 'orange'}}
+                                    <Card sx={{width:'90%',height:'90%',backgroundColor:'rgba(255,255,255,0.5)'}}
                                           id={item}>{index + 1}.{currentQuiz.choiceList[item]}</Card>
                                     : null
                                 :
                                 quizPlay.nickName === null && //호스트 화면
                                 currentQuiz.choiceList[item] != "" ?
-                                    <Card sx={{place: 'center'}}
+                                    <Card sx={{width:'90%',height:'90%',backgroundColor:'rgba(255,255,255,0.5)'}}
                                           id={item}>{index + 1}.{currentQuiz.choiceList[item]}</Card>
                                     : null
 
@@ -79,7 +79,7 @@ export const Type_Select = (props) => {
 
                             {quizPlay.command != "RESULT" && quizPlay.nickName != null && //클라이언트
                             currentQuiz.choiceList[item] != "" ?
-                                <Card sx={{place: 'center'}} id={item} onClick={setSelected}>{index + 1}.{currentQuiz.choiceList[item]}</Card>
+                                <Card sx={{width:'90%',height:'90%',backgroundColor:'rgba(255,255,255,0.5)'}} id={item} onClick={setSelected}>{index + 1}.{currentQuiz.choiceList[item]}</Card>
                                 : null
                             }
                         </Item>
@@ -87,7 +87,9 @@ export const Type_Select = (props) => {
                 })}
 
             </Item>
-            <PlayActionBar sx={{place: 'center', display: 'block', height: '20%'}} handleSubmit={handleSubmit}/>
+            <Item sx={{place:'center',width:'100%',height:'20%'}}>
+                <PlayActionBar sx={{place: 'center', display: 'block',width:'100%'}} handleSubmit={handleSubmit}/>
+            </Item>
         </Item>
     )
 

@@ -2,6 +2,7 @@ import * as React from 'react';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import {Button} from "@mui/material";
 
 const style = {
   position: 'absolute',

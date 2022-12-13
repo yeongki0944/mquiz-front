@@ -7,11 +7,11 @@ export function ClientSubmitWait() {
         <Content>
             <Item sx={{place:'center', marginBottom:'15px'}} sm={{place:'center'}}>
                 {/* 대기 프로그래스 바 */}
-                <CircularProgress size={'20vh'}/>
+                <CircularProgress size={'20vh'} color={'error'}/>
                 <Img
                     alt="complex"
                     src="/img/Spaceman_dabbing.png"
-                    sx={{width: '20vw', height: '20vw',position:'absolute'}}
+                    sx={{width: '15vw', height: '15vw',position:'absolute'}}
                     sm={{width: '50vw', height: '50vw'}}
                 />
             </Item>

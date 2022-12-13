@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {Card, Content, Item} from "../../LayOuts/LayOuts";
+import {Card, Card_panel, Content, Item, Text} from "../../LayOuts/LayOuts";
 import {Type_Select} from "../QuizView/QuizViewTypes/Type_Select";
 import {Type_OX} from "../QuizView/QuizViewTypes/Type_OX";
 import {Type_Reply} from "../QuizView/QuizViewTypes/Type_Reply";
@@ -45,21 +45,46 @@ export const Answer = (props) => {
     }
 
     return (
-        <Item sx={{place:'center',width:'100%',display:'block'}}>
-            <Item sx={{
-                place: 'center',
-                height: '20%',
-                fontSize: '2em',
-                fontWeight: 'bold'
-            }}>Answer</Item>
-            <Item sx={{place: 'center', height: '40%', display: 'flex'}} sm={{display: 'block', height: '45%'}}>
-                <Card sx={{place: 'center', minWidth:'45%',minHeight:'90%',margin:'auto',maxHeight:'90%'}} sm={{minWidth:'100%',minHeight:'150px'}}>{currentQuiz.question}</Card>
-                <Card sx={{place: 'center', minWidth:'45%',minHeight:'90%',margin:'auto',maxHeight:'90%',overflow:'hidden'}} sm={{minWidth:'100%',minHeight:'150px'}}><Media/></Card>
+        <Card_panel sx={{width:'100%',height: '95vh', maxWidth:'1200px', backgroundColor: 'rgba(0,0,0,0.4)'}}>
+            <Item sx={{place: 'center', display: 'block', height: '100%'}}>
+                <Text sx={{color: '#FFC107', fontSize: '3vw'}} sm={{fontSize: '6vw'}}>
+                    Answer
+                </Text>
+                <Item sx={{place: 'center', height: '40%', display: 'flex'}} sm={{display: 'block', height: '50%'}}>
+                    {props.state === "play" ?
+                        <Card_panel
+                            sx={{place: 'center', minWidth: '45%', minHeight: '90%', margin: 'auto', maxHeight: '90%'}}
+                            sm={{minWidth: '100%', minHeight: '50%'}}>{currentQuiz.question}</Card_panel>
+                        :
+                        <Card_panel
+                            sx={{place: 'center', minWidth: '45%', minHeight: '90%', margin: 'auto', maxHeight: '90%'}}
+                            sm={{minWidth: '100%', minHeight: '50%'}}>{currentQuiz.question}</Card_panel>
+                    }
+                    {props.state === "play" ?
+                        <Card_panel sx={{
+                            place: 'center',
+                            minWidth: '45%',
+                            minHeight: '90%',
+                            margin: 'auto',
+                            maxHeight: '90%',
+                            overflow: 'hidden'
+                        }} sm={{minWidth: '100%', minHeight: '50%'}}><Media/></Card_panel>
+                        :
+                        <Card_panel sx={{
+                            place: 'center',
+                            minWidth: '45%',
+                            minHeight: '90%',
+                            margin: 'auto',
+                            maxHeight: '90%',
+                            overflow: 'hidden'
+                        }} sm={{minWidth: '100%', minHeight: '50%'}}><Media/></Card_panel>
+                    }
+                </Item>
+                <Item sx={{place: 'center', height: '40%', display: 'block'}} sm={{height: '40%'}}>
+                    <AnswerSheet/>
+                </Item>
             </Item>
-            <Item sx={{place: 'center', height: '40%', display: 'block'}} sm={{height: '45%'}}>
-                <AnswerSheet/>
-            </Item>
-        </Item>
+        </Card_panel>
 
     )
 }

@@ -20,6 +20,7 @@ import {Provider} from "react-redux";
 import {QuizClientPlay} from "./pages/quizClient/QuizClientPlay";
 import {QuizHostReport} from "./pages/quizHost/QuizHostReport";
 import {NotFound404} from "./pages/NotFound404";
+import {Auth} from "./pages/quizHost/Auth";
 
 
 const App = () =>{
@@ -32,6 +33,8 @@ const App = () =>{
                             {/* 관리자 페이지 목록*/}
 
                             {/* 진행자 페이지 목록*/}
+                            <Route path="/Auth" component={Auth} exact/>
+
                             <Route path="/QHost" component={QuizHostMain} exact/>
 
                             <Route path="/QHost/create" component={QuizHostCreate} exact/>
