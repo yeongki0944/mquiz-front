@@ -59,11 +59,6 @@ export const Page = styled.div`
     overflow-y: hidden;
     background: ${(props) => props.sx.bg};
     display:block;
-    ${(props) => props.sx.bgimg && `
-        background-image: url(${props.sx.bgimg});
-        background-size: cover;
-    `}
-    background-image: url(${(props) => props.sx.bgimg});
     ${props => props.sx.bg === "default" && `
         background: #f5f5f5;
     `}
@@ -90,45 +85,28 @@ export const Content = styled.div`
         max-height: 1080px;
     }
     @media (min-width: 300px) and (max-width: 767px) {
-        max-width: 100vw;
-        max-height: 100vh;
         ${(props) => props.sm}
     }
 `;
 
 export const Item = styled.div`
-    border: 1px solid red;
+    // border: 1px solid red;
     display:flex;
     width:100%;
     height:100%;
-    justify-content: center;
-    align-items: center;
     ${(props) => props.sx};
-    ${(props) => props.sx.place &&
-        props.sx.place === "center" && "justify-content: center; align-items: center;" ||
-        props.sx.place === "left" && "justify-content: left; align-items: left;" ||
-        props.sx.place === "right" && "justify-content: right; align-items: right;" ||
-        props.sx.place === "top" && "justify-content: center; align-items: top;" ||
-        props.sx.place === "top-left" && "justify-content: left; align-items: top;" ||
-        props.sx.place === "top-right" && "justify-content: right; align-items: top;" ||
-        props.sx.place === "bottom" && "justify-content: center; align-items: bottom;" ||
-        props.sx.place === "bottom-left" && "justify-content: left; align-items: bottom;" ||
-        props.sx.place === "bottom-right" && "justify-content: right; align-items: bottom;"}
-    }
+    ${(props) => props.sx.place === "center" && "justify-content: center; align-items: center;"}
+    ${(props) => props.sx.place === "left" && "justify-content: left; align-items: left;"}
+    ${(props) => props.sx.place === "right" && "justify-content: right; align-items: right;"}
+    ${(props) => props.sx.place === "top" && "justify-content: center; align-items: top;"}
+    ${(props) => props.sx.place === "top-left" && "justify-content: left; align-items: top;"}
+    ${(props) => props.sx.place === "top-right" && "justify-content: right; align-items: top;"}
+    ${(props) => props.sx.place === "bottom" && "justify-content: center; align-items: bottom;"}
+    ${(props) => props.sx.place === "bottom-left" && "justify-content: left; align-items: bottom;"}
+    ${(props) => props.sx.place === "bottom-right" && "justify-content: right; align-items: bottom;"}
     
     @media (min-width: 300px) and (max-width: 767px) {
         ${(props) => props.sm} 
-        ${(props) => props.sm.place &&
-            props.sm.place === "center" && "justify-content: center; align-items: center;" ||
-            props.sm.place === "left" && "justify-content: left; align-items: left;" ||
-            props.sm.place === "right" && "justify-content: right; align-items: right;" ||
-            props.sm.place === "top" && "justify-content: center; align-items: top;" ||
-            props.sm.place === "top-left" && "justify-content: left; align-items: top;" ||
-            props.sm.place === "top-right" && "justify-content: right; align-items: top;" ||
-            props.sm.place === "bottom" && "justify-content: center; align-items: bottom;" ||
-            props.sm.place === "bottom-left" && "justify-content: left; align-items: bottom;" ||
-            props.sm.place === "bottom-right" && "justify-content: right; align-items: bottom;"}
-        }
     }
 `;
 
