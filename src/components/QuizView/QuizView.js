@@ -1,33 +1,15 @@
 import * as React from "react";
 import {Gauge} from "./Gauge";
-import {QuizQuestion} from "./QuizQuestion";
 import {Type_Select} from "./QuizViewTypes/Type_Select";
 import {Type_OX} from "./QuizViewTypes/Type_OX";
 import {Type_Reply} from "./QuizViewTypes/Type_Reply";
 import {ImageShow} from "./Outputs/ImageShow";
 import {AudioShow} from "./Outputs/AudioShow";
 import {YoutubeShow} from "./Outputs/YoutubeShow";
-import {PinNum} from "../PinNum";
 import {VolumeControlButton} from "../VolumeControlButton";
 import {useEffect} from "react";
-import styled from "styled-components";
 import {useSelector} from "react-redux";
-import {Card, Content, Item, Item_c, Item_l, Item_r, Page_Default, Page_Gradiant} from "../../LayOuts/LayOuts";
-
-const Item_r_Volume = styled(Item_r)`
-    @media (min-width: 300px) and (max-width: 767px) {
-        position: absolute;
-        right: 0;
-        top: 0;
-        width: 40%;
-    }
-    @media (min-width: 767px) {
-        position: absolute;
-        right: 0;
-        top: 0;
-    }
-`;
-
+import {Card, Item, Item_r} from "../../LayOuts/LayOuts"
 
 export const QuizView = (props) => {
     const currentQuiz = props.currentQuiz;
@@ -59,7 +41,7 @@ export const QuizView = (props) => {
                 return (<AudioShow currentQuiz={currentQuiz}/>);
                 break;
             default:
-                return (<div></div>);
+                return (<Item sx={{place:'center'}}></Item>);
         }
     }
 
@@ -77,7 +59,7 @@ export const QuizView = (props) => {
                         fontSize: '2em',
                         fontWeight: 'bold'
                     }}>PIN: {quizPlay.pinNum}</Item>
-                    <Item sx={{place: 'center', height: '50%'}}>
+                    <Item sx={{place: 'center', height: '50%', width:'100%'}}>
                         <Gauge
                             quizPlay={quizPlay}
                             Qnum={currentQuiz.num}
@@ -95,8 +77,6 @@ export const QuizView = (props) => {
                     <AnswerSheet/>
                 </Item>
             </Item>
-
-
         )
     }
 

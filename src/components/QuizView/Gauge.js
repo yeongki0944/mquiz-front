@@ -1,42 +1,11 @@
-import {Box, LinearProgress} from "@mui/material";
 import * as React from "react";
-import Grid from "@mui/material/Grid";
-import {makeStyles} from "@material-ui/core/styles";
 import {ProgressBar} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.css';
 import {useEffect, useRef, useState} from "react";
-import styled from 'styled-components';
 import {stompSend} from "../../function/WebSocket";
 import {R_setData} from "../../redux/reducers/quizplayReducer";
 import {useDispatch, useSelector} from "react-redux";
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-        flexGrow: 1,
-    },
-    content: {
-        width: "100%",
-        // height: "100%",
-        padding: theme.spacing(2),
-        textAlign: "center",
-        // verticalAlign: "middle",
-        // display: "flex",
-        // alignItems: "center",
-        // justifyContent: "center",
-        // margin: "auto",
-    },
-    item: {
-        width: "10%",
-        padding: theme.spacing(2),
-        verticalAlign: "middle",
-        alignItems: "center",
-        justifyContent: "center",
-    },
-    progress: {
-        width: "90%",
-        padding: theme.spacing(2),
-    },
-}));
+import {Content, Item} from "../../LayOuts/LayOuts";
 
 /**
  * props:
@@ -47,7 +16,6 @@ const useStyles = makeStyles((theme) => ({
 
 export const Gauge = (props) => {
     const dispatch = useDispatch();
-    const classes = useStyles();
 
     const {quizPlay} = useSelector(state => state.quizPlay);
 
@@ -107,16 +75,19 @@ export const Gauge = (props) => {
     },[count]);
 
     return (
-        <div className={classes.content}>
-            <div>
-                문제 {props.Qnum} / {props.TotalQcnt}
-            </div>
-            <div>
-                <ProgressBar animated
-                             now={count < 100 ? count : 100}
-                             label={parseInt((count / (100 / props.timeleft * 0.1))*0.1)}/>
-            </div>
-        </div>
+        <Content sx={{width:'100%'}}>
+            <Item sx={{place:'center'}}>
+                <h5>문제 {props.Qnum} / {props.TotalQcnt}</h5>
+            </Item>
+            <Item sx={{place:'center', width:'100%'}}>
+                <ProgressBar
+                    style={{width:'95%'}}
+                    animated
+                    now={count < 100 ? count : 100}
+                    label={parseInt((count / (100 / props.timeleft * 0.1))*0.1)}
+                />
+            </Item>
+        </Content>
     )
 }
 

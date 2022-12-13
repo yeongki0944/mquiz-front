@@ -1,14 +1,7 @@
 import {useDispatch, useSelector} from "react-redux";
-import {Box, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup} from "@mui/material";
-import {R_modifyQuizAnswer} from "../../../redux/reducers/quizInfoReducer";
 import * as React from "react";
-import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
-
-import styled from "styled-components";
-import {R_setContent, R_setData} from "../../../redux/reducers/quizplayReducer";
-import {Btn, Card, Item, Item_c} from "../../../LayOuts/LayOuts";
-import Button from "@mui/material/Button";
+import {R_setData} from "../../../redux/reducers/quizplayReducer";
+import {Card, Item} from "../../../LayOuts/LayOuts";
 import {stompSend} from "../../../function/WebSocket";
 import {PlayActionBar} from "../PlayActionBar";
 
@@ -52,13 +45,14 @@ export const Type_OX = () => {
     return (
         <Item sx={{place: 'center', display: 'block'}}>
             <Item sx={{place: 'center', display: 'flex', height: '80%'}}>
-                {quizPlay.command === "RESULT" && quizPlay.quiz.answer[0] === "O" ?  //정답화면 정답일 시
+                {
+                    quizPlay.command === "RESULT" && quizPlay.quiz.answer[0] === "O" ?  //정답화면 정답일 시
                     <Item sx={{place: 'center',display: 'flex'}} sm={{display:'block'}}>
                         <Card sx={{place: 'center',minWidth: '45%',margin:'auto',background:'orange'}} sm={{minHeight:'45%',minWidth:'45%'}}>O</Card>
                         <Card sx={{place: 'center',minWidth: '45%',margin:'auto'}} sm={{minHeight:'45%',minWidth:'45%'}}>X</Card>
                     </Item>
                     :
-                    quizPlay.command === "RESULT" && quizPlay.quiz.answer[0] === "O" ?
+                    quizPlay.command === "RESULT" && quizPlay.quiz.answer[0] === "X" ?
                         <Item sx={{place: 'center', width: '100%', height: '100%', display: 'flex'}} sm={{display:'block'}}>
                             <Card sx={{place: 'center',minWidth: '45%',margin:'auto'}} sm={{minHeight:'45%',minWidth:'45%'}}>O</Card>
                             <Card sx={{place: 'center',minWidth: '45%',margin:'auto',background:'orange'}} sm={{minHeight:'45%',minWidth:'45%'}}>X</Card>
@@ -70,7 +64,7 @@ export const Type_OX = () => {
                             <Card sx={{place: 'center',minWidth: '45%',margin:'auto'}} sm={{minHeight:'45%',minWidth:'45%'}}>X</Card>
                         </Item>
                 }
-                {quizPlay.command != "RESULT" && quizPlay.nickName != null && //클라이언트 화면
+                {quizPlay.command !== "RESULT" && quizPlay.nickName != null && //클라이언트 화면
                     <Item sx={{place: 'center', width: '100%', height: '100%', display: 'flex'}} sm={{}}>
                         <Card sx={{place: 'center',minWidth: '45%',margin:'auto'}} sm={{minHeight:'45%',minWidth:'45%'}} onClick={setSelected}>O</Card>
                         <Card sx={{place: 'center',minWidth: '45%',margin:'auto'}} sm={{minHeight:'45%',minWidth:'45%'}} onClick={setSelected}>X</Card>
