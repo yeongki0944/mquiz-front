@@ -5,7 +5,7 @@ import {ControlPanel} from "../../components/quizHost/ControlPanel";
 import {useSelector} from "react-redux";
 import {QuizView} from "../../components/QuizView/QuizView";
 import {NavBar} from "../../components/quizHost/NavBar";
-import {Page_Default} from "../../LayOuts/LayOuts";
+import {Page} from "../../LayOuts/LayOuts";
 import styled from "styled-components";
 
 const Panel = styled.div`
@@ -35,7 +35,7 @@ export const QuizHostCreate = () => {
     const currentQuiz = (quiz.quizData.find(item => item.num === quiz.currentShow));
 
     return (
-        <Page_Default>
+        <Page sx={{bg:'img',img: '/img/background_3.jpg'}}>
             <NavBar/>
             <Panel>
                 {/*퀴즈 복제 및 생성할 때 기본 시간 제한을 30초로 변경 필요*/}
@@ -47,6 +47,6 @@ export const QuizHostCreate = () => {
                 <Form><FormPanel currentQuiz={currentQuiz}/></Form>
             </Panel>
             <ControlPanel quiz={quiz}/>
-        </Page_Default>
+        </Page>
     )
 }

@@ -17,13 +17,13 @@ export default function Home() {
         <Page sx={{bg:'img',img: '/img/background_1.jpg'}}>
             <Content>
                 <Item
-                    sx={{width:'100vw', height:'50vh',color:'white',place:"center"}}
-                    sm={{width:'100vw', height:'50vh',color:'white',place:"center"}}
+                    sx={{width:'100%', height:'50vh',color:'white',place:"center"}}
+                    sm={{width:'100%', height:'50vh',color:'white',place:"center"}}
                 >
                     Logo
                 </Item>
                 <Item sx={{place:'center'}}>
-                    <Item sx={{place:'center',width:'100%',height:'50vh'}}>
+                    <Item sx={{place:'right',width:'100%',height:'50vh',marginRight:'5px'}}>
                         <Card
                             sx={{width:'50%',height:'50%'}}
                             sm={{width:'90%',height:'50%'}}
@@ -37,7 +37,7 @@ export default function Home() {
                             </Item>
                         </Card>
                     </Item>
-                    <Item sx={{place:'center',width:'100%',height:'50vh'}}>
+                    <Item sx={{place:'left',width:'100%',height:'50vh',marginLeft:'5px'}}>
                         <Card
                             sx={{width:'50%',height:'50%'}}
                             sm={{width:'90%',height:'50%'}}

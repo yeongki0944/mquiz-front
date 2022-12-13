@@ -7,48 +7,9 @@ import {R_setQuizList} from "../../redux/reducers/quizListReducer";
 import {QuizListHostMain} from "../../components/quizHost/QuizListHostMain";
 import HostProfile from "../../components/quizHost/HostProfile";
 import {NavBar} from "../../components/quizHost/NavBar";
-import {Item_c, Item_l, Item_t, Page, Page_Default} from "../../LayOuts/LayOuts";
-import styled from "styled-components";
+import {Card_panel, Content, Item, Page} from "../../LayOuts/LayOuts";
 import {QuizPreviewHostMain} from "../../components/quizHost/QuizPreviewHostMain";
 
-const Item_l_Profile = styled(Item_l)`
-    height: 15vh;
-    width: 70%;
-`
-const Item_c_Content = styled(Item_c)`
-    height: 75vh;
-    @media (min-width: 767px) {
-        display: flex;
-        width: 100%;
-    }
-    @media (min-width: 300px) and (max-width: 767px) {
-        display: block;
-        width: 100%;
-    }
-`
-const Item_t_QuizList = styled(Item_t)`
-    height: 75vh;
-    @media (min-width: 767px) {
-        width: 45%;
-    }
-
-    @media (min-width: 300px) and (max-width: 767px) {
-        width: 80%;
-        height: 100%;
-    }
-`
-const Item_c_QuizPreviewList = styled(Item_c)`
-    height: 75vh;
-    @media (min-width: 767px) {
-        width: 45%;
-        overflow-y: scroll;
-        overflow-x: hidden;
-    }
-
-    @media (min-width: 300px) and (max-width: 767px) {
-        display: none;
-    }
-`;
 
 export const QuizHostMain = () => {
     const dispatch = useDispatch();
@@ -70,14 +31,25 @@ export const QuizHostMain = () => {
     }, []);
 
     return (
-        <Page sx={{bg:'img',img: '/img/background_3.jpg'}}>
-            <NavBar/>
-            <Item_l_Profile><HostProfile name={"test"} info={"info"}/></Item_l_Profile>
-            <Item_c_Content>
-                <Item_t_QuizList><QuizListHostMain quizList={quizList} setModalOpen={setModalOpen}/></Item_t_QuizList>
-                <Item_c_QuizPreviewList><QuizPreviewHostMain/></Item_c_QuizPreviewList>
-            </Item_c_Content>
-            <QuizModal open={modalOpen} setOpen={setModalOpen}/>
+        <Page sx={{bg: 'img', img: '/img/background_2.jpg'}}>
+            <Content>
+                <NavBar/>
+                <Item sx={{place: 'center', height: '10vh', marginBottom: '2.5vh', marginTop: '2.5vh'}}
+                      sm={{height: '15vh', marginBottom: '2.5vh', marginTop: '2.5vh'}}>
+                    <HostProfile sx={{height: '100%', width: '50%'}} sm={{place: 'center', width: '100%'}} name={"test"}
+                                 info={"info"}/>
+                </Item>
+                <Item sx={{place: 'center', height: '75vh',width:'100%'}}>
+                    <Card_panel sx={{place: 'center',width:'50%',height:'100%',marginLeft:'1vw',marginRight:'1vw',overflowY:'auto'}} sm={{place: 'center',width:'100%',marginRight:'1vw',marginLeft:'1vw'}}>
+                            <QuizListHostMain sx={{place: 'center'}} sm={{width: '80%'}}
+                                              quizList={quizList} setModalOpen={setModalOpen}/>
+                    </Card_panel>
+                    <Card_panel sx={{place: 'center',width:'50%',height:'100%',marginLeft:'1vw',marginRight:'1vw'}} sm={{place: 'center',display:'none'}}>
+                            <QuizPreviewHostMain sx={{place: 'center', width: '100%'}}/>
+                    </Card_panel>
+                </Item>
+                <QuizModal open={modalOpen} setOpen={setModalOpen}/>
+            </Content>
         </Page>
     );
 }

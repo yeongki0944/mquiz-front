@@ -63,12 +63,11 @@ export const Page = styled.div`
 `;
 
 export const Content = styled.div`
-    // border: 1px solid blue;
+    // border: 3px solid blue;
     margin: auto;
     ${(props) => props.sx}
     @media (min-width: 768px) {
         max-width: 1920px;
-        max-height: 1080px;
     }
     @media (min-width: 300px) and (max-width: 767px) {
         ${(props) => props.sm}
