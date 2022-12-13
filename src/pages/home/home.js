@@ -1,6 +1,6 @@
 import {useHistory} from "react-router-dom";
 import React from "react";
-import {Content, Item, New_Card, Page} from "../../LayOuts/LayOuts";
+import {Card, Content, Item, Page} from "../../LayOuts/LayOuts";
 
 
 export default function Home() {
@@ -14,7 +14,7 @@ export default function Home() {
     }
 
     return (
-        <Page sx={{bg:'img',img: 'img/background_1.jpg'}}>
+        <Page sx={{bg:'img',img: '/img/background_1.jpg'}}>
             <Content>
                 <Item
                     sx={{width:'100vw', height:'50vh',color:'white',place:"center"}}
@@ -24,7 +24,7 @@ export default function Home() {
                 </Item>
                 <Item sx={{place:'center'}}>
                     <Item sx={{place:'center',width:'100%',height:'50vh'}}>
-                        <New_Card
+                        <Card
                             sx={{width:'50%',height:'50%'}}
                             sm={{width:'90%',height:'50%'}}
                             onClick={handleHost}
@@ -35,10 +35,10 @@ export default function Home() {
                             >
                                 퀴즈 만들기
                             </Item>
-                        </New_Card>
+                        </Card>
                     </Item>
                     <Item sx={{place:'center',width:'100%',height:'50vh'}}>
-                        <New_Card
+                        <Card
                             sx={{width:'50%',height:'50%'}}
                             sm={{width:'90%',height:'50%'}}
                             onClick={handleClient}
@@ -49,7 +49,7 @@ export default function Home() {
                             >
                                 퀴즈 풀기
                             </Item>
-                        </New_Card>
+                        </Card>
                     </Item>
                 </Item>
             </Content>

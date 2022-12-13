@@ -5,7 +5,7 @@ import {useEffect, useState} from 'react';
 import {useDispatch} from "react-redux";
 import {R_setData} from "../../redux/reducers/quizplayReducer";
 import CustomAxios from "../../function/CustomAxios";
-import {Btn, Content, Item} from "../../LayOuts/LayOuts";
+import {Btn, Content, Item, Text} from "../../LayOuts/LayOuts";
 
 /**
  * 핀 번호 입력 component
@@ -78,10 +78,14 @@ export const PinNumCheck = () => {
     return (
         <Content>
             <Item sx={{place:'center'}} sm={{place:'center'}}>
-                <h3>PIN 번호를 입력한다면</h3>
+                <Text sx={{color:'#FFC107',fontSize:'3vw'}} sm={{fontSize:'6vw'}}>
+                    Pin 번호를 입력한다면
+                </Text>
             </Item>
             <Item sx={{place:'center'}} sm={{place:'center'}}>
-                <h3>퀴즈를 드리지요</h3>
+                <Text sx={{color:'#FFC107',fontSize:'3vw'}} sm={{fontSize:'6vw'}}>
+                    퀴즈를 드리지요
+                </Text>
             </Item>
             <Item sx={{place:'center'}} sm={{place:'center'}}>
                 <TextField id="pinNum" name="pinNum" type="pinNum" label="PIN 번호 입력(숫자 6자리)"

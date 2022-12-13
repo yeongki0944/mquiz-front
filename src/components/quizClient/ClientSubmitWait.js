@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Content, Item} from "../../LayOuts/LayOuts";
+import {Content, Img, Item, Text} from "../../LayOuts/LayOuts";
 import {CircularProgress} from "@mui/material";
 
 export function ClientSubmitWait() {
@@ -7,22 +7,20 @@ export function ClientSubmitWait() {
         <Content>
             <Item sx={{place:'center', marginBottom:'15px'}} sm={{place:'center'}}>
                 {/* 대기 프로그래스 바 */}
-                <CircularProgress size={150}/>
-                <img
-                    alt={"test"}
-                    src={"/img/logo192.png"}
-                    style={{
-                        position:"absolute",
-                        width:100,
-                        height:100
-                }}/>
+                <CircularProgress size={'20vh'}/>
+                <Img
+                    alt="complex"
+                    src="/img/Spaceman_dabbing.png"
+                    sx={{width: '20vw', height: '20vw',position:'absolute'}}
+                    sm={{width: '50vw', height: '50vw'}}
+                />
             </Item>
-            <Item sx={{place:'center'}} sm={{place:'center'}}>
-                <h3>정답을 제출했습니다!</h3>
-            </Item>
-            <Item sx={{place:'center'}} sm={{place:'center'}}>
-                <h3>잠시 기다려주세요!!</h3>
-            </Item>
+            <Text sx={{color:'#FFC107',fontSize:'3vw'}} sm={{fontSize:'6vw'}}>
+                정답을 제출했습니다!
+            </Text>
+            <Text sx={{color:'#FFC107',fontSize:'3vw'}} sm={{fontSize:'6vw'}}>
+                잠시 기다려주세요!!
+            </Text>
         </Content>
     );
 }

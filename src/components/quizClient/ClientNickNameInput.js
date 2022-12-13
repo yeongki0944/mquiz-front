@@ -5,7 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {R_setData} from "../../redux/reducers/quizplayReducer";
 import {stompSend} from "../../function/WebSocket";
 import {chk_special} from "../../function/RegularExpression";
-import {Btn, Content, Item} from "../../LayOuts/LayOuts";
+import {Btn, Content, Item, Text} from "../../LayOuts/LayOuts";
 
 /**
  * 닉네임 입력 component
@@ -66,7 +66,9 @@ export const NickNameCheck = () => {
     return (
         <Content>
             <Item sx={{place: 'center'}} sm={{place:'center'}}>
-                <h3>취향저격 닉네임을 만들어 주세요</h3>
+                <Text sx={{color:'#FFC107',fontSize:'3vw'}} sm={{fontSize:'6vw'}}>
+                    취향저격 닉네임을 만들어 주세요
+                </Text>
             </Item>
             <Item sx={{place:'center'}} sm={{place:'center'}}>
                 <TextField id="nickName" name="nickName" type="nickName" label="닉네임 입력"

@@ -28,9 +28,9 @@ export const UserList = (props) => {
 
     return (
         <Item sx={props.sx} sm={props.sm}>
+            <Item sx={{place:'center',display:'block'}}>
             {quizPlay.userList.map((item) => {
                 return (
-                    <div key={item} style={{display: "inline-block"}}>
                         <Chip
                             label={item}
                             id={item}
@@ -41,9 +41,9 @@ export const UserList = (props) => {
                                 store.dispatch(R_setData({key: "bannedNickName", value: item}))
                             }}
                         />
-                    </div>
                 )
             })}
+            </Item>
         </Item>
     )
 }

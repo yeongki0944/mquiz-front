@@ -51,7 +51,7 @@ export const QuizClientPlay = () => {
      * FINAL: 최종 결과 표시
      */
     return (
-        <Page sx={{bg:"grad-right", grad1:"rebeccapurple", grad2:"salmon"}}>
+        <Page sx={{bg:'img',img: '/img/background_1.jpg'}}>
             <Item sx={{place:"center"}} sm={{place:'center'}}>
                 {quizPlay.command === null && <NickNameCheck/>}
                 {quizPlay.command === "WAIT" && <ClientReady/>}

@@ -7,7 +7,7 @@ import {R_setQuizList} from "../../redux/reducers/quizListReducer";
 import {QuizListHostMain} from "../../components/quizHost/QuizListHostMain";
 import HostProfile from "../../components/quizHost/HostProfile";
 import {NavBar} from "../../components/quizHost/NavBar";
-import {Item_c, Item_l, Item_t, Page_Default} from "../../LayOuts/LayOuts";
+import {Item_c, Item_l, Item_t, Page, Page_Default} from "../../LayOuts/LayOuts";
 import styled from "styled-components";
 import {QuizPreviewHostMain} from "../../components/quizHost/QuizPreviewHostMain";
 
@@ -70,7 +70,7 @@ export const QuizHostMain = () => {
     }, []);
 
     return (
-        <Page_Default>
+        <Page sx={{bg:'img',img: '/img/background_3.jpg'}}>
             <NavBar/>
             <Item_l_Profile><HostProfile name={"test"} info={"info"}/></Item_l_Profile>
             <Item_c_Content>
@@ -78,7 +78,7 @@ export const QuizHostMain = () => {
                 <Item_c_QuizPreviewList><QuizPreviewHostMain/></Item_c_QuizPreviewList>
             </Item_c_Content>
             <QuizModal open={modalOpen} setOpen={setModalOpen}/>
-        </Page_Default>
+        </Page>
     );
 }
 

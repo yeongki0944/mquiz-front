@@ -57,15 +57,9 @@ export const Page = styled.div`
     height: 100vh;
     overflow-x: hidden;
     overflow-y: hidden;
-    background: ${(props) => props.sx.bg};
     display:block;
-    ${props => props.sx.bg === "default" && `
-        background: #f5f5f5;
-    `}
-    ${props => props.sx.bg === "img" && `
-        background: url(${props.sx.img}) no-repeat center center fixed;
-        background-size: cover;
-    `}
+    background: ${(props) => props.sx.bg === "img" ? `url(${props.sx.img}) no-repeat center center fixed` : `#f5f5f5`};
+    background-size: cover;
 `;
 
 export const Content = styled.div`
@@ -82,7 +76,7 @@ export const Content = styled.div`
 `;
 
 export const Item = styled.div`
-    border: 1px solid red;
+    // border: 1px solid red;
     display:flex;
     width:100%;
     height:100%;
@@ -102,17 +96,30 @@ export const Item = styled.div`
     }
 `;
 
-export const New_Card = styled.div`
-    background: #000;
+export const Text = styled.div`
+    fontWeight:'bold';
+    ${(props) => props.sx}
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    @media (min-width: 768px) {
+    }
+    @media (min-width: 300px) and (max-width: 767px) {
+        ${(props) => props.sm}
+    }
+`
+
+export const Card = styled.div`
+    font-family: 'Jazz LET', fantasy;
+    background: rgba(0,0,0,0.5);
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     padding: 20px;
-    opacity: 0.5;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
     &:hover {
-        opacity: 0.7;
         transform: scale(1.05);
+        background: rgba(0,0,0,0.7);
     }
     
     
@@ -124,57 +131,31 @@ export const New_Card = styled.div`
     }
 `
 
-export const Card = styled.div`
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    padding: 20px;
-    min-width: 90%;
-    min-height: 90%;
-    ${(props) => props.sx};
-    ${(props) => props.sx.place === "center" && "justify-content: center; align-items: center;"}
-    ${(props) => props.sx.place === "left" && "justify-content: left; align-items: left;"}
-    ${(props) => props.sx.place === "right" && "justify-content: right; align-items: right;"}
-    ${(props) => props.sx.place === "top" && "justify-content: center; align-items: top;"}
-    ${(props) => props.sx.place === "top-left" && "justify-content: left; align-items: top;"}
-    ${(props) => props.sx.place === "top-right" && "justify-content: right; align-items: top;"}
-    ${(props) => props.sx.place === "bottom" && "justify-content: center; align-items: bottom;"}
-    ${(props) => props.sx.place === "bottom-left" && "justify-content: left; align-items: bottom;"}
-    ${(props) => props.sx.place === "bottom-right" && "justify-content: right; align-items: bottom;"}
+export const Img = styled.img`
+    ${(props) => props.sx}
+    @media (min-width: 768px) {
+    }
     @media (min-width: 300px) and (max-width: 767px) {
-        min-width: 100%;
-        ${(props) => props.sm} 
+        ${(props) => props.sm}
     }
 `
 
 export const Btn = styled.div`
-    width: 130px;
-    height: 40px;
     color: #fff;
     border-radius: 5px;
     padding: 10px 25px;
     font-family: 'Lato', sans-serif;
-    font-weight: 500;
-    background: orange;
+    font-weight: bold;
+    background: #FF4C29;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
-    7px 7px 20px 0px rgba(0,0,0,.1),
-    4px 4px 5px 0px rgba(0,0,0,.1);
+    box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.3),
+    7px 7px 20px 0px rgba(0,0,0,.5),
+    4px 4px 5px 0px rgba(0,0,0,.3);
     outline: none;
     &:hover {
         opacity: .5;
     }
-    ${(props) => props.sx}
-    ${(props) => props.sx.place === "center" && "justify-content: center; align-items: center;"}
-    ${(props) => props.sx.place === "left" && "justify-content: left; align-items: left;"}
-    ${(props) => props.sx.place === "right" && "justify-content: right; align-items: right;"}
-    ${(props) => props.sx.place === "top" && "justify-content: center; align-items: top;"}
-    ${(props) => props.sx.place === "top-left" && "justify-content: left; align-items: top;"}
-    ${(props) => props.sx.place === "top-right" && "justify-content: right; align-items: top;"}
-    ${(props) => props.sx.place === "bottom" && "justify-content: center; align-items: bottom;"}
-    ${(props) => props.sx.place === "bottom-left" && "justify-content: left; align-items: bottom;"}
-    ${(props) => props.sx.place === "bottom-right" && "justify-content: right; align-items: bottom;"}
     @media (min-width: 300px) and (max-width: 767px) {
         ${(props) => props.sm} 
     }

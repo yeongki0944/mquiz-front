@@ -51,7 +51,7 @@ export const QuizHostPlay = () => {
      */
     return (
 
-        <Page sx={{bg: 'grad-right', grad1: 'rebeccapurple', grad2: 'salmon'}}>
+        <Page sx={{bg:'img',img: '/img/background_1.jpg'}}>
             {quizPlay.command === "WAIT" && <QuizHostReady/>}
             {quizPlay.command === "START" && <QuizStartCounter/>}
             {quizPlay.command === "SHOW" && <QuizView currentQuiz={quizPlay.quiz} state={"play"}/>}

@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 import {VolumeControlButton} from "../../components/VolumeControlButton";
 import {useSelector} from "react-redux";
 import {stompSend} from "../../function/WebSocket";
-import {Btn, Content, Item, Item_b, Item_c, Item_r, Page, Page_Gradiant} from "../../LayOuts/LayOuts";
+import {Btn, Content, Item, Text} from "../../LayOuts/LayOuts";
 import {useState} from "react";
 import {HostCountOutModal, UserList} from "../../components/quizClient/ClientJoinList";
 import {createSvgIcon} from "@mui/material/utils";
@@ -38,18 +38,21 @@ export const QuizHostReady = () => {
     return (
         <Content sx={{width: '100vw', height: '100vh'}}>
             <VolumeControlButton sx={{place: 'top-right', height: '5vh'}}/>
-            <Item sx={{place: 'top', height: '10vh', fontSize: '3em', fontWeight: 'bold', color: 'yellow'}}
-                  sm={{fontSize: '2em'}}>mquiz.site/p 접속해주세요.</Item>
-            <Item sx={{place: 'center', height: '10vh'}}>
+            <Text sx={{color:'#FFC107',fontSize:'3vw'}} sm={{fontSize:'6vw'}}>
+                mquiz.site 접속해주세요
+            </Text>
+            <Item sx={{place: 'center', height: '10vh',display:'space-between'}}>
                 <Btn sx={{place:'center'}}onClick={() => {
                     setOpenQR(true)
                 }}>QR code</Btn>
                 <Btn sx={{place:'center'}}onClick={handleCopy}>URL copy</Btn>
             </Item>
-            <Item sx={{place: 'center', height: '10vh', fontSize: '3em', fontWeight: 'bold'}}
-                  sm={{fontSize: '2em'}}>PIN: {quizPlay.pinNum}</Item>
-            <Item sx={{place: 'center', height: '5vh', fontSize: '2em', fontWeight: 'bold'}}
-                  sm={{fontSize: '1em'}}><HomeIcon/>총 참여자 수 {quizPlay.userList.length} 명</Item>
+            <Text sx={{color:'#FFC107',fontSize:'3vw'}} sm={{fontSize:'6vw'}}>
+                PIN: {quizPlay.pinNum}
+            </Text>
+            <Text sx={{color:'#FFC107',fontSize:'3vw'}} sm={{fontSize:'6vw'}}>
+                <HomeIcon/>총 참여자 수 {quizPlay.userList.length} 명
+            </Text>
             <UserList sx={{
                 place: 'center',
                 height: '50vh',

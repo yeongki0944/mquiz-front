@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useSelector} from "react-redux";
-import {Content, Item} from "../../LayOuts/LayOuts";
+import {Content, Img, Item, Text} from "../../LayOuts/LayOuts";
 
 /**
  * 대기방 component
@@ -11,17 +11,22 @@ export function ClientReady() {
     return (
         <Content>
             <Item sx={{place:'center'}} sm={{place:'center'}}>
-                    <img
+                    <Img
                         alt="complex"
-                        src="/img/logo192.png"
-                        style={{margin: 'auto', display: 'block', maxWidth: '100%', maxHeight: '100%'}}
+                        src="/img/Spaceman.png"
+                        sx={{width: '20vw', height: '20vw'}}
+                        sm={{width: '50vw', height: '50vw'}}
                     />
             </Item>
             <Item sx={{place:'center'}} sm={{place:'center'}}>
-                <h3><b>{quizPlay.nickName}</b>님이 입장했습니다.</h3>
+                <Text sx={{color:'#FFC107',fontSize:'3vw'}} sm={{fontSize:'6vw'}}>
+                    <b>{quizPlay.nickName}</b>님이 입장했습니다.
+                </Text>
             </Item>
             <Item sx={{place:'center'}} sm={{place:'center'}}>
-                <h3>화면에서 닉네임을 확인해 주세요</h3>
+                <Text sx={{color:'#FFC107',fontSize:'3vw'}} sm={{fontSize:'6vw'}}>
+                    화면에서 닉네임을 확인해 주세요
+                </Text>
             </Item>
         </Content>
     );
