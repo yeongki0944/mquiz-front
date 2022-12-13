@@ -7,23 +7,16 @@ import {useDispatch, useSelector} from "react-redux";
 import {NickNameCheck} from "../../components/quizClient/ClientNickNameInput";
 import {ClientReady} from "../../components/quizClient/ClientReady";
 import {ClientCountOutModal} from "../../components/quizClient/ClientCountOutModal";
-import {Item_c, Page_Gradiant} from "../../LayOuts/LayOuts";
-import {stompDisconnect, stompInit, stompSend} from "../../function/WebSocket";
-import styled from "styled-components";
-import Button from "@mui/material/Button";
+import {Item, Page} from "../../LayOuts/LayOuts";
+import {stompInit} from "../../function/WebSocket";
 import {Rank_Page} from "../../components/Result/Rank_Page";
 import {FinalRankPage} from "../../components/Result/FinalRankPage";
-
-const Item_c_full = styled(Item_c)`
-    width: 100%;
-    height: 100%;
-`;
+import {ClientSubmitWait} from "../../components/quizClient/ClientSubmitWait";
 
 export const QuizClientPlay = () => {
     const dispatch = useDispatch();
     const {quizPlay} = useSelector(state => state.quizPlay);
     const [open, setOpen] = useState(false); // 추방 확인 모달창 제어
-
 
     /**
      * 퀴즈 진행 command 시 페이지 변경용 useEffect
@@ -32,7 +25,7 @@ export const QuizClientPlay = () => {
      * KICK: 추방
      */
     useEffect(() => {
-        switch (quizPlay.command){
+        switch (quizPlay.command) {
             case null: //최초 세팅
                 stompInit(quizPlay.pinNum);
                 break;
@@ -58,17 +51,17 @@ export const QuizClientPlay = () => {
      * FINAL: 최종 결과 표시
      */
     return (
-        <Page_Gradiant>
-            <Item_c_full>
+        <Page sx={{bg:"grad-right", grad1:"rebeccapurple", grad2:"salmon"}}>
+            <Item sx={{place:"center"}} sm={{place:'center'}}>
                 {quizPlay.command === null && <NickNameCheck/>}
                 {quizPlay.command === "WAIT" && <ClientReady/>}
                 {quizPlay.command === "START" && <QuizStartCounter/>}
                 {quizPlay.command === "SHOW" && <QuizView currentQuiz={quizPlay.quiz} state={"play"}/>}
-                {quizPlay.command === "SUBMIT" && <div>답변전달완료</div>}
+                {quizPlay.command === "SUBMIT" && <ClientSubmitWait/>}
                 {quizPlay.command === "RESULT" && <Rank_Page/>}
                 {quizPlay.command === "FINAL" && <FinalRankPage/>}
-                <ClientCountOutModal open ={open} setOpen={setOpen}/>
-            </Item_c_full>
-        </Page_Gradiant>
+                <ClientCountOutModal open={open} setOpen={setOpen}/>
+            </Item>
+        </Page>
     );
 }

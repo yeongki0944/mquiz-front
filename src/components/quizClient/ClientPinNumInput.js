@@ -1,16 +1,11 @@
 import * as React from 'react';
-import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
 import {useHistory} from "react-router-dom";
 import {useEffect, useState} from 'react';
-import styled from 'styled-components';
 import {useDispatch} from "react-redux";
 import {R_setData} from "../../redux/reducers/quizplayReducer";
 import CustomAxios from "../../function/CustomAxios";
-import {R_setQuizList} from "../../redux/reducers/quizListReducer";
-import {R_setCurrentShow, R_setId, R_setQuiz} from "../../redux/reducers/quizInfoReducer";
+import {Btn, Content, Item} from "../../LayOuts/LayOuts";
 
 /**
  * 핀 번호 입력 component
@@ -81,23 +76,25 @@ export const PinNumCheck = () => {
     );
 
     return (
-        <Box align='center' sx={{minWidth: 275}}>
-            <Typography variant="h5" component="div" align='center'>
-                PIN 번호를 입력한다면
-            </Typography>
-            <Typography variant="h5" component="div" align='center'>
-                퀴즈를 드리지요
-            </Typography>
-            <TextField id="pinNum" name="pinNum" type="pinNum" label="PIN 번호 입력(숫자 6자리)"
-                       variant="outlined"
-                       helperText={error}
-                       error={error !== '' || false} required autoFocus
-                       onBlur={handleInput}
-                       onKeyPress={handleEnterKey}
-            />
-            <Typography>
-                <Button variant="contained" onClick={()=>handleSubmit(pinNum)}>참여확인</Button>
-            </Typography>
-        </Box>
+        <Content>
+            <Item sx={{place:'center'}} sm={{place:'center'}}>
+                <h3>PIN 번호를 입력한다면</h3>
+            </Item>
+            <Item sx={{place:'center'}} sm={{place:'center'}}>
+                <h3>퀴즈를 드리지요</h3>
+            </Item>
+            <Item sx={{place:'center'}} sm={{place:'center'}}>
+                <TextField id="pinNum" name="pinNum" type="pinNum" label="PIN 번호 입력(숫자 6자리)"
+                           variant="outlined"
+                           helperText={error}
+                           error={error !== '' || false} required autoFocus
+                           onBlur={handleInput}
+                           onKeyPress={handleEnterKey}
+                />
+            </Item>
+            <Item sx={{place:'center', marginTop:5}} sm={{place:'center'}}>
+                <Btn sx={{place:'center'}} onClick={()=>handleSubmit(pinNum)}>참여확인</Btn>
+            </Item>
+        </Content>
     );
 }

@@ -1,13 +1,11 @@
 import * as React from 'react';
-import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
 import {useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {R_setData} from "../../redux/reducers/quizplayReducer";
 import {stompSend} from "../../function/WebSocket";
 import {chk_special} from "../../function/RegularExpression";
+import {Btn, Content, Item} from "../../LayOuts/LayOuts";
 
 /**
  * 닉네임 입력 component
@@ -66,21 +64,23 @@ export const NickNameCheck = () => {
 
 
     return (
-        <Box align='center' sx={{minWidth: 275}}>
-            <Typography variant="h5" component="div" align='center'>
-                취향저격 닉네임을 만들어 주세요
-            </Typography>
-            <TextField id="nickName" name="nickName" type="nickName" label="닉네임 입력"
-                       variant="outlined"
-                       helperText={error}
-                       error={error !== '' || false} required autoFocus
-                       onBlur={handleInput}
-                       onKeyPress={handleEnterKey}
-            />
-            <Typography>
-                <Button variant="contained" onClick={()=>handleSubmit(nick_Name)}>참여확인</Button>
-            </Typography>
-        </Box>
+        <Content>
+            <Item sx={{place: 'center'}} sm={{place:'center'}}>
+                <h3>취향저격 닉네임을 만들어 주세요</h3>
+            </Item>
+            <Item sx={{place:'center'}} sm={{place:'center'}}>
+                <TextField id="nickName" name="nickName" type="nickName" label="닉네임 입력"
+                               variant="outlined"
+                               helperText={error}
+                               error={error !== '' || false} required autoFocus
+                               onBlur={handleInput}
+                               onKeyPress={handleEnterKey}
+                    />
+            </Item>
+            <Item sx={{place:'center'}} sm={{place:'center'}}>
+                <Btn sx={{place:'center'}} onClick={()=>handleSubmit(nick_Name)}>참여확인</Btn>
+            </Item>
+        </Content>
     );
 }
 
