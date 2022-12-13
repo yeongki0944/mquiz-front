@@ -28,8 +28,20 @@ const RankBox = (props) => {
 
     return (
         <div>
-            {props.quizPlay.nickName != null && <Top_text>내 점수</Top_text> &&
-                props.quizPlay.rank.map(
+            {
+                props.quizPlay.nickName != null
+                && <Item sx={{
+                    place: 'left',
+                    display: 'block',
+                    width: '90%',
+                    height: '100%',
+                    // font-size: 4vw;
+                    fontWeight: '600',
+                    lineHeight: '2.5rem',
+                }}>
+                    내 점수
+                </Item>
+                && props.quizPlay.rank.map(
                     (item, index) => {
                         if (item.nickName === props.quizPlay.nickName) {
                             return (
@@ -42,8 +54,19 @@ const RankBox = (props) => {
                             )
                         }
                     }
-                )}
-            <Top_text>참여자 점수</Top_text>
+                )
+            }
+            <Item sx={{
+                place: 'left',
+                display: 'block',
+                width: '90%',
+                height: '100%',
+                // font-size: 4vw;
+                fontWeight: '600',
+                lineHeight: '2.5rem',
+            }}>
+                참여자 점수
+            </Item>
             {props.quizPlay.rank.map(
                 (item, index) => {
                     //if rank == 1 or 2 or 3
