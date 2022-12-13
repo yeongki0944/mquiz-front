@@ -1,18 +1,21 @@
-import {useSelector} from "react-redux";
 import styled from "@mui/material/styles/styled";
-import Paper from "@mui/material/Paper";
+import {Item} from "../../../LayOuts/LayOuts";
 
-const Img = styled("img")({
-    width: "100%",
-    height: "100%",
-    objectFit: "cover",
-    objectPosition: "center",
-
-});
 export const ImageShow = (props) =>{
-    const {quiz} = useSelector(state => state.quiz);
     const currentQuiz = props.currentQuiz;
     return(
-            <Img src={currentQuiz.media.url} alt=""/>
+        <Item sx={{place:'center', width:'100%', height:'100%'}}>
+            <img
+                src={currentQuiz.media.url}
+                alt="퀴즈 이미지"
+                style={{
+                    width: '100%',
+                    height: '100%',
+                    maxWidth: '80%',
+                    objectFit: 'contain',
+                    objectPosition: 'center'
+                }}
+            />
+        </Item>
     )
 }
