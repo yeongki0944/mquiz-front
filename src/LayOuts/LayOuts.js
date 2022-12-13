@@ -84,7 +84,7 @@ export const Page = styled.div`
 export const Content = styled.div`
     // border: 1px solid blue;
     margin: auto;
-    ${(props) => props.sx && props.sx}
+    ${(props) => props.sx}
     @media (min-width: 768px) {
         max-width: 1920px;
         max-height: 1080px;
@@ -92,7 +92,7 @@ export const Content = styled.div`
     @media (min-width: 300px) and (max-width: 767px) {
         max-width: 100vw;
         max-height: 100vh;
-        ${(props) => props.sm && props.sm}
+        ${(props) => props.sm}
     }
 `;
 
@@ -101,36 +101,34 @@ export const Item = styled.div`
     display:flex;
     width:100%;
     height:100%;
-    
+    justify-content: center;
+    align-items: center;
     ${(props) => props.sx};
-    justify-content: ${(props) => props.sx.place ?
-    props.sx.place === "center" ? "center" :
-        props.sx.place === "left" ? "left" :
-            props.sx.place === "right" ? "right" :
-                props.sx.place === "top" ? "top" :
-                    props.sx.place === "bottom" ? "bottom" :
-                        props.sx.place === "top-left" ? "top left" :
-                            props.sx.place === "top-right" ? "top right" :
-                                props.sx.place === "bottom-left" ? "bottom left" :
-                                    props.sx.place === "bottom-right" ? "bottom right" :
-                                        "center" : "center"};
-    @media (min-width: 768px) {  
-        
+    ${(props) => props.sx.place &&
+        props.sx.place === "center" && "justify-content: center; align-items: center;" ||
+        props.sx.place === "left" && "justify-content: left; align-items: left;" ||
+        props.sx.place === "right" && "justify-content: right; align-items: right;" ||
+        props.sx.place === "top" && "justify-content: center; align-items: top;" ||
+        props.sx.place === "top-left" && "justify-content: left; align-items: top;" ||
+        props.sx.place === "top-right" && "justify-content: right; align-items: top;" ||
+        props.sx.place === "bottom" && "justify-content: center; align-items: bottom;" ||
+        props.sx.place === "bottom-left" && "justify-content: left; align-items: bottom;" ||
+        props.sx.place === "bottom-right" && "justify-content: right; align-items: bottom;"}
     }
+    
     @media (min-width: 300px) and (max-width: 767px) {
-        ${(props) => props.sm};
-        justify-content: ${(props) => props.sm.place ?
-        props.sm.place === "center" ? "center" :
-            props.sm.place === "left" ? "left" :
-                props.sm.place === "right" ? "right" :
-                    props.sm.place === "top" ? "top" :
-                        props.sm.place === "bottom" ? "bottom" :
-                            props.sm.place === "top-left" ? "top left" :
-                                props.sm.place === "top-right" ? "top right" :
-                                    props.sm.place === "bottom-left" ? "bottom left" :
-                                        props.sm.place === "bottom-right" ? "bottom right" :
-                                            "center" : "center"};
-     
+        ${(props) => props.sm} 
+        ${(props) => props.sm.place &&
+            props.sm.place === "center" && "justify-content: center; align-items: center;" ||
+            props.sm.place === "left" && "justify-content: left; align-items: left;" ||
+            props.sm.place === "right" && "justify-content: right; align-items: right;" ||
+            props.sm.place === "top" && "justify-content: center; align-items: top;" ||
+            props.sm.place === "top-left" && "justify-content: left; align-items: top;" ||
+            props.sm.place === "top-right" && "justify-content: right; align-items: top;" ||
+            props.sm.place === "bottom" && "justify-content: center; align-items: bottom;" ||
+            props.sm.place === "bottom-left" && "justify-content: left; align-items: bottom;" ||
+            props.sm.place === "bottom-right" && "justify-content: right; align-items: bottom;"}
+        }
     }
 `;
 
