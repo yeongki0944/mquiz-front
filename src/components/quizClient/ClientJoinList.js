@@ -59,12 +59,12 @@ export const HostCountOutModal = (props) => {
                 padding: '20px',
                 boxShadow: '0 0 10px rgba(0,0,0,0.5)',
                 margin: 'auto',
-                width: '400px',
-                height: '300px',
+                width: '40%',
+                height: '30%',
                 display: 'block'
             }} sm={{
-                width: 300,
-                height: 200,
+                width: '80%',
+                height: '40%',
             }}>
                 <Item sx={{place:'center', height:'70%'}} sm={{height: '50%'}}>
                     <Img alt={"유저 강퇴"} src={"/img/logo192.png"} sm={{height:'70%'}}/>

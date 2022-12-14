@@ -26,8 +26,8 @@ export function ClientCountOutModal(props) {
                 top: '50%',
                 left: '50%',
                 transform: 'translate(-50%, -50%)',
-                width: 400,
-                height: 300,
+                width: '40%',
+                height: '30%',
                 background: '#fff',
                 borderRadius: '10px',
                 border: '2px solid #000',
@@ -36,8 +36,8 @@ export function ClientCountOutModal(props) {
                 display:'block'
             }}
             sm={{
-                width: 300,
-                height: 200,
+                width: '80%',
+                height: '40%',
             }}>
                 <Item sx={{place:'center', height:'70%'}} sm={{height: '60%'}}>
                     <Img alt={"강퇴 당함"} src={"/img/logo192.png"} sm={{height:'70%'}}/>
