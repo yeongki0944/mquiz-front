@@ -44,7 +44,7 @@ export const QuizHostMain = () => {
                             <QuizListHostMain sx={{place: 'center'}} sm={{width: '80%'}}
                                               quizList={quizList} setModalOpen={setModalOpen}/>
                     </Card_panel>
-                    <Card_panel sx={{place: 'center',width:'50%',height:'100%',marginLeft:'1vw',marginRight:'1vw'}} sm={{place: 'center',display:'none'}}>
+                    <Card_panel sx={{place: 'center',width:'50%',height:'100%',marginLeft:'1vw',marginRight:'1vw',overflowY:'auto'}} sm={{place: 'center',display:'none'}}>
                             <QuizPreviewHostMain sx={{place: 'center', width: '100%'}}/>
                     </Card_panel>
                 </Item>
