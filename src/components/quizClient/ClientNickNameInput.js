@@ -6,6 +6,7 @@ import {R_setData} from "../../redux/reducers/quizplayReducer";
 import {stompSend} from "../../function/WebSocket";
 import {chk_special} from "../../function/RegularExpression";
 import {Btn, Content, Item, Text} from "../../LayOuts/LayOuts";
+import {getNickname, getPinNum, setNickname, setPinNum, setRole} from "../../function/localStorage";
 
 /**
  * 닉네임 입력 component
@@ -14,14 +15,14 @@ export const NickNameCheck = () => {
     const dispatch = useDispatch();
 
     const {quizPlay} = useSelector(state => state.quizPlay);
-    const [nick_Name, setNickName] = useState('');
+    const [nick_Name, setNick_Name] = useState('');
     const [error, setError] = useState('');
 
     /**
      * blur 이벤트 발생시 닉네임 set
      */
     const handleInput = (e) => {
-        setNickName(e.target.value);
+        setNick_Name(e.target.value);
     }
 
     /**
@@ -50,19 +51,19 @@ export const NickNameCheck = () => {
      * 유효성 통과된 닉네임 입력 후 입장
      */
     const handleEnter = (nick) => {
-        localStorage.setItem('nickName', nick);
-        localStorage.setItem('pinNum', quizPlay.pinNum);
-        localStorage.setItem('role', "CLIENT");
-
+        setNick_Name(nick);
+        setRole("CLIENT");
+        setNickname(nick);
         stompSend('setnickname', {
-            pinNum: quizPlay.pinNum,
-            nickName: nick
+            pinNum: getPinNum(),
+            nickName: nick,
         });
         /**
          * [*수정 요망*]
          *  닉네임 중복 관련 기능 필요(반환값) << 이거 socket 에서 처리
          */
-        dispatch(R_setData({key:'nickName', value:nick}));
+        // dispatch(R_setData({key:'nickName', value:nick}));
+        setNick_Name(nick);
     }
 
 

@@ -8,6 +8,7 @@ import {useState} from "react";
 import {HostCountOutModal, UserList} from "../../components/quizClient/ClientJoinList";
 import {createSvgIcon} from "@mui/material/utils";
 import {QR_Modal} from "../../components/QR_Modal";
+import {getPinNum} from "../../function/localStorage";
 
 const HomeIcon = createSvgIcon(
     <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>,
@@ -30,7 +31,7 @@ export const QuizHostReady = () => {
 
     const handleStart = () => {
         stompSend("start", {
-            pinNum: quizPlay.pinNum,
+            pinNum: getPinNum(),
             command: "START",
         })
     }
@@ -48,7 +49,7 @@ export const QuizHostReady = () => {
                 <Btn sx={{place:'center'}}onClick={handleCopy}>URL copy</Btn>
             </Item>
             <Text sx={{color:'#FFC107',fontSize:'3vw'}} sm={{fontSize:'6vw'}}>
-                PIN: {quizPlay.pinNum}
+                PIN: {getPinNum()}
             </Text>
             <Text sx={{color:'#FFC107',fontSize:'3vw'}} sm={{fontSize:'6vw'}}>
                 <HomeIcon/>총 참여자 수 {quizPlay.userList.length} 명
@@ -64,7 +65,7 @@ export const QuizHostReady = () => {
                 opacity: '0.3',
                 borderRadius: '10px'
             }}
-                      pinNum={quizPlay.pinNum}
+                      pinNum={getPinNum()}
                       setOpen={setOpenBan}
             />
             <Item sx={{place: 'center', height:'10vh',margin: 'auto'}}>

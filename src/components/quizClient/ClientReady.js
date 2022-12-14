@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {useSelector} from "react-redux";
 import {Content, Img, Item, Text} from "../../LayOuts/LayOuts";
+import {getNickname} from "../../function/localStorage";
 
 /**
  * 대기방 component
@@ -20,7 +21,7 @@ export function ClientReady() {
             </Item>
             <Item sx={{place:'center'}} sm={{place:'center'}}>
                 <Text sx={{color:'#FFC107',fontSize:'3vw'}} sm={{fontSize:'6vw'}}>
-                    <b>{quizPlay.nickName}</b>님이 입장했습니다.
+                    <b>{getNickname()}</b>님이 입장했습니다.
                 </Text>
             </Item>
             <Item sx={{place:'center'}} sm={{place:'center'}}>

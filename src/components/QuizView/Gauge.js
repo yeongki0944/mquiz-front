@@ -6,6 +6,7 @@ import {stompSend} from "../../function/WebSocket";
 import {R_setData} from "../../redux/reducers/quizplayReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {Content, Item, Text} from "../../LayOuts/LayOuts";
+import {getNickname, getPinNum, getRole} from "../../function/localStorage";
 
 /**
  * props:
@@ -54,15 +55,15 @@ export const Gauge = (props) => {
                 return;
             }
             else if(count >= 100){
-                if(quizPlay.nickName === null ){ // 호스트
+                if(getRole() === "HOST" ){ // 호스트
 
                 }
                 else{ // 클라이언트
                     dispatch(R_setData({key: "command", value: "SUBMIT"}));
                     stompSend("submit", {
-                        pinNum: quizPlay.pinNum,
+                        pinNum: getPinNum(),
                         action: "SUBMIT",
-                        nickName: quizPlay.nickName,
+                        nickName: getNickname(),
                         submit: {
                             answer: [],
                             answerTime: quizPlay.quiz.time,

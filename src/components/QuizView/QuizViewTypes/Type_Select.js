@@ -4,6 +4,7 @@ import {stompSend} from "../../../function/WebSocket";
 import {Btn, Card, Item, Item_c} from "../../../LayOuts/LayOuts";
 import {R_setData} from "../../../redux/reducers/quizplayReducer";
 import {PlayActionBar} from "../PlayActionBar";
+import {getNickname, getPinNum, getRole} from "../../../function/localStorage";
 
 
 export const Type_Select = (props) => {
@@ -30,9 +31,9 @@ export const Type_Select = (props) => {
             answers.push("num" + item.innerHTML[0]);
         })
         stompSend("submit", {
-            pinNum: quizPlay.pinNum,
+            pinNum: getPinNum(),
             action: "SUBMIT",
-            nickName: quizPlay.nickName,
+            nickName: getNickname(),
             submit: {
                 answer: answers,
                 answerTime: 1,
@@ -69,7 +70,7 @@ export const Type_Select = (props) => {
                                           id={item}>{index + 1}.{currentQuiz.choiceList[item]}</Card>
                                     : null
                                 :
-                                quizPlay.nickName === null && //호스트 화면
+                                getRole() === "HOST" && //호스트 화면
                                 currentQuiz.choiceList[item] != "" ?
                                     <Card sx={{width:'90%',height:'90%',backgroundColor:'rgba(255,255,255,0.5)'}}
                                           id={item}>{index + 1}.{currentQuiz.choiceList[item]}</Card>
@@ -77,7 +78,7 @@ export const Type_Select = (props) => {
 
                             }
 
-                            {quizPlay.command != "RESULT" && quizPlay.nickName != null && //클라이언트
+                            {quizPlay.command != "RESULT" && getRole() === "CLIENT" && //클라이언트
                             currentQuiz.choiceList[item] != "" ?
                                 <Card sx={{width:'90%',height:'90%',backgroundColor:'rgba(255,255,255,0.5)'}} id={item} onClick={setSelected}>{index + 1}.{currentQuiz.choiceList[item]}</Card>
                                 : null

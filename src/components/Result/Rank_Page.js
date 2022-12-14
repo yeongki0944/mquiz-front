@@ -8,6 +8,7 @@ import {Button} from "@mui/material";
 import {stompSend} from "../../function/WebSocket";
 import {VolumeControlButton} from "../VolumeControlButton";
 import * as React from "react";
+import {getRole} from "../../function/localStorage";
 
 const Top_text = styled(Item_l)`
     display: block;
@@ -98,29 +99,18 @@ export const Rank_Page = () => {
                 {view === 'rank' && <RankBox quizPlay={quizPlay}/>}
                 {view === 'answer' && <Answer currentQuiz={quizPlay.quiz}/>}
             </Item>
-            {/*<Item sx={{place: 'center', height: '10vh'}}>*/}
-            {/*    {view === 'rank' && <Btn sx={{place: 'center'}} onClick={() => {*/}
-            {/*        setView("answer");*/}
-            {/*    }}>정답보기</Btn>*/}
-            {/*    }*/}
-            {/*    {view === 'answer' &&*/}
-            {/*        <Btn sx={{place: 'center'}}*/}
-            {/*             onClick={() => {*/}
-            {/*                 setView("rank");*/}
-            {/*             }}>결과보기</Btn>*/}
-            {/*    }*/}
-            {/*    {quizPlay.nickName === null &&*/}
-            {/*        <Btn sx={{place: 'center'}}*/}
-            {/*             onClick={() => {*/}
-            {/*                 stompSend("start", {*/}
-            {/*                     pinNum: quizPlay.pinNum,*/}
-            {/*                     command: "START",*/}
-            {/*                 })*/}
-            {/*             }}>*/}
-            {/*            다음문제*/}
-            {/*        </Btn>*/}
-            {/*    }*/}
-            {/*</Item>*/}
+            <Item sx={{place: 'center', height: '10vh'}}>
+                {view === 'rank' && <Btn sx={{place: 'center'}} onClick={() => {
+                    setView("answer");
+                }}>정답보기</Btn>
+                }
+                {view === 'answer' &&
+                    <Btn sx={{place: 'center'}}
+                         onClick={() => {
+                             setView("rank");
+                         }}>결과보기</Btn>
+                }
+            </Item>
         </Content>
     )
 }

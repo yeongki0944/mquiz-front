@@ -13,6 +13,7 @@ import {Rank_Page} from "../../components/Result/Rank_Page";
 import {FinalRankPage} from "../../components/Result/FinalRankPage";
 import {ClientSubmitWait} from "../../components/quizClient/ClientSubmitWait";
 import {QuizClientReconnect} from "./QuizClientReconnect";
+import {getPinNum} from "../../function/localStorage";
 
 export const QuizClientPlay = () => {
     const dispatch = useDispatch();
@@ -28,7 +29,7 @@ export const QuizClientPlay = () => {
     useEffect(() => {
         switch (quizPlay.command) {
             case null: //최초 세팅
-                stompInit(quizPlay.pinNum);
+                stompInit(getPinNum());
                 break;
             case "START": //시작 시 3초 카운터 실행
                 setTimeout(() => {

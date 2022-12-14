@@ -10,6 +10,7 @@ import {VolumeControlButton} from "../VolumeControlButton";
 import {useEffect} from "react";
 import {useSelector} from "react-redux";
 import {Card_panel, Item, Text} from "../../LayOuts/LayOuts"
+import {getPinNum} from "../../function/localStorage";
 
 export const QuizView = (props) => {
     const currentQuiz = props.currentQuiz;
@@ -54,7 +55,7 @@ export const QuizView = (props) => {
             <Item sx={{place: 'center', display: 'block', height: '100%'}}>
                 <Item sx={{place: 'center', display: 'block', height: '20%'}} sm={{height: '10%'}}>
                     <Text sx={{color:'#FFC107',fontSize:'3vw'}} sm={{fontSize:'6vw'}}>
-                        PIN: {quizPlay.pinNum}
+                        PIN: {getPinNum()}
                     </Text>
                     <Item sx={{place: 'center', height: '50%', width:'100%'}}>
                         {/*<Gauge*/}

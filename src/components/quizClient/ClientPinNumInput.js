@@ -3,9 +3,9 @@ import TextField from '@mui/material/TextField';
 import {useHistory} from "react-router-dom";
 import {useEffect, useState} from 'react';
 import {useDispatch} from "react-redux";
-import {R_setData} from "../../redux/reducers/quizplayReducer";
 import CustomAxios from "../../function/CustomAxios";
 import {Btn, Content, Item, Text} from "../../LayOuts/LayOuts";
+import {setPinNum} from "../../function/localStorage";
 
 /**
  * 핀 번호 입력 component
@@ -13,14 +13,14 @@ import {Btn, Content, Item, Text} from "../../LayOuts/LayOuts";
 export const PinNumCheck = () => {
     const dispatch = useDispatch();
     const history = useHistory();
-    const [pinNum, setPinNum] = useState('');
+    const [pin_Num, setPin_Num] = useState('');
     const [error, setError] = useState('');
 
     /**
      * blur 이벤트 발생시 Pin set
      */
     const handleInput = (e) => {
-        setPinNum(e.target.value);
+        setPin_Num(e.target.value);
     }
 
     /**
@@ -55,7 +55,8 @@ export const PinNumCheck = () => {
         await CustomAxios.post('/joinroom', {'pinNum': pin})
             .then((res) => {
                 if(res.data.statusCode === 200){
-                    dispatch(R_setData({key: 'pinNum', value: res.data.data.pinNum}));
+                    // dispatch(R_setData({key: 'pinNum', value: res.data.data.pinNum}));
+                    setPinNum(res.data.data.pinNum);
                     history.push({
                         pathname: '/QClient/play'
                     })
@@ -97,7 +98,7 @@ export const PinNumCheck = () => {
                 />
             </Item>
             <Item sx={{place:'center', marginTop:5}} sm={{place:'center'}}>
-                <Btn sx={{place:'center'}} onClick={()=>handleSubmit(pinNum)}>참여확인</Btn>
+                <Btn sx={{place:'center'}} onClick={()=>handleSubmit(pin_Num)}>참여확인</Btn>
             </Item>
         </Content>
     );

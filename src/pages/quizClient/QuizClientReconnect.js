@@ -5,6 +5,7 @@ import {stompInit} from "../../function/WebSocket";
 import {useDispatch} from "react-redux";
 import {R_setData} from "../../redux/reducers/quizplayReducer";
 import {useHistory} from "react-router-dom";
+import {getNickname, getPinNum} from "../../function/localStorage";
 
 /**
  * 대기방 component
@@ -14,8 +15,8 @@ export function QuizClientReconnect() {
     const history = useHistory();
 
     useEffect(()=>{
-        console.log(localStorage.getItem('pinNum'));
-        stompInit(localStorage.getItem('pinNum'));
+        console.log(getPinNum());
+        stompInit(getPinNum());
     },[])
 
     return (
@@ -30,7 +31,7 @@ export function QuizClientReconnect() {
             </Item>
             <Item sx={{place:'center'}} sm={{place:'center'}}>
                 <Text sx={{color:'#FFC107',fontSize:'3vw'}} sm={{fontSize:'6vw'}}>
-                    <b>{localStorage.getItem('nickName')}</b>님이 입장했습니다.
+                    <b>{getNickname()}</b>님이 입장했습니다.
                 </Text>
             </Item>
             <Item sx={{place:'center'}} sm={{place:'center'}}>

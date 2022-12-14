@@ -1,6 +1,7 @@
 import SockJS from "sockjs-client";
 import {Stomp} from "@stomp/stompjs";
 import {playFunction} from "./PlayFunction";
+import {setPinNum} from "./localStorage";
 
 
 const URL = process.env.REACT_APP_BACKEND_SERVER;
@@ -16,8 +17,7 @@ export const stompInit = (pinNum) => {
     stomp.connect({}, () => {
         console.log("STOMP Connection");
         stompSubscribe(pinNum);
-
-        localStorage.setItem('pinNum', pinNum);
+        setPinNum(pinNum)
     }, (error) => {
         console.log("실패");
     });
@@ -55,5 +55,6 @@ export const stompDisconnect = () => {
     stomp.disconnect(() => {
         console.log("소켓 연결 해제");
         localStorage.removeItem('pinNum');
+        localStorage.removeItem('nickName');
     }, {});
 }

@@ -4,6 +4,7 @@ import {R_setData} from "../../../redux/reducers/quizplayReducer";
 import {Card, Item} from "../../../LayOuts/LayOuts";
 import {stompSend} from "../../../function/WebSocket";
 import {PlayActionBar} from "../PlayActionBar";
+import {getNickname, getPinNum, getRole} from "../../../function/localStorage";
 
 export const Type_OX = () => {
     const dispatch = useDispatch();
@@ -30,9 +31,9 @@ export const Type_OX = () => {
         const answers = [selected.innerText];
         // console.log(answers);
         stompSend("submit", {
-            pinNum: quizPlay.pinNum,
+            pinNum: getPinNum(),
             action: "SUBMIT",
-            nickName: quizPlay.nickName,
+            nickName: getNickname(),
             submit: {
                 answer: answers,
                 answerTime: 1,
@@ -58,13 +59,13 @@ export const Type_OX = () => {
                             <Card sx={{place: 'center',minWidth: '45%',margin:'auto',background:'orange'}} sm={{minHeight:'45%',minWidth:'45%'}}>X</Card>
                         </Item>
                         :
-                        quizPlay.nickName === null && //호스트 화면
+                        getRole() === "HOST" && //호스트 화면
                         <Item sx={{place: 'center', width: '100%', height: '100%',display:'flex'}} sm={{}}>
                             <Card sx={{place: 'center',minWidth: '45%',margin:'auto'}} sm={{minHeight:'45%',minWidth:'45%'}}>O</Card>
                             <Card sx={{place: 'center',minWidth: '45%',margin:'auto'}} sm={{minHeight:'45%',minWidth:'45%'}}>X</Card>
                         </Item>
                 }
-                {quizPlay.command !== "RESULT" && quizPlay.nickName != null && //클라이언트 화면
+                {quizPlay.command !== "RESULT" && getRole() === "CLIENT" && //클라이언트 화면
                     <Item sx={{place: 'center', width: '100%', height: '100%', display: 'flex'}} sm={{}}>
                         <Card sx={{place: 'center',minWidth: '45%',margin:'auto'}} sm={{minHeight:'45%',minWidth:'45%'}} onClick={setSelected}>O</Card>
                         <Card sx={{place: 'center',minWidth: '45%',margin:'auto'}} sm={{minHeight:'45%',minWidth:'45%'}} onClick={setSelected}>X</Card>

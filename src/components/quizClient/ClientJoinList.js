@@ -6,6 +6,7 @@ import {useSelector} from "react-redux";
 import store from "../../redux/store";
 import {R_setData} from "../../redux/reducers/quizplayReducer";
 import {stompSend} from "../../function/WebSocket";
+import {getPinNum} from "../../function/localStorage";
 
 export const UserList = (props) => {
     const {quizPlay} = useSelector(state => state.quizPlay)
@@ -13,6 +14,7 @@ export const UserList = (props) => {
     return (
         <Item sx={props.sx} sm={props.sm}>
             <Item sx={{place:'center',display:'block'}}>
+
             {quizPlay.userList.map((item,index) => {
                 return (
                         <Chip
@@ -75,7 +77,7 @@ export const HostCountOutModal = (props) => {
                 <Item sx={{place:'center',height:'20%'}} sm={{height: '30%'}}>
                     <Btn onClick={() => {
                         stompSend("ban", {
-                            pinNum: quizPlay.pinNum,
+                            pinNum: getPinNum(),
                             nickName: quizPlay.bannedNickName
                         });
                         props.setOpen(false);

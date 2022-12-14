@@ -9,6 +9,7 @@ import {TextField} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import {stompSend} from "../../../function/WebSocket";
 import {PlayActionBar} from "../PlayActionBar";
+import {getNickname, getPinNum, getRole} from "../../../function/localStorage";
 
 const Content = styled(Item_c)`
   display: block;
@@ -38,9 +39,9 @@ export const Type_Reply = () => {
         let answer_text = document.getElementById('quizAnswer').value;
         console.log(answer_text);
         stompSend("submit", {
-            pinNum: quizPlay.pinNum,
+            pinNum: getPinNum(),
             action: "SUBMIT",
-            nickName: quizPlay.nickName,
+            nickName: getNickname(),
             submit: {
                 answer: [answer_text],
                 answerTime: 1,
@@ -66,7 +67,7 @@ export const Type_Reply = () => {
                         </Card>
                     </Item>
                     :
-                    quizPlay.nickName === null && //호스트 화면
+                    getRole() === "HOST" && //호스트 화면
                     <Item sx={{place: 'center'}}>
                         <TextField id="quizAnswer" name="quizAnswer" type="quizAnswer" label="정답을 입력해 주세요"
                                    variant="outlined"
@@ -75,7 +76,7 @@ export const Type_Reply = () => {
                         />
                     </Item>
                 }
-                {quizPlay.command != "RESULT" && quizPlay.nickName != null && //클라이언트
+                {quizPlay.command != "RESULT" && getRole() === "CLIENT" && //클라이언트
                     <Item sx={{place: 'center'}}>
                         <TextField id="quizAnswer" name="quizAnswer" type="quizAnswer" label="정답을 입력해 주세요"
                                    variant="outlined"

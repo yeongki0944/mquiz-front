@@ -12,5 +12,18 @@ export const getRole = ()=>{
 }
 
 export const setPinNum = (pinNum)=>{
-    return localStorage.getItem('pinNum');
+    return localStorage.setItem('pinNum',pinNum);
+}
+
+export const setNickname = (nickName)=>{
+    return localStorage.setItem('nickName',nickName);
+}
+
+export const setRole = (role)=>{
+    return localStorage.setItem('role',role);
+}
+
+export const flushLocalStorage = ()=>{
+    localStorage.removeItem('pinNum');
+    localStorage.removeItem('nickName');
 }

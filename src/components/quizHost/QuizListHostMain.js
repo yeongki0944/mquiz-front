@@ -14,6 +14,7 @@ import styled from "styled-components";
 import {R_setData} from "../../redux/reducers/quizplayReducer";
 import {useState} from "react";
 import {Card_panel, Item} from "../../LayOuts/LayOuts";
+import {getPinNum, setPinNum} from "../../function/localStorage";
 
 /**
  * props:
@@ -157,7 +158,8 @@ export const QuizListHostMain = (props) => {
         CustomAxios.post('/v1/host/createPlay', {'id': id})
             .then(res => {
                 dispatch(R_setData({key: "command", value: "READY"})); // 최초 세팅
-                dispatch(R_setData({key: "pinNum", value: res.data.data}))
+                console.log(res.data);
+                setPinNum(res.data.data);
                 history.push({
                     pathname: '/QHost/play',
                 })
