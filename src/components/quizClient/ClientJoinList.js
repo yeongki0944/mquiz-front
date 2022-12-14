@@ -62,14 +62,17 @@ export const HostCountOutModal = (props) => {
                 width: '400px',
                 height: '300px',
                 display: 'block'
+            }} sm={{
+                width: 300,
+                height: 200,
             }}>
-                <Item sx={{place:'center', height:'70%'}}>
-                    <Img alt={"유저 강퇴"} src={"/img/logo192.png"} />
+                <Item sx={{place:'center', height:'70%'}} sm={{height: '50%'}}>
+                    <Img alt={"유저 강퇴"} src={"/img/logo192.png"} sm={{height:'70%'}}/>
                 </Item>
-                <Text>
-                    {quizPlay.bannedNickName} 선택한 참여자를 내보냅니다.
+                <Text sm={{height:'20%'}}>
+                    {quizPlay.bannedNickName}님을 강퇴하실건가요?
                 </Text>
-                <Item sx={{place:'center',height:'20%'}}>
+                <Item sx={{place:'center',height:'20%'}} sm={{height: '30%'}}>
                     <Btn onClick={() => {
                         stompSend("ban", {
                             pinNum: quizPlay.pinNum,

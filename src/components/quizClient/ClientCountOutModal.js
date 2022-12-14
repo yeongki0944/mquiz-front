@@ -34,12 +34,16 @@ export function ClientCountOutModal(props) {
                 boxShadow: 24,
                 p: 4,
                 display:'block'
+            }}
+            sm={{
+                width: 300,
+                height: 200,
             }}>
-                <Item sx={{place:'center', height:'70%'}}>
-                    <Img alt={"강퇴 당함"} src={"/img/logo192.png"} />
+                <Item sx={{place:'center', height:'70%'}} sm={{height: '60%'}}>
+                    <Img alt={"강퇴 당함"} src={"/img/logo192.png"} sm={{height:'70%'}}/>
                 </Item>
                 <Text sx={{height: '10%'}}>진행자에 의해 강퇴 되었습니다.</Text>
-                <Item sx={{place:'center', width: '100%', height:'20%'}}>
+                <Item sx={{place:'center', width: '100%', height:'20%'}} sm={{height: '30%'}}>
                     <Btn onClick={() =>{
                         console.log("forceRefresh");
                         history.push('/');
