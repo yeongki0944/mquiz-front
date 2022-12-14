@@ -3,12 +3,7 @@ import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import {useDispatch} from "react-redux";
 import {R_modifyQuiz} from "../../../redux/reducers/quizInfoReducer";
-import styled from "styled-components";
-import {useState} from "react";
-
-const Image_Input = styled('input')`
-    display : none;
-`
+import {Item} from "../../../LayOuts/LayOuts";
 
 export default function ImageBox() {
     const dispatch = useDispatch();
@@ -25,8 +20,9 @@ export default function ImageBox() {
     }
 
     return (
-        <div>
-            <Image_Input
+        <Item sx={{place: 'center'}}>
+            <input
+                style={{display: 'none'}}
                 accept="image/*"
                 id="icon-button-file"
                 type="file"
@@ -34,9 +30,23 @@ export default function ImageBox() {
             />
             <label htmlFor="icon-button-file">
                 <IconButton color="primary" aria-label="upload picture" component="span">
-                    <PhotoCamera />
+                    <PhotoCamera/>
                 </IconButton>
             </label>
-        </div>
+        </Item>
+
+        // <div>
+        //     <Image_Input
+        //         accept="image/*"
+        //         id="icon-button-file"
+        //         type="file"
+        //         onChange={handleImageChange}
+        //     />
+        //     <label htmlFor="icon-button-file">
+        //         <IconButton color="primary" aria-label="upload picture" component="span">
+        //             <PhotoCamera />
+        //         </IconButton>
+        //     </label>
+        // </div>
     );
 }

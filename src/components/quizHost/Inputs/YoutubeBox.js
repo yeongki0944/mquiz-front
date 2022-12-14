@@ -6,9 +6,11 @@ import {Slider} from "@mui/material";
 import styled from "@mui/material/styles/styled";
 import Paper from "@mui/material/Paper";
 import {R_modifyQuiz} from "../../../redux/reducers/quizInfoReducer";
+import {Btn, Item, Text} from "../../../LayOuts/LayOuts";
+import {fontWeight} from "@mui/system";
 
 
-const YoutubeModal = styled(Modal) ({
+const YoutubeModal = styled(Modal)({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -63,31 +65,61 @@ export default function YoutubeBox() {
     function valuetext(value) {
         return `${value}`;
     }
+
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
 
     return (
-        <div>
+        <Item sx={{place: 'center'}}>
             <input type="text" value={url} onChange={handleUrl}/>
-            <button onClick={handleVideoId}>Set Start and End</button>
-            <YoutubeModal open={showModal} handleClose={handleclosemodal}>
-                <ModalPaper>
-                    <Slider
-                        value={value}
-                        onChange={handleChange}
-                        valueLabelDisplay="auto"
-                        getAriaValueText={valuetext}
-                        max={videoLength}
-                    />
-                    <button onClick={handleVideoUrl}>Set</button>
-                </ModalPaper>
-            </YoutubeModal>
+            <Btn onClick={handleVideoId}>영상설정하기</Btn>
+            <Modal
+                sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}
+                open={showModal}
+            >
+                <Item sx={{place: 'center', display:'block',width: '50%', height: '20%',background:'#fff', borderRadius:'10px'}}>
+                    <Item sx={{place: 'center', height:'20%'}}>
+                        <Text sx={{fontWeight:900}}>영상 사작/끝 시간 설정</Text>
+                    </Item>
+                    <Item sx={{place:'center', height:'40%'}}>
+                        <Slider
+                            value={value}
+                            onChange={handleChange}
+                            valueLabelDisplay="auto"
+                            getAriaValueText={valuetext}
+                            max={videoLength}
+                        />
+                    </Item>
+                    <Item sx={{place: 'center', height:'40%'}}>
+                        <Btn onClick={handleVideoUrl}>Set</Btn>
+                    </Item>
+                </Item>
+            </Modal>
+        </Item>
 
-        </div>
+        // <div>
+        //     <input type="text" value={url} onChange={handleUrl}/>
+        //     <button onClick={handleVideoId}>Set Start and End</button>
+        //     <YoutubeModal open={showModal} handleClose={handleclosemodal}>
+        //         <ModalPaper sx={{
+        //             width: '50%',
+        //             height: '10%',
+        //             background:'#fff',
+        //             borderRadius:'10px'
+        //         }}>
+        //             <Slider
+        //                 value={value}
+        //                 onChange={handleChange}
+        //                 valueLabelDisplay="auto"
+        //                 getAriaValueText={valuetext}
+        //                 max={videoLength}
+        //             />
+        //             <Btn onClick={handleVideoUrl}>Set</Btn>
+        //         </ModalPaper>
+        //     </YoutubeModal>
+        // </div>
     )
-
-
 
 
 }

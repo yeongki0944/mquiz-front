@@ -47,22 +47,23 @@ export const FinalRankPage = () => {
                         <Avatar sx={{width: 300, height: 300}}><h2>{quizPlay.nickName}</h2></Avatar>
                     </Item>
                 ) : (
-                    <div>
+                    <Item sx={{place: 'top',width:'100%', height:'100%', maxHeight:'85%', marginTop:'10px'}}>
                         {quizPlay.rank.map(
                             (item, index) => {
                                 if (item.rank === 1 || item.rank === 2 || item.rank === 3) {
                                     return (
-                                        <Rank
-                                            key={index}
-                                            rank={item.rank}
-                                            nickName={item.nickName}
-                                            score={item.rankScore}
-                                        />
+                                        <Item key={index} sx={{place:'center',height:'30%', margin:'5px'}}>
+                                            <Rank
+                                                rank={item.rank}
+                                                nickName={item.nickName}
+                                                score={item.rankScore}
+                                            />
+                                        </Item>
                                     )
                                 }
                             }
                         )}
-                    </div>
+                    </Item>
                 )
             }
 
@@ -92,30 +93,32 @@ export const FinalRankPage = () => {
             )}
 
 
-            <Item sx={{place: "bottom", height: "10%"}}>
-                <Btn sx={{place: "center"}} onClick={() => {
-                    html2canvas(document.querySelector("#capture")).then(canvas => {
-                        let link = document.createElement('a');
-                        if (typeof link.download === 'string') {
-                            link.href = canvas.toDataURL('image/png');
-                            link.download = "capture-test.png";
-                            document.body.appendChild(link);
-                            link.click();
-                            document.body.removeChild(link);
-                        } else {
-                            window.open(canvas.toDataURL('image/png'));
-                        }
-                    })
-                }}>
-                    화면 캡처
-                </Btn>
-                <Btn sx={{place: "center"}} onClick={() => {
-                    stompDisconnect();
-                    history.push('/');
-                    history.go(0);
-                }}>
-                    확인
-                </Btn>
+            <Item sx={{place: 'center', height: "10%"}}>
+                <Item sx={{place:'center'}}>
+                    <Btn sx={{place: 'center', display: 'flex', margin: 'auto'}} onClick={() => {
+                        html2canvas(document.querySelector("#capture")).then(canvas => {
+                            let link = document.createElement('a');
+                            if (typeof link.download === 'string') {
+                                link.href = canvas.toDataURL('image/png');
+                                link.download = "capture-test.png";
+                                document.body.appendChild(link);
+                                link.click();
+                                document.body.removeChild(link);
+                            } else {
+                                window.open(canvas.toDataURL('image/png'));
+                            }
+                        })
+                    }}>
+                        화면 캡처
+                    </Btn>
+                    <Btn sx={{place: 'center', display: 'flex', margin: 'auto'}} onClick={() => {
+                        stompDisconnect();
+                        history.push('/');
+                        history.go(0);
+                    }}>
+                        확인
+                    </Btn>
+                </Item>
             </Item>
         </Item>
     )

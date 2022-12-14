@@ -1,9 +1,10 @@
 import * as React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import {useState} from "react";
+import {Item} from "../../../LayOuts/LayOuts";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -16,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function AudioBox(props){
+export default function AudioBox(props) {
     const classes = useStyles();
     const [file, setFile] = useState();
 
@@ -26,10 +27,10 @@ export default function AudioBox(props){
     }
 
     return (
-        <div className={classes.root}>
+        <Item sx={{place: 'center'}}>
             <input
                 accept="image/*"
-                className={classes.input}
+                style={{display: 'none'}}
                 id={props.id}
                 type="file"
                 onChange={handleChange}
@@ -37,7 +38,19 @@ export default function AudioBox(props){
             <label htmlFor="contained-button-file">
                 audio
             </label>
-        </div>
+        </Item>
+        // <div className={classes.root}>
+        //     <input
+        //         accept="image/*"
+        //         style={{display:'none'}}
+        //         id={props.id}
+        //         type="file"
+        //         onChange={handleChange}
+        //     />
+        //     <label htmlFor="contained-button-file">
+        //         audio
+        //     </label>
+        // </div>
     );
 
 }
