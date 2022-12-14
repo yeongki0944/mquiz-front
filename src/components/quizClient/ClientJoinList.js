@@ -1,27 +1,11 @@
 import * as React from 'react';
-import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
-import CardMedia from "@mui/material/CardMedia";
 import Chip from "@mui/material/Chip";
-import {useState} from "react";
-import {Item, Item_c, Page_Default} from "../../LayOuts/LayOuts";
-import styled from "styled-components";
+import {Btn, Img, Item, Text} from "../../LayOuts/LayOuts";
 import {useSelector} from "react-redux";
 import store from "../../redux/store";
 import {R_setData} from "../../redux/reducers/quizplayReducer";
 import {stompSend} from "../../function/WebSocket";
-
-const Item_c_paper = styled(Item_c)`
-    background: #fff;
-    border-radius: 10px;
-    border: 1px solid #ccc;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.5);
-    margin: auto;
-    width: 400px;
-    height: 250px;
-    display: block;
-`
 
 export const UserList = (props) => {
     const {quizPlay} = useSelector(state => state.quizPlay)
@@ -63,26 +47,43 @@ export const HostCountOutModal = (props) => {
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
         >
-            <Item_c_paper>
-                <CardMedia
-                    component="img"
-                    height="150"
-                    width="50"
-                    image="/img/logo192.png"
-                    alt="green iguana"
-                />
-                <Item_c> {quizPlay.bannedNickName} 선택한 참여자를 내보냅니다.</Item_c>
-                <Item_c>
-                    <Button variant="contained" onClick={() => {
-                            stompSend("ban", {
-                                pinNum: quizPlay.pinNum,
-                                nickName: quizPlay.bannedNickName
-                            });
-                            props.setOpen(false);
-                    }}>확인</Button>
-                    <Button variant="contained" color="primary" onClick={handleClose}>취소</Button>
-                </Item_c>
-            </Item_c_paper>
+            <Item sx={{
+                place:'center',
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                background: '#fff',
+                borderRadius: '10px',
+                border: '1px solid #ccc',
+                padding: '20px',
+                boxShadow: '0 0 10px rgba(0,0,0,0.5)',
+                margin: 'auto',
+                width: '400px',
+                height: '300px',
+                display: 'block'
+            }}>
+                <Item sx={{place:'center', height:'70%'}}>
+                    <Img alt={"유저 강퇴"} src={"/img/logo192.png"} />
+                </Item>
+                <Text>
+                    {quizPlay.bannedNickName} 선택한 참여자를 내보냅니다.
+                </Text>
+                <Item sx={{place:'center',height:'20%'}}>
+                    <Btn onClick={() => {
+                        stompSend("ban", {
+                            pinNum: quizPlay.pinNum,
+                            nickName: quizPlay.bannedNickName
+                        });
+                        props.setOpen(false);
+                    }}>
+                        확인
+                    </Btn>
+                    <Btn onClick={handleClose}>
+                        취소
+                    </Btn>
+                </Item>
+            </Item>
         </Modal>
     );
 }
