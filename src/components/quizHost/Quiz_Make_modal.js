@@ -1,8 +1,5 @@
 import * as React from 'react';
 import {useEffect, useState} from "react";
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Grid from "@mui/material/Grid";
 import ImageList from '@mui/material/ImageList';
@@ -12,38 +9,11 @@ import MenuItem from "@mui/material/MenuItem";
 import Chip from "@mui/material/Chip";
 import {FormControlLabel, FormGroup, Switch} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
-import {makeStyles} from "@material-ui/core/styles";
-import {R_makeQuizShow, R_modifyQuiz, R_setId} from "../../redux/reducers/quizInfoReducer";
+import {R_makeQuizShow} from "../../redux/reducers/quizInfoReducer";
 import CustomAxios from "../../function/CustomAxios";
 import {useHistory} from "react-router-dom";
-import styled from "styled-components";
+import {Btn, Img, Item, Text} from "../../LayOuts/LayOuts";
 
-const ThumbnailImg = styled.img`
-    width: 100%;
-    height: 100%;
-    max-width:280;
-    max-height:200;
-`
-
-const InputTextFiled = styled(TextField)`
-    width: 100%;
-    height: 50;
-    max-width:740;
-`
-
-// useStyles에 넣으면 이상해짐 ㅎㄷㄷ
-const boxstyle = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 800,
-    height: 800,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4
-}
 const imageItemData = [
     {
         img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
@@ -125,8 +95,6 @@ export default function BasicModal(props) {
     // 이미지 변경
     const [imageUrl, setImageUrl] = useState(imageItemData[0].img);
 
-    const [helperText, setHelperText] = useState('');
-
     const history = useHistory();
 
     const setQuizInfo = async () => {
@@ -147,7 +115,7 @@ export default function BasicModal(props) {
         })
     }
 
-    const handleInputTitle = (e) =>{
+    const handleInputTitle = (e) => {
         dispatch(R_makeQuizShow({key: 'title', value: e.target.value}))
     }
 
@@ -196,7 +164,7 @@ export default function BasicModal(props) {
     /**
      * chipData에 변화가 있을 때 리덕스에 저장
      */
-    useEffect(()=>{
+    useEffect(() => {
         // 리덕스에 저장할 태그명 리스트 세팅
         let inputTagData = [];
         for (let i = 0; i < chipData.length; i++) {
@@ -205,59 +173,69 @@ export default function BasicModal(props) {
 
         // 리덕스에 저장
         dispatch(R_makeQuizShow({key: 'tags', value: inputTagData}))
-    },[chipData])
+    }, [chipData])
 
     // useEffect(()=>{
     //     console.log(quiz.quizInfo);
     // })
     return (
-        <div>
-            <Modal
-                open={props.open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box sx={boxstyle}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12} mb={4}>
-                            <ModalTitle/>
-                        </Grid>
-                        <Grid item xs={5} mb={2}>
-                            <ModalThumbnail/>
-                        </Grid>
-                        <Grid item xs={7} mb={2}>
-                            <ModalBasicThumbnail/>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <ModalInputShowTitle/>
-                        </Grid>
-                        <Grid item xs={6}>
-                            <ModalSelectCategory/>
-                        </Grid>
-                        <Grid item xs={6}>
-                            <ModalShowIsPublic/>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <ModalInputTag/>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <ModalAddTagChip/>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <ModalDataSubmit/>
-                        </Grid>
+        <Modal
+            open={props.open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+        >
+            <Item sx={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                width: 800,
+                height: 800,
+                background: '#fff',
+                border: '2px solid #000',
+                boxShadow: 24,
+                p: 4,
+                display: 'block'
+            }}>
+                <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                        <ModalTitle/>
                     </Grid>
-                </Box>
-            </Modal>
-        </div>
+                    <Grid item xs={5}>
+                        <ModalThumbnail/>
+                    </Grid>
+                    <Grid item xs={7}>
+                        <ModalBasicThumbnail/>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <ModalInputShowTitle/>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <ModalSelectCategory/>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <ModalShowIsPublic/>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <ModalInputTag/>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <ModalAddTagChip/>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <ModalDataSubmit/>
+                    </Grid>
+                </Grid>
+            </Item>
+        </Modal>
     );
 
     function ModalTitle() {
         return (
-            <Typography align={"center"} variant={"h3"}>
-                <b>Show 기본 설정</b>
-            </Typography>
+            <Text sx={{fontSize: 30, width: '100%', height: '5%', fontWeight: 900, marginTop: '10px'}}>
+                Show 생성
+            </Text>
         );
     }
 
@@ -266,12 +244,19 @@ export default function BasicModal(props) {
      */
     function ModalThumbnail() {
         return (
-            <div>
-                <Typography align={"left"} variant={"h6"}>
-                    <b>대표 이미지</b>
-                </Typography>
-                <ThumbnailImg src={imageUrl} alt="대표 이미지"></ThumbnailImg>
-            </div>
+            <Item sx={{place: 'center', width: '100%', height: '100%', display: 'block'}}>
+                <Text sx={{fontSize: 20, fontWeight: 900, width: '100%', height: '10%', marginLeft: '20px'}}>대표
+                    이미지</Text>
+                <Item sx={{place: 'center', width: '100%', height: '90%'}}>
+                    <Img sx={{
+                        width: '100%',
+                        height: '100%',
+                        maxWidth: 280,
+                        maxHeight: 200,
+                    }} src={imageUrl} alt={"대표 이미지"}>
+                    </Img>
+                </Item>
+            </Item>
         );
     }
 
@@ -280,34 +265,40 @@ export default function BasicModal(props) {
      */
     function ModalBasicThumbnail() {
         return (
-            <div>
-                <Typography align={"left"} variant={"h6"}>
-                    <b>기본 이미지</b>
-                </Typography>
-                <ImageList
-                    sx={{width: 430, height: 200}}
-                    cols={3}
-                    rowHeight={164}
-                >
-
-                    {imageItemData.map((item) => (
-                        <ImageListItem key={item.img}>
-                            <img
-                                id={item.title}
-                                src={`${item.img}?w=150&h=150&fit=crop&auto=format`}
-                                srcSet={`${item.img}?w=150&h=150&fit=crop&auto=format&dpr=2 2x`}
-                                alt={item.title}
-                                loading="lazy"
-                                onClick={() => {
-                                    setImageUrl(item.img)
-                                    dispatch(R_makeQuizShow({key:'titleimg_origin', value: item.img}))
-                                    dispatch(R_makeQuizShow({key:'titleimg_thumb', value: item.img}))
-                                }}
-                            />
-                        </ImageListItem>
-                    ))}
-                </ImageList>
-            </div>
+            <Item sx={{place: 'center', width: '100%', height: '100%', display: 'block'}}>
+                <Text sx={{
+                    fontSize: 20,
+                    fontWeight: 900,
+                    width: '100%',
+                    height: '10%',
+                    marginLeft: '10px',
+                    marginBottom: '5px'
+                }}>기본 이미지</Text>
+                <Item sx={{place: 'center', width: '100%', height: '90%'}}>
+                    <ImageList
+                        sx={{width: 430, height: 200}}
+                        cols={3}
+                        rowHeight={164}
+                    >
+                        {imageItemData.map((item) => (
+                            <ImageListItem key={item.img}>
+                                <img
+                                    id={item.title}
+                                    src={`${item.img}?w=150&h=150&fit=crop&auto=format`}
+                                    srcSet={`${item.img}?w=150&h=150&fit=crop&auto=format&dpr=2 2x`}
+                                    alt={item.title}
+                                    loading="lazy"
+                                    onClick={() => {
+                                        setImageUrl(item.img)
+                                        dispatch(R_makeQuizShow({key: 'titleimg_origin', value: item.img}))
+                                        dispatch(R_makeQuizShow({key: 'titleimg_thumb', value: item.img}))
+                                    }}
+                                />
+                            </ImageListItem>
+                        ))}
+                    </ImageList>
+                </Item>
+            </Item>
         )
     }
 
@@ -317,17 +308,31 @@ export default function BasicModal(props) {
      */
     function ModalInputShowTitle() {
         return (
-            <div>
-                <Typography align={"left"} variant="h5">
-                    <b>Show 제목</b>
-                </Typography>
-                <InputTextFiled
-                    placeholder={"제목을 입력해주세요."}
-                    variant="outlined"
-                    defaultValue={quiz.quizInfo.title}
-                    onBlur={handleInputTitle}
-                />
-            </div>
+            <Item sx={{place: 'center', width: '100%', height: '100%', display: 'block'}}>
+                <Text sx={{
+                    fontSize: 20,
+                    fontWeight: 900,
+                    width: '15%',
+                    height: '30%',
+                    marginLeft: '10px',
+                    textAlign: 'left'
+                }}>
+                    Show 제목
+                </Text>
+                <Item sx={{place: 'center', width: '100%', height: '70%'}}>
+                    <TextField sx={{
+                        marginTop:'5px',
+                        width: '95%',
+                        height: '100%',
+                        //marginLeft: '5px',
+                    }}
+                               placeholder={"제목을 입력해주세요."}
+                               variant="outlined"
+                               defaultValue={quiz.quizInfo.title}
+                               onBlur={handleInputTitle}
+                    />
+                </Item>
+            </Item>
         );
     }
 
@@ -341,29 +346,38 @@ export default function BasicModal(props) {
      */
     function ModalSelectCategory() {
         return (
-            <div>
-                <Typography align={"left"} variant="h5">
-                    <b>카테고리 선택</b>
-                </Typography>
-                <TextField
-                    id="standard-select-currency"
-                    select
-                    value={"카테고리1"}
-                    onChange={
-                        (event) => {
-                            dispatch(R_makeQuizShow({key: 'category', value: event.target.value}))
+            <Item sx={{place: 'left', width: '100%', height: '100%', display: 'block'}}>
+                <Text sx={{
+                    fontSize: 20,
+                    fontWeight: 900,
+                    width: '40%',
+                    height: '25%',
+                    marginLeft: '5px'
+                }}>
+                    카테고리 선택
+                </Text>
+                <Item sx={{place: 'left', width: '100%', height: '75%'}}>
+                    <TextField
+                        sx={{marginLeft: '20px', marginTop: '10px', width: '100%', height: '100%'}}
+                        id="standard-select-currency"
+                        select
+                        value={"카테고리1"}
+                        onChange={
+                            (event) => {
+                                dispatch(R_makeQuizShow({key: 'category', value: event.target.value}))
+                            }
                         }
-                    }
-                    helperText="카테고리를 선택하세요!"
-                    variant="standard"
-                >
-                    {currencies.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
-                            {option.label}
-                        </MenuItem>
-                    ))}
-                </TextField>
-            </div>
+                        helperText="카테고리를 선택하세요!"
+                        variant="standard"
+                    >
+                        {currencies.map((option) => (
+                            <MenuItem key={option.value} value={option.value}>
+                                {option.label}
+                            </MenuItem>
+                        ))}
+                    </TextField>
+                </Item>
+            </Item>
         );
     }
 
@@ -372,31 +386,46 @@ export default function BasicModal(props) {
      */
     function ModalShowIsPublic() {
         return (
-            <div>
-                <Typography align={"left"} variant="h5">
-                    <b>공개 / 비공개 설정</b>
-                </Typography>
-                <FormGroup>
-                    <FormControlLabel
-                        control={<Switch checked={quiz.quizInfo.public}/>}
-                        label={label}
-                        onChange={
-                            (event) => {
-                                if (quiz.quizInfo.public) {
-                                    setLabel("비공개");
-                                    dispatch(R_makeQuizShow({key: 'public', value: event.target.checked}))
-                                } else {
-                                    setLabel("공개");
-                                    dispatch(R_makeQuizShow({key: 'public', value: event.target.checked}))
+            <Item sx={{place: 'center', width: '100%', height: '100%', display: 'block'}}>
+                <Text sx={{
+                    fontSize: 20,
+                    fontWeight: 900,
+                    width: '50%',
+                    height: '25%',
+                    marginLeft: '5px'
+                }}>
+                    공개 / 비공개 설정
+                </Text>
+                <Item sx={{place: 'left', width: '100%', height: '30%', margin: '5px'}}>
+                    <FormGroup sx={{marginLeft: '15px', width: '100%', height: '100%'}}>
+                        <FormControlLabel
+                            sx={{fontWeight: 900}}
+                            control={<Switch checked={quiz.quizInfo.public}/>}
+                            label={label}
+                            onChange={
+                                (event) => {
+                                    if (quiz.quizInfo.public) {
+                                        setLabel("비공개");
+                                        dispatch(R_makeQuizShow({key: 'public', value: event.target.checked}))
+                                    } else {
+                                        setLabel("공개");
+                                        dispatch(R_makeQuizShow({key: 'public', value: event.target.checked}))
+                                    }
                                 }
                             }
-                        }
-                    />
-                </FormGroup>
-                <Typography align={"left"} variant="p" sx={{fontSize: 12}}>
+                        />
+                    </FormGroup>
+                </Item>
+                <Text sx={{
+                    fontSize: 13,
+                    fontWeight: 500,
+                    width: '100%',
+                    height: '25%',
+                    marginTop: '10px'
+                }}>
                     공개로 설정하는 경우 다른 사용자에게 Show가 공유됩니다.
-                </Typography>
-            </div>
+                </Text>
+            </Item>
         );
     }
 
@@ -406,82 +435,98 @@ export default function BasicModal(props) {
         const [chipErrorMsg, setChipErrorMsg] = useState('');
 
         return (
-            <div>
-                <Typography align={"left"} variant="h5">
-                    <b>태그</b>
-                </Typography>
-                <InputTextFiled
-                    id="standard-basic"
-                    variant="standard"
-                    //className={classes.tagTextFieldStyle}
-                    helperText={chipErrorMsg}
-                    value={chipText}
-                    onChange={
-                        (event) => {
-                            setChipErrorMsg('');
-                            setChipText(event.target.value);
+            <Item sx={{place: 'center', width: '100%', height: '100%', display: 'block'}}>
+                <Text sx={{
+                    fontSize: 20,
+                    fontWeight: 900,
+                    width: '9%',
+                    height: '30%',
+                    marginLeft: '5px'
+                }}>
+                    태그
+                </Text>
+                <Item sx={{place: 'center', width: '100%', height: '70%'}}>
+                    <TextField
+                        sx={{
+                            marginTop:'5px',
+                            width: '95%',
+                            height: '100%',
+                        }}
+                        variant="outlined"
+                        placeholder={"태그를 입력한 후 엔터를 누르세요."}
+                        helperText={chipErrorMsg}
+                        value={chipText}
+                        onChange={
+                            (event) => {
+                                setChipErrorMsg('');
+                                setChipText(event.target.value);
+                            }
                         }
-                    }
-                    onKeyUp={
-                        (event) => {
-                            if (event.keyCode === 13) {
-                                if (chipText !== '') {
-                                    // 중복 태그 체크
-                                    let tagList = [];
-                                    for (let i = 0; i < chipData.length; i++) {
-                                        if (chipData[i].label !== chipText) {
-                                            tagList.push({key: chipData[i].key, label: chipData[i].label})
-                                        } else {
-                                            setChipText('');
-                                            setChipErrorMsg("현재 동일한 태그가 존재합니다.");
-                                            return;
+                        onKeyUp={
+                            (event) => {
+                                if (event.keyCode === 13) {
+                                    if (chipText !== '') {
+                                        // 중복 태그 체크
+                                        let tagList = [];
+                                        for (let i = 0; i < chipData.length; i++) {
+                                            if (chipData[i].label !== chipText) {
+                                                tagList.push({key: chipData[i].key, label: chipData[i].label})
+                                            } else {
+                                                setChipText('');
+                                                setChipErrorMsg("현재 동일한 태그가 존재합니다.");
+                                                return;
+                                            }
                                         }
-                                    }
-                                    // 새로 등록한 태그 추가
-                                    tagList.push({key: chipCount, label: chipText});
+                                        // 새로 등록한 태그 추가
+                                        tagList.push({key: chipCount, label: chipText});
 
-                                    // chipData 설정
-                                    setChipData(tagList);
-                                    setChipText('');
-                                    setChipCount(chipCount + 1);
+                                        // chipData 설정
+                                        setChipData(tagList);
+                                        setChipText('');
+                                        setChipCount(chipCount + 1);
+                                    }
                                 }
                             }
                         }
-                    }
-                >
-                </InputTextFiled>
-            </div>
+                    >
+                    </TextField>
+                </Item>
+            </Item>
         );
     }
 
     function ModalAddTagChip() {
         return (
-            <div style={{height: 30}}>
-                {
-                    chipData.map((item) => {
-                        return (
-                            <div key={item.key} style={{display: "inline-block"}}>
-                                <Chip
-                                    label={item.label}
-                                    sx={{marginLeft: 1, marginRight: 1}}
-                                    onDelete={
-                                        () => {
-                                            setChipData((chips) => chips.filter((chip) => chip.key !== item.key));
-                                        }
-                                    }/>
-                            </div>
-                        )
-                    })
-                }
-            </div>
+            <Item sx={{place:'center', width: '100%',height: '100%'}}>
+                <Item sx={{place:'left', height:30, width: '95%'}}>
+                    {
+                        chipData.map((item) => {
+                            return (
+                                <Item key={item.key} sx={{place:'left', display:'inline'}}>
+                                    <Chip
+                                        label={item.label}
+                                        sx={{marginLeft: 1, marginRight: 1}}
+                                        onDelete={
+                                            () => {
+                                                setChipData((chips) => chips.filter((chip) => chip.key !== item.key));
+                                            }
+                                        }/>
+                                </Item>
+                            )
+                        })
+                    }
+                </Item>
+            </Item>
         )
     }
 
     function ModalDataSubmit() {
         return (
-            <div align={"center"}>
-                <Button variant={"contained"} onClick={setQuizInfo}>생성</Button>
-            </div>
+            <Item sx={{place:'center'}}>
+                <Btn onClick={setQuizInfo}>
+                    생성
+                </Btn>
+            </Item>
         )
     }
 }
