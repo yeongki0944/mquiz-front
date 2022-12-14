@@ -16,15 +16,22 @@ export const QR_Modal = (props) => {
         >
             <Item sx={{
                 place:'center',
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
                 background: '#fff',
                 borderRadius: '10px',
                 border: '1px solid #ccc',
                 padding: '20px',
                 boxShadow: '0 0 10px rgba(0,0,0,0.5)',
                 margin: 'auto',
-                width: '400px',
-                height: '300px',
+                width: '40%',
+                height: '40%',
                 display: 'block'
+            }} sm={{
+                width: '80%',
+                height: '50%',
             }}>
                 <Item sx={{place:'center'}}>
                     <QRCode
