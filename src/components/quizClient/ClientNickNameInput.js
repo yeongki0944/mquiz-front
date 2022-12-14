@@ -50,6 +50,10 @@ export const NickNameCheck = () => {
      * 유효성 통과된 닉네임 입력 후 입장
      */
     const handleEnter = (nick) => {
+        localStorage.setItem('nickName', nick);
+        localStorage.setItem('pinNum', quizPlay.pinNum);
+        localStorage.setItem('role', "CLIENT");
+
         stompSend('setnickname', {
             pinNum: quizPlay.pinNum,
             nickName: nick

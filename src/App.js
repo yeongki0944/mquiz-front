@@ -21,7 +21,7 @@ import {QuizClientPlay} from "./pages/quizClient/QuizClientPlay";
 import {QuizHostReport} from "./pages/quizHost/QuizHostReport";
 import {NotFound404} from "./pages/NotFound404";
 import {Auth} from "./pages/quizHost/Auth";
-
+import {QuizClientReconnect} from "./pages/quizClient/QuizClientReconnect";
 
 const App = () =>{
     return (
@@ -51,6 +51,8 @@ const App = () =>{
                             <Route path="/QClient" component={QuizClientMain} exact/>
 
                             <Route path="/QClient/play" component={QuizClientPlay} exact/>
+
+                            <Route path="/QClient/reconnect" component={QuizClientReconnect} exact/>
 
                             {/* 404 페이지, 테스트 페이지*/}
 

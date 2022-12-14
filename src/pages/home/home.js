@@ -1,6 +1,7 @@
 import {useHistory} from "react-router-dom";
-import React from "react";
-import {Card, Content, Item, Page} from "../../LayOuts/LayOuts";
+import React, {useEffect} from "react";
+import {Btn, Card, Content, Item, Page} from "../../LayOuts/LayOuts";
+import {checkConnected} from "../../function/Reconnect";
 
 
 export default function Home() {
@@ -12,6 +13,10 @@ export default function Home() {
     const handleClient = () => {
         history.push("/Qclient");
     }
+
+    useEffect(()=>{
+        checkConnected();
+    },[])
 
     return (
         <Page sx={{bg:'img',img: '/img/background_1.jpg'}}>

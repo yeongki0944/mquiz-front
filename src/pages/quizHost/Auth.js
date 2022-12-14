@@ -15,6 +15,8 @@ export const Auth = () => {
     const [pageState, setPageState] = useState(true);
 
     const handleSuccess = () => {
+        localStorage.setItem('role','HOST');
+        // 여기 호스트 닉네임 넣으면됨. 로컬스토리지로
         usehistory.push("/QHost");
     }
     const handleLogin = () => {

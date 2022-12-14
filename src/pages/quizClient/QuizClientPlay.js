@@ -12,6 +12,7 @@ import {stompInit} from "../../function/WebSocket";
 import {Rank_Page} from "../../components/Result/Rank_Page";
 import {FinalRankPage} from "../../components/Result/FinalRankPage";
 import {ClientSubmitWait} from "../../components/quizClient/ClientSubmitWait";
+import {QuizClientReconnect} from "./QuizClientReconnect";
 
 export const QuizClientPlay = () => {
     const dispatch = useDispatch();
@@ -60,6 +61,7 @@ export const QuizClientPlay = () => {
                 {quizPlay.command === "SUBMIT" && <ClientSubmitWait/>}
                 {quizPlay.command === "RESULT" && <Rank_Page/>}
                 {quizPlay.command === "FINAL" && <FinalRankPage/>}
+                {quizPlay.command === "RECONNECT" && <QuizClientReconnect/>}
                 <ClientCountOutModal open={open} setOpen={setOpen}/>
             </Item>
         </Page>

@@ -4,7 +4,9 @@ import {playFunction} from "./PlayFunction";
 
 
 const URL = process.env.REACT_APP_BACKEND_SERVER;
-let stomp = Stomp.over(()=>{ return new SockJS(URL+"/connect") });
+let stomp = Stomp.over(() => {
+    return new SockJS(URL + "/connect")
+});
 
 /**
  * Stomp 연결
@@ -14,7 +16,9 @@ export const stompInit = (pinNum) => {
     stomp.connect({}, () => {
         console.log("STOMP Connection");
         stompSubscribe(pinNum);
-    },(error)=>{
+
+        localStorage.setItem('pinNum', pinNum);
+    }, (error) => {
         console.log("실패");
     });
 }
@@ -32,7 +36,6 @@ const stompSubscribe = (pinNum) => {
         console.log(msg.body);
         playFunction(JSON.parse(msg.body));
     });
-
 }
 
 /**
@@ -51,5 +54,6 @@ export const stompSend = (path, data) => {
 export const stompDisconnect = () => {
     stomp.disconnect(() => {
         console.log("소켓 연결 해제");
+        localStorage.removeItem('pinNum');
     }, {});
 }
