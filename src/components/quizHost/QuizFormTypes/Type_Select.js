@@ -1,8 +1,8 @@
 import {useDispatch, useSelector} from "react-redux";
 import {R_modifyQuiz, R_modifyQuizAnswer} from "../../../redux/reducers/quizInfoReducer";
-import {useEffect} from "react";
-import {Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, TextField} from "@mui/material";
+import {Checkbox, FormControl, FormControlLabel, FormGroup, TextField} from "@mui/material";
 import * as React from "react";
+import {Item} from "../../../LayOuts/LayOuts";
 
 export const Type_Select = () => {
     const dispatch = useDispatch();
@@ -28,26 +28,29 @@ export const Type_Select = () => {
     };
 
     return (
-        <FormControl component="fieldset">
-            <FormGroup>
-                {Object.keys(currentQuiz.choiceList).map((item, index) => {
-                    return (
-                        <div key={index}>
-                            <FormControlLabel
-                                control={<Checkbox checked={answer.includes(item)} onChange={handleChangeChk}
-                                                   name={item}/>}
-                            />
-                            <TextField
-                                variant="outlined"
-                                defaultValue={currentQuiz.choiceList[item]}
-                                placeholder={"답을 입력해주세요."}
-                                onBlur={handleChangeText}
-                                name={item}
-                            />
-                        </div>
-                    )
-                })}
-            </FormGroup>
-        </FormControl>
+        <Item sx={{place:'center'}}>
+            <FormControl component="fieldset">
+                <FormGroup>
+                    {Object.keys(currentQuiz.choiceList).map((item, index) => {
+                        return (
+                            <div key={index}>
+                                <FormControlLabel
+                                    control={<Checkbox checked={answer.includes(item)} onChange={handleChangeChk}
+                                                       name={item}/>}
+                                />
+                                <TextField
+                                    variant="outlined"
+                                    defaultValue={currentQuiz.choiceList[item]}
+                                    placeholder={"답을 입력해주세요."}
+                                    onBlur={handleChangeText}
+                                    name={item}
+                                />
+                            </div>
+                        )
+                    })}
+                </FormGroup>
+            </FormControl>
+        </Item>
+
     )
 }
