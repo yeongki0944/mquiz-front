@@ -3,19 +3,14 @@ import {useDispatch, useSelector} from "react-redux";
 import {QuizView} from "../../components/QuizView/QuizView";
 import {useEffect} from "react";
 import {QuizStartCounter} from "../../components/QuizStartCounter";
-import {styled} from "@mui/system";
-import {R_setData, R_setContent} from "../../redux/reducers/quizplayReducer";
-import {Item_c, Page, Page_Gradiant} from "../../LayOuts/LayOuts";
+import {R_setData} from "../../redux/reducers/quizplayReducer";
+import {Page} from "../../LayOuts/LayOuts";
 import {QuizHostReady} from "./QuizHostReady";
-import {stompInit, stompSend, stompDisconnect, stompSubscribe} from "../../function/WebSocket";
+import {stompInit, stompSubscribe} from "../../function/WebSocket";
 import {Rank_Page} from "../../components/Result/Rank_Page";
 import {FinalRankPage} from "../../components/Result/FinalRankPage"
 import {getPinNum} from "../../function/localStorage";
 
-const Item_c_full = styled(Item_c)`
-    width: 100%;
-    height: 100%;
-`;
 export const QuizHostPlay = () => {
     const dispatch = useDispatch();
     const {quizPlay} = useSelector(state => state.quizPlay);

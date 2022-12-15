@@ -1,15 +1,13 @@
 import * as React from 'react';
-import {Page_Default} from "../../LayOuts/LayOuts";
+import {Page} from "../../LayOuts/LayOuts";
 import {NavBar} from "../../components/quizHost/NavBar";
-import {useRef, useState} from "react";
-import {useSelector} from "react-redux";
 
 export const QuizHostReport = () => {
 
     return (
-        <Page_Default>
+        <Page sx={{bg: 'img', img: '/img/background_1.jpg'}}>
             <NavBar/>
             report
-        </Page_Default>
+        </Page>
     );
 }

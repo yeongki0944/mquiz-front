@@ -1,4 +1,4 @@
-import {Content, Item, Item_c, Item_l, Item_r, Page_Default} from "../../LayOuts/LayOuts";
+import {Item} from "../../LayOuts/LayOuts";
 
 // const Rank_sheet = styled(Item_c)`
 //     width: 100%;

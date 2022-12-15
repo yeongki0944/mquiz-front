@@ -1,20 +1,7 @@
 import * as React from "react";
-import {BottomNavigation, BottomNavigationAction} from "@mui/material";
-import styled from "styled-components";
 import {useHistory} from "react-router-dom";
-import {Content, Item, Item_c, Text} from "../../LayOuts/LayOuts";
+import {Item, Text} from "../../LayOuts/LayOuts";
 
-const Styled_NavBar = styled(BottomNavigation)`
-    width: 100%;
-    height: 5vh;
-    @media (min-width: 767px) {
-    }
-
-    @media (min-width: 300px) and (max-width: 767px) {
-        position: absolute;
-        bottom: 0;
-    }
-`;
 
 export const NavBar = () => {
     const history = useHistory();

@@ -1,8 +1,7 @@
 import * as React from "react";
 import 'bootstrap/dist/css/bootstrap.css';
 import {useEffect, useRef, useState} from "react";
-import styled from "styled-components";
-import {Content, Img, Item, Page_Default} from "../LayOuts/LayOuts";
+import {Content, Img, Item} from "../LayOuts/LayOuts";
 
 
 /*

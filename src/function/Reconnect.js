@@ -6,11 +6,11 @@ import {getPinNum} from "./localStorage";
 export const checkConnected = () => {
     console.log(getPinNum());
     if(localStorage.getItem('pinNum') != null){
-        // 재접속 만들기
-        if(localStorage.getItem('role')==="HOST"){
 
+        if(localStorage.getItem('role')==="HOST"){ //HOST 재접속
+            window.location.href="/QHost/reconnect";
         }
-        else{
+        else{ //CLIENT 재접속
             window.location.href="/QClient/reconnect";
         }
     }

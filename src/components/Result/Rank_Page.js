@@ -1,29 +1,12 @@
-import styled from "styled-components";
-import {Btn, Content, Item, Item_c, Item_l, Page_Default} from "../../LayOuts/LayOuts";
+import {Btn, Content, Item} from "../../LayOuts/LayOuts";
 import {useSelector} from "react-redux";
 import {Rank} from "./Rank";
 import {useState} from "react";
 import {Answer} from "./Answer";
-import {Button} from "@mui/material";
-import {stompSend} from "../../function/WebSocket";
 import {VolumeControlButton} from "../VolumeControlButton";
 import * as React from "react";
-import {getRole} from "../../function/localStorage";
 
-const Top_text = styled(Item_l)`
-    display: block;
-    width: 90%;
-    height: 100%;
-    // font-size: 4vw;
-    font-weight: 600;
-    line-height: 2.5rem;
-`;
 
-const Page_Content = styled(Item_c)`
-    display: block;
-    width: 60%;
-    height: 60%;
-`
 const RankBox = (props) => {
     // const {quizPlay} = useSelector(state => state.quizPlay);
 

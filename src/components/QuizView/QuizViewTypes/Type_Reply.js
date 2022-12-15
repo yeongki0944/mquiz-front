@@ -1,30 +1,12 @@
 import {useDispatch, useSelector} from "react-redux";
 import * as React from "react";
-import Button from "@mui/material/Button";
-import {useEffect, useState} from "react";
-import {R_setContent, R_setData} from "../../../redux/reducers/quizplayReducer";
-import styled from "styled-components";
-import {Btn, Card, Item, Item_c} from "../../../LayOuts/LayOuts";
+import { useState} from "react";
+import {R_setData} from "../../../redux/reducers/quizplayReducer";
+import { Card, Item} from "../../../LayOuts/LayOuts";
 import {TextField} from "@mui/material";
-import Typography from "@mui/material/Typography";
 import {stompSend} from "../../../function/WebSocket";
 import {PlayActionBar} from "../PlayActionBar";
 import {getNickname, getPinNum, getRole} from "../../../function/localStorage";
-
-const Content = styled(Item_c)`
-  display: block;
-  height: 85%;
-`;
-const Answers = styled(Item_c)`
-    height: 95%;
-    display: block;
-`;
-const AnswerArea = styled(Item_c)`
-    @media (min-width: 300px) and (max-width: 767px) {
-    }
-    @media (min-width: 767px) {
-    }
-`
 
 export const Type_Reply = () => {
     const dispatch = useDispatch();

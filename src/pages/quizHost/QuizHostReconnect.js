@@ -10,7 +10,7 @@ import {getNickname, getPinNum} from "../../function/localStorage";
 /**
  * 대기방 component
  */
-export function QuizClientReconnect() {
+export function QuizHostReconnect() {
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -32,14 +32,14 @@ export function QuizClientReconnect() {
                 </Item>
                 <Item sx={{place: 'center'}} sm={{place: 'center'}}>
                     <Text sx={{color: '#FFC107', fontSize: '3vw'}} sm={{fontSize: '6vw'}}>
-                        <b>{getNickname()}</b>님이 입장했습니다.
+                        진행중인 퀴즈가 있습니다. 재개하시겠습니까?
                     </Text>
                 </Item>
                 <Item sx={{place: 'center'}} sm={{place: 'center'}}>
                     <Item sx={{place: 'center'}}>
                         <Btn onClick={() => {
                             dispatch(R_setData({key: 'command', value: 'WAIT'}));
-                            history.push('/QClient/play');
+                            history.push('/QHost/play');
                         }}>
                             참가
                         </Btn>

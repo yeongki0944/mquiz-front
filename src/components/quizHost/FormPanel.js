@@ -31,7 +31,7 @@ import {styled} from "@mui/material/styles";
 import {Type_Reply} from "./QuizFormTypes/Type_Reply";
 import {Type_OX} from "./QuizFormTypes/Type_OX";
 import {Type_Select} from "./QuizFormTypes/Type_Select";
-import {Item_c} from "../../LayOuts/LayOuts";
+import {Item} from "../../LayOuts/LayOuts";
 
 
 const Img = styled('img')({
@@ -56,7 +56,7 @@ export const FormPanel = (props) => {
 
         return (
             <div>
-                <Item_c>
+                <Item sx={{place:'center'}}>
                     {types.map((type) => (
                         <Button key={type}
                                 onClick={() => {
@@ -96,7 +96,7 @@ export const FormPanel = (props) => {
                             </Card>
                         </Button>
                     ))}
-                </Item_c>
+                </Item>
             </div>
         )
     }
@@ -128,7 +128,7 @@ export const FormPanel = (props) => {
         }, {value: 40, label: '40초'}, {value: 50, label: '50초'}, {value: 60, label: '60초'}];
         return (
             <div>
-                <Item_c>
+                <Item sx={{place:'center'}}>
                     점수 사용
                     <Switch
                         checked={currentQuiz.useScore}
@@ -141,8 +141,8 @@ export const FormPanel = (props) => {
                             }
                         }}
                     />
-                </Item_c>
-                <Item_c>
+                </Item>
+                <Item sx={{place:'center'}}>
                     <Rating
                         id="rate"
                         name="simple-controlled"
@@ -155,8 +155,8 @@ export const FormPanel = (props) => {
                             }
                         }}
                     />
-                </Item_c>
-                <Item_c>시간제한
+                </Item>
+                <Item sx={{place:'center'}}>시간제한
                     <TextField
                         select
                         value={currentQuiz.time}
@@ -176,7 +176,7 @@ export const FormPanel = (props) => {
                             </option>
                         ))}
                     </TextField>[초]
-                </Item_c>
+                </Item>
             </div>
         );
     }
@@ -190,7 +190,7 @@ export const FormPanel = (props) => {
                         value={currentQuiz.media.type}
                         name="radio-buttons-group"
                     >
-                        <Item_c>
+                        <Item sx={{place:'center'}}>
                             <FormControlLabel value="Image" control={<Radio/>} label="Image"
                                               onClick={() => {
                                                   setQuiz("media", "type", 'Image');
@@ -206,7 +206,7 @@ export const FormPanel = (props) => {
                                                   setQuiz("media", "type", 'Audio');
                                                   setQuiz("media", "url", '');
                                               }}/>
-                        </Item_c>
+                        </Item>
                     </RadioGroup>
                 </FormControl>
                 {currentQuiz.media.type === 'Image' && <ImageBox/>}
@@ -258,19 +258,19 @@ export const FormPanel = (props) => {
         <div>
             <hr/>
             <FormLabel component="legend">유형</FormLabel>
-            <Item_c><TypeButton/></Item_c>
+            <Item sx={{place:'center'}}><TypeButton/></Item>
             <hr/>
             <FormLabel component="legend">질문</FormLabel>
-            <Item_c><Question/></Item_c>
+            <Item sx={{place:'center'}}><Question/></Item>
             <hr/>
             <FormLabel component="legend">미디어</FormLabel>
-            <Item_c><MediaBox/></Item_c>
+            <Item sx={{place:'center'}}><MediaBox/></Item>
             <hr/>
             <FormLabel component="legend">정답</FormLabel>
-            <Item_c><FormType/></Item_c>
+            <Item sx={{place:'center'}}><FormType/></Item>
             <hr/>
             <FormLabel component="legend">옵션</FormLabel>
-            <Item_c><Options/></Item_c>
+            <Item sx={{place:'center'}}><Options/></Item>
         </div>
     );
 }
