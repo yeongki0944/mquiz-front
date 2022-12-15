@@ -1,20 +1,19 @@
 import {useDispatch, useSelector} from "react-redux";
 import {R_addQuiz, R_makeQuizShow, R_setCurrentShow} from "../../redux/reducers/quizInfoReducer";
-import {BottomNavigation, BottomNavigationAction} from "@mui/material";
 import * as React from "react";
-import styled from "styled-components";
 import {useHistory} from "react-router-dom";
 import {saveShowAPI} from "../../function/API";
-
-const Styled_BottomNavigation = styled(BottomNavigation)`
-    width: 100%;
-    height: 5vh;
-`;
+import {Btn, Item, Text} from "../../LayOuts/LayOuts";
+import {useState} from "react";
+import Modal from "@mui/material/Modal";
+import {Slider} from "@mui/material";
 
 export const ControlPanel = (props) => {
     const dispatch = useDispatch();
     const history = useHistory();
     const quiz = props.quiz;
+    const [open,setOpen] = useState(false);
+    const [result,setResult] = useState('');
 
     const verifyQuiz = () => {
         let result = [];
@@ -59,16 +58,11 @@ export const ControlPanel = (props) => {
         let result = verifyQuiz();
         if(result.length > 0){
             dispatch(R_makeQuizShow({key:"state", value:"작성중"}));
-            alert(result.join("\n"));
-            return;
         }else{
             dispatch(R_makeQuizShow({key:"state", value:"완성"}));
-            if(saveShowAPI(quiz)){
-                history.push("/QHost");
-            }else{
-                alert("저장에 실패했습니다.");
-            }
         }
+        setResult(result);
+        setOpen(true);
 
     }
     const addPage = () => {
@@ -77,10 +71,48 @@ export const ControlPanel = (props) => {
     }
 
     return (
-        <Styled_BottomNavigation showLabels>
-            <BottomNavigationAction label="+ Page" onClick={addPage}/>
-            <BottomNavigationAction label="+ Show"/>
-            <BottomNavigationAction label="Save" onClick={save}/>
-        </Styled_BottomNavigation>
+    <Item sx={{place: 'center', width: "100%", height: '5vh',backgroundColor:'rgba(0,0,0,0.5)',position:'absolute',bottom:0}} sm={{}}>
+        <Item sx={{place: 'center'}} onClick={addPage}>
+            <Text sx={{color:'#fff',cursor:'pointer'}}>+ Page</Text>
+        </Item>
+        <Item sx={{place: 'center'}}>
+            <Text sx={{color:'#fff',cursor:'pointer'}}>+ Show</Text>
+        </Item>
+        <Item sx={{place: 'center',cursor:'pointer'}} onClick={save}>
+            <Text sx={{color:'#fff'}}>Save</Text>
+        </Item>
+        <Modal
+            sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}
+            open={open}
+        >
+            <Item sx={{place: 'center', display:'block',width: '50%', height: '50%',background:'#fff', borderRadius:'10px'}}>
+                <Item sx={{place: 'center', height: '20%', width: '100%', borderBottom:'1px solid #000'}}>
+                    <Text sx={{fontSize:'1.5rem'}}>저장 상태 확인</Text>
+                </Item>
+                <Item sx={{place: 'center', height: '50%', width: '100%',display:'block',overflowY:'auto'}}>
+                    {result.length > 0 ?
+                        result.map((item,index) => {
+                            return <Text key={index}>{item}</Text>
+                        })
+                        :
+                        <Text>필수 조건을 모두 만족하였습니다.</Text>
+                    }
+                </Item>
+                <Item sx={{place: 'center', height: '10%', width: '100%'}}>
+                    <Btn sx={{width:'50%', height:'100%', background:'#fff', border:'1px solid #000', borderRadius:'10px'}} onClick={() => {
+                        if(saveShowAPI(quiz)){
+                            history.push("/QHost");
+                        }else{
+                            alert("저장에 실패했습니다.");
+                        }
+                        setOpen(false);
+                    }}>저장</Btn>
+                    <Btn sx={{width:'50%', height:'100%', background:'#fff', border:'1px solid #000', borderRadius:'10px'}} onClick={() => {
+                        setOpen(false);
+                    }}>돌아가기</Btn>
+                </Item>
+            </Item>
+        </Modal>
+    </Item>
     )
 }
