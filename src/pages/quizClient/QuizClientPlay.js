@@ -14,7 +14,8 @@ import {FinalRankPage} from "../../components/Result/FinalRankPage";
 import {ClientSubmitWait} from "../../components/quizClient/ClientSubmitWait";
 import {QuizClientReconnect} from "./QuizClientReconnect";
 import {flushLocalStorage, getPinNum} from "../../function/localStorage";
-import {disableBackPage} from "../../function/common";
+import {disableBackPage, disableRefresh} from "../../function/common";
+import {VolumeControlButton} from "../../components/VolumeControlButton";
 
 export const QuizClientPlay = () => {
     const dispatch = useDispatch();
@@ -23,8 +24,9 @@ export const QuizClientPlay = () => {
 
     useEffect(() => {
         disableBackPage();
+        disableRefresh();
     }, []);
-    
+
     /**
      * 퀴즈 진행 command 시 페이지 변경용 useEffect
      * null: 웹소켓 시작
@@ -60,6 +62,8 @@ export const QuizClientPlay = () => {
     return (
         <Page sx={{bg:'img',img: '/img/background_1.jpg'}}>
             <Item sx={{place:"center"}} sm={{place:'center'}}>
+                {quizPlay.command === "WAIT" && <VolumeControlButton sx={{place: 'top-right', height: '5vh'}} mediaName='Ready'/>}
+                {quizPlay.command != "WAIT" && <VolumeControlButton sx={{place: 'top-right', height: '5vh'}} mediaName='Play'/>}
                 {quizPlay.command === null && <NickNameCheck/>}
                 {quizPlay.command === "WAIT" && <ClientReady/>}
                 {quizPlay.command === "START" && <QuizStartCounter/>}

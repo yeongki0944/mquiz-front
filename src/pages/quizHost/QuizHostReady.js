@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {Link} from "react-router-dom";
-import {VolumeControlButton} from "../../components/VolumeControlButton";
 import {useSelector} from "react-redux";
 import {stompSend} from "../../function/WebSocket";
 import {Btn, Content, Item, Text} from "../../LayOuts/LayOuts";
@@ -9,7 +8,7 @@ import {HostCountOutModal, UserList} from "../../components/quizClient/ClientJoi
 import {createSvgIcon} from "@mui/material/utils";
 import {QR_Modal} from "../../components/QR_Modal";
 import {getPinNum} from "../../function/localStorage";
-import {disableBackPage} from "../../function/common";
+import {disableBackPage, disableRefresh} from "../../function/common";
 
 const HomeIcon = createSvgIcon(
     <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>,
@@ -20,7 +19,7 @@ export const QuizHostReady = () => {
     const {quizPlay} = useSelector(state => state.quizPlay);
     const [openBan, setOpenBan] = useState(false);
     const [openQR, setOpenQR] = useState(false);
-    const URL = "http://15.152.42.217:3000/QClient?pinNum="+ quizPlay.pinNum;
+    const URL = "http://www.mquiz.site/QClient/"+ quizPlay.pinNum;
 
     const handleCopy = () => {
         navigator.clipboard.writeText(URL).then(function () {
@@ -39,11 +38,11 @@ export const QuizHostReady = () => {
 
     useEffect(() => {
         disableBackPage();
+        disableRefresh();
     }, []);
 
     return (
         <Content sx={{width: '100vw', height: '100vh'}}>
-            <VolumeControlButton sx={{place: 'top-right', height: '5vh'}}/>
             <Text sx={{color:'#FFC107',fontSize:'3vw'}} sm={{fontSize:'6vw'}}>
                 mquiz.site 접속해주세요
             </Text>
