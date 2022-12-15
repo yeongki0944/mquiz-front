@@ -10,9 +10,9 @@ import Chip from "@mui/material/Chip";
 import {FormControlLabel, FormGroup, Switch} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import {R_makeQuizShow} from "../../redux/reducers/quizInfoReducer";
-import CustomAxios from "../../function/CustomAxios";
 import {useHistory} from "react-router-dom";
 import {Btn, Img, Item, Text} from "../../LayOuts/LayOuts";
+import {createShowAPI} from "../../function/API";
 
 const imageItemData = [
     {
@@ -97,22 +97,18 @@ export default function BasicModal(props) {
 
     const history = useHistory();
 
-    const setQuizInfo = async () => {
-        console.log(quiz.quizData);
-        await CustomAxios.post("/v1/show", {
+    const handleCreate = () => {
+        if (createShowAPI({
             quizInfo: quiz.quizInfo,
             quizData: quiz.quizData,
-        }).then((res) => {
-            console.log(res.data)
+        })) {
             props.setOpen(false);
             history.push({
                 pathname: "/QHost/create",
-                state: {id: res.data.data}
             })
-        }).catch((err) => {
-            console.log(err)
-            // props.setOpen(false)
-        })
+        } else {
+            alert("퀴즈 생성 실패");
+        }
     }
 
     const handleInputTitle = (e) => {
@@ -321,7 +317,7 @@ export default function BasicModal(props) {
                 </Text>
                 <Item sx={{place: 'center', width: '100%', height: '70%'}}>
                     <TextField sx={{
-                        marginTop:'5px',
+                        marginTop: '5px',
                         width: '95%',
                         height: '100%',
                         //marginLeft: '5px',
@@ -448,7 +444,7 @@ export default function BasicModal(props) {
                 <Item sx={{place: 'center', width: '100%', height: '70%'}}>
                     <TextField
                         sx={{
-                            marginTop:'5px',
+                            marginTop: '5px',
                             width: '95%',
                             height: '100%',
                         }}
@@ -497,12 +493,12 @@ export default function BasicModal(props) {
 
     function ModalAddTagChip() {
         return (
-            <Item sx={{place:'center', width: '100%',height: '100%'}}>
-                <Item sx={{place:'left', height:30, width: '95%'}}>
+            <Item sx={{place: 'center', width: '100%', height: '100%'}}>
+                <Item sx={{place: 'left', height: 30, width: '95%'}}>
                     {
                         chipData.map((item) => {
                             return (
-                                <Item key={item.key} sx={{place:'left', display:'inline'}}>
+                                <Item key={item.key} sx={{place: 'left', display: 'inline'}}>
                                     <Chip
                                         label={item.label}
                                         sx={{marginLeft: 1, marginRight: 1}}
@@ -522,8 +518,8 @@ export default function BasicModal(props) {
 
     function ModalDataSubmit() {
         return (
-            <Item sx={{place:'center'}}>
-                <Btn onClick={setQuizInfo}>
+            <Item sx={{place: 'center'}}>
+                <Btn onClick={handleCreate}>
                     생성
                 </Btn>
             </Item>

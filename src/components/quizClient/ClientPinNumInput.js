@@ -3,9 +3,9 @@ import TextField from '@mui/material/TextField';
 import {useHistory} from "react-router-dom";
 import {useEffect, useState} from 'react';
 import {useDispatch} from "react-redux";
-import CustomAxios from "../../function/CustomAxios";
 import {Btn, Content, Item, Text} from "../../LayOuts/LayOuts";
 import {setPinNum} from "../../function/localStorage";
+import {enterRoomAPI} from "../../function/API";
 
 /**
  * 핀 번호 입력 component
@@ -51,22 +51,12 @@ export const PinNumCheck = () => {
      * 방 존재 시 setQuiz 실행
      */
     const handleEnter = async (pin) => {
-        //핀 검증
-        await CustomAxios.post('/joinroom', {'pinNum': pin})
-            .then((res) => {
-                if(res.data.statusCode === 200){
-                    // dispatch(R_setData({key: 'pinNum', value: res.data.data.pinNum}));
-                    setPinNum(res.data.data.pinNum);
-                    history.push({
-                        pathname: '/QClient/play'
-                    })
-                }else{
-                    setError('핀번호가 틀렸습니다.');
-                }
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+        if(enterRoomAPI({pin})){
+            setPinNum(pin);
+            history.push('/QClient/play');
+        }else{
+            setError('존재하지 않는 방입니다.');
+        }
     }
 
     useEffect(() => {

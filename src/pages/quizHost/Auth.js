@@ -1,12 +1,11 @@
 import {Btn, Card_panel, Content, Item, Page, Text} from "../../LayOuts/LayOuts";
 import {useHistory} from "react-router-dom";
-import CustomAxios from "../../function/CustomAxios";
 import {useState} from "react";
-import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 import * as React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {editUserInfo} from "../../redux/reducers/userInfoReducer";
+import {loginAPI, registerAPI} from "../../function/API";
 
 export const Auth = () => {
     const usehistory = useHistory();
@@ -20,31 +19,19 @@ export const Auth = () => {
         usehistory.push("/QHost");
     }
     const handleLogin = () => {
-        CustomAxios.post("v1/hostauth/login", {
-            "hostEmail": userInfo.hostEmail,
-            "password" : userInfo.password
-        }).then((res) => {
-            console.log(res);
-            if (true) {
-                // handleSuccess();
-            }
-        }).catch((err) => {
-            console.log(err);
-        })
+        if(loginAPI({hostEmail: userInfo.hostEmail, password: userInfo.password})){
+            handleSuccess();
+        }else {
+            alert("로그인 실패");
+        }
     }
 
     const handleReg = () => {
-        CustomAxios.post("v1/hostauth/join", {
-            "hostEmail": userInfo.hostEmail,
-            "password" : userInfo.password
-        }).then((res) => {
-            console.log(res);
-            if (true) {
-                setPageState(true);
-            }
-        }).catch((err) => {
-            console.log(err);
-        })
+        if(registerAPI({hostEmail: userInfo.hostEmail, password: userInfo.password})){
+            handleSuccess();
+        }else {
+            alert("회원가입 실패");
+        }
     }
 
     const handleIdInput = (e) => {

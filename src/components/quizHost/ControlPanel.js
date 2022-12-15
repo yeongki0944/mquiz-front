@@ -1,12 +1,10 @@
-import {makeStyles} from "@material-ui/core/styles";
 import {useDispatch, useSelector} from "react-redux";
 import {R_addQuiz, R_makeQuizShow, R_setCurrentShow} from "../../redux/reducers/quizInfoReducer";
 import {BottomNavigation, BottomNavigationAction} from "@mui/material";
 import * as React from "react";
-import axios from "axios";
-import CustomAxios from "../../function/CustomAxios";
 import styled from "styled-components";
 import {useHistory} from "react-router-dom";
+import {saveShowAPI} from "../../function/API";
 
 const Styled_BottomNavigation = styled(BottomNavigation)`
     width: 100%;
@@ -65,14 +63,11 @@ export const ControlPanel = (props) => {
             return;
         }else{
             dispatch(R_makeQuizShow({key:"state", value:"완성"}));
-            await CustomAxios.post('/v1/show', quiz)
-                .then(res => {
-                    console.log(res.data)
-                    history.push("/QHost");
-                })
-                .catch(err => {
-                    console.log(err)
-                })
+            if(saveShowAPI(quiz)){
+                history.push("/QHost");
+            }else{
+                alert("저장에 실패했습니다.");
+            }
         }
 
     }

@@ -8,13 +8,10 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import {useDispatch} from "react-redux";
 import Add from "@material-ui/icons/Add";
 import { useHistory} from "react-router-dom";
-import CustomAxios from "../../function/CustomAxios";
-import {R_setCurrentShow, R_setId, R_setQuiz} from "../../redux/reducers/quizInfoReducer";
 import styled from "styled-components";
-import {R_setData} from "../../redux/reducers/quizplayReducer";
 import {useState} from "react";
 import {Card_panel, Item} from "../../LayOuts/LayOuts";
-import {getPinNum, setPinNum} from "../../function/localStorage";
+import {createPlayAPI, deleteShowAPI, getShowInfoAPI, setShowListAPI} from "../../function/API";
 
 /**
  * props:
@@ -54,18 +51,7 @@ export const QuizListHostMain = (props) => {
             <Card_panel
                 sx={{margin: '10px 0'}}
                 key={index}
-                  onClick={() => {
-                      CustomAxios.get('/v1/show?showId=' + item.id)
-                          .then(res => {
-                              console.log(res.data);
-                              dispatch(R_setId(item.id));
-                              dispatch(R_setQuiz(res.data.data));
-                              dispatch(R_setCurrentShow(1));
-                          })
-                          .catch(err => {
-                              console.log(err);
-                          })
-                  }}>
+                  onClick={()=>{getShowInfoAPI(item.id);}}>
                 <Grid container spacing={2}>
                     <Grid item>
                         <img alt="complex"
@@ -97,18 +83,32 @@ export const QuizListHostMain = (props) => {
                             <Typography variant="subtitle1" component="div">
                                 <Button onClick={(e) => {
                                     e.stopPropagation();
-                                    handleEdit(item.id)
+                                    setButtonDisabled(true);
+                                    getShowInfoAPI(item.id);
+                                    history.push({
+                                        pathname: '/QHost/create',
+                                    })
                                 }} disabled={buttonDisabled}><EditIcon_Styled/></Button>
 
                                 {item.quizInfo.state === "완성" &&
                                     <Button onClick={(e) => {
                                         e.stopPropagation();
-                                        handlePlay(item.id)
+                                        setButtonDisabled(true);
+                                        if(createPlayAPI(item.id)){
+                                            history.push({
+                                                pathname: '/QHost/play',
+                                            })
+                                        }else{
+                                            setButtonDisabled(false);
+                                            alert("퀴즈를 불러오는데 실패했습니다.");
+                                        }
                                     }} disabled={buttonDisabled}><PlayArrow/></Button>
                                 }
                                 <Button onClick={(e) => {
                                     e.stopPropagation();
-                                    handledelete(item.id)
+                                    setButtonDisabled(true);
+                                    deleteShowAPI(item.id);
+                                    history.go(0);
                                 }} disabled={buttonDisabled}><DeleteForeverIcon/></Button>
                             </Typography>
                         </Grid>
@@ -117,60 +117,6 @@ export const QuizListHostMain = (props) => {
             </Card_panel>
         )
     );
-
-    function handledelete(id) {
-        setButtonDisabled(true);
-        CustomAxios.delete(`/v1/show?showId=${id}`)
-            .then(res => {
-                console.log(res);
-                history.go(0);
-            })
-            .catch(err => {
-                console.log(err);
-            })
-            .finally(() => {
-                setButtonDisabled(false);
-            })
-    }
-
-    const handleEdit = (id) => {
-        setButtonDisabled(true);
-        CustomAxios.get('/v1/show?showId=' + id)
-            .then(res => {
-                console.log(res.data);
-                dispatch(R_setId(id));
-                dispatch(R_setQuiz(res.data.data));
-                dispatch(R_setCurrentShow(1));
-            })
-            .catch(err => {
-                console.log(err);
-            })
-            .finally(() => {
-                setButtonDisabled(false);
-            })
-        history.push({
-            pathname: '/QHost/create',
-        })
-    }
-
-    const handlePlay = (id) => {
-        setButtonDisabled(true);
-        CustomAxios.post('/v1/host/createPlay', {'id': id})
-            .then(res => {
-                dispatch(R_setData({key: "command", value: "READY"})); // 최초 세팅
-                console.log(res.data);
-                setPinNum(res.data.data);
-                history.push({
-                    pathname: '/QHost/play',
-                })
-            })
-            .catch(() => {
-                console.log("오류 발생");
-            })
-            .finally(() => {
-                setButtonDisabled(false);
-            })
-    }
 
     function handleCreate() {
         props.setModalOpen(true);
