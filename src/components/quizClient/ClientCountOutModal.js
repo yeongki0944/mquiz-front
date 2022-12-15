@@ -2,6 +2,8 @@ import * as React from 'react';
 import Modal from '@mui/material/Modal';
 import { useHistory } from 'react-router-dom';
 import {Btn, Img, Item, Text} from "../../LayOuts/LayOuts";
+import {flushLocalStorage} from "../../function/localStorage";
+import {stompDisconnect} from "../../function/WebSocket";
 
 export function ClientCountOutModal(props) {
     const open = props.open;
@@ -46,6 +48,7 @@ export function ClientCountOutModal(props) {
                 <Item sx={{place:'center', width: '100%', height:'20%'}} sm={{height: '30%'}}>
                     <Btn onClick={() =>{
                         console.log("forceRefresh");
+                        stompDisconnect();
                         history.push('/');
                         history.go(0)
                     }}>

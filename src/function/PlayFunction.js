@@ -1,6 +1,7 @@
 import store from "../redux/store";
 import {R_setData, R_setBan, R_setUserlist} from "../redux/reducers/quizplayReducer";
 import {useSelector} from "react-redux";
+import {getNickname} from "./localStorage";
 
 /**
  * 게임 진행을 위한 데이터를 가져오고, action에 따라 처리
@@ -8,6 +9,7 @@ import {useSelector} from "react-redux";
 
 
 export const playFunction = (data) => {
+    console.log("playFunction IN");
     switch (data.action){
         case "COMMAND":
             command(data);
@@ -17,8 +19,11 @@ export const playFunction = (data) => {
             store.dispatch(R_setData({key: "userList", value: data.userList}))
             break;
         case "BAN":
-            store.dispatch(R_setBan({key: "bannedNickName", value: data.nickName}))
-            store.dispatch(R_setData({key: "userList", value: data.userList}))
+            if(getNickname() === data.nickName){
+                store.dispatch(R_setData({key: "command", value: data.command}));
+            }
+            store.dispatch(R_setBan({key: "bannedNickName", value: data.nickName}));
+            store.dispatch(R_setData({key: "userList", value: data.userList}));
             break;
         default:
             break;

@@ -13,7 +13,7 @@ import {Rank_Page} from "../../components/Result/Rank_Page";
 import {FinalRankPage} from "../../components/Result/FinalRankPage";
 import {ClientSubmitWait} from "../../components/quizClient/ClientSubmitWait";
 import {QuizClientReconnect} from "./QuizClientReconnect";
-import {getPinNum} from "../../function/localStorage";
+import {flushLocalStorage, getPinNum} from "../../function/localStorage";
 
 export const QuizClientPlay = () => {
     const dispatch = useDispatch();
@@ -38,8 +38,8 @@ export const QuizClientPlay = () => {
                 break;
             case "KICK": //추방
                 setOpen(true);
+                flushLocalStorage();
                 break;
-
         }
     }, [quizPlay.command]);
 
