@@ -9,7 +9,6 @@ import {getNickname, setQuizTime} from "./localStorage";
 
 
 export const playFunction = (data) => {
-    console.log("playFunction IN");
     switch (data.action){
         case "COMMAND":
             command(data);
@@ -46,7 +45,7 @@ const command = (props) => {
             store.dispatch(R_setData({key: "rank", value: props.rank}));
             break;
         case "FINAL":
-            console.log(props.quiz);
+            console.log(props);
             store.dispatch(R_setData({key: "quiz", value: props.quiz}));
             store.dispatch(R_setData({key: "rank", value: props.rank}));
         default:

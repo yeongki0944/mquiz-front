@@ -13,7 +13,10 @@ export const PlayActionBar = (props) => {
         stompSend("skip", {
             pinNum: getPinNum(),
             action: "COMMAND",
-            command: "START"
+            command: "START",
+            userList: quizPlay.userList,
+            quiz:quizPlay.quiz,
+            rank:quizPlay.rank
         });
     }
     const handleNext = () => {
