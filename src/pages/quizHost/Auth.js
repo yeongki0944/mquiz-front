@@ -19,19 +19,23 @@ export const Auth = () => {
         usehistory.push("/QHost");
     }
     const handleLogin = () => {
-        if(loginAPI({hostEmail: userInfo.hostEmail, password: userInfo.password})){
+    loginAPI({hostEmail: userInfo.hostEmail, password: userInfo.password}).then(res => {
+        if (res.data.statusCode === 200) {
             handleSuccess();
-        }else {
+        } else {
             alert("로그인 실패");
         }
+    })
     }
 
     const handleReg = () => {
-        if(registerAPI({hostEmail: userInfo.hostEmail, password: userInfo.password})){
-            handleSuccess();
-        }else {
-            alert("회원가입 실패");
-        }
+        registerAPI({hostEmail: userInfo.hostEmail, password: userInfo.password,nickName:userInfo.nickName}).then(res => {
+            if (res.data.statusCode === 200) {
+                setPageState(true);
+            } else {
+                alert("회원가입 실패");
+            }
+        })
     }
 
     const handleIdInput = (e) => {
@@ -39,6 +43,9 @@ export const Auth = () => {
     }
     const handlePwInput = (e) => {
         dispatch(editUserInfo({key: "password", value: e.target.value}));
+    }
+    const handleNickNameInput = (e) => {
+        dispatch(editUserInfo({key: "nickName", value: e.target.value}));
     }
 
     return (
@@ -70,6 +77,13 @@ export const Auth = () => {
                                 <Btn onClick={handleLogin}>로그인</Btn>
                             ) : (
                                 <>
+                                    <TextField id="nickName" name="nickName" type="nickName" label="닉네임"
+                                               variant="outlined"
+                                        // helperText={error}
+                                        // error={error !== '' || false} required autoFocus
+                                               onBlur={handleNickNameInput}
+                                        // onKeyPress={handleEnterKey}
+                                    />
                                     <TextField sx={{width: '100%'}} id="outlined-basic" label="비밀번호 확인"
                                                variant="outlined"/>
                                     <Btn onClick={handleReg}>회원가입</Btn>

@@ -12,22 +12,7 @@ import {setPinNum} from "./localStorage";
  * Output: true/false
  */
 export const loginAPI = async (data) => {
-    await CustomAxios.post("/v1/hostauth/login", data
-    ).then((res) => {
-        if(res.status === 200){
-            console.log("로그인 성공");
-            /**
-             * 성공시 localstorage 설정하기
-             */
-            return true;
-        }else{
-            console.log("로그인 실패");
-            return false;
-        }
-    }).catch((err) => {
-        console.log(err);
-        return false;
-    })
+    return await CustomAxios.post("/v1/hostauth/login", data);
 };
 
 /**
@@ -36,20 +21,8 @@ export const loginAPI = async (data) => {
  * Input:{hostEmail,password}
  * Output: true/false
  */
-export const registerAPI = async (data) => {
-    await CustomAxios.post("/v1/hostauth/join", data
-    ).then((res) => {
-        if(res.status === 200){
-            console.log("회원가입 성공");
-            return true;
-        }else{
-            console.log("회원가입 실패");
-            return false;
-        }
-    }).catch((err) => {
-        console.log(err);
-        return false;
-    })
+export const registerAPI = async(data) => {
+     return await CustomAxios.post("/v1/hostauth/join", data);
 };
 
 /**
@@ -58,18 +31,21 @@ export const registerAPI = async (data) => {
  * Input:{pinNum}
  * Output: true/false
  */
-export const enterRoomAPI = async (data) => {
-    await CustomAxios.post("/joinroom", data
+export const enterRoomAPI = async (pinNum) => {
+    let url = "/joinroom/"+ pinNum;
+    console.log(url);
+    await CustomAxios.post(url
     ).then((res) => {
         if(res.status === 200){
             console.log("게임방 접속 성공");
-            return true;
+            return "Test";
         }else{
             console.log("게임방 접속 실패");
-            return false;
+            return "TEST";
         }
     }).catch((err) => {
         console.log(err);
+        console.log("게임방 접속 실패");
         return false;
     })
 };
