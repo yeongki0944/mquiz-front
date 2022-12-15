@@ -14,12 +14,17 @@ import {FinalRankPage} from "../../components/Result/FinalRankPage";
 import {ClientSubmitWait} from "../../components/quizClient/ClientSubmitWait";
 import {QuizClientReconnect} from "./QuizClientReconnect";
 import {flushLocalStorage, getPinNum} from "../../function/localStorage";
+import {disableBackPage} from "../../function/common";
 
 export const QuizClientPlay = () => {
     const dispatch = useDispatch();
     const {quizPlay} = useSelector(state => state.quizPlay);
     const [open, setOpen] = useState(false); // 추방 확인 모달창 제어
 
+    useEffect(() => {
+        disableBackPage();
+    }, []);
+    
     /**
      * 퀴즈 진행 command 시 페이지 변경용 useEffect
      * null: 웹소켓 시작

@@ -10,12 +10,16 @@ import {stompInit, stompSubscribe} from "../../function/WebSocket";
 import {Rank_Page} from "../../components/Result/Rank_Page";
 import {FinalRankPage} from "../../components/Result/FinalRankPage"
 import {getPinNum} from "../../function/localStorage";
+import {disableBackPage} from "../../function/common";
 
 export const QuizHostPlay = () => {
     const dispatch = useDispatch();
     const {quizPlay} = useSelector(state => state.quizPlay);
 
-
+    useEffect(() => {
+        disableBackPage();
+    }, []);
+    
     /**
      * 퀴즈 진행 command 시 페이지 변경용 useEffect
      * READY : 웹 소켓 시작 후 퀴즈 시작 전 대기 화면
