@@ -5,6 +5,7 @@ import {useState} from "react";
 import {Answer} from "./Answer";
 import {VolumeControlButton} from "../VolumeControlButton";
 import * as React from "react";
+import {getNickname, getRole} from "../../function/localStorage";
 
 
 const RankBox = (props) => {
@@ -13,13 +14,13 @@ const RankBox = (props) => {
     return (
         <div>
             {
-                props.quizPlay.nickName != null
+                getRole() === "CLIENT"
                 && <Item sx={{
                     place: 'left',
                     display: 'block',
                     width: '90%',
                     height: '100%',
-                    // font-size: 4vw;
+                    fontSize: '4vw',
                     fontWeight: '600',
                     lineHeight: '2.5rem',
                 }}>
@@ -27,7 +28,7 @@ const RankBox = (props) => {
                 </Item>
                 && props.quizPlay.rank.map(
                     (item, index) => {
-                        if (item.nickName === props.quizPlay.nickName) {
+                        if (item.nickName === getNickname()) {
                             return (
                                 <Rank
                                     key={index}

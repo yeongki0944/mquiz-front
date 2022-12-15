@@ -1,10 +1,9 @@
-import {Btn, Item} from "../../LayOuts/LayOuts";
+import {Btn, Item, Text} from "../../LayOuts/LayOuts";
 import {useSelector} from "react-redux";
 import {Rank} from "./Rank";
 import {useEffect, useState} from "react";
 import {Avatar} from "@mui/material";
 import {stompDisconnect} from "../../function/WebSocket";
-import {PinNum} from "../PinNum";
 import * as React from "react";
 import {useHistory} from "react-router-dom";
 import html2canvas from "html2canvas";
@@ -38,17 +37,17 @@ export const FinalRankPage = () => {
                 background: "#ffffff"
             }}
         >
-            <Item sx={{place: "left", borderBottom: "1px solid black", height: "5%"}}>
-                <PinNum pinNum={getPinNum()}/>
+            <Item sx={{place: "center", borderBottom: "1px solid black", height: "5%"}}>
+                <Text sx={{fontSize: 40, fontWeight:900}}>PIN : {getPinNum()}</Text>
             </Item>
 
             {
                 getRole() === "CLIENT" ? (
                     <Item sx={{height: "40%", place: "center"}}>
-                        <Avatar sx={{width: 300, height: 300}}><h2>{quizPlay.nickName}</h2></Avatar>
+                        <Avatar sx={{width: 300, height: 300}}><h2>{getNickname()}</h2></Avatar>
                     </Item>
                 ) : (
-                    <Item sx={{place: 'top',width:'100%', height:'100%', maxHeight:'85%', marginTop:'10px'}}>
+                    <Item sx={{place: 'top',width:'100%', height:'100%', maxHeight:'85%', marginTop:'10px', display:'block'}}>
                         {quizPlay.rank.map(
                             (item, index) => {
                                 if (item.rank === 1 || item.rank === 2 || item.rank === 3) {
