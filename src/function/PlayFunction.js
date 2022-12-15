@@ -1,7 +1,7 @@
 import store from "../redux/store";
 import {R_setData, R_setBan, R_setUserlist} from "../redux/reducers/quizplayReducer";
 import {useSelector} from "react-redux";
-import {getNickname} from "./localStorage";
+import {getNickname, setQuizTime} from "./localStorage";
 
 /**
  * 게임 진행을 위한 데이터를 가져오고, action에 따라 처리
@@ -38,6 +38,7 @@ const command = (props) => {
     switch (props.command){
         case "START":
             store.dispatch(R_setData({key: "quiz", value: props.quiz}));
+            setQuizTime();
             break;
         case "RESULT":
             console.log(props.quiz);

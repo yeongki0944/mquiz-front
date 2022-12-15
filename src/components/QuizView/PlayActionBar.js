@@ -2,12 +2,10 @@ import {Btn, Item} from "../../LayOuts/LayOuts";
 import * as React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {stompSend} from "../../function/WebSocket";
-import {R_setData} from "../../redux/reducers/quizplayReducer";
 import {getPinNum, getRole} from "../../function/localStorage";
 
 export const PlayActionBar = (props) => {
     const {quizPlay} = useSelector(state => state.quizPlay);
-    const dispatch = useDispatch();
     const handleSubmit = props.handleSubmit;
 
 

@@ -2,6 +2,8 @@ import {useHistory} from "react-router-dom";
 import React, {useEffect} from "react";
 import {Btn, Card, Content, Item, Page} from "../../LayOuts/LayOuts";
 import {checkConnected} from "../../function/Reconnect";
+import {getQuizTime, setQuizTime} from "../../function/localStorage";
+import {getSolvedTime} from "../../function/Timer";
 
 
 export default function Home() {
@@ -25,7 +27,7 @@ export default function Home() {
                     sx={{width:'100%', height:'50vh',color:'white',place:"center"}}
                     sm={{width:'100%', height:'50vh',color:'white',place:"center"}}
                 >
-                    Logo
+                    logo
                 </Item>
                 <Item sx={{place:'center'}}>
                     <Item sx={{place:'right',width:'100%',height:'50vh',marginRight:'5px'}}>

@@ -7,6 +7,7 @@ import {TextField} from "@mui/material";
 import {stompSend} from "../../../function/WebSocket";
 import {PlayActionBar} from "../PlayActionBar";
 import {getNickname, getPinNum, getRole} from "../../../function/localStorage";
+import {getSolvedTime} from "../../../function/Timer";
 
 export const Type_Reply = () => {
     const dispatch = useDispatch();
@@ -26,7 +27,7 @@ export const Type_Reply = () => {
             nickName: getNickname(),
             submit: {
                 answer: [answer_text],
-                answerTime: 1,
+                answerTime: getSolvedTime(),
                 quizNum: quizPlay.quiz.num
             }
         });

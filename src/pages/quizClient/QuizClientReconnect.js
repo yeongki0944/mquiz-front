@@ -33,6 +33,7 @@ export function QuizClientReconnect() {
                 <Item sx={{place: 'center'}} sm={{place: 'center'}}>
                     <Text sx={{color: '#FFC107', fontSize: '3vw'}} sm={{fontSize: '6vw'}}>
                         <b>{getNickname()}</b>님이 입장했습니다.
+                        진행하던 게임이 있습니다. 참가하시겠습니까?
                     </Text>
                 </Item>
                 <Item sx={{place: 'center'}} sm={{place: 'center'}}>

@@ -9,8 +9,8 @@ import {YoutubeShow} from "./Outputs/YoutubeShow";
 import {VolumeControlButton} from "../VolumeControlButton";
 import {useEffect} from "react";
 import {useSelector} from "react-redux";
-import {Card_panel, Item, Text} from "../../LayOuts/LayOuts"
-import {getPinNum} from "../../function/localStorage";
+import {Btn, Card_panel, Item, Text} from "../../LayOuts/LayOuts"
+import {getPinNum, getQuizTime} from "../../function/localStorage";
 
 export const QuizView = (props) => {
     const currentQuiz = props.currentQuiz;
@@ -53,21 +53,19 @@ export const QuizView = (props) => {
     const View = () => {
         return (
             <Item sx={{place: 'center', display: 'block', height: '100%'}}>
-                <Item sx={{place: 'center', display: 'block', height: '20%'}} sm={{height: '10%'}}>
+                <Item sx={{place: 'center', display: 'block', height: '20%'}} sm={{height: '20%'}}>
                     <Text sx={{color:'#FFC107',fontSize:'3vw'}} sm={{fontSize:'6vw'}}>
                         PIN: {getPinNum()}
                     </Text>
                     <Item sx={{place: 'center', height: '50%', width:'100%'}}>
-                        {/*<Gauge*/}
-                        {/*    quizPlay={quizPlay}*/}
-                        {/*    Qnum={currentQuiz.num}*/}
-                        {/*    TotalQcnt={"N"}*/}
-                        {/*    timeprogress={10}*/}
-                        {/*    timeleft={currentQuiz.time}*/}
-                        {/*/>*/}
+                        <Gauge
+                            quizPlay={quizPlay}
+                            Qnum={currentQuiz.num}
+                            TotalQcnt={"N"}
+                        />
                     </Item>
                 </Item>
-                <Item sx={{place: 'center', height: '40%', display: 'flex'}} sm={{display: 'block', height: '50%'}}>
+                <Item sx={{place: 'center', height: '40%', display: 'flex'}} sm={{display: 'block', height: '40%'}}>
                     {props.state === "play" ?
                         <Card_panel sx={{place: 'center', minWidth:'45%',minHeight:'90%',margin:'auto',maxHeight:'90%'}} sm={{minWidth:'100%',minHeight:'50%'}}>{currentQuiz.question}</Card_panel>
                         :

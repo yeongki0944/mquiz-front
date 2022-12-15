@@ -5,6 +5,7 @@ import {Card, Item} from "../../../LayOuts/LayOuts";
 import {R_setData} from "../../../redux/reducers/quizplayReducer";
 import {PlayActionBar} from "../PlayActionBar";
 import {getNickname, getPinNum, getRole} from "../../../function/localStorage";
+import {getSolvedTime} from "../../../function/Timer";
 
 
 export const Type_Select = (props) => {
@@ -36,7 +37,7 @@ export const Type_Select = (props) => {
             nickName: getNickname(),
             submit: {
                 answer: answers,
-                answerTime: 1,
+                answerTime: getSolvedTime(),
                 quizNum: quizPlay.quiz.num
             }
         });

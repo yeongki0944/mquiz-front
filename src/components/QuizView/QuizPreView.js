@@ -67,16 +67,10 @@ export const QuizPreView = (props) => {
                         <Img src={imageItemData[0].img} sx={{width: '100%', height: '100%'}}/>}</Item>
                 </Item>
                 <Item sx={{place: 'center'}}>
-                    <Item sx={{place: 'center', width: '100%'}}><Text>정답</Text></Item>
+                    {currentQuiz.type !== "단답형" ? <AnswerSheet/> : <div></div>}
                 </Item>
-                <Item sx={{place: 'center'}}>
-                    <Item sx={{place: 'center', width: '100%'}}>
-                        {console.log(currentQuiz)}
-                        <Item sx={{place: 'center'}}>{currentQuiz.choiceList.num1 !== "" ? <Text>1.{currentQuiz.choiceList.num1}</Text> : <></>}</Item>
-                        <Item sx={{place: 'center'}}>{currentQuiz.choiceList.num2 !== "" ? <Text>2.{currentQuiz.choiceList.num2}</Text> : <></>}</Item>
-                        <Item sx={{place: 'center'}}>{currentQuiz.choiceList.num3 !== "" ? <Text>3.{currentQuiz.choiceList.num3}</Text> : <></>}</Item>
-                        <Item sx={{place: 'center'}}>{currentQuiz.choiceList.num4 !== "" ? <Text>4.{currentQuiz.choiceList.num4}</Text> : <></>}</Item>
-                    </Item>
+                <Item sx={{place:'center'}}>
+                    <Item sx={{place: 'center', width: '100%'}}><Text>정답:{currentQuiz.answer}</Text></Item>
                 </Item>
             </Item>
         </Item>

@@ -5,6 +5,7 @@ import {Card, Item} from "../../../LayOuts/LayOuts";
 import {stompSend} from "../../../function/WebSocket";
 import {PlayActionBar} from "../PlayActionBar";
 import {getNickname, getPinNum, getRole} from "../../../function/localStorage";
+import {getSolvedTime} from "../../../function/Timer";
 
 export const Type_OX = () => {
     const dispatch = useDispatch();
@@ -36,7 +37,7 @@ export const Type_OX = () => {
             nickName: getNickname(),
             submit: {
                 answer: answers,
-                answerTime: 1,
+                answerTime: getSolvedTime(),
                 quizNum: quizPlay.quiz.num
             }
         });
@@ -50,25 +51,25 @@ export const Type_OX = () => {
                     quizPlay.command === "RESULT" && quizPlay.quiz.answer[0] === "O" ?  //정답화면 정답일 시
                     <Item sx={{place: 'center',display: 'flex'}} sm={{display:'block'}}>
                         <Card sx={{place: 'center',minWidth: '45%',margin:'auto',background:'orange'}} sm={{minHeight:'45%',minWidth:'45%'}}>O</Card>
-                        <Card sx={{place: 'center',minWidth: '45%',margin:'auto'}} sm={{minHeight:'45%',minWidth:'45%'}}>X</Card>
+                        <Card sx={{place: 'center',minWidth: '45%',margin:'auto',backgroundColor:'rgba(255,255,255,0.5)'}} sm={{minHeight:'45%',minWidth:'45%'}}>X</Card>
                     </Item>
                     :
                     quizPlay.command === "RESULT" && quizPlay.quiz.answer[0] === "X" ?
                         <Item sx={{place: 'center', width: '100%', height: '100%', display: 'flex'}} sm={{display:'block'}}>
-                            <Card sx={{place: 'center',minWidth: '45%',margin:'auto'}} sm={{minHeight:'45%',minWidth:'45%'}}>O</Card>
+                            <Card sx={{place: 'center',minWidth: '45%',margin:'auto',backgroundColor:'rgba(255,255,255,0.5)'}} sm={{minHeight:'45%',minWidth:'45%'}}>O</Card>
                             <Card sx={{place: 'center',minWidth: '45%',margin:'auto',background:'orange'}} sm={{minHeight:'45%',minWidth:'45%'}}>X</Card>
                         </Item>
                         :
                         getRole() === "HOST" && //호스트 화면
                         <Item sx={{place: 'center', width: '100%', height: '100%',display:'flex'}} sm={{}}>
-                            <Card sx={{place: 'center',minWidth: '45%',margin:'auto'}} sm={{minHeight:'45%',minWidth:'45%'}}>O</Card>
-                            <Card sx={{place: 'center',minWidth: '45%',margin:'auto'}} sm={{minHeight:'45%',minWidth:'45%'}}>X</Card>
+                            <Card sx={{place: 'center',minWidth: '45%',margin:'auto',backgroundColor:'rgba(255,255,255,0.5)'}} sm={{minHeight:'45%',minWidth:'45%'}}>O</Card>
+                            <Card sx={{place: 'center',minWidth: '45%',margin:'auto',backgroundColor:'rgba(255,255,255,0.5)'}} sm={{minHeight:'45%',minWidth:'45%'}}>X</Card>
                         </Item>
                 }
                 {quizPlay.command !== "RESULT" && getRole() === "CLIENT" && //클라이언트 화면
                     <Item sx={{place: 'center', width: '100%', height: '100%', display: 'flex'}} sm={{}}>
-                        <Card sx={{place: 'center',minWidth: '45%',margin:'auto'}} sm={{minHeight:'45%',minWidth:'45%'}} onClick={setSelected}>O</Card>
-                        <Card sx={{place: 'center',minWidth: '45%',margin:'auto'}} sm={{minHeight:'45%',minWidth:'45%'}} onClick={setSelected}>X</Card>
+                        <Card sx={{place: 'center',minWidth: '45%',margin:'auto',backgroundColor:'rgba(255,255,255,0.5)'}} sm={{minHeight:'45%',minWidth:'45%'}} onClick={setSelected}>O</Card>
+                        <Card sx={{place: 'center',minWidth: '45%',margin:'auto',backgroundColor:'rgba(255,255,255,0.5)'}} sm={{minHeight:'45%',minWidth:'45%'}} onClick={setSelected}>X</Card>
                     </Item>
                 }
 

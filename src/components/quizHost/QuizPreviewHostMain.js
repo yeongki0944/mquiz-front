@@ -19,7 +19,7 @@ export const QuizPreviewHostMain = (props) => {
             <Item sx={props.sx} sm={props.sm}>
                 <Item sx={{place: 'center', display: 'block'}}>
                     <Text>
-                        퀴즈: {quiz.quizData.length}문제
+                        총 {quiz.quizData.length}문제
                     </Text>
                     <Item sx={{place: 'center', display: 'block'}}>
                             {quiz.quizData.map(
