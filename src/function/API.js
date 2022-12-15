@@ -32,22 +32,7 @@ export const registerAPI = async(data) => {
  * Output: true/false
  */
 export const enterRoomAPI = async (pinNum) => {
-    let url = "/joinroom/"+ pinNum;
-    console.log(url);
-    await CustomAxios.post(url
-    ).then((res) => {
-        if(res.status === 200){
-            console.log("게임방 접속 성공");
-            return "Test";
-        }else{
-            console.log("게임방 접속 실패");
-            return "TEST";
-        }
-    }).catch((err) => {
-        console.log(err);
-        console.log("게임방 접속 실패");
-        return false;
-    })
+    return await CustomAxios.post("/joinroom",{pinNum : pinNum});
 };
 
 /**

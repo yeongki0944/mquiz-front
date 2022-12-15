@@ -57,6 +57,8 @@ const App = () =>{
 
                             <Route path="/QClient/reconnect" component={QuizClientReconnect} exact/>
 
+                            <Route path="/QClient/:pinNum" component={QuizClientMain} exact/>
+
                             {/* 404 페이지, 테스트 페이지*/}
 
                             <Route path="*" component={NotFound404} />

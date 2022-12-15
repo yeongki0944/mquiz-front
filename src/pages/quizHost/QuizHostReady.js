@@ -19,7 +19,7 @@ export const QuizHostReady = () => {
     const {quizPlay} = useSelector(state => state.quizPlay);
     const [openBan, setOpenBan] = useState(false);
     const [openQR, setOpenQR] = useState(false);
-    const URL = "http://www.mquiz.site/QClient/"+ quizPlay.pinNum;
+    const URL = "http://www.mquiz.site/QClient/"+ getPinNum();
 
     const handleCopy = () => {
         navigator.clipboard.writeText(URL).then(function () {

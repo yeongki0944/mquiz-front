@@ -58,13 +58,17 @@ export const FinalRankPage = () => {
                                 (item, index) => {
                                     if (item.rank === 1 || item.rank === 2 || item.rank === 3) {
                                         return (
-                                            <Card_panel key={index}>
+                                            <Item sx={{place: "center",height:'20%'}}>
+                                                <Item sx={{place: "center", height: '100%', width: '50%'}} sm={{width:'90%'}}>
                                                     <Rank
+                                                        sx={{place: "top", height: '100%', width: '100%'}}
+                                                        key={index}
                                                         rank={item.rank}
                                                         nickName={item.nickName}
-                                                        score={item.rankScore}
+                                                        score={Math.floor(item.rankScore)}
                                                     />
-                                            </Card_panel>
+                                                </Item>
+                                            </Item>
                                         )
                                     }
                                 }
@@ -77,7 +81,7 @@ export const FinalRankPage = () => {
                     <Item sx={{place: 'center', display: 'block'}}>
                         <Text sx={{color: '#FFC107', fontSize: '2vw'}}
                               sm={{fontSize: '5vw'}}>당신은 <b>{rank}위</b> 입니다.</Text>
-                        <Text sx={{color: '#FFC107', fontSize: '2vw'}} sm={{fontSize: '5vw'}}>({rankScore} 점)</Text>
+                        <Text sx={{color: '#FFC107', fontSize: '2vw'}} sm={{fontSize: '5vw'}}>({Math.floor(rankScore)} 점)</Text>
                         <Card_panel>
                             <Text sx={{fontSize: '2vw'}} sm={{fontSize: '5vw'}}>총 참가자
                                 : {quizPlay.userList.length}명</Text>

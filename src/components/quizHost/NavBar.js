@@ -18,11 +18,6 @@ export const NavBar = () => {
                 <Text sx={{color:'#fff',cursor:'pointer'}}>DashBoard</Text>
             </Item>
             <Item sx={{place: 'center',cursor:'pointer'}} onClick={() => {
-                history.push("/QHost/find")
-            }}>
-                <Text sx={{color:'#fff'}}>Find</Text>
-            </Item>
-            <Item sx={{place: 'center',cursor:'pointer'}} onClick={() => {
                 history.push("/QHost/report")
             }}>
                 <Text sx={{color:'#fff'}}>Report</Text>

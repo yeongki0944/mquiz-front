@@ -51,18 +51,25 @@ export const PinNumCheck = () => {
      * 방 존재 시 setQuiz 실행
      */
     const handleEnter = async (pin) => {
-        if(enterRoomAPI({pin})){
-            setPinNum(pin);
-            history.push('/QClient/play');
-        }else{
-            setError('존재하지 않는 방입니다.');
-        }
+        enterRoomAPI(pin).then((res) => {
+            console.log()
+            if (res.data.statusCode ===200){
+                setPinNum(pin);
+                history.push('/QClient/play');
+            } else {
+                setError('존재하지 않는 방입니다.');
+            }
+        });
     }
 
+    /**
+     * URL 접속 방법 www.mquiz.com/QClient/555555
+     */
     useEffect(() => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const pin = urlParams.get('pinNum');
-            if (pin) {handleEnter(pin);}
+        const pin = window.location.pathname.split('/')[2];
+        if (pin) {
+            handleSubmit(pin);
+        }
         }, []
     );
 

@@ -65,10 +65,14 @@ export const Type_Select = (props) => {
                               sm={{width: '50%', height: '50%'}}
                               key={index}
                               >
-                            {quizPlay.command === "RESULT" && chkAnswer(item) ?  //정답화면 정답일 시
+                            {quizPlay.command === "RESULT" ?  //정답화면 정답일 시
                                 currentQuiz.choiceList[item] != "" ?
-                                    <Card sx={{width:'90%',height:'90%',backgroundColor:'rgba(255,255,255,0.5)'}}
-                                          id={item}>{index + 1}.{currentQuiz.choiceList[item]}</Card>
+                                        chkAnswer(item) ?
+                                            <Card sx={{width:'90%',height:'90%',backgroundColor:'orange'}}
+                                                  id={item}>{index + 1}.{currentQuiz.choiceList[item]}</Card>
+                                            :
+                                            <Card sx={{width:'90%',height:'90%',backgroundColor:'rgba(255,255,255,0.5)'}}
+                                                  id={item}>{index + 1}.{currentQuiz.choiceList[item]}</Card>
                                     : null
                                 :
                                 getRole() === "HOST" && //호스트 화면

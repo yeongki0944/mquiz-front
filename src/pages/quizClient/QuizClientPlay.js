@@ -62,8 +62,8 @@ export const QuizClientPlay = () => {
     return (
         <Page sx={{bg:'img',img: '/img/background_1.jpg'}}>
             <Item sx={{place:"center"}} sm={{place:'center'}}>
-                {quizPlay.command === "WAIT" && <VolumeControlButton sx={{place: 'top-right', height: '5vh'}} mediaName='Ready'/>}
-                {quizPlay.command != "WAIT" && <VolumeControlButton sx={{place: 'top-right', height: '5vh'}} mediaName='Play'/>}
+                {/*{quizPlay.command === "WAIT" && <VolumeControlButton sx={{place: 'top-right', height: '5vh'}} mediaName='Ready'/>}*/}
+                {/*{quizPlay.command != "WAIT" && <VolumeControlButton sx={{place: 'top-right', height: '5vh'}} mediaName='Play'/>}*/}
                 {quizPlay.command === null && <NickNameCheck/>}
                 {quizPlay.command === "WAIT" && <ClientReady/>}
                 {quizPlay.command === "START" && <QuizStartCounter/>}

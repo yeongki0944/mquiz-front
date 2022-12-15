@@ -36,19 +36,16 @@ export const PlayActionBar = (props) => {
         <Item sx={props.sx}>
             {quizPlay.command === "RESULT" ?
                 getRole() === "HOST" ? //결과창이고 host일시
-                    <Item sx={{place: 'center', display: 'flex', margin: 'auto'}}>:
-                        <Btn sx={{place: 'center'}} onClick={handleStart}>다음문제</Btn>
-                    </Item>
+                    null
                     : null
                 :
                 getRole() === "HOST" ? //결과창 아니고 host 일시
                     quizPlay.command === "SHOW" || quizPlay.command==="RESULT" ?
-                        <Item sx={{place: 'center', display: 'flex', margin: 'auto'}}>:
+                        <Item sx={{place: 'center', display: 'flex', margin: 'auto'}}>
                             <Btn sx={{place: 'center'}} onClick={handleNext}>다음</Btn>
                             <Btn sx={{place: 'center'}} onClick={handleSkip}>건너뛰기</Btn>
                         </Item>
-                        :
-                        null
+                        : null
                     :
                     <Item sx={{place: 'center', display: 'flex', margin: 'auto'}}>
                         <Btn sx={{place: 'center', margin: 'auto'}}

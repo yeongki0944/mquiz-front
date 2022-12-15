@@ -22,45 +22,16 @@ export const Gauge = (props) => {
     const {quizPlay} = useSelector(state => state.quizPlay);
 
     const [count, setCount] = useState(quizPlay.quiz.time);
-    const [delay, setDelay] = useState(100); // 0.1초
-
-    // function useInterval(callback, delay) {
-    //     const savedCallback = useRef();
-    //
-    //     useEffect(() => {
-    //         savedCallback.current = callback;
-    //     }, [callback]);
-    //
-    //     useEffect(() => {
-    //         function tick() {
-    //             savedCallback.current();
-    //         }
-    //
-    //         if (delay !== null) {
-    //             let id = setInterval(tick, delay);
-    //             return () => clearInterval(id);
-    //         }
-    //     }, [delay]);
-    // }
-    //
-    // useInterval(
-    //     () => {
-    //         // Your custom logic here
-    //         setCount(count + 100 / props.timeleft * 0.1);
-    //     },
-    //     count < 100 ? delay : null
-    // );
 
     useEffect(() => {
         const interval = setInterval(() => {
-            setCount(getGaugeTimer(quizPlay.quiz.time+3));
+            setCount(getGaugeTimer(quizPlay.quiz.time + 3));
             if (count <= 0) {
                 clearInterval(interval);
                 setCount(0);
-                if(getRole() === "HOST" ){ // 호스트
+                if (getRole() === "HOST") { // 호스트
 
-                }
-                else{ // 클라이언트
+                } else { // 클라이언트
                     dispatch(R_setData({key: "command", value: "SUBMIT"}));
                     stompSend("submit", {
                         pinNum: getPinNum(),
@@ -80,19 +51,23 @@ export const Gauge = (props) => {
 
 
     return (
-        <Content sx={{width:'100%'}}>
-            <Text sx={{color:'#FFC107',fontSize:'2vw'}} sm={{fontSize:'5vw'}}>
+        <Content sx={{width: '100%'}}>
+            <Text sx={{color: '#FFC107', fontSize: '2vw'}} sm={{fontSize: '5vw'}}>
                 문제 {props.Qnum} / {props.TotalQcnt}
             </Text>
-            <Item sx={{place:'center', width:'100%'}}>
-                <Text sx={{color:'#FFC107',fontSize:'3vw'}} sm={{fontSize:'6vw'}}>
-                    {count/10}
-                    /{quizPlay.quiz.time}</Text>
-                <ProgressBar
-                    style={{width:'90%'}}
-                    animated
-                    now={count/quizPlay.quiz.time*10}
-                />
+            <Item sx={{place: 'center', width: '100%'}}>
+                <Item sx={{place: 'center', width: '10%'}}>
+                    <Text sx={{color: '#FFC107', fontSize: '3vw'}} sm={{fontSize: '6vw'}}>
+                        {count / 10}
+                        /{quizPlay.quiz.time}</Text>
+                </Item>
+                <Item sx={{place: 'center', width: '90%'}}>
+                    <ProgressBar
+                        style={{width: '100%'}}
+                        animated
+                        now={count / quizPlay.quiz.time * 10}
+                    />
+                </Item>
             </Item>
         </Content>
     )

@@ -1,8 +1,8 @@
 import {useDispatch, useSelector} from "react-redux";
 import * as React from "react";
-import { useState} from "react";
+import {useState} from "react";
 import {R_setData} from "../../../redux/reducers/quizplayReducer";
-import { Card, Item} from "../../../LayOuts/LayOuts";
+import {Card, Card_panel, Item} from "../../../LayOuts/LayOuts";
 import {TextField} from "@mui/material";
 import {stompSend} from "../../../function/WebSocket";
 import {PlayActionBar} from "../PlayActionBar";
@@ -42,7 +42,7 @@ export const Type_Reply = () => {
 
     return (
         <Item sx={{place: 'center', display: 'block'}}>
-            <Item sx={{place: 'center', display: 'block', height: '90%'}}>
+            <Item sx={{place: 'center', display: 'block', height: '70%'}}>
                 {quizPlay.command === "RESULT" ?  //정답화면 정답일 시
                     <Item sx={{place: 'center'}}>
                         <Card sx={{place: 'center', background: 'orange'}}>
@@ -61,11 +61,13 @@ export const Type_Reply = () => {
                 }
                 {quizPlay.command != "RESULT" && getRole() === "CLIENT" && //클라이언트
                     <Item sx={{place: 'center'}}>
-                        <TextField id="quizAnswer" name="quizAnswer" type="quizAnswer" label="정답을 입력해 주세요"
-                                   variant="outlined"
-                                   onBlur={handleInput}
-                                   onKeyPress={handleEnterKey}
-                        />
+                        <Card_panel>
+                            <TextField id="quizAnswer" name="quizAnswer" type="quizAnswer" label="정답을 입력해 주세요"
+                                       variant="outlined"
+                                       onBlur={handleInput}
+                                       onKeyPress={handleEnterKey}
+                            />
+                        </Card_panel>
                     </Item>
                 }
             </Item>

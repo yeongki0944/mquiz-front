@@ -98,15 +98,15 @@ export default function BasicModal(props) {
     const history = useHistory();
 
     const handleCreate = () => {
-        if (createShowAPI({
+        createShowAPI({
             quizInfo: quiz.quizInfo,
-            quizData: quiz.quizData,
-        })) {
-            props.setOpen(false);
-            history.go(0);
-        } else {
-            alert("퀴즈 생성 실패");
-        }
+            quizData: quiz.quizData,}
+        ).then(res => {
+            console.log(res);
+            history.push("/quiz");
+        }).catch(
+            alert("오류가 발생했습니다.")
+        )
     }
 
     const handleInputTitle = (e) => {

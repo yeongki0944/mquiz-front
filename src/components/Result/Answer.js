@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {Card, Card_panel, Content, Item, Text} from "../../LayOuts/LayOuts";
+import {Btn, Card, Card_panel, Content, Item, Text} from "../../LayOuts/LayOuts";
 import {Type_Select} from "../QuizView/QuizViewTypes/Type_Select";
 import {Type_OX} from "../QuizView/QuizViewTypes/Type_OX";
 import {Type_Reply} from "../QuizView/QuizViewTypes/Type_Reply";
@@ -8,6 +8,8 @@ import {YoutubeShow} from "../QuizView/Outputs/YoutubeShow";
 import {AudioShow} from "../QuizView/Outputs/AudioShow";
 import * as React from "react";
 import {QuizQuestion} from "../QuizView/QuizQuestion";
+import {stompSend} from "../../function/WebSocket";
+import {getPinNum, getRole} from "../../function/localStorage";
 
 export const Answer = (props) => {
     const currentQuiz = props.currentQuiz;
@@ -52,36 +54,31 @@ export const Answer = (props) => {
                 </Text>
                 <Item sx={{place: 'center', height: '40%', display: 'flex'}} sm={{display: 'block', height: '50%'}}>
                     {props.state === "play" ?
-                        <Card_panel
-                            sx={{place: 'center', minWidth: '45%', minHeight: '90%', margin: 'auto', maxHeight: '90%'}}
-                            sm={{minWidth: '100%', minHeight: '50%'}}>{currentQuiz.question}</Card_panel>
+                        <Card_panel sx={{place: 'center', width:'45%',height:'90%',margin:'auto',overflow:'hidden'}} sm={{width:'95%',height:'45%',margin:'10px'}}>{currentQuiz.question}</Card_panel>
                         :
-                        <Card_panel
-                            sx={{place: 'center', minWidth: '45%', minHeight: '90%', margin: 'auto', maxHeight: '90%'}}
-                            sm={{minWidth: '100%', minHeight: '50%'}}>{currentQuiz.question}</Card_panel>
+                        <Card_panel sx={{place: 'center', width:'45%',height:'90%',margin:'auto',overflow:'hidden'}} sm={{width:'95%',height:'45%',margin:'10px'}}>{currentQuiz.question}</Card_panel>
                     }
                     {props.state === "play" ?
-                        <Card_panel sx={{
-                            place: 'center',
-                            minWidth: '45%',
-                            minHeight: '90%',
-                            margin: 'auto',
-                            maxHeight: '90%',
-                            overflow: 'hidden'
-                        }} sm={{minWidth: '100%', minHeight: '50%'}}><Media/></Card_panel>
+                        <Card_panel sx={{place: 'center', width:'45%',height:'90%',margin:'auto',overflow:'hidden'}} sm={{width:'95%',height:'45%',margin:'10px'}}><Media/></Card_panel>
                         :
-                        <Card_panel sx={{
-                            place: 'center',
-                            minWidth: '45%',
-                            minHeight: '90%',
-                            margin: 'auto',
-                            maxHeight: '90%',
-                            overflow: 'hidden'
-                        }} sm={{minWidth: '100%', minHeight: '50%'}}><Media/></Card_panel>
+                        <Card_panel sx={{place: 'center', width:'45%',height:'90%',margin:'auto',overflow:'hidden'}} sm={{width:'95%',height:'45%',margin:'10px'}}><Media/></Card_panel>
                     }
                 </Item>
                 <Item sx={{place: 'center', height: '40%', display: 'block'}} sm={{height: '40%'}}>
                     <AnswerSheet/>
+                </Item>
+                <Item sx={{place:'center',height:'10%'}}>
+                    <Btn onClick={()=>{props.setView('rank')}}>점수보기</Btn>
+                    {getRole() === "HOST" &&
+                        <Btn onClick={()=>{
+                            stompSend("start", {
+                                pinNum: getPinNum(),
+                                action: "COMMAND",
+                                command: "START"
+                            });
+                        }}>다음문제</Btn>
+                    }
+
                 </Item>
             </Item>
         </Card_panel>

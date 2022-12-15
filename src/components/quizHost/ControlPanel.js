@@ -100,11 +100,13 @@ export const ControlPanel = (props) => {
                 </Item>
                 <Item sx={{place: 'center', height: '10%', width: '100%'}}>
                     <Btn sx={{width:'50%', height:'100%', background:'#fff', border:'1px solid #000', borderRadius:'10px'}} onClick={() => {
-                        if(saveShowAPI(quiz)){
-                            history.push("/QHost");
-                        }else{
-                            alert("저장에 실패했습니다.");
-                        }
+                        saveShowAPI(quiz).then((res) => {
+                            if(res){
+                                history.push("/quiz");
+                            }
+                        }).catch(() => {
+                            alert("저장에 실패하였습니다.");
+                        })
                         setOpen(false);
                     }}>저장</Btn>
                     <Btn sx={{width:'50%', height:'100%', background:'#fff', border:'1px solid #000', borderRadius:'10px'}} onClick={() => {

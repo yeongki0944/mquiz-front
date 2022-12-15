@@ -107,8 +107,17 @@ export const QuizListHostMain = (props) => {
                                 <Button onClick={(e) => {
                                     e.stopPropagation();
                                     setButtonDisabled(true);
-                                    deleteShowAPI(item.id);
-                                    history.go(0);
+                                    deleteShowAPI(item.id).then((res) => {
+                                        if (res) {
+                                            setButtonDisabled(false);
+                                            alert("삭제되었습니다.");
+                                            history.go(0);
+                                        } else {
+                                            setButtonDisabled(false);
+                                            alert("삭제에 실패했습니다.");
+                                        }
+                                    })
+
                                 }} disabled={buttonDisabled}><DeleteForeverIcon/></Button>
                             </Typography>
                         </Grid>
