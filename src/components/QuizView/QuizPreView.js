@@ -71,6 +71,7 @@ export const QuizPreView = (props) => {
                 </Item>
                 <Item sx={{place: 'center'}}>
                     <Item sx={{place: 'center', width: '100%'}}>
+                        {console.log(currentQuiz)}
                         <Item sx={{place: 'center'}}>{currentQuiz.choiceList.num1 !== "" ? <Text>1.{currentQuiz.choiceList.num1}</Text> : <></>}</Item>
                         <Item sx={{place: 'center'}}>{currentQuiz.choiceList.num2 !== "" ? <Text>2.{currentQuiz.choiceList.num2}</Text> : <></>}</Item>
                         <Item sx={{place: 'center'}}>{currentQuiz.choiceList.num3 !== "" ? <Text>3.{currentQuiz.choiceList.num3}</Text> : <></>}</Item>

@@ -1,6 +1,6 @@
 import {useDispatch, useSelector} from "react-redux";
 import {FormControl, FormControlLabel, Radio, RadioGroup} from "@mui/material";
-import {R_modifyQuizAnswer} from "../../../redux/reducers/quizInfoReducer";
+import {R_modifyQuiz, R_modifyQuizAnswer} from "../../../redux/reducers/quizInfoReducer";
 import * as React from "react";
 import {Item} from "../../../LayOuts/LayOuts";
 
@@ -11,6 +11,7 @@ export const Type_OX = () => {
 
     const handleChange = (event) => {
         dispatch(R_modifyQuizAnswer([event.target.value]));
+        dispatch(R_modifyQuiz({keytype: "choiceList", key: 'num1', value: event.target.value}));
     };
     return (
         <Item sx={{place: 'center'}}>
@@ -27,19 +28,5 @@ export const Type_OX = () => {
                 </RadioGroup>
             </FormControl>
         </Item>
-        // <div>
-        //     <FormControl>
-        //         <RadioGroup
-        //             aria-labelledby="demo-radio-buttons-group-label"
-        //             value={currentQuiz.answer[0]}
-        //             name="radio-buttons-group"
-        //         >
-        //             <FormControlLabel value="O" control={<Radio />} label="O"
-        //                               onChange={handleChange}/>
-        //             <FormControlLabel value="X" control={<Radio />} label="X"
-        //                                 onChange={handleChange}/>
-        //         </RadioGroup>
-        //     </FormControl>
-        // </div>
     );
 }

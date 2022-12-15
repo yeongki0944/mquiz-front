@@ -15,9 +15,9 @@ export const QuizHostCreate = () => {
     return (
         <Page sx={{bg:'img',img: '/img/background_1.jpg'}}>
             <NavBar/>
-            <Item sx={{position:'center',height:'95vh'}}>
+            <Item sx={{position:'center',height:'90vh'}}>
                 {/*퀴즈 복제 및 생성할 때 기본 시간 제한을 30초로 변경 필요*/}
-                <Item sx={{place:'top',width:'15%',backgroundColor:'rgba(255,255,255,0.7)',overflow:'auto',overflowX:'hidden',borderRadius:10,margin:'10px'}}>
+                <Item sx={{place:'top',width:'15%',backgroundColor:'rgba(255,255,255,0.5)',overflow:'auto',overflowX:'hidden',borderRadius:10,margin:'10px'}}>
                     <ListPanel quiz={quiz}/>
                 </Item>
                 <Item sx={{place:'center', width:'70%',marginLeft:'5%',marginRight:'5%'}}>
@@ -26,7 +26,7 @@ export const QuizHostCreate = () => {
                               state={"create"}
                     />
                 </Item>
-                <Item sx={{place:'top',width:'25%',backgroundColor:'rgba(255,255,255,0.7)',overflow:'auto',overflowX:'hidden',borderRadius:10,margin:'10px'}}>
+                <Item sx={{place:'top',width:'25%',backgroundColor:'rgba(255,255,255,0.5)',overflow:'auto',overflowX:'hidden',borderRadius:10,margin:'10px'}}>
                     <FormPanel currentQuiz={currentQuiz}/>
                 </Item>
             </Item>

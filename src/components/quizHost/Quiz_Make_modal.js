@@ -103,9 +103,7 @@ export default function BasicModal(props) {
             quizData: quiz.quizData,
         })) {
             props.setOpen(false);
-            history.push({
-                pathname: "/QHost/create",
-            })
+            history.go(0);
         } else {
             alert("퀴즈 생성 실패");
         }
@@ -142,7 +140,7 @@ export default function BasicModal(props) {
 
 
         dispatch(R_makeQuizShow({key: 'email', value: "test@gmail.com"}))
-        dispatch(R_makeQuizShow({key: 'state', value: "완성"}))
+        dispatch(R_makeQuizShow({key: 'state', value: "작성중"}))
         dispatch(R_makeQuizShow({key: 'public', value: true}))
 
         dispatch(R_makeQuizShow({key: 'createDate', value: "2022-01-01"}))

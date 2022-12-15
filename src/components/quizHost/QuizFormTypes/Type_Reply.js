@@ -1,6 +1,6 @@
 import {useDispatch, useSelector} from "react-redux";
 import {TextField} from "@mui/material";
-import {R_modifyQuizAnswer} from "../../../redux/reducers/quizInfoReducer";
+import {R_modifyQuiz, R_modifyQuizAnswer} from "../../../redux/reducers/quizInfoReducer";
 import * as React from "react";
 import {Item} from "../../../LayOuts/LayOuts";
 
@@ -12,6 +12,7 @@ export const Type_Reply = () => {
     const handleChangeText = (event) => {
         const {name, value} = event.target;
         dispatch(R_modifyQuizAnswer([value]));
+        dispatch(R_modifyQuiz({keytype: "choiceList", key: 'num1', value: event.target.value}));
     };
 
     return (
