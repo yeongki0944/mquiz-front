@@ -1,4 +1,4 @@
-import {Btn, Item, Text} from "../../LayOuts/LayOuts";
+import {Btn, Card, Card_panel, Content, Img, Item, Text} from "../../LayOuts/LayOuts";
 import {useSelector} from "react-redux";
 import {Rank} from "./Rank";
 import {useEffect, useState} from "react";
@@ -26,102 +26,102 @@ export const FinalRankPage = () => {
     }, []);
 
     return (
-        <Item
-            id={"capture"}
-            sx={{
-                display: "block",
-                maxWidth: "1200px",
-                width: "100%",
-                height: "100%",
-                margin: "auto",
-                background: "#ffffff"
-            }}
-        >
-            <Item sx={{place: "center", borderBottom: "1px solid black", height: "5%"}}>
-                <Text sx={{fontSize: 40, fontWeight:900}}>PIN : {getPinNum()}</Text>
-            </Item>
-
-            {
-                getRole() === "CLIENT" ? (
-                    <Item sx={{height: "40%", place: "center"}}>
-                        <Avatar sx={{width: 300, height: 300}}><h2>{getNickname()}</h2></Avatar>
-                    </Item>
-                ) : (
-                    <Item sx={{place: 'top',width:'100%', height:'100%', maxHeight:'85%', marginTop:'10px', display:'block'}}>
-                        {quizPlay.rank.map(
-                            (item, index) => {
-                                if (item.rank === 1 || item.rank === 2 || item.rank === 3) {
-                                    return (
-                                        <Item key={index} sx={{place:'center',height:'30%', margin:'5px'}}>
-                                            <Rank
-                                                rank={item.rank}
-                                                nickName={item.nickName}
-                                                score={item.rankScore}
-                                            />
-                                        </Item>
-                                    )
-                                }
-                            }
-                        )}
-                    </Item>
-                )
-            }
-
-            {getRole() === "CLIENT" &&
-                <>
-                    <Item sx={{place: "center", height: "10%"}}><h1>당신은 <b>{rank}위</b> 입니다.</h1></Item>
-                    <Item sx={{place: "center", height: "10%"}}><h1>({rankScore} 점)</h1></Item>
-                    <Item sx={{
-                        height: "25%",
-                        border: "1px solid #f5f5f5",
-                        background: "#f5f5f5",
-                        display: "flex",
-                        place: "center"
-                    }}>
-                        <Item sx={{place: "center", width: "35%"}}>
-                            <h2>총 참가자 : {quizPlay.userList.length}명</h2>
-                        </Item>
-                        <Item sx={{place: "center", width: "65%"}}>
-                            <h2>총 {quizPlay.quiz.num}문제 중, N문제 정답 / N문제 오답 </h2>
-                        </Item>
-                    </Item>
-                </>
-            }
-
-            <Item sx={{place: 'center', height: "10%"}}>
-                <Item sx={{place:'center'}}>
-                    {getRole() === "CLIENT" &&
-                        <Btn sx={{place: 'center', display: 'flex', margin: 'auto'}} onClick={() => {
-                            html2canvas(document.querySelector("#capture")).then(canvas => {
-                                let link = document.createElement('a');
-                                if (typeof link.download === 'string') {
-                                    link.href = canvas.toDataURL('image/png');
-                                    link.download = "capture-test.png";
-                                    document.body.appendChild(link);
-                                    link.click();
-                                    document.body.removeChild(link);
-                                } else {
-                                    window.open(canvas.toDataURL('image/png'));
-                                }
-                            })
-                        }}>
-                            화면 캡처
-                        </Btn>
-                    }
-
-                    <Btn sx={{place: 'center', display: 'flex', margin: 'auto'}} onClick={() => {
-                        /**
-                         * Host일 경우에만 방을 삭제한다. 레디스로
-                         */
-                        stompDisconnect();
-                        flushLocalStorage();
-                        history.push('/');
-                        history.go(0);
-                    }}>
-                        확인
-                    </Btn>
+        <Content>
+            <Card_panel sx={{backgroundColor: 'rgba(0,0,0,0.5)', width: '100%', height: '100%'}}>
+                <Item sx={{place: "center", borderBottom: "1px solid black", height: "5%"}}>
+                    <Text sx={{color: '#FFC107', fontSize: '2vw'}} sm={{fontSize: '5vw'}}>
+                        PIN : {getPinNum()}
+                    </Text>
                 </Item>
-            </Item>
-        </Item>
+
+                {
+                    getRole() === "CLIENT" ? (
+                        <Item sx={{height: "40%", place: "center", display: 'block'}}>
+                            <Item sx={{place: 'center', width: '100%', height: '100%'}}>
+                                <Img
+                                    alt="complex"
+                                    src="/img/Spaceman_star.png"
+                                    sx={{width: '50%', height: '50%', margin: 'auto'}}
+                                    sm={{width: '70%', height: '70%', margin: 'auto'}}
+                                />
+                            </Item>
+                            <Text sx={{color: '#FFC107', fontSize: '3vw'}} sm={{fontSize: '10vw'}}>
+                                {getNickname()}
+                            </Text>
+                        </Item>
+                    ) : (
+                        <Item sx={{height: "80vh", place: "center", display: 'block', margin: 'auto'}}>
+                            <Text sx={{color: '#FFC107', fontSize: '5vw'}} sm={{fontSize: '10vw'}}>
+                                최종 결과
+                            </Text>
+                            {quizPlay.rank.map(
+                                (item, index) => {
+                                    if (item.rank === 1 || item.rank === 2 || item.rank === 3) {
+                                        return (
+                                            <Card_panel key={index}>
+                                                    <Rank
+                                                        rank={item.rank}
+                                                        nickName={item.nickName}
+                                                        score={item.rankScore}
+                                                    />
+                                            </Card_panel>
+                                        )
+                                    }
+                                }
+                            )}
+                        </Item>
+                    )
+                }
+
+                {getRole() === "CLIENT" &&
+                    <Item sx={{place: 'center', display: 'block'}}>
+                        <Text sx={{color: '#FFC107', fontSize: '2vw'}}
+                              sm={{fontSize: '5vw'}}>당신은 <b>{rank}위</b> 입니다.</Text>
+                        <Text sx={{color: '#FFC107', fontSize: '2vw'}} sm={{fontSize: '5vw'}}>({rankScore} 점)</Text>
+                        <Card_panel>
+                            <Text sx={{fontSize: '2vw'}} sm={{fontSize: '5vw'}}>총 참가자
+                                : {quizPlay.userList.length}명</Text>
+                            <Text sx={{fontSize: '2vw'}} sm={{fontSize: '5vw'}}>총 {quizPlay.quiz.num}문제 중, N문제 정답 / N문제
+                                오답 </Text>
+                        </Card_panel>
+                    </Item>
+                }
+
+                <Item sx={{place: 'center', height: "10%"}}>
+                    <Item sx={{place: 'center'}}>
+                        {getRole() === "CLIENT" &&
+                            <Btn sx={{place: 'center', display: 'flex', margin: 'auto'}} onClick={() => {
+                                html2canvas(document.querySelector("#capture")).then(canvas => {
+                                    let link = document.createElement('a');
+                                    if (typeof link.download === 'string') {
+                                        link.href = canvas.toDataURL('image/png');
+                                        link.download = "capture-test.png";
+                                        document.body.appendChild(link);
+                                        link.click();
+                                        document.body.removeChild(link);
+                                    } else {
+                                        window.open(canvas.toDataURL('image/png'));
+                                    }
+                                })
+                            }}>
+                                화면 캡처
+                            </Btn>
+                        }
+
+                        <Btn sx={{place: 'center', display: 'flex', margin: 'auto'}} onClick={() => {
+                            /**
+                             * Host일 경우에만 방을 삭제한다. 레디스로
+                             */
+                            stompDisconnect();
+                            flushLocalStorage();
+                            history.push('/');
+                            history.go(0);
+                        }}>
+                            확인
+                        </Btn>
+                    </Item>
+                </Item>
+            </Card_panel>
+        </Content>
     )
 }

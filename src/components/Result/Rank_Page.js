@@ -79,7 +79,7 @@ export const Rank_Page = () => {
     return (
         <Content>
             <VolumeControlButton sx={{place: 'top-right', height: '5vh'}}/>
-            <Item sx={{place: 'center', height: '85vh'}}>
+            <Item sx={{place: 'center', height: '85vh',width:'100vw'}}>
                 {view === 'rank' && <RankBox quizPlay={quizPlay}/>}
                 {view === 'answer' && <Answer currentQuiz={quizPlay.quiz}/>}
             </Item>
