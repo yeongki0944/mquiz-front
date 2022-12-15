@@ -1,31 +1,17 @@
 import {useDispatch} from "react-redux";
-import {useEffect, useRef, useState} from "react";
-import Paper from "@mui/material/Paper";
+import {useEffect, useRef} from "react";
 import {
     R_copyQuiz,
     R_deleteQuiz,
     R_renumberQuiz,
     R_setCurrentShow,
-    R_setQuiz, R_setQuizData
+    R_setQuizData
 } from "../../redux/reducers/quizInfoReducer";
-import {Button} from "@mui/material";
 import FileCopyIcon from "@material-ui/icons/FileCopy";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import * as React from "react";
 import '../../styles/baseStyle.css';
-import {styled} from "@mui/system";
-
-const Item_card = styled(Paper)({
-    backgroundColor: "#ffffff",
-    color: "#000000",
-    padding: "10px",
-    margin: "10px",
-    borderRadius: "10px",
-    boxShadow: "0 0 10px 0 rgba(0,0,0,0.2)",
-    '&:hover': {
-        border: "1px solid lightblue",
-    }
-})
+import {Item} from "../../LayOuts/LayOuts";
 
 export const ListPanel = (props) => {
     const quiz = props.quiz;
@@ -70,25 +56,70 @@ export const ListPanel = (props) => {
 
 
     return (
-        <div>
-            {quiz.quizData.map((item,index) =>
-                <div key={index}
-                     onDragStart={(e) => dragStart(e, index)}
-                     onDragEnter={(e) => dragEnter(e, index)}
-                     onDragEnd={drop}
-                     draggable>
-                    <div>{item.num}P</div>
-                    <Item_card className={"item_card"} key={item.num} id={item.num}
-                               onClick={() => {
-                                   dispatch(R_setCurrentShow(item.num));
-                               }}
+        <Item sx={{place: 'center', display: 'block'}}>
+            {quiz.quizData.map((item, index) =>
+                <Item
+                    sx={{
+                        place: 'center',
+                        display: 'block',
+                        width: '100%',
+                        height: '12%'
+                    }}
+                    key={index}
+                    onDragStart={(e) => dragStart(e, index)}
+                    onDragEnter={(e) => dragEnter(e, index)}
+                    onDragEnd={drop}
+                    draggable
+                >
+                    {/*<Item*/}
+                    {/*    sx={{*/}
+                    {/*        place: 'center',*/}
+                    {/*        width:'100%',*/}
+                    {/*        height:'25%'*/}
+                    {/*    }}*/}
+                    {/*>*/}
+                    {/*    {item.num}P*/}
+                    {/*</Item>*/}
+                    <Item
+                        sx={{
+                            place: 'center',
+                            display: 'block',
+                            width: '90%',
+                            height: '80%',
+                            backgroundColor: "#ffffff",
+                            color: "#000000",
+                            padding: "10px",
+                            margin: "10px",
+                            borderRadius: "10px",
+                            boxShadow: "0 0 10px 0 rgba(0,0,0,0.2)",
+                            '&:hover': {
+                                border: "1px solid lightblue",
+                            }
+                        }}
+                        key={item.num}
+                        id={item.num}
+                        onClick={() => {
+                            dispatch(R_setCurrentShow(item.num));
+                        }}
                     >
-                        Status [{item.type}]
-                        <div>
-                            <FileCopyIcon onClick={() => {
-                                dispatch(R_copyQuiz(item.num));
+                        <Item sx={{place: 'rignt', width: '100%', height: '50%'}}>
+                            <Item sx={{place: 'center', width: '20%'}}>Q{item.num}</Item>
+                            <Item sx={{place: 'center'}}>Status [{item.type}]</Item>
+                        </Item>
+                        <Item
+                            sx={{
+                                place: 'right',
+                                width: '100%',
+                                height: '50%',
+                                marginTop: '5px'
                             }}
+                        >
+                            <FileCopyIcon
+                                onClick={() => {
+                                    dispatch(R_copyQuiz(item.num));
+                                }}
                             />
+
                             <DeleteForeverIcon
                                 onClick={(e) => {
                                     e.stopPropagation();
@@ -101,10 +132,47 @@ export const ListPanel = (props) => {
                                     dispatch(R_renumberQuiz());
                                 }}
                             />
-                        </div>
-                    </Item_card>
-                </div>
+                        </Item>
+                    </Item>
+                </Item>
             )}
-        </div>
+        </Item>
+
+        // <div>
+        //     {quiz.quizData.map((item,index) =>
+        //         <div key={index}
+        //              onDragStart={(e) => dragStart(e, index)}
+        //              onDragEnter={(e) => dragEnter(e, index)}
+        //              onDragEnd={drop}
+        //              draggable>
+        //             <div>{item.num}P</div>
+        //             <Item_card className={"item_card"} key={item.num} id={item.num}
+        //                        onClick={() => {
+        //                            dispatch(R_setCurrentShow(item.num));
+        //                        }}
+        //             >
+        //                 Status [{item.type}]
+        //                 <div>
+        //                     <FileCopyIcon onClick={() => {
+        //                         dispatch(R_copyQuiz(item.num));
+        //                     }}
+        //                     />
+        //                     <DeleteForeverIcon
+        //                         onClick={(e) => {
+        //                             e.stopPropagation();
+        //                             if (quiz.quizData.length === 1) {
+        //                                 alert("최소 1개의 문제는 존재해야 합니다.");
+        //                                 return;
+        //                             }
+        //                             dispatch(R_setCurrentShow(item.num - 1));
+        //                             dispatch(R_deleteQuiz(item.num));
+        //                             dispatch(R_renumberQuiz());
+        //                         }}
+        //                     />
+        //                 </div>
+        //             </Item_card>
+        //         </div>
+        //     )}
+        // </div>
     )
 }
