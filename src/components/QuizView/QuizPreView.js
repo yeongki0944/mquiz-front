@@ -10,7 +10,7 @@ import {YoutubeShow} from "./Outputs/YoutubeShow";
 import {useEffect} from "react";
 import styled from "styled-components";
 import {useSelector} from "react-redux";
-import {Item_c, Item_l, Item_r, Item_t, Page_Default, Page_Gradiant} from "../../LayOuts/LayOuts";
+import {Img, Item, Item_c, Item_l, Item_r, Text} from "../../LayOuts/LayOuts";
 
 const imageItemData = [
     {
@@ -173,19 +173,29 @@ export const QuizPreView = (props) => {
     }, [])
 
     return (
-        <div>
-            <Item_c_Content>
-                <Item_c_Quiz>
-                    <Item_c_QNum><b>[퀴즈 {currentQuiz.num}]</b></Item_c_QNum>
-                    <Item_c_QBox>{currentQuiz.type}</Item_c_QBox>
-                </Item_c_Quiz>
-                <Item_c_Media>
-                    {currentQuiz.media.url !== "" ? <Media/> : <img src={imageItemData[0].img} width={"500px"} height={"200px"}/>}
-                </Item_c_Media>
-                <Item_l_Question>
-                    <QuizQuestion question={currentQuiz.question}/>
-                </Item_l_Question>
-            </Item_c_Content>
-        </div>
+        <Item sx={props.sx} sm={props.sm}>
+            <Item sx={{place: 'left', display: 'block'}}>
+                <Item sx={{place: 'center'}}>
+                    <Item sx={{place: 'center'}}><Text>[퀴즈 {currentQuiz.num}]</Text></Item>
+                    <Item sx={{place: 'center'}}><Text>{currentQuiz.type}</Text></Item>
+                </Item>
+                <Item sx={{place: 'center'}}>
+                    <Item sx={{place: 'center', width: '50%'}}><Text>{currentQuiz.question}</Text></Item>
+                    <Item sx={{place: 'center', width: '50%'}}>{currentQuiz.media.url !== "" ? <Media/> :
+                        <Img src={imageItemData[0].img} sx={{width: '100%', height: '100%'}}/>}</Item>
+                </Item>
+                <Item sx={{place: 'center'}}>
+                    <Item sx={{place: 'center', width: '100%'}}><Text>정답</Text></Item>
+                </Item>
+                <Item sx={{place: 'center'}}>
+                    <Item sx={{place: 'center', width: '100%'}}>
+                        <Item sx={{place: 'center'}}>{currentQuiz.choiceList.num1 !== "" ? <Text>1.{currentQuiz.choiceList.num1}</Text> : <></>}</Item>
+                        <Item sx={{place: 'center'}}>{currentQuiz.choiceList.num2 !== "" ? <Text>2.{currentQuiz.choiceList.num2}</Text> : <></>}</Item>
+                        <Item sx={{place: 'center'}}>{currentQuiz.choiceList.num3 !== "" ? <Text>3.{currentQuiz.choiceList.num3}</Text> : <></>}</Item>
+                        <Item sx={{place: 'center'}}>{currentQuiz.choiceList.num4 !== "" ? <Text>4.{currentQuiz.choiceList.num4}</Text> : <></>}</Item>
+                    </Item>
+                </Item>
+            </Item>
+        </Item>
     )
 }
