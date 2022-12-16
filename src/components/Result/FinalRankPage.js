@@ -25,7 +25,7 @@ export const FinalRankPage = () => {
     }, []);
 
     return (
-        <Content id={"capture"}>
+        <Content>
             <Card_panel sx={{backgroundColor: 'rgba(0,0,0,0.5)', width: '100%', height: '100%'}}>
                 <Item sx={{place: "center", borderBottom: "1px solid black", height: "5%"}}>
                     <Text sx={{color: '#FFC107', fontSize: '2vw'}} sm={{fontSize: '5vw'}}>

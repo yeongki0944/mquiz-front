@@ -75,7 +75,7 @@ export const QuizClientMain = () => {
      * FINAL: 최종 결과 표시
      */
     return (
-        <Page sx={{bg:'img',img: '/img/background_1.jpg'}}>
+        <Page sx={{bg:'img',img: '/img/background_1.jpg'}} id={"capture"}>
             <Item sx={{place:"center"}} sm={{place:'center'}}>
                 {quizPlay.command === "PIN" && <PinNumCheck/>}
                 {quizPlay.command === "NICK" && <NickNameCheck/>}
