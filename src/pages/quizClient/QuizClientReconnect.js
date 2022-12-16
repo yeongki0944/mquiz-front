@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Btn, Content, Img, Item, Page, Text} from "../../LayOuts/LayOuts";
+import {Btn, Content, Img, Item, Text} from "../../LayOuts/LayOuts";
 import {useEffect} from "react";
 import {stompInit} from "../../function/WebSocket";
 import {useDispatch} from "react-redux";
@@ -20,7 +20,6 @@ export function QuizClientReconnect() {
     }, [])
 
     return (
-        <Page sx={{bg: 'img', img: '/img/background_1.jpg'}}>
             <Content>
                 <Item sx={{place: 'center'}} sm={{place: 'center'}}>
                     <Img
@@ -40,7 +39,7 @@ export function QuizClientReconnect() {
                     <Item sx={{place: 'center'}}>
                         <Btn onClick={() => {
                             dispatch(R_setData({key: 'command', value: 'WAIT'}));
-                            history.push('/QClient/play');
+                            history.push('/QClient');
                         }}>
                             참가
                         </Btn>
@@ -55,8 +54,6 @@ export function QuizClientReconnect() {
                         </Btn>
                     </Item>
                 </Item>
-
             </Content>
-        </Page>
     );
 }

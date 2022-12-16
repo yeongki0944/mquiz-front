@@ -1,18 +1,17 @@
 import * as React from 'react';
 import TextField from '@mui/material/TextField';
-import {useHistory} from "react-router-dom";
 import {useEffect, useState} from 'react';
 import {useDispatch} from "react-redux";
 import {Btn, Content, Item, Text} from "../../LayOuts/LayOuts";
 import {setPinNum} from "../../function/localStorage";
 import {enterRoomAPI} from "../../function/API";
+import {R_setData} from "../../redux/reducers/quizplayReducer";
 
 /**
  * 핀 번호 입력 component
  */
 export const PinNumCheck = () => {
     const dispatch = useDispatch();
-    const history = useHistory();
     const [pin_Num, setPin_Num] = useState('');
     const [error, setError] = useState('');
 
@@ -54,8 +53,9 @@ export const PinNumCheck = () => {
         enterRoomAPI(pin).then((res) => {
             console.log()
             if (res.data.statusCode ===200){
+                dispatch(R_setData({key:'command',value:'NICK'}));
                 setPinNum(pin);
-                history.push('/QClient/play');
+                //history.push('/QClient/play');
             } else {
                 setError('존재하지 않는 방입니다.');
             }

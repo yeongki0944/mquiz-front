@@ -1,11 +1,8 @@
 import {useHistory} from "react-router-dom";
 import React, {useEffect} from "react";
-import {Btn, Card, Content, Img, Item, Page} from "../../LayOuts/LayOuts";
+import {Card, Content, Img, Item, Page} from "../../LayOuts/LayOuts";
 import {checkConnected} from "../../function/Reconnect";
-import {getQuizTime, setQuizTime} from "../../function/localStorage";
-import {getSolvedTime} from "../../function/Timer";
 import {disableBackPage, disableRefresh} from "../../function/common";
-import {VolumeControlButton} from "../../components/VolumeControlButton";
 
 
 export default function Home() {
