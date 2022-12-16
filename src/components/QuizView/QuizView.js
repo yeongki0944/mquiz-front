@@ -9,6 +9,7 @@ import {useEffect} from "react";
 import {useSelector} from "react-redux";
 import { Card_panel, Item, Text} from "../../layouts/LayOuts"
 import {getPinNum} from "../../function/localStorage";
+import {Gauge} from "./Gauge";
 
 export const QuizView = (props) => {
     const currentQuiz = props.currentQuiz;
@@ -56,11 +57,11 @@ export const QuizView = (props) => {
                         PIN: {getPinNum()}
                     </Text>
                     <Item sx={{place: 'center', height: '50%', width:'100%'}}>
-                        {/*<Gauge*/}
-                        {/*    quizPlay={quizPlay}*/}
-                        {/*    Qnum={currentQuiz.num}*/}
-                        {/*    TotalQcnt={"N"}*/}
-                        {/*/>*/}
+                        <Gauge
+                            quizPlay={quizPlay}
+                            Qnum={currentQuiz.num}
+                            TotalQcnt={"N"}
+                        />
                     </Item>
                 </Item>
                 <Item sx={{place: 'center', height: '40%', display: 'flex'}} sm={{display: 'block', height: '40%'}}>

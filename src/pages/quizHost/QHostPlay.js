@@ -12,6 +12,7 @@ import {FinalRankPage} from "../../components/result/FinalRankPage"
 import {getPinNum} from "../../function/localStorage";
 import {VolumeControlButton} from "../../components/VolumeControlButton";
 import {QHostReconnect} from "../../components/quizHost/QHostReconnect";
+import {HomeButton} from "../../components/HomeButton";
 
 export const QHostPlay = () => {
     const dispatch = useDispatch();
@@ -49,6 +50,7 @@ export const QHostPlay = () => {
     return (
 
         <Page sx={{bg: 'img', img: '/img/background_1.jpg'}}>
+            <HomeButton sx={{position: 'absolute', top: 5, left: 5, zIndex: 100,width:'5vh',height:'5vh'}}/>
             {quizPlay.command === "WAIT" &&
                 <VolumeControlButton sx={{place: 'top-right', height: '5vh'}} mediaName='Ready'/>}
             {quizPlay.command != "WAIT" &&

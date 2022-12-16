@@ -21,12 +21,12 @@ export const Router = () =>{
     return(
         {
             "MAIN": <Home/>,
-            "QHOST": <QHostMain/>,
             "QCLIENT": <QClientMain/>,
-            "AUTH": <QHostAuth/>,
+            "QHOST": <QHostMain/>,
+            "QHOSTAUTH": <QHostAuth/>,
             "QHOSTCREATE" : <QHostCreate/>,
             "QHOSTPLAY" : <QHostPlay/>,
             "QHOSTREPORT" : <QHostReport/>,
-        }[page.page]
+        }[page]
     )
 }

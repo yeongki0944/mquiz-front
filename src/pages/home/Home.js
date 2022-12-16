@@ -10,7 +10,7 @@ export default function Home() {
     const dispatch = useDispatch();
 
     const handleHost = () => {
-        redirectPage("AUTH");
+        redirectPage("QHOSTAUTH");
     }
     const handleClient = () => {
         dispatch(R_setData({key:'command',value:'PIN'}));

@@ -43,11 +43,10 @@ export const QStartCounter = () => {
         <Content sx={{width: '100vw', height: '100vh'}}>
             <Item sx={{place: 'center'}}>
                 <Img
-                    alt="complex"
                     src={"/img/count"+count+".png"}
                     sx={{width: '15vw', height: '15vw', position: 'absolute'}}
                     sm={{width: '30vw', height: '30vw'}}
-                />}
+                />
             </Item>
         </Content>
     )

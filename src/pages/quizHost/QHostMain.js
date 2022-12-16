@@ -28,7 +28,7 @@ export const QHostMain = () => {
                     <HostProfile sx={{height: '100%', width: '50%'}} sm={{place: 'center', width: '100%'}} name={"test"}
                                  info={"info"}/>
                 </Item>
-                <Item sx={{place: 'center', height: '75vh',width:'100%'}}>
+                <Item sx={{place: 'center', height: '70vh',width:'100%'}}>
                     <Card_panel sx={{place: 'center',width:'50%',height:'100%',marginLeft:'1vw',marginRight:'1vw',overflowY:'auto'}} sm={{place: 'center',width:'100%',marginRight:'1vw',marginLeft:'1vw'}}>
                             <QuizList sx={{place: 'center'}} sm={{width: '80%'}}
                                       quizList={quizList} setModalOpen={setModalOpen}/>

@@ -7,6 +7,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {editUserInfo} from "../../redux/reducers/userInfoReducer";
 import {loginAPI, registerAPI} from "../../function/API";
 import {redirectPage} from "../../function/common";
+import {HomeButton} from "../../components/HomeButton";
 
 export const QHostAuth = () => {
     const dispatch = useDispatch();
@@ -50,6 +51,7 @@ export const QHostAuth = () => {
 
     return (
         <Page sx={{bg: 'img', img: '/img/background_1.jpg'}}>
+            <HomeButton sx={{position: 'absolute', top: 5, left: 5, zIndex: 100,width:'5vh',height:'5vh'}}/>
             <Item sx={{place: 'center'}}>
                 <Content>
                     <Card_panel sx={{backgroundColor: 'rgba(0,0,0,0.3)'}}>
