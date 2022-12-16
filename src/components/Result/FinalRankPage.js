@@ -1,8 +1,7 @@
-import {Btn, Card, Card_panel, Content, Img, Item, Text} from "../../LayOuts/LayOuts";
+import {Btn, Card_panel, Content, Img, Item, Text} from "../../LayOuts/LayOuts";
 import {useSelector} from "react-redux";
 import {Rank} from "./Rank";
 import {useEffect, useState} from "react";
-import {Avatar} from "@mui/material";
 import {stompDisconnect} from "../../function/WebSocket";
 import * as React from "react";
 import {useHistory} from "react-router-dom";
@@ -26,7 +25,7 @@ export const FinalRankPage = () => {
     }, []);
 
     return (
-        <Content>
+        <Content id={"capture"}>
             <Card_panel sx={{backgroundColor: 'rgba(0,0,0,0.5)', width: '100%', height: '100%'}}>
                 <Item sx={{place: "center", borderBottom: "1px solid black", height: "5%"}}>
                     <Text sx={{color: '#FFC107', fontSize: '2vw'}} sm={{fontSize: '5vw'}}>
