@@ -46,7 +46,6 @@ export const QuizView = (props) => {
     }
 
     useEffect(() => {
-        console.log(currentQuiz.media);
     }, [])
 
     const View = () => {

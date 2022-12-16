@@ -49,7 +49,6 @@ export const Type_Select = (props) => {
         let chk = false;
         quizPlay.quiz.answer.forEach(ans => {
             if (ans == item) {
-                console.log("true");
                 chk = true;
             }
         })

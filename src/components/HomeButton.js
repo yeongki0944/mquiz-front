@@ -9,7 +9,6 @@ export const HomeButton = (props) => {
     const {page} = useSelector(state => state.page);
 
     const handleHomeButton = () => {
-        console.log(page);
         switch(page){
             case "QCLIENT":
                 confirmRedirect("메인으로 이동하시겠습니까? 이동 시 게임에서 나가게 됩니다.");
@@ -24,7 +23,6 @@ export const HomeButton = (props) => {
     };
 
     const confirmRedirect = (Msg) => {
-        console.log(Msg);
         if(window.confirm(Msg)){
             if(getRole()==="HOST"){
                 //방 닫기 제작

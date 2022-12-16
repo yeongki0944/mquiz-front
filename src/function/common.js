@@ -24,7 +24,7 @@ export const disableRefresh = () => {
 };
 
 export const checkConnected = (command) => {
-    if (getPinNum() != null || getRole() != '') {
+    if (getPinNum() != null) {
         if (command === null) {
             if (getRole() === 'HOST') {
                 store.dispatch(R_setData({key: 'command', value: 'RECONNECT'}));

@@ -15,7 +15,6 @@ export function QHostReconnect() {
     const history = useHistory();
 
     useEffect(() => {
-        console.log(getPinNum());
         stompInit(getPinNum());
     }, [])
 
@@ -51,7 +50,6 @@ export function QHostReconnect() {
                         flushLocalStorage();
                         stompDisconnect();
                         redirectPage("MAIN");
-                        history.go(0);
                     }}>
                         메인으로
                     </Btn>

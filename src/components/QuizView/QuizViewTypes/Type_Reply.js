@@ -20,7 +20,6 @@ export const Type_Reply = () => {
 
     const handleSubmit = () => {
         let answer_text = document.getElementById('quizAnswer').value;
-        console.log(answer_text);
         stompSend("submit", {
             pinNum: getPinNum(),
             action: "SUBMIT",

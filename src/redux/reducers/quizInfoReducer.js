@@ -60,14 +60,12 @@ const initialState = {
 
 export const quizInfoReducer = handleActions({
     [SET_QUIZ]: (state, action) => {
-        // console.log("SET_QUIZ");
         return {
             ...state,
             quiz: action.payload
         }
     },
     [SET_QUIZ_DATA]: (state, action) => {
-        console.log(action.payload);
         return {
             ...state,
             quiz: {
@@ -77,7 +75,6 @@ export const quizInfoReducer = handleActions({
         }
     },
     [SET_ID]: (state, action) => {
-        // console.log("SET_ID");
         return {
             ...state,
             quiz: {
@@ -107,7 +104,6 @@ export const quizInfoReducer = handleActions({
         // }
     },
     [SET_CURRENT_SHOW]: (state, action) => {
-        // console.log("SET_CURRENT_SHOW"+action.payload);
         return {
             ...state,
             quiz: {
@@ -167,7 +163,6 @@ export const quizInfoReducer = handleActions({
         }
     },
     [COPY_QUIZ]: (state, action) => {
-        // console.log("COPY_QUIZ");
         return {
             ...state,
             quiz: {
@@ -198,7 +193,6 @@ export const quizInfoReducer = handleActions({
         switch (action.payload.keytype)
         {
             case "base":
-                // console.log(action.payload);
                 state.quiz.quizData[quizIndex][action.payload.key] = action.payload.value;
                 return {
                     ...state,

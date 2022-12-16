@@ -47,7 +47,6 @@ export function QClientBanModal(props) {
                 <Text sx={{height: '10%'}}>진행자에 의해 강퇴 되었습니다.</Text>
                 <Item sx={{place:'center', width: '100%', height:'20%'}} sm={{height: '30%'}}>
                     <Btn onClick={() =>{
-                        console.log("forceRefresh");
                         stompDisconnect();
                         redirectPage("MAIN");
                         history.go(0)

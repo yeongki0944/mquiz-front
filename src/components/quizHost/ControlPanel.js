@@ -18,10 +18,8 @@ export const ControlPanel = (props) => {
 
     const verifyQuiz = () => {
         let result = [];
-        console.log(quiz.quizData);
         quiz.quizData.forEach((item, index) => {
             //공통 검증
-            console.log("question"+item.answer);
             if (item["question"] === "") {
                 result.push(index + 1 + "번 문제의 문제를 입력해주세요.");
             }

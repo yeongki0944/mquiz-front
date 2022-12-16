@@ -101,7 +101,6 @@ export default function BasicModal(props) {
             quizInfo: quiz.quizInfo,
             quizData: quiz.quizData,}
         ).then(res => {
-            console.log(res);
             setShowListAPI("test@gmail.com");
         }).catch(
             alert("오류가 발생했습니다.")
@@ -168,9 +167,6 @@ export default function BasicModal(props) {
         dispatch(R_makeQuizShow({key: 'tags', value: inputTagData}))
     }, [chipData])
 
-    // useEffect(()=>{
-    //     console.log(quiz.quizInfo);
-    // })
     return (
         <Modal
             open={props.open}

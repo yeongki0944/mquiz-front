@@ -30,7 +30,6 @@ export const Type_OX = () => {
     const handleSubmit = () => { //OX
         const selected = document.getElementById("selected");
         const answers = [selected.innerText];
-        // console.log(answers);
         stompSend("submit", {
             pinNum: getPinNum(),
             action: "SUBMIT",

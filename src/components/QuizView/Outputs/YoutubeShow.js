@@ -6,7 +6,6 @@ import {Item} from "../../../layouts/LayOuts";
 export const YoutubeShow = (props) => {
     const currentQuiz = props.currentQuiz;
     useEffect(() => {
-        console.log(currentQuiz.media.url);
     }, []);
     return (
         <Item sx={{place:'center'}}>

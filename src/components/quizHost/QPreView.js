@@ -44,9 +44,6 @@ export const QPreView = (props) => {
         }
     }
 
-    useEffect(() => {
-        console.log(currentQuiz.media);
-    }, [])
 
     return (
         <Item sx={props.sx} sm={props.sm}>

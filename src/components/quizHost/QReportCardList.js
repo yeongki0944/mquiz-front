@@ -11,7 +11,7 @@ export const QReportCardList = (props) => {
 
     return (
         <Item sx={{place:'top', width:'100%', height:'100%', display:'block'}}>
-            <Card_panel sx={{height:'15%', width:'100%', marginBottom:'15px'}} onClick={()=>{console.log("test")}}>
+            <Card_panel sx={{height:'15%', width:'100%', marginBottom:'15px'}}>
                 <Item sx={{place:'left', width:'100%', height:'50%'}}>
                     쇼 제목
                 </Item>

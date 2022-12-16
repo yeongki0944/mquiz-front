@@ -25,7 +25,6 @@ export const QHostPlay = () => {
     useEffect(() => {
         switch (quizPlay.command) {
             case "READY":
-                console.log(getPinNum());
                 stompInit(getPinNum());
                 setTimeout(() => {
                     dispatch(R_setData({key: "command", value: "WAIT"}));

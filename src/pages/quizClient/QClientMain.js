@@ -33,7 +33,6 @@ export const QClientMain = () => {
      * KICK: 추방
      */
     useEffect(() => {
-        console.log(quizPlay.command);
         switch (quizPlay.command) {
             case "NICK": //최초 세팅
                 stompInit(getPinNum());

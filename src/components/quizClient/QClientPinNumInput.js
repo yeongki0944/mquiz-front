@@ -68,7 +68,6 @@ export const PinNumCheck = () => {
     useEffect(() => {
         if (window.location.pathname.startsWith('/p/')) {
             let pinNum = window.location.pathname.substring(3);
-            console.log(pinNum);
             if(pinNum){
                 if (pinNum.length === 6) {
                     enterRoomAPI(pinNum).then((res) => {

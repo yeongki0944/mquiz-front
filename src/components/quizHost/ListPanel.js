@@ -22,7 +22,6 @@ export const ListPanel = (props) => {
 
     useEffect(() => {
         setSelected(quiz.currentShow);
-        // console.log(quiz);
     }, [quiz.currentShow]);
 
     const setSelected = (currentShow) => {
@@ -35,12 +34,10 @@ export const ListPanel = (props) => {
 
     const dragStart = (e, position) => {
         dragItem.current = position;
-        // console.log(e.target.innerHTML);
     };
 
     const dragEnter = (e, position) => {
         dragOverItem.current = position;
-        // console.log(e.target.innerHTML);
     };
 
     const drop = (e) => {

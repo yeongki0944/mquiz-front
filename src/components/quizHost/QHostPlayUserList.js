@@ -24,8 +24,7 @@ export const UserList = (props) => {
                             sx={{margin: 1, backgroundColor: '#61DAFB', color: '#202123'}}
                             onDelete={() => {
                                 props.setOpen(true)
-                                console.log("nickname : " + item)
-                                store.dispatch(R_setData({key: "bannedNickName", value: item}))
+                               store.dispatch(R_setData({key: "bannedNickName", value: item}))
                             }}
                         />
                 )
@@ -39,7 +38,6 @@ export const UserList = (props) => {
 export const HostCountOutModal = (props) => {
     const handleClose = () => props.setOpen(false);
     const {quizPlay} = useSelector(state => state.quizPlay)
-    console.log("Modal : " + quizPlay.bannedNickName)
     return (
         <Modal
             open={props.open}
