@@ -11,7 +11,7 @@ import {QuizView} from "../../components/QuizView/QuizView";
 import {QClientSubmitWait} from "../../components/quizClient/QClientSubmitWait";
 import {RankPage} from "../../components/result/RankPage";
 import {FinalRankPage} from "../../components/result/FinalRankPage";
-import {QClientReconnect} from "./QClientReconnect";
+import {QClientReconnect} from "../../components/quizClient/QClientReconnect";
 import {QClientBanModal} from "../../components/quizClient/QClientBanModal";
 import {stompInit} from "../../function/WebSocket";
 import {flushLocalStorage, getPinNum} from "../../function/localStorage";
