@@ -16,15 +16,15 @@ export const disableBackPage = () => {
 };
 
 export const disableRefresh = () => {
-    window.addEventListener('beforeunload', function (e) {
-        e.preventDefault();
-        e.returnValue = '';
-        window.location.href = '/';
-    });
+    // window.addEventListener('beforeunload', function (e) {
+    //     e.preventDefault();
+    //     e.returnValue = '';
+    //     window.location.href = '/';
+    // });
 };
 
 export const checkConnected = (command) => {
-    if (getPinNum() != null) {
+    if (getPinNum() != null || getRole() != '') {
         if (command === null) {
             if (getRole() === 'HOST') {
                 store.dispatch(R_setData({key: 'command', value: 'RECONNECT'}));
@@ -34,13 +34,14 @@ export const checkConnected = (command) => {
                 redirectPage('QCLIENT');
             }
         }
-    } else {
-        const URL = window.location.pathname.split('/')[1];
-        const pinNum = URL.substring(URL.lastIndexOf('/') + 1);
-        if(pinNum){
-            setRole('CLIENT');
-            store.dispatch(R_setData({key: 'command', value: 'PIN'}));
-            redirectPage('QCLIENT');
+    } else { //여긴 URL 접속 경로로 접근 시 사용됨
+        if (window.location.pathname.startsWith('/p/')) {
+            let pinNum = window.location.pathname.substring(3);
+            if(pinNum){
+                setRole('CLIENT');
+                store.dispatch(R_setData({key: 'command', value: 'PIN'}));
+                redirectPage('QCLIENT');
+            }
         }
     }
 }
