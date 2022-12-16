@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {Btn, Content, Img, Item, Page, Text} from "../../layouts/LayOuts";
 import {useEffect} from "react";
-import {stompInit, stompSend} from "../../function/WebSocket";
+import {stompDisconnect, stompInit, stompSend} from "../../function/WebSocket";
 import {useDispatch} from "react-redux";
 import {useHistory} from "react-router-dom";
 import {flushLocalStorage, getPinNum} from "../../function/localStorage";
@@ -49,6 +49,7 @@ export function QHostReconnect() {
                     </Btn>
                     <Btn onClick={() => {
                         flushLocalStorage();
+                        stompDisconnect();
                         redirectPage("MAIN");
                         history.go(0);
                     }}>

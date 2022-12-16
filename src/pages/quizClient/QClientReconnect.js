@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {Btn, Content, Img, Item, Text} from "../../layouts/LayOuts";
 import {useEffect} from "react";
-import {stompInit} from "../../function/WebSocket";
+import {stompDisconnect, stompInit} from "../../function/WebSocket";
 import {useDispatch} from "react-redux";
 import {R_setData} from "../../redux/reducers/quizplayReducer";
 import {useHistory} from "react-router-dom";
@@ -45,6 +45,7 @@ export function QClientReconnect() {
                         </Btn>
                         <Btn onClick={() => {
                             flushLocalStorage();
+                            stompDisconnect();
                             redirectPage("MAIN");
                         }}>
                             메인으로
