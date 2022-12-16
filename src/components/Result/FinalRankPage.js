@@ -57,11 +57,10 @@ export const FinalRankPage = () => {
                                 (item, index) => {
                                     if (item.rank === 1 || item.rank === 2 || item.rank === 3) {
                                         return (
-                                            <Item sx={{place: "center",height:'20%'}}>
-                                                <Item sx={{place: "center", height: '100%', width: '50%'}} sm={{width:'90%'}}>
+                                            <Item sx={{place: "center",height:'20%'}} key={index}>
+                                                <Item sx={{place: "center", height: '100%', width: '50%'}} sm={{width:'90%'}} >
                                                     <Rank
                                                         sx={{place: "top", height: '100%', width: '100%'}}
-                                                        key={index}
                                                         rank={item.rank}
                                                         nickName={item.nickName}
                                                         score={Math.floor(item.rankScore)}

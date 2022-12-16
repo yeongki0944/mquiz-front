@@ -3,15 +3,12 @@ import {useSelector} from "react-redux";
 import {Rank} from "./Rank";
 import {useState} from "react";
 import {Answer} from "./Answer";
-import {VolumeControlButton} from "../VolumeControlButton";
 import * as React from "react";
 import {getNickname, getPinNum, getRole} from "../../function/localStorage";
 import {stompSend} from "../../function/WebSocket";
 
 
 const RankBox = (props) => {
-    // const {quizPlay} = useSelector(state => state.quizPlay);
-
     return (
         <Item sx={{place: 'top', display: 'block'}}>
             {getRole() === "CLIENT"
@@ -23,11 +20,10 @@ const RankBox = (props) => {
                     (item, index) => {
                         if (item.nickName === getNickname()) {
                             return (
-                                <Item sx={{place: "center",height:'20%'}}>
+                                <Item sx={{place: "center",height:'20%'}} key={index}>
                                     <Item sx={{place: "center", height: '100%', width: '50%'}} sm={{width:'90%'}}>
                                         <Rank
                                             sx={{place: "top", height: '100%', width: '100%'}}
-                                            key={index}
                                             rank={item.rank}
                                             nickName={item.nickName}
                                             score={Math.floor(item.rankScore)}
@@ -45,11 +41,10 @@ const RankBox = (props) => {
                     //if rank == 1 or 2 or 3
                     if (item.rank === 1 || item.rank === 2 || item.rank === 3) {
                         return (
-                            <Item sx={{place: "center",height:'20%'}}>
+                            <Item sx={{place: "center",height:'20%'}} key={index}>
                                 <Item sx={{place: "center", height: '100%', width: '50%'}} sm={{width:'90%'}}>
                                     <Rank
                                         sx={{place: "top", height: '100%', width: '100%'}}
-                                        key={index}
                                         rank={item.rank}
                                         nickName={item.nickName}
                                         score={Math.floor(item.rankScore)}
