@@ -5,19 +5,25 @@ import {useEffect} from "react";
 import {QuizStartCounter} from "../../components/QuizStartCounter";
 import {R_setData} from "../../redux/reducers/quizplayReducer";
 import {Page} from "../../LayOuts/LayOuts";
-import {QuizHostReady} from "./QuizHostReady";
+import {QuizHostReady} from "../../components/quizHost/QuizHostReady";
 import {stompInit, stompSubscribe} from "../../function/WebSocket";
 import {Rank_Page} from "../../components/Result/Rank_Page";
 import {FinalRankPage} from "../../components/Result/FinalRankPage"
-import {getPinNum} from "../../function/localStorage";
+import {getPinNum, getRole} from "../../function/localStorage";
 import {disableBackPage, disableRefresh} from "../../function/common";
 import {VolumeControlButton} from "../../components/VolumeControlButton";
+import {checkConnected} from "../../function/Reconnect";
+import {QuizHostReconnect} from "./QuizHostReconnect";
 
 export const QuizHostPlay = () => {
     const dispatch = useDispatch();
     const {quizPlay} = useSelector(state => state.quizPlay);
 
     useEffect(() => {
+        console.log(quizPlay.command)
+        if (checkConnected()&& quizPlay.command === null) {
+            dispatch(R_setData({key:'command',value:'RECONNECT'}));
+        }
         disableBackPage();
         disableRefresh();
     }, []);
@@ -54,14 +60,17 @@ export const QuizHostPlay = () => {
      */
     return (
 
-        <Page sx={{bg:'img',img: '/img/background_1.jpg'}}>
-            {quizPlay.command === "WAIT" && <VolumeControlButton sx={{place: 'top-right', height: '5vh'}} mediaName='Ready'/>}
-            {quizPlay.command != "WAIT" && <VolumeControlButton sx={{place: 'top-right', height: '5vh'}} mediaName='Play'/>}
+        <Page sx={{bg: 'img', img: '/img/background_1.jpg'}}>
+            {quizPlay.command === "WAIT" &&
+                <VolumeControlButton sx={{place: 'top-right', height: '5vh'}} mediaName='Ready'/>}
+            {quizPlay.command != "WAIT" &&
+                <VolumeControlButton sx={{place: 'top-right', height: '5vh'}} mediaName='Play'/>}
             {quizPlay.command === "WAIT" && <QuizHostReady/>}
             {quizPlay.command === "START" && <QuizStartCounter/>}
             {quizPlay.command === "SHOW" && <QuizView currentQuiz={quizPlay.quiz} state={"play"}/>}
             {quizPlay.command === "RESULT" && <Rank_Page/>}
             {quizPlay.command === "FINAL" && <FinalRankPage/>}
+            {quizPlay.command === "RECONNECT" && <QuizHostReconnect/>}
         </Page>
     );
 }

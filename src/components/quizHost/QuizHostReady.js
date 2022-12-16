@@ -4,9 +4,9 @@ import {useSelector} from "react-redux";
 import {stompSend} from "../../function/WebSocket";
 import {Btn, Content, Item, Text} from "../../LayOuts/LayOuts";
 import {useEffect, useState} from "react";
-import {HostCountOutModal, UserList} from "../../components/quizClient/ClientJoinList";
+import {HostCountOutModal, UserList} from "../quizClient/ClientJoinList";
 import {createSvgIcon} from "@mui/material/utils";
-import {QR_Modal} from "../../components/QR_Modal";
+import {QR_Modal} from "../QR_Modal";
 import {getPinNum} from "../../function/localStorage";
 import {disableBackPage, disableRefresh} from "../../function/common";
 
@@ -19,7 +19,7 @@ export const QuizHostReady = () => {
     const {quizPlay} = useSelector(state => state.quizPlay);
     const [openBan, setOpenBan] = useState(false);
     const [openQR, setOpenQR] = useState(false);
-    const URL = "http://www.mquiz.site/QClient/"+ getPinNum();
+    const URL = "http://www.mquiz.site/p/"+ getPinNum();
 
     const handleCopy = () => {
         navigator.clipboard.writeText(URL).then(function () {

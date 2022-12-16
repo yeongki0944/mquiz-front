@@ -9,7 +9,7 @@ import Home from "./pages/home/home";
 
 import {QuizHostMain} from "./pages/quizHost/QuizHostMain";
 import {QuizHostFind} from "./pages/quizHost/QuizHostFind"
-import {QuizHostReady} from "./pages/quizHost/QuizHostReady"
+import {QuizHostReady} from "./components/quizHost/QuizHostReady"
 import {QuizHostPlay} from "./pages/quizHost/QuizHostPlay"
 import {QuizHostCreate} from "./pages/quizHost/QuizHostCreate";
 
@@ -57,7 +57,7 @@ const App = () =>{
 
                             <Route path="/QClient/reconnect" component={QuizClientReconnect} exact/>
 
-                            <Route path="/QClient/:pinNum" component={QuizClientMain} exact/>
+                            <Route path="/p/:pinNum" component={QuizClientMain} exact/>
 
                             {/* 404 페이지, 테스트 페이지*/}
 
