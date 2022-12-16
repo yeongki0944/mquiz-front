@@ -2,7 +2,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {FormControl, FormControlLabel, Radio, RadioGroup} from "@mui/material";
 import {R_modifyQuiz, R_modifyQuizAnswer} from "../../../redux/reducers/quizInfoReducer";
 import * as React from "react";
-import {Item} from "../../../LayOuts/LayOuts";
+import {Item} from "../../../layouts/LayOuts";
 
 export const Type_OX = () => {
     const dispatch = useDispatch();

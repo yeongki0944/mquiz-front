@@ -1,7 +1,7 @@
 import {useDispatch, useSelector} from "react-redux";
 import * as React from "react";
 import {R_setData} from "../../../redux/reducers/quizplayReducer";
-import {Card, Item} from "../../../LayOuts/LayOuts";
+import {Card, Item} from "../../../layouts/LayOuts";
 import {stompSend} from "../../../function/WebSocket";
 import {PlayActionBar} from "../PlayActionBar";
 import {getNickname, getPinNum, getRole} from "../../../function/localStorage";

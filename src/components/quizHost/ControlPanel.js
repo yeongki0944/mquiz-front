@@ -3,10 +3,11 @@ import {R_addQuiz, R_makeQuizShow, R_setCurrentShow} from "../../redux/reducers/
 import * as React from "react";
 import {useHistory} from "react-router-dom";
 import {saveShowAPI} from "../../function/API";
-import {Btn, Item, Text} from "../../LayOuts/LayOuts";
+import {Btn, Item, Text} from "../../layouts/LayOuts";
 import {useState} from "react";
 import Modal from "@mui/material/Modal";
 import {Slider} from "@mui/material";
+import {redirectPage} from "../../function/common";
 
 export const ControlPanel = (props) => {
     const dispatch = useDispatch();
@@ -101,8 +102,8 @@ export const ControlPanel = (props) => {
                 <Item sx={{place: 'center', height: '10%', width: '100%'}}>
                     <Btn sx={{width:'50%', height:'100%', background:'#fff', border:'1px solid #000', borderRadius:'10px'}} onClick={() => {
                         saveShowAPI(quiz).then((res) => {
-                            if(res){
-                                history.push("/quiz");
+                            if(res.data.statusCode === 200) {
+                                redirectPage("QHOST");
                             }
                         }).catch(() => {
                             alert("저장에 실패하였습니다.");

@@ -1,4 +1,4 @@
-import {Btn, Item} from "../../LayOuts/LayOuts";
+import {Btn, Item} from "../../layouts/LayOuts";
 import * as React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {stompSend} from "../../function/WebSocket";

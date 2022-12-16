@@ -5,7 +5,7 @@ import {useEffect, useRef, useState} from "react";
 import {stompSend} from "../../function/WebSocket";
 import {R_setData} from "../../redux/reducers/quizplayReducer";
 import {useDispatch, useSelector} from "react-redux";
-import {Content, Item, Text} from "../../LayOuts/LayOuts";
+import {Content, Item, Text} from "../../layouts/LayOuts";
 import {getNickname, getPinNum, getQuizTime, getRole} from "../../function/localStorage";
 import {getGaugeTimer, getRemainingTimebySec, getSolvedTime, getTime} from "../../function/Timer";
 

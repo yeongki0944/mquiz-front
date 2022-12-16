@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import {useState} from "react";
-import {Item} from "../../../LayOuts/LayOuts";
+import {Item} from "../../../layouts/LayOuts";
 
 const useStyles = makeStyles((theme) => ({
     root: {

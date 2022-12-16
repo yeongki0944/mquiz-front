@@ -2,7 +2,7 @@ import {useDispatch, useSelector} from "react-redux";
 import * as React from "react";
 import {useState} from "react";
 import {R_setData} from "../../../redux/reducers/quizplayReducer";
-import {Card, Card_panel, Item} from "../../../LayOuts/LayOuts";
+import {Card, Card_panel, Item} from "../../../layouts/LayOuts";
 import {TextField} from "@mui/material";
 import {stompSend} from "../../../function/WebSocket";
 import {PlayActionBar} from "../PlayActionBar";

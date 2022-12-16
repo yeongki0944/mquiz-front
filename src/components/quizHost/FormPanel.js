@@ -17,7 +17,7 @@ import {styled} from "@mui/material/styles";
 import {Type_Reply} from "./QuizFormTypes/Type_Reply";
 import {Type_OX} from "./QuizFormTypes/Type_OX";
 import {Type_Select} from "./QuizFormTypes/Type_Select";
-import {Item, Text} from "../../LayOuts/LayOuts";
+import {Item, Text} from "../../layouts/LayOuts";
 
 
 const Img = styled('img')({

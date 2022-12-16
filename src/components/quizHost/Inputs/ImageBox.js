@@ -3,7 +3,7 @@ import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import {useDispatch} from "react-redux";
 import {R_modifyQuiz} from "../../../redux/reducers/quizInfoReducer";
-import {Item} from "../../../LayOuts/LayOuts";
+import {Item} from "../../../layouts/LayOuts";
 
 export default function ImageBox() {
     const dispatch = useDispatch();

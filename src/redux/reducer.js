@@ -4,6 +4,7 @@ import {quizListReducer} from "./reducers/quizListReducer";
 import {mongodbReducer} from "./reducers/mongodbReducer";
 import {quizPlayReducer} from "./reducers/quizplayReducer";
 import {userInfoReducer} from "./reducers/userInfoReducer";
+import {pageControlReducer} from "./reducers/pageControlReducer";
 
 export default combineReducers({
     quiz: quizInfoReducer,
@@ -11,5 +12,6 @@ export default combineReducers({
     quizPlay: quizPlayReducer,
     mongodbUrl : mongodbReducer,
     userInfo: userInfoReducer,
+    page : pageControlReducer
 })
 

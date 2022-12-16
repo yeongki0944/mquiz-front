@@ -110,21 +110,7 @@ export const getShowInfoAPI = async (quizId) => {
  * Output: true/false
  */
 export const saveShowAPI = async(quiz) =>{
-    await CustomAxios.post('/v1/show', quiz)
-        .then(res => {
-            console.log(res.data)
-            if(res.status === 200){
-                console.log("퀴즈 저장 성공");
-                return true;
-            }else{
-                console.log("퀴즈 저장 실패");
-                return false;
-            }
-        })
-        .catch(err => {
-            console.log(err)
-            return false;
-        })
+    return await CustomAxios.post('/v1/show', quiz);
 }
 
 /**

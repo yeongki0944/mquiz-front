@@ -1,6 +1,6 @@
 import {Avatar,} from "@mui/material";
 import * as React from "react";
-import {Card_panel, Img, Item} from "../../LayOuts/LayOuts";
+import {Card_panel, Img, Item} from "../../layouts/LayOuts";
 
 
 export default function HostProfile(props) {

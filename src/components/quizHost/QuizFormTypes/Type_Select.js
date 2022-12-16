@@ -2,7 +2,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {R_modifyQuiz, R_modifyQuizAnswer} from "../../../redux/reducers/quizInfoReducer";
 import {Checkbox, FormControl, FormControlLabel, FormGroup, TextField} from "@mui/material";
 import * as React from "react";
-import {Item} from "../../../LayOuts/LayOuts";
+import {Item} from "../../../layouts/LayOuts";
 
 export const Type_Select = () => {
     const dispatch = useDispatch();

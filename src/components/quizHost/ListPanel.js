@@ -11,7 +11,7 @@ import FileCopyIcon from "@material-ui/icons/FileCopy";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import * as React from "react";
 import '../../styles/baseStyle.css';
-import {Item} from "../../LayOuts/LayOuts";
+import {Item} from "../../layouts/LayOuts";
 
 export const ListPanel = (props) => {
     const quiz = props.quiz;
