@@ -12,7 +12,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {R_makeQuizShow} from "../../redux/reducers/quizInfoReducer";
 import {useHistory} from "react-router-dom";
 import {Btn, Img, Item, Text} from "../../layouts/LayOuts";
-import {createShowAPI} from "../../function/API";
+import {createShowAPI, setShowListAPI} from "../../function/API";
 import {redirectPage} from "../../function/common";
 
 const imageItemData = [
@@ -96,15 +96,13 @@ export default function BasicModal(props) {
     // 이미지 변경
     const [imageUrl, setImageUrl] = useState(imageItemData[0].img);
 
-    const history = useHistory();
-
     const handleCreate = () => {
         createShowAPI({
             quizInfo: quiz.quizInfo,
             quizData: quiz.quizData,}
         ).then(res => {
             console.log(res);
-            redirectPage("QHOST");
+            setShowListAPI("test@gmail.com");
         }).catch(
             alert("오류가 발생했습니다.")
         )

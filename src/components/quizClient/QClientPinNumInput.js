@@ -3,9 +3,11 @@ import TextField from '@mui/material/TextField';
 import {useEffect, useState} from 'react';
 import {useDispatch} from "react-redux";
 import {Btn, Content, Item, Text} from "../../layouts/LayOuts";
-import {getPinNum, setPinNum} from "../../function/localStorage";
+import {getPinNum, setPinNum, setRole} from "../../function/localStorage";
 import {enterRoomAPI} from "../../function/API";
 import {R_setData} from "../../redux/reducers/quizplayReducer";
+import store from "../../redux/store";
+import {redirectPage} from "../../function/common";
 
 /**
  * 핀 번호 입력 component
@@ -54,7 +56,6 @@ export const PinNumCheck = () => {
             if (res.data.statusCode === 200) {
                 dispatch(R_setData({key: 'command', value: 'NICK'}));
                 setPinNum(pin);
-                //history.push('/QClient/play');
             } else {
                 setError('존재하지 않는 방입니다.');
             }
@@ -65,14 +66,26 @@ export const PinNumCheck = () => {
      * URL 접속 방법 www.mquiz.com/QClient/555555
      */
     useEffect(() => {
-        const url = window.location.pathname;
-        const pin = url.split('/').pop();
-        console.log(pin);
-        if (pin.length === 6) {
-            handleSubmit(pin);
-        }else{
-            setError('전달받은 6자리 번호 입력해주세요!');
+        if (window.location.pathname.startsWith('/p/')) {
+            let pinNum = window.location.pathname.substring(3);
+            console.log(pinNum);
+            if(pinNum){
+                if (pinNum.length === 6) {
+                    enterRoomAPI(pinNum).then((res) => {
+                        if (res.data.statusCode === 200) {
+                            dispatch(R_setData({key: 'command', value: 'NICK'}));
+                            setPin_Num(pinNum);
+                            setPinNum(pinNum);
+                        } else {
+                            setError('존재하지 않는 방입니다.');
+                        }
+                    });
+                }else{
+                    setError('핀번호는 6자리여야 합니다.');
+                }
+            }
         }
+
     }, []);
 
     return (
