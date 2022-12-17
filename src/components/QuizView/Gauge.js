@@ -1,13 +1,13 @@
 import * as React from "react";
 import {ProgressBar} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.css';
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useState} from "react";
 import {stompSend} from "../../function/WebSocket";
 import {R_setData} from "../../redux/reducers/quizplayReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {Content, Item, Text} from "../../layouts/LayOuts";
-import {getNickname, getPinNum, getQuizTime, getRole} from "../../function/localStorage";
-import {getGaugeTimer, getRemainingTimebySec, getSolvedTime, getTime} from "../../function/Timer";
+import {getNickname, getPinNum, getRole} from "../../function/localStorage";
+import {getGaugeTimer, getSolvedTime} from "../../function/Timer";
 
 /**
  * props:
@@ -20,7 +20,7 @@ export const Gauge = (props) => {
     const dispatch = useDispatch();
 
     const {quizPlay} = useSelector(state => state.quizPlay);
-    const [count, setCount] = useState(0);
+    const [count, setCount] = useState(10000);
 
     useEffect(() => {
         if (getPinNum() === null) {
