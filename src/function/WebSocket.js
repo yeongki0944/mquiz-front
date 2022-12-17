@@ -4,7 +4,7 @@ import {playFunction} from "./PlayFunction";
 import {setPinNum} from "./localStorage";
 
 
-const URL = process.env.REACT_APP_BACKEND_SERVER;
+const URL = process.env.REACT_APP_BACKEND_SERVER_PLAY;
 let stomp = Stomp.over(() => {
     return new SockJS(URL + "/connect")
 });

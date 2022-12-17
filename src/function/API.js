@@ -1,9 +1,10 @@
-import CustomAxios from "./CustomAxios";
+import CustomAxios, {CustomAxios_PLAY, CustomAxios_SHOW} from "./CustomAxios";
 import {R_setQuizList} from "../redux/reducers/quizListReducer";
 import store from "../redux/store";
 import {R_setCurrentShow, R_setId, R_setQuiz} from "../redux/reducers/quizInfoReducer";
 import {R_setData} from "../redux/reducers/quizplayReducer";
 import {setPinNum} from "./localStorage";
+import {redirectPage} from "./common";
 
 /**
  * 로그인 처리
@@ -12,7 +13,7 @@ import {setPinNum} from "./localStorage";
  * Output: true/false
  */
 export const loginAPI = async (data) => {
-    return await CustomAxios.post("/v1/hostauth/login", data);
+    return await CustomAxios_SHOW.post("/v1/hostauth/login", data);
 };
 
 /**
@@ -21,8 +22,8 @@ export const loginAPI = async (data) => {
  * Input:{hostEmail,password}
  * Output: true/false
  */
-export const registerAPI = async(data) => {
-     return await CustomAxios.post("/v1/hostauth/join", data);
+export const registerAPI = async (data) => {
+    return await CustomAxios_SHOW.post("/v1/hostauth/join", data);
 };
 
 /**
@@ -62,7 +63,7 @@ export const checkEmailAuthNumAPI = async(data) => {
  * Output: true/false
  */
 export const enterRoomAPI = async (pinNum) => {
-    return await CustomAxios.post("/joinroom",{pinNum : pinNum});
+    return await CustomAxios_PLAY.post("/joinroom", {pinNum: pinNum});
 };
 
 /**
@@ -72,11 +73,11 @@ export const enterRoomAPI = async (pinNum) => {
  */
 
 export const setShowListAPI = async (email) => {
-    await CustomAxios.get("/v1/show/List?email=" + email)
+    await CustomAxios_SHOW.get("/v1/show/List?email=" + email)
         .then((res) => {
-            if(res.status === 200){
+            if (res.status === 200) {
                 store.dispatch(R_setQuizList(res.data.data))
-            }else{
+            } else {
             }
         }).catch((err) => {
         })
@@ -90,16 +91,7 @@ export const setShowListAPI = async (email) => {
  */
 
 export const createShowAPI = async (data) => {
-    await CustomAxios.post("/v1/show", data
-    ).then((res) => {
-        if(res.status === 200){
-            return true;
-        }else{
-            return false;
-        }
-    }).catch((err) => {
-        return false;
-    })
+    return await CustomAxios_SHOW.post("/v1/show", data);
 }
 
 /**
@@ -110,27 +102,24 @@ export const createShowAPI = async (data) => {
  */
 
 export const getShowInfoAPI = async (quizId) => {
-    await CustomAxios.get("/v1/show?showId=" + quizId)
+    await CustomAxios_SHOW.get("/v1/show?showId=" + quizId)
         .then((res) => {
-            if(res.status === 200){
-                store.dispatch(R_setId(quizId));
-                store.dispatch(R_setQuiz(res.data.data));
-                store.dispatch(R_setCurrentShow(1));
-                return null;
-            }else{
-                return null;
-            }
+            console.log(res.data.data);
+            store.dispatch(R_setId(quizId));
+            store.dispatch(R_setQuiz(res.data.data));
+            store.dispatch(R_setCurrentShow(1));
         }).catch((err) => {
-            return null;
+            console.log(err);
         })
 }
+
 /** Show 편집저장 API
  * type: POST
  * Input: {quiz}
  * Output: true/false
  */
-export const saveShowAPI = async(quiz) =>{
-    return await CustomAxios.post('/v1/show', quiz);
+export const saveShowAPI = async (quiz) => {
+    return await CustomAxios_SHOW.post('/v1/show', quiz);
 }
 
 /**
@@ -140,16 +129,7 @@ export const saveShowAPI = async(quiz) =>{
  * Output: true/false
  */
 export const deleteShowAPI = async (quizId) => {
-    await CustomAxios.delete("/v1/show?showId=" + quizId
-    ).then((res) => {
-        if(res.status === 200){
-            return true;
-        }else{
-            return false;
-        }
-    }).catch((err) => {
-        return false;
-    })
+    return await CustomAxios_SHOW.delete("/v1/show?showId=" + quizId);
 }
 
 /**
@@ -159,16 +139,5 @@ export const deleteShowAPI = async (quizId) => {
  * Output: true/false
  */
 export const createPlayAPI = async (quizId) => {
-    await CustomAxios.post("/v1/host/createPlay", {id: quizId}
-    ).then((res) => {
-        if(res.status === 200){
-            store.dispatch(R_setData({key: "command", value: "READY"}));
-            setPinNum(res.data.data);
-            return true;
-        }else{
-            return false;
-        }
-    }).catch((err) => {
-        return false;
-    })
+    return await CustomAxios_PLAY.post("/v1/host/createPlay", {id: quizId})
 }

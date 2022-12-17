@@ -13,6 +13,9 @@ import {useState} from "react";
 import {Card_panel, Item} from "../../layouts/LayOuts";
 import {createPlayAPI, deleteShowAPI, getShowInfoAPI, setShowListAPI} from "../../function/API";
 import {redirectPage} from "../../function/common";
+import store from "../../redux/store";
+import {R_setData} from "../../redux/reducers/quizplayReducer";
+import {setPinNum} from "../../function/localStorage";
 
 /**
  * props:
@@ -92,27 +95,28 @@ export const QuizList = (props) => {
                                     <Button onClick={(e) => {
                                         e.stopPropagation();
                                         setButtonDisabled(true);
-                                        if(createPlayAPI(item.id)){
+                                        createPlayAPI(item.id).then((res) => {
+                                            console.log(res);
+                                            store.dispatch(R_setData({key: "command", value: "READY"}));
+                                            setPinNum(res.data.data);
                                             redirectPage("QHOSTPLAY");
-                                        }else{
-                                            setButtonDisabled(false);
-                                            alert("퀴즈를 불러오는데 실패했습니다.");
-                                        }
+                                        }).catch((err) => {
+                                            console.log(err);
+                                        });
+                                        setButtonDisabled(false);
                                     }} disabled={buttonDisabled}><PlayArrow/></Button>
                                 }
                                 <Button onClick={(e) => {
                                     e.stopPropagation();
                                     setButtonDisabled(true);
                                     deleteShowAPI(item.id).then((res) => {
-                                        if (res) {
-                                            setButtonDisabled(false);
-                                            alert("삭제되었습니다.");
-                                            history.go(0);
-                                        } else {
-                                            setButtonDisabled(false);
-                                            alert("삭제에 실패했습니다.");
-                                        }
-                                    })
+                                        alert("삭제되었습니다.");
+                                        setShowListAPI('test@gmail.com');
+                                        setButtonDisabled(false);
+                                    }).catch((err) => {
+                                        alert("삭제에 실패했습니다.");
+                                        setButtonDisabled(false);
+                                    });
 
                                 }} disabled={buttonDisabled}><DeleteForeverIcon/></Button>
                             </Typography>
