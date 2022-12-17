@@ -92,27 +92,21 @@ export const QuizList = (props) => {
                                     <Button onClick={(e) => {
                                         e.stopPropagation();
                                         setButtonDisabled(true);
-                                        if(createPlayAPI(item.id)){
-                                            redirectPage("QHOSTPLAY");
-                                        }else{
-                                            setButtonDisabled(false);
-                                            alert("퀴즈를 불러오는데 실패했습니다.");
-                                        }
+                                        createPlayAPI(item.id);
+                                        setButtonDisabled(false);
                                     }} disabled={buttonDisabled}><PlayArrow/></Button>
                                 }
                                 <Button onClick={(e) => {
                                     e.stopPropagation();
                                     setButtonDisabled(true);
                                     deleteShowAPI(item.id).then((res) => {
-                                        if (res) {
-                                            setButtonDisabled(false);
-                                            alert("삭제되었습니다.");
-                                            history.go(0);
-                                        } else {
-                                            setButtonDisabled(false);
-                                            alert("삭제에 실패했습니다.");
-                                        }
-                                    })
+                                        alert("삭제되었습니다.");
+                                        setShowListAPI('test@gmail.com');
+                                        setButtonDisabled(false);
+                                    }).catch((err) => {
+                                        alert("삭제에 실패했습니다.");
+                                        setButtonDisabled(false);
+                                    });
 
                                 }} disabled={buttonDisabled}><DeleteForeverIcon/></Button>
                             </Typography>

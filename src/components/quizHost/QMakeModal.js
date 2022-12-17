@@ -100,11 +100,14 @@ export default function BasicModal(props) {
         createShowAPI({
             quizInfo: quiz.quizInfo,
             quizData: quiz.quizData,}
-        ).then(res => {
+        ).then((res) => {
+            console.log(res);
             setShowListAPI("test@gmail.com");
-        }).catch(
-            alert("오류가 발생했습니다.")
-        )
+            handleClose();
+        }).catch((err) => {
+            alert("에러");
+            console.log(err);
+        });
     }
 
     const handleInputTitle = (e) => {
