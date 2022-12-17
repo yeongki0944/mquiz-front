@@ -8,7 +8,6 @@ import {editUserInfo} from "../../redux/reducers/userInfoReducer";
 import {
     checkEmailAPI,
     checkEmailAuthNumAPI,
-    emailAuthNumAPI,
     emailSendAuthNumAPI,
     loginAPI,
     registerAPI

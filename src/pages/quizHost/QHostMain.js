@@ -13,6 +13,10 @@ import {setShowListAPI} from "../../function/API";
 export const QHostMain = () => {
     const [modalOpen, setModalOpen] = useState(false);
     const {quizList} = useSelector(state => state.quizList);
+    const {userInfo} = useSelector(state => state.userInfo);
+
+    // const email = userInfo.authNum;
+
     const email = "test@gmail.com";
 
     useEffect(() => {
