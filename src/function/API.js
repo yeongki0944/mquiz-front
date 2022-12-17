@@ -109,12 +109,5 @@ export const deleteShowAPI = async (quizId) => {
  * Output: true/false
  */
 export const createPlayAPI = async (quizId) => {
-    await CustomAxios_PLAY.post("/v1/host/createPlay", {id: quizId}
-    ).then((res) => {
-        store.dispatch(R_setData({key: "command", value: "READY"}));
-        setPinNum(res.data.data);
-        redirectPage("/QHOSTPLAY");
-    }).catch((err) => {
-        return false;
-    })
+    return await CustomAxios_PLAY.post("/v1/host/createPlay", {id: quizId})
 }

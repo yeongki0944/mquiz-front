@@ -13,6 +13,9 @@ import {useState} from "react";
 import {Card_panel, Item} from "../../layouts/LayOuts";
 import {createPlayAPI, deleteShowAPI, getShowInfoAPI, setShowListAPI} from "../../function/API";
 import {redirectPage} from "../../function/common";
+import store from "../../redux/store";
+import {R_setData} from "../../redux/reducers/quizplayReducer";
+import {setPinNum} from "../../function/localStorage";
 
 /**
  * props:
@@ -92,7 +95,14 @@ export const QuizList = (props) => {
                                     <Button onClick={(e) => {
                                         e.stopPropagation();
                                         setButtonDisabled(true);
-                                        createPlayAPI(item.id);
+                                        createPlayAPI(item.id).then((res) => {
+                                            console.log(res);
+                                            store.dispatch(R_setData({key: "command", value: "READY"}));
+                                            setPinNum(res.data.data);
+                                            redirectPage("QHOSTPLAY");
+                                        }).catch((err) => {
+                                            console.log(err);
+                                        });
                                         setButtonDisabled(false);
                                     }} disabled={buttonDisabled}><PlayArrow/></Button>
                                 }
