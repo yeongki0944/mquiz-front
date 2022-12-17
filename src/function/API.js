@@ -26,6 +26,36 @@ export const registerAPI = async(data) => {
 };
 
 /**
+ * 회원가입 이메일 중복 확인
+ * type: POST
+ * Input:{hostEmail}
+ * Output: true/false
+ */
+export const checkEmailAPI = async(data) => {
+    return await CustomAxios.post("/v1/hostauth/join/checkHostEmail", data);
+};
+
+/**
+ * 회원가입 이메일 인증번호 전송
+ * type: POST
+ * Input:{hostEmail}
+ * Output: true(ePw)/false
+ */
+export const emailSendAuthNumAPI = async(data) => {
+    return await CustomAxios.post("/v1/hostauth/join/mailConfirm", data);
+};
+
+/**
+ * 회원가입 이메일 인증번호 확인
+ * type: POST
+ * Input:{authNum}
+ * Output: true/false
+ */
+export const checkEmailAuthNumAPI = async(data) => {
+    return await CustomAxios.post("/v1/hostauth/join/verifyEmail", data);
+};
+
+/**
  * Play 접속
  * type: POST
  * Input:{pinNum}

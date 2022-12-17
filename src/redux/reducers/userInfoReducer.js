@@ -12,6 +12,7 @@ const initialState = {
         password : null,
         hostEmail : null,
         nickName: null,
+        authNum : null,
         role: null,
     }
 }
