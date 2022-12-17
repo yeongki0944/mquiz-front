@@ -46,7 +46,7 @@ export function QClientReconnect() {
                         <Btn onClick={() => {
                             flushLocalStorage();
                             stompDisconnect();
-                            redirectPage("MAIN");
+                            window.location.href = "/";
                         }}>
                             메인으로
                         </Btn>

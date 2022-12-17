@@ -47,8 +47,11 @@ export function QHostReconnect() {
                         다음
                     </Btn>
                     <Btn onClick={() => {
+                        stompSend("end", {
+                            pinNum: getPinNum(),
+                            action: "END"
+                        });
                         flushLocalStorage();
-                        stompDisconnect();
                         redirectPage("MAIN");
                     }}>
                         메인으로

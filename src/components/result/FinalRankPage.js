@@ -2,7 +2,7 @@ import {Btn, Card_panel, Content, Img, Item, Text} from "../../layouts/LayOuts";
 import {useSelector} from "react-redux";
 import {Rank} from "./Rank";
 import {useEffect, useState} from "react";
-import {stompDisconnect} from "../../function/WebSocket";
+import {stompDisconnect, stompSend} from "../../function/WebSocket";
 import * as React from "react";
 import {useHistory} from "react-router-dom";
 import html2canvas from "html2canvas";
@@ -115,7 +115,10 @@ export const FinalRankPage = () => {
                             /**
                              * Host일 경우에만 방을 삭제한다. 레디스로
                              */
-                            stompDisconnect();
+                            stompSend("end", {
+                                pinNum: getPinNum(),
+                                action: "END"
+                            });
                             flushLocalStorage();
                             redirectPage("MAIN");
                             history.go(0);

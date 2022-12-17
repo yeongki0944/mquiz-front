@@ -20,12 +20,22 @@ export const Gauge = (props) => {
     const dispatch = useDispatch();
 
     const {quizPlay} = useSelector(state => state.quizPlay);
+    const [count, setCount] = useState(0);
 
-    const [count, setCount] = useState(quizPlay.quiz.time);
+    useEffect(() => {
+        if (getPinNum() === null) {
+            setCount(props.currentQuiz.time);
+        } else {
+            setCount(quizPlay.quiz.time);
+        }
+    }, []);
+
 
     useEffect(() => {
         const interval = setInterval(() => {
-            setCount(getGaugeTimer(quizPlay.quiz.time + 3));
+            if (getPinNum() != null) {
+                setCount(getGaugeTimer(quizPlay.quiz.time + 3));
+            }
             if (count <= 0) {
                 clearInterval(interval);
                 setCount(0);
@@ -45,7 +55,7 @@ export const Gauge = (props) => {
                     });
                 }
             }
-        }, quizPlay.quiz.time);
+        }, count);
         return () => clearInterval(interval);
     }, [count]);
 
@@ -57,16 +67,24 @@ export const Gauge = (props) => {
             </Text>
             <Item sx={{place: 'center', width: '100%'}}>
                 <Item sx={{place: 'center', width: '10%'}}>
-                    <Text sx={{color: '#FFC107', fontSize: '3vw'}} sm={{fontSize: '6vw'}}>
-                        {count / 10}
-                        /{quizPlay.quiz.time}</Text>
+                    <Text sx={{color: '#FFC107', fontSize: '2vw'}} sm={{fontSize: '6vw'}}>
+                        {getPinNum() === null ? <>0/{props.currentQuiz.time}</> : <>{count / 10}/{quizPlay.quiz.time}</>}
+                    </Text>
                 </Item>
                 <Item sx={{place: 'center', width: '90%'}}>
-                    <ProgressBar
-                        style={{width: '100%'}}
-                        animated
-                        now={count / quizPlay.quiz.time * 10}
-                    />
+                    {getPinNum() === null ?
+                        <ProgressBar
+                            style={{width: '100%'}}
+                            animated
+                            now={count / props.currentQuiz.time * 10}
+                        />
+                        :
+                        <ProgressBar
+                            style={{width: '100%'}}
+                            animated
+                            now={count / quizPlay.quiz.time * 10}
+                        />
+                    }
                 </Item>
             </Item>
         </Content>

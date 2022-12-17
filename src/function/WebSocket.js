@@ -20,6 +20,8 @@ export const stompInit = (pinNum) => {
         setPinNum(pinNum)
     }, (error) => {
         console.log("실패");
+        //실패 시 핀넘버 초기화
+        setPinNum(null)
     });
 }
 

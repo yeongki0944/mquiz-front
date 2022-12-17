@@ -51,19 +51,20 @@ export const QuizView = (props) => {
     const View = () => {
         return (
             <Item sx={{place: 'center', display: 'block', height: '100%'}}>
-                <Item sx={{place: 'center', display: 'block', height: '20%'}} sm={{height: '20%'}}>
+                <Item sx={{place: 'center', display: 'block', height: '25%'}} sm={{height: '25%'}}>
                     <Text sx={{color:'#FFC107',fontSize:'3vw'}} sm={{fontSize:'6vw'}}>
                         PIN: {getPinNum()}
                     </Text>
-                    <Item sx={{place: 'center', height: '50%', width:'100%'}}>
+                    <Item sx={{place: 'center', height: '70%', width:'100%'}}>
                         <Gauge
                             quizPlay={quizPlay}
+                            currentQuiz={currentQuiz}
                             Qnum={currentQuiz.num}
                             TotalQcnt={"N"}
                         />
                     </Item>
                 </Item>
-                <Item sx={{place: 'center', height: '40%', display: 'flex'}} sm={{display: 'block', height: '40%'}}>
+                <Item sx={{place: 'center', height: '35%', display: 'flex'}} sm={{display: 'block', height: '35%'}}>
                     {props.state === "play" ?
                         <Card_panel sx={{place: 'center', width:'45%',height:'90%',margin:'auto',overflow:'hidden'}} sm={{width:'95%',height:'45%',margin:'10px'}}>{currentQuiz.question}</Card_panel>
                         :

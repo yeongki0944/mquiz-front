@@ -3,7 +3,9 @@ import 'bootstrap/dist/css/bootstrap.css';
 import {Img, Item} from "../layouts/LayOuts";
 import {redirectPage} from "../function/common";
 import {useSelector} from "react-redux";
-import {flushLocalStorage, getRole} from "../function/localStorage";
+import {flushLocalStorage, getNickname, getPinNum, getRole} from "../function/localStorage";
+import {stompSend} from "../function/WebSocket";
+import {getSolvedTime} from "../function/Timer";
 
 export const HomeButton = (props) => {
     const {page} = useSelector(state => state.page);
@@ -25,7 +27,10 @@ export const HomeButton = (props) => {
     const confirmRedirect = (Msg) => {
         if(window.confirm(Msg)){
             if(getRole()==="HOST"){
-                //방 닫기 제작
+                stompSend("end", {
+                    pinNum: getPinNum(),
+                    action: "END"
+                });
             }
             flushLocalStorage();
             window.location.href = "/";
