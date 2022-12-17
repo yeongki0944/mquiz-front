@@ -4,7 +4,7 @@ const session = window.sessionStorage
 
 
 export const CustomAxios_SHOW = axios.create({
-    baseURL: process.env.REACT_APP_BACKEND_SERVER_PLAY,
+    baseURL: process.env.REACT_APP_BACKEND_SERVER_SHOW,
     headers: {
         // 'Authorization': session.getItem('access-token-jwt'),
         // 'Refresh': session.getItem('refresh-token-jwt'),
