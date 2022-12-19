@@ -1,10 +1,7 @@
-import CustomAxios, {CustomAxios_LAMDA, CustomAxios_PLAY, CustomAxios_SHOW} from "./CustomAxios";
+import {CustomAxios_LAMDA, CustomAxios_PLAY, CustomAxios_SHOW} from "./CustomAxios";
 import {R_setQuizList} from "../redux/reducers/quizListReducer";
 import store from "../redux/store";
 import {R_setCurrentShow, R_setId, R_setQuiz} from "../redux/reducers/quizInfoReducer";
-import {R_setData} from "../redux/reducers/quizplayReducer";
-import {setPinNum} from "./localStorage";
-import {redirectPage} from "./common";
 
 /**
  * 로그인 처리
@@ -33,7 +30,7 @@ export const registerAPI = async (data) => {
  * Output: true/false
  */
 export const checkEmailAPI = async(data) => {
-    return await CustomAxios.post("/v1/hostauth/join/checkHostEmail", data);
+    return await CustomAxios_SHOW.post("/v1/hostauth/join/checkHostEmail", data);
 };
 
 /**
@@ -43,7 +40,7 @@ export const checkEmailAPI = async(data) => {
  * Output: true(ePw)/false
  */
 export const emailSendAuthNumAPI = async(data) => {
-    return await CustomAxios.post("/v1/hostauth/join/mailConfirm", data);
+    return await CustomAxios_SHOW.post("/v1/hostauth/join/mailConfirm", data);
 };
 
 /**
@@ -53,7 +50,7 @@ export const emailSendAuthNumAPI = async(data) => {
  * Output: true/false
  */
 export const checkEmailAuthNumAPI = async(data) => {
-    return await CustomAxios.post("/v1/hostauth/join/verifyEmail", data);
+    return await CustomAxios_SHOW.post("/v1/hostauth/join/verifyEmail", data);
 };
 
 /**
