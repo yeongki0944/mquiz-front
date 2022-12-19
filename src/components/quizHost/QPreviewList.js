@@ -25,7 +25,7 @@ export const QPreviewList = (props) => {
                             {quiz.quizData.map(
                                 (item, index) => {
                                     return (
-                                        <Card_panel sx={{margin:'10px'}}>
+                                        <Card_panel sx={{margin:'10px'}} key={index}>
                                             <QPreView sx={{place:'center'}} currentQuiz={item}/>
                                         </Card_panel>
                                     )

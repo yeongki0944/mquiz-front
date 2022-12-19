@@ -20,7 +20,7 @@ exports.handler = async (event) => {
             Key: {
                 "email": email
             },
-            ProjectionExpression: "quizInfo",
+            ProjectionExpression: "id,quizInfo",
             FilterExpression: "quizInfo.email = :email",
             ExpressionAttributeValues: {
                 ":email": email

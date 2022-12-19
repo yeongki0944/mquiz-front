@@ -55,6 +55,7 @@ export const QuizList = (props) => {
                 sx={{margin: '10px 0'}}
                 key={index}
                   onClick={()=>{getShowInfoAPI(item.id);}}>
+                {console.log(quizList)}
                 <Grid container spacing={2}>
                     <Grid item>
                         <img alt="complex"

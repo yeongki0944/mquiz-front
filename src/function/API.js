@@ -45,6 +45,7 @@ export const enterRoomAPI = async (pinNum) => {
 export const setShowListAPI = async (email) => {
     await CustomAxios_LAMDA.get("/show/list/" + email)
         .then((res) => {
+            console.log(res.data);
             if (res.status === 200) {
                 store.dispatch(R_setQuizList(res.data.Items))
             } else {
@@ -72,9 +73,10 @@ export const createShowAPI = async (data) => {
  */
 
 export const getShowInfoAPI = async (quizId) => {
+    console.log("/show/" + quizId);
     await CustomAxios_LAMDA.get("/show/" + quizId)
         .then((res) => {
-            console.log(res.data)
+            console.log(res)
             store.dispatch(R_setId(quizId));
             store.dispatch(R_setQuiz(res.data.Item));
             store.dispatch(R_setCurrentShow(1));
