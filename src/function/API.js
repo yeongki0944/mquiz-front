@@ -1,4 +1,4 @@
-import CustomAxios, {CustomAxios_PLAY, CustomAxios_SHOW} from "./CustomAxios";
+import CustomAxios, {CustomAxios_LAMDA, CustomAxios_PLAY, CustomAxios_SHOW} from "./CustomAxios";
 import {R_setQuizList} from "../redux/reducers/quizListReducer";
 import store from "../redux/store";
 import {R_setCurrentShow, R_setId, R_setQuiz} from "../redux/reducers/quizInfoReducer";
@@ -73,10 +73,11 @@ export const enterRoomAPI = async (pinNum) => {
  */
 
 export const setShowListAPI = async (email) => {
-    await CustomAxios_SHOW.get("/v1/show/List?email=" + email)
+    await CustomAxios_LAMDA.get("/show/list/" + email)
         .then((res) => {
+            console.log(res.data);
             if (res.status === 200) {
-                store.dispatch(R_setQuizList(res.data.data))
+                store.dispatch(R_setQuizList(res.data.Items))
             } else {
             }
         }).catch((err) => {
@@ -91,7 +92,7 @@ export const setShowListAPI = async (email) => {
  */
 
 export const createShowAPI = async (data) => {
-    return await CustomAxios_SHOW.post("/v1/show", data);
+    return await CustomAxios_LAMDA.post("/show", data);
 }
 
 /**
@@ -102,42 +103,78 @@ export const createShowAPI = async (data) => {
  */
 
 export const getShowInfoAPI = async (quizId) => {
-    await CustomAxios_SHOW.get("/v1/show?showId=" + quizId)
+    console.log("/show/" + quizId);
+    await CustomAxios_LAMDA.get("/show/" + quizId)
         .then((res) => {
-            console.log(res.data.data);
+            console.log(res)
             store.dispatch(R_setId(quizId));
-            store.dispatch(R_setQuiz(res.data.data));
+            store.dispatch(R_setQuiz(res.data.Item));
             store.dispatch(R_setCurrentShow(1));
         }).catch((err) => {
             console.log(err);
         })
 }
 
-/** Show 편집저장 API
- * type: POST
+/** Show 저장 API
+ * type: PUT
  * Input: {quiz}
  * Output: true/false
  */
 export const saveShowAPI = async (quiz) => {
-    return await CustomAxios_SHOW.post('/v1/show', quiz);
+    return await CustomAxios_LAMDA.put('/show/'+quiz.id, quiz);
 }
+
 
 /**
  * Show 삭제 API
- * type: DELETEe
+ * type: DELETE
  * Input: quizId
- * Output: true/false
  */
 export const deleteShowAPI = async (quizId) => {
-    return await CustomAxios_SHOW.delete("/v1/show?showId=" + quizId);
+    return await CustomAxios_LAMDA.delete("/show/" + quizId);
 }
 
 /**
  * Play 생성
  * type: POST
  * Input: {quizId}
- * Output: true/false
  */
 export const createPlayAPI = async (quizId) => {
     return await CustomAxios_PLAY.post("/v1/host/createPlay", {id: quizId})
+}
+
+/**
+ * Log 저장
+ * type: POST
+ * Input: {showid,showtitle,playdate,quizcount,usercount,userdata}
+ */
+export const saveLogAPI = async (data) => {
+    return await CustomAxios_LAMDA.post("/log", data);
+}
+
+/**
+ * Log 목록 Fetch
+ * type: GET
+ * Input: email
+ */
+export const getLogListAPI = async (email) => {
+    return await CustomAxios_LAMDA.get("/log/list/" + email);
+}
+
+/**
+ * Log 정보 Fetch
+ * type: GET
+ * Input: logId
+ */
+export const getLogInfoAPI = async (logId) => {
+    return await CustomAxios_LAMDA.get("/log/" + logId);
+}
+
+/**
+ * Log 삭제 API
+ * type: DELETE
+ * Input: logId
+ */
+export const deleteLogAPI = async (logId) => {
+    return await CustomAxios_LAMDA.delete("/log/" + logId);
 }

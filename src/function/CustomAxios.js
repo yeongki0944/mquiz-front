@@ -19,3 +19,10 @@ export const CustomAxios_PLAY = axios.create({
     }
 })
 
+export const CustomAxios_LAMDA = axios.create({
+    baseURL: process.env.REACT_APP_LAMBDA,
+    headers: {
+        // 'Authorization': session.getItem('access-token-jwt'),
+        // 'Refresh': session.getItem('refresh-token-jwt'),
+    }
+})
