@@ -26,7 +26,7 @@ export const HomeButton = (props) => {
 
     const confirmRedirect = (Msg) => {
         if(window.confirm(Msg)){
-            if(getRole()==="HOST"){
+            if(getRole()==="HOST"&&page!="QHOSTAUTH"){
                 stompSend("end", {
                     pinNum: getPinNum(),
                     action: "END"
