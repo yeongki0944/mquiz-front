@@ -3,6 +3,7 @@ import {Card, Content, Img, Item, Page} from "../../layouts/LayOuts";
 import {checkConnected, checkURLConnection, disableBackPage, disableRefresh, redirectPage} from "../../function/common";
 import {useDispatch, useSelector} from "react-redux";
 import {R_setData} from "../../redux/reducers/quizplayReducer";
+import axios from "axios";
 
 
 export default function Home() {
