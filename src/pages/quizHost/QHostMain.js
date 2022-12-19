@@ -8,13 +8,13 @@ import {NavBar} from "../../components/quizHost/NavBar";
 import {Card_panel, Content, Item, Page} from "../../layouts/LayOuts";
 import {QPreviewList} from "../../components/quizHost/QPreviewList";
 import {setShowListAPI} from "../../function/API";
+import {R_addQuiz, R_setQuiz} from "../../redux/reducers/quizInfoReducer";
 
 
 export const QHostMain = () => {
     const [modalOpen, setModalOpen] = useState(false);
     const {quizList} = useSelector(state => state.quizList);
     const {userInfo} = useSelector(state => state.userInfo);
-
     // const email = userInfo.authNum;
 
     const email = "test@gmail.com";

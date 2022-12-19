@@ -16,6 +16,7 @@ import {redirectPage} from "../../function/common";
 import store from "../../redux/store";
 import {R_setData} from "../../redux/reducers/quizplayReducer";
 import {setPinNum} from "../../function/localStorage";
+import {R_addQuiz, R_setQuiz} from "../../redux/reducers/quizInfoReducer";
 
 /**
  * props:
@@ -55,7 +56,6 @@ export const QuizList = (props) => {
                 sx={{margin: '10px 0'}}
                 key={index}
                   onClick={()=>{getShowInfoAPI(item.id);}}>
-                {console.log(quizList)}
                 <Grid container spacing={2}>
                     <Grid item>
                         <img alt="complex"

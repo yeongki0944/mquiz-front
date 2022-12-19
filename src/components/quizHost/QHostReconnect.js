@@ -52,7 +52,7 @@ export function QHostReconnect() {
                             action: "END"
                         });
                         flushLocalStorage();
-                        redirectPage("MAIN");
+                        window.location.href = "/";
                     }}>
                         메인으로
                     </Btn>

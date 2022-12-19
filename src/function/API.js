@@ -118,7 +118,8 @@ export const getShowInfoAPI = async (quizId) => {
  * Output: true/false
  */
 export const saveShowAPI = async (quiz) => {
-    return await CustomAxios_LAMDA.put('/show/'+quiz.id, quiz);
+    console.log(quiz);
+    return await CustomAxios_LAMDA.put('/show', quiz);
 }
 
 

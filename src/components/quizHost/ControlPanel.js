@@ -100,6 +100,7 @@ export const ControlPanel = (props) => {
                 <Item sx={{place: 'center', height: '10%', width: '100%'}}>
                     <Btn sx={{width:'50%', height:'100%', background:'#fff', border:'1px solid #000', borderRadius:'10px'}} onClick={() => {
                         saveShowAPI(quiz).then((res) => {
+                            console.log(res);
                             if(res.data.statusCode === 200) {
                                 redirectPage("QHOST");
                             }
