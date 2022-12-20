@@ -121,6 +121,7 @@ export const Btn = styled.div`
     &:hover {
         opacity: .5;
     }
+    ${(props) => props.sx}
     @media (min-width: 300px) and (max-width: 767px) {
         ${(props) => props.sm} 
     }

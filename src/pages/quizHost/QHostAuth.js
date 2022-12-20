@@ -1,6 +1,6 @@
 import {Btn, Card_panel, Content, Item, Page, Text} from "../../layouts/LayOuts";
 import {useHistory} from "react-router-dom";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import TextField from "@mui/material/TextField";
 import * as React from "react";
 import {useDispatch, useSelector} from "react-redux";
@@ -14,6 +14,7 @@ import {
 } from "../../function/API";
 import {redirectPage} from "../../function/common";
 import {HomeButton} from "../../components/HomeButton";
+import {R_setQuiz} from "../../redux/reducers/quizInfoReducer";
 
 export const QHostAuth = () => {
     const dispatch = useDispatch();
@@ -130,53 +131,67 @@ export const QHostAuth = () => {
                                         />
                                     </Item>
                                     <Btn onClick={handleLogin}>로그인</Btn>
-                                    <Text sx={{textDecoration:'underline',color:'blue',cursor:'pointer' }} onClick={() => setPageState(false)}>회원가입하기</Text>
+                                    <Text sx={{textDecoration: 'underline', color: 'blue', cursor: 'pointer'}}
+                                          onClick={() => setPageState(false)}>회원가입하기</Text>
                                 </Item>
                             ) : (
-                                <>
-                                    <TextField id="id" name="id" type="id" label="아이디"
-                                               variant="outlined"
-                                        // helperText={error}
-                                        // error={error !== '' || false} required autoFocus
-                                               onBlur={handleIdInput}
-                                        // onKeyPress={handleEnterKey}
-                                    />
+                                <Item sx={{place: 'center', display: 'block'}}>
+                                    <Item sx={{place: 'left', margin: '10px'}}>
+                                        <TextField id="id" name="id" type="id" label="이메일"
+                                                   variant="outlined"
+                                            // helperText={error}
+                                            // error={error !== '' || false} required autoFocus
+                                                   onBlur={handleIdInput}
+                                            // onKeyPress={handleEnterKey}
+                                        />
+                                        <Btn sx={{margin:'10px'}} onClick={handleCheckEmailAuth}><Text>중복 확인</Text></Btn>
+                                    </Item>
 
-                                    <Btn onClick={handleCheckEmailAuth}>이메일 중복 확인</Btn>
+                                    <Btn sx={{margin:'10px'}} onClick={handleEmailAuth}><Text>인증 번호 전송</Text></Btn>
 
-                                    <Btn onClick={handleEmailAuth}>인증 번호 전송</Btn>
 
-                                    <TextField id="authNumInput" name="authNumInput" type="authNumInput" label="인증번호"
-                                               variant="outlined"
-                                        // helperText={error}
-                                        // error={error !== '' || false} required autoFocus
-                                               onBlur={handleAuthNumInput}
-                                        // onKeyPress={handleEnterKey}
-                                    />
-                                    <Btn onClick={handleCheckEmailAuthNum}>인증 번호 확인</Btn>
+                                    <Item sx={{place: 'left', margin: '10px'}}>
+                                        <TextField id="authNumInput" name="authNumInput" type="authNumInput"
+                                                   label="인증번호"
+                                                   variant="outlined"
+                                            // helperText={error}
+                                            // error={error !== '' || false} required autoFocus
+                                                   onBlur={handleAuthNumInput}
+                                            // onKeyPress={handleEnterKey}
+                                        />
+                                        <Btn sx={{margin:'10px'}}onClick={handleCheckEmailAuthNum}><Text>인증 번호 확인</Text></Btn>
+                                    </Item>
 
-                                    <TextField id="id" name="id" type="id" label="비밀번호"
-                                               variant="outlined"
-                                        // helperText={error}
-                                        // error={error !== '' || false} required autoFocus
-                                               onBlur={handlePwInput}
-                                        // onKeyPress={handleEnterKey}
-                                    />
+                                    <Item sx={{place: 'left', margin: '10px'}}>
+                                        <TextField sx={{width:'100%'}} id="id" name="id" type="id" label="비밀번호"
+                                                   variant="outlined"
+                                            // helperText={error}
+                                            // error={error !== '' || false} required autoFocus
+                                                   onBlur={handlePwInput}
+                                            // onKeyPress={handleEnterKey}
+                                        />
+                                    </Item>
 
-                                    <TextField sx={{width: '100%'}} id="outlined-basic" label="비밀번호 확인"
-                                               variant="outlined"/>
-
-                                    <TextField id="nickName" name="nickName" type="nickName" label="닉네임"
-                                               variant="outlined"
-                                        // helperText={error}
-                                        // error={error !== '' || false} required autoFocus
-                                               onBlur={handleNickNameInput}
-                                        // onKeyPress={handleEnterKey}
-                                    />
-
-                                    <Btn onClick={handleReg}>회원가입</Btn>
-                                    <Btn onClick={() => setPageState(true)}>로그인하기</Btn>
-                                </>
+                                    <Item sx={{place: 'left', margin: '10px'}}>
+                                        <TextField sx={{width:'100%'}} id="outlined-basic" label="비밀번호 확인"
+                                                   variant="outlined"/>
+                                    </Item>
+                                    <Item sx={{place: 'left', margin: '10px'}}>
+                                        <TextField sx={{width:'100%'}} id="nickName" name="nickName" type="nickName" label="닉네임"
+                                                   variant="outlined"
+                                            // helperText={error}
+                                            // error={error !== '' || false} required autoFocus
+                                                   onBlur={handleNickNameInput}
+                                            // onKeyPress={handleEnterKey}
+                                        />
+                                    </Item>
+                                    <Item sx={{place: 'center'}}>
+                                        <Btn onClick={handleReg}><Text>회원가입</Text></Btn>
+                                    </Item>
+                                    <Text sx={{textDecoration: 'underline', color: 'blue', cursor: 'pointer'}}
+                                          onClick={() => setPageState(true)}>로그인하기
+                                    </Text>
+                                </Item>
                             )}
                         </Item>
                         <Btn onClick={handleSuccess}>로그인성공 버튼</Btn>
