@@ -21,22 +21,26 @@ export const QHostAuth = () => {
     const [pageState, setPageState] = useState(true);
 
     const handleSuccess = () => {
-        localStorage.setItem('role','HOST');
+        localStorage.setItem('role', 'HOST');
         // 여기 호스트 닉네임 넣으면됨. 로컬스토리지로
         redirectPage("QHOST");
     }
     const handleLogin = () => {
-    loginAPI({hostEmail: userInfo.hostEmail, password: userInfo.password}).then(res => {
-        if (res.data.statusCode === 200) {
-            handleSuccess();
-        } else {
-            alert("로그인 실패");
-        }
-    })
+        loginAPI({hostEmail: userInfo.hostEmail, password: userInfo.password}).then(res => {
+            if (res.data.statusCode === 200) {
+                handleSuccess();
+            } else {
+                alert("로그인 실패");
+            }
+        })
     }
 
     const handleReg = () => {
-        registerAPI({hostEmail: userInfo.hostEmail, password: userInfo.password,nickName:userInfo.nickName}).then(res => {
+        registerAPI({
+            hostEmail: userInfo.hostEmail,
+            password: userInfo.password,
+            nickName: userInfo.nickName
+        }).then(res => {
             if (res.data.statusCode === 200) {
                 setPageState(true);
             } else {
@@ -46,7 +50,7 @@ export const QHostAuth = () => {
     }
 
     const handleEmailAuth = () => {
-        emailSendAuthNumAPI({hostEmail:userInfo.hostEmail}).then(res => {
+        emailSendAuthNumAPI({hostEmail: userInfo.hostEmail}).then(res => {
             if (res.data.statusCode === 200) {
                 console.log(res.data.data);
                 alert("이메일에 전송된 인증번호를 확인해 주세요");
@@ -57,7 +61,7 @@ export const QHostAuth = () => {
     }
 
     const handleCheckEmailAuthNum = () => {
-        checkEmailAuthNumAPI({authNum:userInfo.authNum}).then(res => {
+        checkEmailAuthNumAPI({authNum: userInfo.authNum}).then(res => {
             if (res.data.statusCode === 200) {
                 console.log(res.data.data);
                 alert("이메일 인증 성공");
@@ -68,7 +72,7 @@ export const QHostAuth = () => {
     }
 
     const handleCheckEmailAuth = () => {
-        checkEmailAPI({hostEmail:userInfo.hostEmail}).then(res => {
+        checkEmailAPI({hostEmail: userInfo.hostEmail}).then(res => {
             if (res.data.statusCode === 200) {
                 console.log(res.data.data);
                 alert("이메일 사용 가능");
@@ -94,36 +98,40 @@ export const QHostAuth = () => {
 
     return (
         <Page sx={{bg: 'img', img: '/img/background_1.jpg'}}>
-            <HomeButton sx={{position: 'absolute', top: 5, left: 5, zIndex: 100,width:'5vh',height:'5vh'}}/>
+            <HomeButton sx={{position: 'absolute', top: 5, left: 5, zIndex: 100, width: '5vh', height: '5vh'}}/>
             <Item sx={{place: 'center'}}>
                 <Content>
-                    <Card_panel sx={{backgroundColor: 'rgba(0,0,0,0.3)'}}>
+                    <Card_panel sx={{backgroundColor: 'rgba(255,255,255,0.8)', border: '5px solid #FFC107'}}>
                         <Item sx={{place: 'center', display: 'block'}}>
                             {pageState ? (
-                                <Text sx={{color: '#FFC107', fontSize: '3vw'}} sm={{fontSize: '6vw'}}>로그인</Text>
+                                <Text sx={{color: '#000', fontSize: '3vw'}} sm={{fontSize: '6vw'}}>로그인</Text>
                             ) : (
-                                <Text sx={{color: '#FFC107', fontSize: '3vw'}} sm={{fontSize: '6vw'}}>회원가입</Text>
+                                <Text sx={{color: '#000', fontSize: '3vw'}} sm={{fontSize: '6vw'}}>회원가입</Text>
                             )}
 
                             {pageState ? (
-                                <>
-                                    <TextField id="id" name="id" type="id" label="아이디"
-                                               variant="outlined"
-                                        // helperText={error}
-                                        // error={error !== '' || false} required autoFocus
-                                               onBlur={handleIdInput}
-                                        // onKeyPress={handleEnterKey}
-                                    />
-
-                                    <TextField id="id" name="id" type="id" label="비밀번호"
-                                               variant="outlined"
-                                        // helperText={error}
-                                        // error={error !== '' || false} required autoFocus
-                                               onBlur={handlePwInput}
-                                        // onKeyPress={handleEnterKey}
-                                    />
+                                <Item sx={{place: 'center', display: 'block'}}>
+                                    <Item sx={{place: 'center'}}>
+                                        <TextField id="id" name="id" type="id" label="아이디"
+                                                   variant="outlined"
+                                            // helperText={error}
+                                            // error={error !== '' || false} required autoFocus
+                                                   onBlur={handleIdInput}
+                                            // onKeyPress={handleEnterKey}
+                                        />
+                                    </Item>
+                                    <Item sx={{place: 'center'}}>
+                                        <TextField id="id" name="id" type="id" label="비밀번호"
+                                                   variant="outlined"
+                                            // helperText={error}
+                                            // error={error !== '' || false} required autoFocus
+                                                   onBlur={handlePwInput}
+                                            // onKeyPress={handleEnterKey}
+                                        />
+                                    </Item>
                                     <Btn onClick={handleLogin}>로그인</Btn>
-                                </>
+                                    <Text sx={{textDecoration:'underline',color:'blue',cursor:'pointer' }} onClick={() => setPageState(false)}>회원가입하기</Text>
+                                </Item>
                             ) : (
                                 <>
                                     <TextField id="id" name="id" type="id" label="아이디"
@@ -167,15 +175,10 @@ export const QHostAuth = () => {
                                     />
 
                                     <Btn onClick={handleReg}>회원가입</Btn>
+                                    <Btn onClick={() => setPageState(true)}>로그인하기</Btn>
                                 </>
                             )}
                         </Item>
-                        {pageState ? (
-                            <Btn onClick={() => setPageState(false)}>회원가입하기</Btn>
-                        ) : (
-                            <Btn onClick={() => setPageState(true)}>로그인하기</Btn>
-                        )}
-
                         <Btn onClick={handleSuccess}>로그인성공 버튼</Btn>
                     </Card_panel>
                 </Content>

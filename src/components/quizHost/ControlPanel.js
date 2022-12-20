@@ -101,9 +101,7 @@ export const ControlPanel = (props) => {
                     <Btn sx={{width:'50%', height:'100%', background:'#fff', border:'1px solid #000', borderRadius:'10px'}} onClick={() => {
                         saveShowAPI(quiz).then((res) => {
                             console.log(res);
-                            if(res.data.statusCode === 200) {
-                                redirectPage("QHOST");
-                            }
+                            redirectPage("QHOST");
                         }).catch(() => {
                             alert("저장에 실패하였습니다.");
                         })

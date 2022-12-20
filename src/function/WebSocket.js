@@ -60,3 +60,11 @@ export const stompDisconnect = () => {
         localStorage.removeItem('nickName');
     }, {});
 }
+
+/**
+ * Stomp isConnected
+ * Stomp 연결여부를 확인한다.
+ */
+export const stompIsConnected = () => {
+    return stomp.connected;
+}
