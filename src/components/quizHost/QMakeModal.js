@@ -87,6 +87,8 @@ const currencies = [
 export default function BasicModal(props) {
     const dispatch = useDispatch();
     const {quiz} = useSelector(state => state.quiz);
+    const {userInfo} = useSelector(state => state.userInfo);
+
 
     // chip
     const [chipData, setChipData] = useState([]);
@@ -102,7 +104,8 @@ export default function BasicModal(props) {
             quizData: quiz.quizData,}
         ).then((res) => {
             console.log(res);
-            setShowListAPI("test@gmail.com");
+            // setShowListAPI("test@gmail.com");
+            setShowListAPI(userInfo.hostEmail);
             handleClose();
         }).catch((err) => {
             alert("에러");
@@ -140,7 +143,8 @@ export default function BasicModal(props) {
         // let dateDataString = JSON.stringify(dateData);
 
 
-        dispatch(R_makeQuizShow({key: 'email', value: "test@gmail.com"}))
+        //dispatch(R_makeQuizShow({key: 'email', value: "test@gmail.com"}))
+        dispatch(R_makeQuizShow({key: 'email', value: userInfo.hostEmail}))
         dispatch(R_makeQuizShow({key: 'state', value: "작성중"}))
         dispatch(R_makeQuizShow({key: 'public', value: true}))
 

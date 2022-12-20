@@ -15,12 +15,18 @@ export const QHostMain = () => {
     const [modalOpen, setModalOpen] = useState(false);
     const {quizList} = useSelector(state => state.quizList);
     const {userInfo} = useSelector(state => state.userInfo);
-    // const email = userInfo.authNum;
 
-    const email = "test@gmail.com";
+    //const email = "test@gmail.com";
 
     useEffect(() => {
-        setShowListAPI(email);
+        if(userInfo.hostEmail != null){
+            setShowListAPI(userInfo.hostEmail);
+            console.log(userInfo.hostEmail)
+            //setShowListAPI("test@gmail.com");
+        }else {
+            setShowListAPI("test@gmail.com");
+        }
+
     }, []);
 
     return (

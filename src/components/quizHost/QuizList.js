@@ -47,6 +47,7 @@ const AddBtn = styled.div`
 export const QuizList = (props) => {
     const history = useHistory();
     const quizList = props.quizList;
+    const userInfo = props.userInfo;
 
     const [buttonDisabled, setButtonDisabled] = useState(false);
 
@@ -55,7 +56,7 @@ export const QuizList = (props) => {
             <Card_panel
                 sx={{margin: '10px 0'}}
                 key={index}
-                  onClick={()=>{getShowInfoAPI(item.id);}}>
+                onClick={()=>{getShowInfoAPI(item.id);}}>
                 <Grid container spacing={2}>
                     <Grid item>
                         <img alt="complex"
@@ -112,7 +113,10 @@ export const QuizList = (props) => {
                                     setButtonDisabled(true);
                                     deleteShowAPI(item.id).then((res) => {
                                         alert("삭제되었습니다.");
-                                        setShowListAPI('test@gmail.com');
+                                        // setShowListAPI('test@gmail.com');
+                                        console.log(userInfo.hostEmail);
+                                        setShowListAPI(userInfo.hostEmail);
+
                                         setButtonDisabled(false);
                                     }).catch((err) => {
                                         alert("삭제에 실패했습니다.");
