@@ -107,6 +107,7 @@ export const Img = styled.img`
 export const Btn = styled.div`
     color: #fff;
     border-radius: 5px;
+    margin: 10px;
     padding: 10px 25px;
     font-family: 'Lato', sans-serif;
     font-weight: bold;

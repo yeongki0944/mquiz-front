@@ -137,17 +137,17 @@ export const QHostAuth = () => {
                             ) : (
                                 <Item sx={{place: 'center', display: 'block'}}>
                                     <Item sx={{place: 'left', margin: '10px'}}>
-                                        <TextField id="id" name="id" type="id" label="이메일"
+                                        <TextField id="id" name="id" type="email" label="이메일"
                                                    variant="outlined"
                                             // helperText={error}
                                             // error={error !== '' || false} required autoFocus
                                                    onBlur={handleIdInput}
                                             // onKeyPress={handleEnterKey}
                                         />
-                                        <Btn sx={{margin:'10px'}} onClick={handleCheckEmailAuth}><Text>중복 확인</Text></Btn>
+                                        <Btn onClick={handleCheckEmailAuth}><Text>중복 확인</Text></Btn>
                                     </Item>
 
-                                    <Btn sx={{margin:'10px'}} onClick={handleEmailAuth}><Text>인증 번호 전송</Text></Btn>
+                                    <Btn onClick={handleEmailAuth}><Text>인증 번호 전송</Text></Btn>
 
 
                                     <Item sx={{place: 'left', margin: '10px'}}>
@@ -159,11 +159,11 @@ export const QHostAuth = () => {
                                                    onBlur={handleAuthNumInput}
                                             // onKeyPress={handleEnterKey}
                                         />
-                                        <Btn sx={{margin:'10px'}}onClick={handleCheckEmailAuthNum}><Text>인증 번호 확인</Text></Btn>
+                                        <Btn onClick={handleCheckEmailAuthNum}><Text>인증 번호 확인</Text></Btn>
                                     </Item>
 
                                     <Item sx={{place: 'left', margin: '10px'}}>
-                                        <TextField sx={{width:'100%'}} id="id" name="id" type="id" label="비밀번호"
+                                        <TextField sx={{width:'100%'}} id="id" name="id" type="password" label="비밀번호"
                                                    variant="outlined"
                                             // helperText={error}
                                             // error={error !== '' || false} required autoFocus
@@ -173,11 +173,11 @@ export const QHostAuth = () => {
                                     </Item>
 
                                     <Item sx={{place: 'left', margin: '10px'}}>
-                                        <TextField sx={{width:'100%'}} id="outlined-basic" label="비밀번호 확인"
+                                        <TextField sx={{width:'100%'}} id="outlined-basic" label="비밀번호 확인" type="password"
                                                    variant="outlined"/>
                                     </Item>
                                     <Item sx={{place: 'left', margin: '10px'}}>
-                                        <TextField sx={{width:'100%'}} id="nickName" name="nickName" type="nickName" label="닉네임"
+                                        <TextField sx={{width:'100%'}} id="nickName" name="nickName" type="text" label="닉네임"
                                                    variant="outlined"
                                             // helperText={error}
                                             // error={error !== '' || false} required autoFocus
