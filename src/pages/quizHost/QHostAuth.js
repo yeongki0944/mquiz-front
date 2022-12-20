@@ -14,7 +14,6 @@ import {
 } from "../../function/API";
 import {redirectPage} from "../../function/common";
 import {HomeButton} from "../../components/HomeButton";
-import {R_setQuiz} from "../../redux/reducers/quizInfoReducer";
 import {chk_special} from "../../function/RegularExpression";
 
 export const QHostAuth = () => {
@@ -24,6 +23,9 @@ export const QHostAuth = () => {
     const [password, setPassword] = useState('');
     const [passwdError, setPasswdError] = useState('');
     const [nickNameError, setNickNameError] = useState('');
+
+    const [chkDup, setChkDup] = useState(false);
+    const [chkAuth, setChkAuth] = useState(false);
 
     const handleSuccess = () => {
         localStorage.setItem('role', 'HOST');
@@ -41,17 +43,26 @@ export const QHostAuth = () => {
     }
 
     const handleReg = () => {
-        registerAPI({
-            hostEmail: userInfo.hostEmail,
-            password: userInfo.password,
-            nickName: userInfo.nickName
-        }).then(res => {
-            if (res.data.statusCode === 200) {
-                setPageState(true);
-            } else {
-                alert("회원가입 실패");
+        if (chkDup && chkAuth) {
+            registerAPI({
+                hostEmail: userInfo.hostEmail,
+                password: userInfo.password,
+                nickName: userInfo.nickName
+            }).then(res => {
+                if (res.data.statusCode === 200) {
+                    setPageState(true);
+                } else {
+                    alert("회원가입 실패");
+                }
+            })
+        }else{
+            if(!chkDup){
+                alert("이메일 중복확인을 해주세요.");
+            }else if(!chkAuth){
+                alert("이메일 인증을 해주세요.");
             }
-        })
+        }
+
     }
 
     const handleEmailAuth = () => {
@@ -69,8 +80,10 @@ export const QHostAuth = () => {
         checkEmailAuthNumAPI({authNum: userInfo.authNum}).then(res => {
             if (res.data.statusCode === 200) {
                 console.log(res.data.data);
+                setChkAuth(true);
                 alert("이메일 인증 성공");
             } else {
+                setChkAuth(false);
                 alert("이메일 인증 실패");
             }
         });
@@ -80,8 +93,10 @@ export const QHostAuth = () => {
         checkEmailAPI({hostEmail: userInfo.hostEmail}).then(res => {
             if (res.data.statusCode === 200) {
                 console.log(res.data.data);
+                setChkDup(true);
                 alert("이메일 사용 가능");
             } else {
+                setChkDup(false);
                 alert("이메일 중복입니다.");
             }
         });
@@ -96,18 +111,18 @@ export const QHostAuth = () => {
     const handleCheckPwInput = (e) => {
 
         console.log(userInfo.password);
-        if(userInfo.password != setPassword(e.target.value)){
+        if (userInfo.password != setPassword(e.target.value)) {
             setPasswdError('비밀번호가 일치하지 않습니다.');
             return;
-        }else{
+        } else {
             setPasswdError('');
         }
     }
     const handleNickNameInput = (e) => {
-        if(chk_special(e.target.value)){
+        if (chk_special(e.target.value)) {
             setNickNameError('특수문자는 사용할 수 없습니다.');
             return;
-        }else{
+        } else {
             setNickNameError('');
         }
         dispatch(editUserInfo({key: "nickName", value: e.target.value}));
@@ -183,7 +198,7 @@ export const QHostAuth = () => {
                                     </Item>
 
                                     <Item sx={{place: 'left', margin: '10px'}}>
-                                        <TextField sx={{width:'100%'}} id="id" name="id" type="password" label="비밀번호"
+                                        <TextField sx={{width: '100%'}} id="id" name="id" type="password" label="비밀번호"
                                                    variant="outlined"
                                             // helperText={error}
                                             // error={error !== '' || false} required autoFocus
@@ -193,7 +208,8 @@ export const QHostAuth = () => {
                                     </Item>
 
                                     <Item sx={{place: 'left', margin: '10px'}}>
-                                        <TextField sx={{width:'100%'}} id="outlined-basic" label="비밀번호 확인" type="password"
+                                        <TextField sx={{width: '100%'}} id="outlined-basic" label="비밀번호 확인"
+                                                   type="password"
                                                    variant="outlined"
                                                    helperText={passwdError}
                                                    error={passwdError !== '' || false} required autoFocus
@@ -202,7 +218,8 @@ export const QHostAuth = () => {
 
                                     </Item>
                                     <Item sx={{place: 'left', margin: '10px'}}>
-                                        <TextField sx={{width:'100%'}} id="nickName" name="nickName" type="text" label="닉네임"
+                                        <TextField sx={{width: '100%'}} id="nickName" name="nickName" type="text"
+                                                   label="닉네임"
                                                    variant="outlined"
                                                    helperText={nickNameError}
                                                    error={nickNameError !== '' || false} required autoFocus
