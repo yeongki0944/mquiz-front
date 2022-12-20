@@ -15,11 +15,15 @@ import {
 import {redirectPage} from "../../function/common";
 import {HomeButton} from "../../components/HomeButton";
 import {R_setQuiz} from "../../redux/reducers/quizInfoReducer";
+import {chk_special} from "../../function/RegularExpression";
 
 export const QHostAuth = () => {
     const dispatch = useDispatch();
     const {userInfo} = useSelector(state => state.userInfo);
     const [pageState, setPageState] = useState(true);
+    const [password, setPassword] = useState('');
+    const [passwdError, setPasswdError] = useState('');
+    const [nickNameError, setNickNameError] = useState('');
 
     const handleSuccess = () => {
         localStorage.setItem('role', 'HOST');
@@ -89,7 +93,23 @@ export const QHostAuth = () => {
     const handlePwInput = (e) => {
         dispatch(editUserInfo({key: "password", value: e.target.value}));
     }
+    const handleCheckPwInput = (e) => {
+
+        console.log(userInfo.password);
+        if(userInfo.password != setPassword(e.target.value)){
+            setPasswdError('비밀번호가 일치하지 않습니다.');
+            return;
+        }else{
+            setPasswdError('');
+        }
+    }
     const handleNickNameInput = (e) => {
+        if(chk_special(e.target.value)){
+            setNickNameError('특수문자는 사용할 수 없습니다.');
+            return;
+        }else{
+            setNickNameError('');
+        }
         dispatch(editUserInfo({key: "nickName", value: e.target.value}));
     }
     const handleAuthNumInput = (e) => {
@@ -130,7 +150,7 @@ export const QHostAuth = () => {
                                             // onKeyPress={handleEnterKey}
                                         />
                                     </Item>
-                                    <Btn onClick={handleLogin}>로그인</Btn>
+                                    <Btn onClick={handleLogin}><Text>로그인</Text></Btn>
                                     <Text sx={{textDecoration: 'underline', color: 'blue', cursor: 'pointer'}}
                                           onClick={() => setPageState(false)}>회원가입하기</Text>
                                 </Item>
@@ -174,13 +194,18 @@ export const QHostAuth = () => {
 
                                     <Item sx={{place: 'left', margin: '10px'}}>
                                         <TextField sx={{width:'100%'}} id="outlined-basic" label="비밀번호 확인" type="password"
-                                                   variant="outlined"/>
+                                                   variant="outlined"
+                                                   helperText={passwdError}
+                                                   error={passwdError !== '' || false} required autoFocus
+                                                   onBlur={handleCheckPwInput}
+                                        />
+
                                     </Item>
                                     <Item sx={{place: 'left', margin: '10px'}}>
                                         <TextField sx={{width:'100%'}} id="nickName" name="nickName" type="text" label="닉네임"
                                                    variant="outlined"
-                                            // helperText={error}
-                                            // error={error !== '' || false} required autoFocus
+                                                   helperText={nickNameError}
+                                                   error={nickNameError !== '' || false} required autoFocus
                                                    onBlur={handleNickNameInput}
                                             // onKeyPress={handleEnterKey}
                                         />
