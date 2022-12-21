@@ -1,5 +1,8 @@
 import * as React from 'react'
 import {Item, Card_panel} from "../../layouts/LayOuts";
+import {useSelector} from "react-redux";
+import {useEffect} from "react";
+import {getLogInfoAPI, getLogListAPI} from "../../function/API";
 
 /**
  * props:
@@ -8,28 +11,48 @@ import {Item, Card_panel} from "../../layouts/LayOuts";
  */
 
 export const QReportCardList = (props) => {
+    const reportList = props.reportList;
+
+    // const ReportList = reportList.map(
+    //     (item, index) =>(
+    //         <Card_panel
+    //             sx={{height:'15%', width:'100%', marginBottom:'15px'}}
+    //             key={index}
+    //             onClick={()=>{
+    //                 getLogInfoAPI(item.showid);
+    //             }}
+    //         >
+    //             <Item sx={{place:'left', width:'100%', height:'50%'}}>
+    //                 {item.title}
+    //             </Item>
+    //             <Item sx={{place:'left', width:'100%', height:'50%'}}>
+    //                 <Item sx={{place:'center'}}>
+    //                     {item.playdate}
+    //                 </Item>
+    //                 <Item sx={{place:'center'}}>
+    //                     {item.quizcount}
+    //                 </Item>
+    //                 <Item sx={{place:'center'}}>
+    //                     {item.usercount}
+    //                 </Item>
+    //             </Item>
+    //         </Card_panel>
+    //     )
+    // )
+
+    const ReportList = () => {
+        return(
+            <>
+                {console.log("-----------------------")}
+                {console.log(reportList)}
+            </>
+        )
+    }
 
     return (
         <Item sx={{place:'top', width:'100%', height:'100%', display:'block'}}>
-            <Card_panel sx={{height:'15%', width:'100%', marginBottom:'15px'}}>
-                <Item sx={{place:'left', width:'100%', height:'50%'}}>
-                    쇼 제목
-                </Item>
-                <Item sx={{place:'left', width:'100%', height:'50%'}}>
-                    <Item sx={{place:'center'}}>
-                        플레이 날짜
-                    </Item>
-                    <Item sx={{place:'center'}}>
-                        총 문제 수
-                    </Item>
-                    <Item sx={{place:'center'}}>
-                        총 플레이 시간
-                    </Item>
-                    <Item sx={{place:'center'}}>
-                        참여자수
-                    </Item>
-                </Item>
-            </Card_panel>
+            {ReportList}
+
         </Item>
     );
 }

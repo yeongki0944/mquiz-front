@@ -2,6 +2,7 @@ import {CustomAxios_LAMDA, CustomAxios_PLAY, CustomAxios_SHOW} from "./CustomAxi
 import {R_setQuizList} from "../redux/reducers/quizListReducer";
 import store from "../redux/store";
 import {R_setCurrentShow, R_setId, R_setQuiz} from "../redux/reducers/quizInfoReducer";
+import {R_setReportInfo, R_setReportList} from "../redux/reducers/reportInfoReducer";
 
 /**
  * 로그인 처리
@@ -156,7 +157,16 @@ export const saveLogAPI = async (data) => {
  * Input: email
  */
 export const getLogListAPI = async (email) => {
-    return await CustomAxios_LAMDA.get("/log/list/" + email);
+    return await CustomAxios_LAMDA.get("/log/list/" + email)
+        .then((res) => {
+            if (res.status === 200) {
+                store.dispatch(R_setReportList(res.data.Items))
+            } else {
+
+            }
+        }).catch((err) => {
+            console.log(err);
+        })
 }
 
 /**
@@ -165,7 +175,15 @@ export const getLogListAPI = async (email) => {
  * Input: logId
  */
 export const getLogInfoAPI = async (logId) => {
-    return await CustomAxios_LAMDA.get("/log/" + logId);
+    return await CustomAxios_LAMDA.get("/log/" + logId)
+        .then((res) => {
+            console.log(res.data);
+            if (res.status === 200) {
+                store.dispatch(R_setReportInfo(res.data.Items))
+            } else {
+            }
+        }).catch((err) => {
+        })
 }
 
 /**
