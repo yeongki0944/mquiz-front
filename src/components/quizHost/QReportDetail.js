@@ -10,24 +10,25 @@ export const ReportDetail = (props) => {
 
     const [pieChartData, setPieChartData] = useState(0);
 
-
     useEffect(()=>{
-        let userCorrectCount = 0;
-        let allQuizCount = 0;
+        if(reportInfo.id !== ""){
+            let userCorrectCount = 0;
+            let allQuizCount = 0;
 
-        for (let i = 0; i < reportInfo.userdata.length; i++) {
-            userCorrectCount += parseFloat(reportInfo.userdata[i].correctcount);
-            allQuizCount += parseInt(reportInfo.quizcount);
+            for (let i = 0; i < reportInfo.userdata.length; i++) {
+                userCorrectCount += parseFloat(reportInfo.userdata[i].correctcount);
+                allQuizCount += parseInt(reportInfo.quizcount);
+            }
+
+            setPieChartData(userCorrectCount/allQuizCount*100);
+
         }
-
-        setPieChartData(userCorrectCount/allQuizCount*100);
     },[reportInfo]);
-
 
     if (reportInfo.id === "") {
         return (<Item sx={{place:'center'}}><Content></Content></Item>)
     } else {
-        let userdatalist = [...reportInfo.userdata].reverse();
+        let userDataList = [...reportInfo.userdata].reverse();
         return (
             <Item sx={{place: 'center', display: 'block'}}>
                 <Item sx={{place: 'center', height: '50%'}}>
@@ -53,13 +54,16 @@ export const ReportDetail = (props) => {
                             />
                         </Item>
                         <Item sx={{place: 'center', height: '20%'}}>
-                            <Text sx={{fontSize: 25}}>참가자 전체 정답률 : {pieChartData}%</Text>
+                            <Text sx={{fontSize: 25}}>참가자 전체 정답률 : {pieChartData.toFixed(2)}%</Text>
                         </Item>
                     </Item>
                 </Item>
                 <Item sx={{place: 'center', height: '50%'}}>
                     <Item sx={{place: 'top', width: '100%', display:'block'}}>
-                        <Card_panel sx={{place: 'center', width:'100%', height:'10%', marginBottom:'10px'}}>
+                        <Card_panel
+                            sx={{place: 'center', width:'100%', height:'10%', marginBottom:'10px', fontSize:'1vw'}}
+                            sm={{place: 'center', width:'100%', height:'20%', marginBottom:'10px', fontSize:'1vw'}}
+                        >
                             <Item sx={{place: 'center'}}>
                                 <Item sx={{place: 'center', width: '10%'}}>등수</Item>
                                 <Item sx={{place: 'center', width: '30%'}}>닉네임</Item>
@@ -69,10 +73,14 @@ export const ReportDetail = (props) => {
                             </Item>
                         </Card_panel>
                         {
-                            userdatalist.map(
+                            userDataList.map(
                                 (item, index) => {
                                     return (
-                                        <Card_panel sx={{place: 'center', width:'100%', height:'20%', marginBottom:'10px'}} key={index}>
+                                        <Card_panel
+                                            sx={{place: 'center', width:'100%', height:'20%', marginBottom:'10px'}}
+                                            sm={{place: 'center', width:'100%', height:'30%', marginBottom:'10px', fontSize:'1vw'}}
+                                            key={index}
+                                        >
                                             <Item sx={{place: 'center'}}>
                                                 <Item sx={{place: 'center', width: '10%'}}>{item.rank} 등</Item>
                                                 <Item sx={{place: 'center', width: '30%'}}>{item.nickname}</Item>

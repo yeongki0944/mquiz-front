@@ -119,7 +119,7 @@ export const getShowInfoAPI = async (quizId) => {
  * Output: true/false
  */
 export const saveShowAPI = async (quiz) => {
-    console.log(quiz);
+    // console.log(quiz);
     return await CustomAxios_LAMDA.put('/show', quiz);
 }
 
@@ -177,7 +177,7 @@ export const getLogListAPI = async (email) => {
 export const getLogInfoAPI = async (logId) => {
     return await CustomAxios_LAMDA.get("/log/" + logId)
         .then((res) => {
-            console.log(res.data);
+            // console.log(res.data);
             if (res.status === 200) {
                 store.dispatch(R_setReportInfo(res.data.Item))
             } else {

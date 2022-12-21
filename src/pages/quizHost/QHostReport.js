@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Card_panel, Item, Page, Text} from "../../layouts/LayOuts";
+import { Card_panel, Item, Page} from "../../layouts/LayOuts";
 import {NavBar} from "../../components/quizHost/NavBar";
 import {QReportCardList} from "../../components/quizHost/QReportCardList";
 import {useEffect} from "react";
@@ -10,7 +10,6 @@ import {ReportDetail} from "../../components/quizHost/QReportDetail";
 export const QHostReport = () => {
     const {userInfo} = useSelector(state => state.userInfo);
     const {reportList} = useSelector(state => state.reportList);
-
 
     useEffect(() => {
         if(userInfo.hostEmail != null){

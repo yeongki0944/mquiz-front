@@ -1,6 +1,9 @@
 import * as React from 'react'
 import {Item, Card_panel} from "../../layouts/LayOuts";
 import {getLogInfoAPI} from "../../function/API";
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import ClassIcon from '@mui/icons-material/Class';
+import PersonIcon from '@mui/icons-material/Person';
 
 /**
  * props:
@@ -15,23 +18,26 @@ export const QReportCardList = (props) => {
         (item, index) =>(
             <Card_panel
                 sx={{height:'15%', width:'100%', marginBottom:'15px'}}
+                sm={{height:'50%', width:'100%', marginBottom:'15px'}}
                 key={index}
                 onClick={()=>{
                     getLogInfoAPI(item.id);
                 }}
             >
                 <Item sx={{place:'left', width:'100%', height:'50%'}}>
-                    {item.showtitle}
+                    <Item sx={{place:'left', marginLeft:'10px'}}>
+                        <h4>{item.showtitle}</h4>
+                    </Item>
                 </Item>
-                <Item sx={{place:'left', width:'100%', height:'50%'}}>
+                <Item sx={{place:'left', width:'100%', height:'50%', fontSize:'1vw'}}>
                     <Item sx={{place:'center'}}>
-                        {item.playdate}
+                        <AccessTimeIcon/> {item.playdate}
+                    </Item>
+                    <Item sx={{place:'center', }}>
+                        <ClassIcon/> {item.quizcount}
                     </Item>
                     <Item sx={{place:'center'}}>
-                        {item.quizcount}
-                    </Item>
-                    <Item sx={{place:'center'}}>
-                        {item.usercount}
+                        <PersonIcon/> {item.usercount}
                     </Item>
                 </Item>
             </Card_panel>
