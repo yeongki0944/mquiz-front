@@ -6,7 +6,7 @@ import {stompSend} from "../../function/WebSocket";
 import * as React from "react";
 import {useHistory} from "react-router-dom";
 import html2canvas from "html2canvas";
-import {flushLocalStorage, getNickname, getPinNum, getRole} from "../../function/localStorage";
+import {flushLocalStorage, getCorrectCnt, getNickname, getPinNum, getRole} from "../../function/localStorage";
 import {redirectPage} from "../../function/common";
 
 export const FinalRankPage = () => {
@@ -84,7 +84,7 @@ export const FinalRankPage = () => {
                         <Card_panel>
                             <Text sx={{fontSize: '2vw'}} sm={{fontSize: '5vw'}}>총 참가자
                                 : {quizPlay.userList.length}명</Text>
-                            <Text sx={{fontSize: '2vw'}} sm={{fontSize: '5vw'}}>총 {quizPlay.quiz.num}문제 중, N문제 정답 / N문제
+                            <Text sx={{fontSize: '2vw'}} sm={{fontSize: '5vw'}}>총 {quizPlay.quiz.num}문제 중, {getCorrectCnt()}문제 정답 / {quizPlay.quiz.num-getCorrectCnt()}문제
                                 오답 </Text>
                         </Card_panel>
                     </Item>
@@ -123,8 +123,7 @@ export const FinalRankPage = () => {
                                 });
                             }
                             flushLocalStorage();
-                            redirectPage("MAIN");
-                            history.go(0);
+                            window.location.href = "/";
                         }}>
                             확인
                         </Btn>

@@ -1,6 +1,9 @@
 import {Card_panel, Img, Item, Text} from "../../layouts/LayOuts";
+import {useEffect, useState} from "react";
+import {getCorrectCnt, getDiffScore, getNickname, getScore, setCorrectCnt, setScore} from "../../function/localStorage";
 
 export const Rank = (props) => {
+
     return (
         <Card_panel sx={props.sx}>
             <Item sx={{place: "center"}}>
@@ -22,7 +25,17 @@ export const Rank = (props) => {
                     <Text sx={{fontSize:'2vw'}} sm={{fontSize:'6vw'}}>{props.nickName}</Text>
                 </Item>
                 <Item sx={{place: 'center'}}>
-                    <Text sx={{fontSize:'2vw'}} sm={{fontSize:'6vw'}}>{props.score}점</Text>
+                    {props.type === "personal" ?
+                        <Text sx={{fontSize:'2vw'}} sm={{fontSize:'6vw'}}>{props.score}점
+                            {getDiffScore() > 0 ?
+                                <Text sx={{fontSize: '2vw', color: 'green'}} sm={{fontSize: '6vw'}}>(+{getDiffScore()})</Text>
+                                :
+                                <Text sx={{fontSize: '2vw', color: 'red'}} sm={{fontSize: '6vw'}}>(+{getDiffScore()})</Text>
+                            }
+                        </Text>
+                        :
+                        <Text sx={{fontSize:'2vw'}} sm={{fontSize:'6vw'}}>{props.score}점</Text>
+                    }
                 </Item>
             </Item>
         </Card_panel>

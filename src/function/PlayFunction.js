@@ -1,7 +1,16 @@
 import store from "../redux/store";
 import {R_setData, R_setBan, R_setUserlist} from "../redux/reducers/quizplayReducer";
 import {useSelector} from "react-redux";
-import {getNickname, setQuizTime} from "./localStorage";
+import {
+    getCorrectCnt,
+    getNickname,
+    getRole,
+    getScore,
+    setCorrectCnt,
+    setDiffScore,
+    setQuizTime,
+    setScore
+} from "./localStorage";
 import {stompDisconnect} from "./WebSocket";
 
 /**
@@ -47,10 +56,32 @@ const command = (props) => {
         case "RESULT":
             store.dispatch(R_setData({key: "quiz", value: props.quiz}));
             store.dispatch(R_setData({key: "rank", value: props.rank}));
+            if(getRole()==="CLIENT"){ //정답갯수 세기
+                let score = props.rank.filter((item) => item.nickName === getNickname())[0].rankScore;
+                if(parseInt(score-getScore()) > 0){ //정답일 시
+                    setCorrectCnt(parseInt(getCorrectCnt())+1);
+                    setDiffScore(parseInt(score-getScore()));
+                    setScore(score);
+                }else{
+                    setDiffScore(0);
+                }
+
+            }
             break;
         case "FINAL":
             store.dispatch(R_setData({key: "quiz", value: props.quiz}));
             store.dispatch(R_setData({key: "rank", value: props.rank}));
+            if(getRole()==="CLIENT"){ //정답갯수 세기
+                let score = props.rank.filter((item) => item.nickName === getNickname())[0].rankScore;
+                if(parseInt(score-getScore()) > 0){ //정답일 시
+                    setCorrectCnt(parseInt(getCorrectCnt())+1);
+                    setDiffScore(parseInt(score-getScore()));
+                    setScore(score);
+                }else{
+                    setDiffScore(0);
+                }
+
+            }
         default:
             break;
     }

@@ -1,11 +1,11 @@
 import * as React from 'react';
 import TextField from '@mui/material/TextField';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {stompSend} from "../../function/WebSocket";
 import {chk_special} from "../../function/RegularExpression";
 import {Btn, Content, Item, Text} from "../../layouts/LayOuts";
-import {getNickname, getPinNum, setNickname, setPinNum, setRole} from "../../function/localStorage";
+import {getNickname, getPinNum, setNickname, setPinNum, setRole, setScore} from "../../function/localStorage";
 
 /**
  * 닉네임 입력 component
@@ -65,7 +65,11 @@ export const NickNameCheck = () => {
         setNick_Name(nick);
     }
 
-
+    useEffect(
+        () => {
+            setScore(0);
+        }, []
+    )
 
     return (
         <Content>

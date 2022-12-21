@@ -14,7 +14,7 @@ import {FinalRankPage} from "../../components/result/FinalRankPage";
 import {QClientReconnect} from "../../components/quizClient/QClientReconnect";
 import {QClientBanModal} from "../../components/quizClient/QClientBanModal";
 import {stompInit} from "../../function/WebSocket";
-import {flushLocalStorage, getPinNum} from "../../function/localStorage";
+import {flushLocalStorage, getCorrectCnt, getPinNum} from "../../function/localStorage";
 import {HomeButton} from "../../components/HomeButton";
 import {VolumeControlButton} from "../../components/VolumeControlButton";
 
@@ -67,6 +67,7 @@ export const QClientMain = () => {
             {/*    <VolumeControlButton sx={{place: 'top-right', height: '5vh'}} mediaName='Ready'/>}*/}
             {/*{quizPlay.command != "WAIT" &&*/}
             {/*    <VolumeControlButton sx={{place: 'top-right', height: '5vh'}} mediaName='Play'/>}*/}
+            {getCorrectCnt()}
             <Item sx={{place:"center"}} sm={{place:'center'}}>
                 {quizPlay.command === "PIN" && <PinNumCheck/>}
                 {quizPlay.command === "NICK" && <NickNameCheck/>}

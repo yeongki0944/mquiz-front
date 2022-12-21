@@ -27,6 +27,7 @@ const RankBox = (props) => {
                                             rank={item.rank}
                                             nickName={item.nickName}
                                             score={Math.floor(item.rankScore)}
+                                            type={"personal"}
                                         />
                                     </Item>
                                 </Item>
@@ -48,6 +49,7 @@ const RankBox = (props) => {
                                         rank={item.rank}
                                         nickName={item.nickName}
                                         score={Math.floor(item.rankScore)}
+                                        type={"top"}
                                     />
                                 </Item>
                             </Item>
