@@ -15,12 +15,18 @@ export const QHostMain = () => {
     const [modalOpen, setModalOpen] = useState(false);
     const {quizList} = useSelector(state => state.quizList);
     const {userInfo} = useSelector(state => state.userInfo);
-    // const email = userInfo.authNum;
 
-    const email = "test@gmail.com";
+    //const email = "test@gmail.com";
 
     useEffect(() => {
-        setShowListAPI(email);
+        if(userInfo.hostEmail != null){
+            setShowListAPI(userInfo.hostEmail);
+            console.log(userInfo.hostEmail)
+            //setShowListAPI("test@gmail.com");
+        }else {
+            setShowListAPI("test@gmail.com");
+        }
+
     }, []);
 
     return (
@@ -29,8 +35,8 @@ export const QHostMain = () => {
                 <NavBar/>
                 <Item sx={{place: 'center', height: '10vh', marginBottom: '2.5vh', marginTop: '2.5vh'}}
                       sm={{height: '15vh', marginBottom: '2.5vh', marginTop: '2.5vh'}}>
-                    <HostProfile sx={{height: '100%', width: '50%'}} sm={{place: 'center', width: '100%'}} name={"test"}
-                                 info={"info"}/>
+                    <HostProfile sx={{height: '100%', width: '50%'}} sm={{place: 'center', width: '100%'}} name={userInfo.hostEmail}
+                                 info={userInfo.nickName}/>
                 </Item>
                 <Item sx={{place: 'center', height: '70vh',width:'100%'}}>
                     <Card_panel sx={{place: 'center',width:'50%',height:'100%',marginLeft:'1vw',marginRight:'1vw',overflowY:'auto'}} sm={{place: 'center',width:'100%',marginRight:'1vw',marginLeft:'1vw'}}>

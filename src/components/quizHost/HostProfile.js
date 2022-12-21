@@ -14,8 +14,9 @@ export default function HostProfile(props) {
                     sx={{width: '5vw', height: '5vw'}}
                     sm={{width: '20vw', height: '20vw'}}
                 />
-                <p>{props.name}</p>
-                {props.info}
+                <p>{props.name} 님 환영합니다.</p>
+
+                <p>닉네임 : {props.info}</p>
             </Item>
         </Card_panel>
     )
