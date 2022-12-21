@@ -15,7 +15,6 @@ import {
 import {redirectPage} from "../../function/common";
 import {HomeButton} from "../../components/HomeButton";
 import {chk_nickname, chk_passwd, chk_special} from "../../function/RegularExpression";
-import {FormControl, FormHelperText} from "@mui/material";
 
 export const QHostAuth = () => {
     const dispatch = useDispatch();
@@ -23,12 +22,14 @@ export const QHostAuth = () => {
     const [pageState, setPageState] = useState(true);
     const [email, chkEmail] = useState('');
     const [emailAuthNum, chkEmailAuthNum] = useState('');
-    const [password, setPasswdError] = useState('5~16자리 영문자,숫자,특수문자(!@#$%) 입력');
+    const [password, setPasswdError] = useState('');
+    const [passwordStatus, setPasswdStatusError] = useState('');
     const [passwdChkError, setPasswdChkError] = useState('');
     const [nickName, setNickNameError] = useState('');
 
     const [chkDup, setChkDup] = useState(false);
     const [chkAuth, setChkAuth] = useState(false);
+    const [chkPssword, setChkPssword] = useState(false);
 
     const handleSuccess = () => {
         localStorage.setItem('role', 'HOST');
@@ -58,10 +59,10 @@ export const QHostAuth = () => {
                     alert("회원가입 실패");
                 }
             })
-        } else {
-            if (!chkDup) {
+        }else{
+            if(!chkDup){
                 alert("이메일 중복확인을 해주세요.");
-            } else if (!chkAuth) {
+            }else if(!chkAuth){
                 alert("이메일 인증을 해주세요.");
             }
         }
@@ -76,6 +77,8 @@ export const QHostAuth = () => {
             } else {
                 alert("이메일 인증 번호 전송 실패");
             }
+        }).catch(res => {
+            console.log(res)
         });
     }
 
@@ -83,12 +86,14 @@ export const QHostAuth = () => {
         checkEmailAuthNumAPI({authNum: userInfo.authNum}).then(res => {
             if (res.data.statusCode === 200) {
                 console.log(res.data.data);
-                setChkAuth(true);
                 alert("이메일 인증 성공");
-            } else {
+                setChkAuth(true);
+            }else {
+                alert("유효하지 않은 인증 번호");
                 setChkAuth(false);
-                alert("이메일 인증 실패");
             }
+        }).catch(res => {
+            console.log(res)
         });
     }
 
@@ -96,13 +101,24 @@ export const QHostAuth = () => {
         checkEmailAPI({hostEmail: userInfo.hostEmail}).then(res => {
             if (res.data.statusCode === 200) {
                 console.log(res.data.data);
-                setChkDup(true);
                 alert("이메일 사용 가능");
-            } else {
+                setChkDup(true);
+            }else {
+                alert("이메일 중복");
                 setChkDup(false);
-                alert("이메일 중복입니다.");
             }
+            //console.log(res.data.statusCode)
+        }).catch(res => {
+            console.log(res)
         });
+    }
+
+    const handleLoginIdInput = (e) => {
+        dispatch(editUserInfo({key: "hostEmail", value: e.target.value}));
+    }
+
+    const handleLoginPasswdInput = (e) => {
+        dispatch(editUserInfo({key: "password", value: e.target.value}));
     }
 
     const handleIdInput = (e) => {
@@ -118,7 +134,7 @@ export const QHostAuth = () => {
         var specRegex = /[!@#$%]/im;
 
         // 패스워드 구성요소에 대한 길이 및 종류 체크
-        if (lengthRegex.exec(e.target.value)) {
+        if(lengthRegex.exec(e.target.value)) {
 //	          element.innerHTML = '길이 체크 통과!';
             // 각 요소별 체크를 통해 카운팅 결과에 따른 안전,보통,위험,사용불가 로 출력
             var safetyCount = 0;
@@ -129,19 +145,25 @@ export const QHostAuth = () => {
 
             switch (safetyCount) {
                 case 4:
-                    setPasswdError('안전');
+                    setPasswdError('');
+                    setPasswdStatusError('안전합니다.');
                     break;
                 case 3:
-                    setPasswdError('보통');
+                    setPasswdError('');
+                    setPasswdStatusError('보통입니다.');
                     break;
                 case 2:
-                    setPasswdError('위험');
+                    setPasswdError('');
+                    setPasswdStatusError('위험합니다.');
                     break;
                 case 1:
-                    setPasswdError('권장하지 않습니다');
+                    setPasswdError('');
+                    setPasswdStatusError('권장하지 않습니다');
                     break;
             }
-        } else {
+        }else if(e.target.value===null){
+            setPasswdError('');
+        }else{
             setPasswdError('5~16자리 영문자,숫자,특수문자(!@#$%) 입력');
         }
 
@@ -157,17 +179,19 @@ export const QHostAuth = () => {
         console.log(userInfo.password);
         if (userInfo.password != e.target.value) {
             setPasswdChkError('비밀번호가 일치하지 않습니다.');
+            setChkPssword(false);
             return;
         } else {
             setPasswdChkError('');
-
+            setChkPssword(true);
+            return;
         }
     }
     const handleNickNameInput = (e) => {
         if (chk_nickname(e.target.value)) {
             setNickNameError('');
-        } else {
-            setNickNameError('한글, 영어 대소문자 3~15자리 입력');
+        } else{
+            setNickNameError('사용 할 수 없습니다.');
             return;
         }
         dispatch(editUserInfo({key: "nickName", value: e.target.value}));
@@ -197,7 +221,7 @@ export const QHostAuth = () => {
                                                    variant="outlined"
                                             // helperText={error}
                                             // error={error !== '' || false} required autoFocus
-                                                   onBlur={handleIdInput}
+                                                   onBlur={handleLoginIdInput}
                                             // onKeyPress={handleEnterKey}
                                         />
                                     </Item>
@@ -206,7 +230,7 @@ export const QHostAuth = () => {
                                                    variant="outlined"
                                             // helperText={error}
                                             // error={error !== '' || false} required autoFocus
-                                                   onBlur={handlePwInput}
+                                                   onBlur={handleLoginPasswdInput}
                                             // onKeyPress={handleEnterKey}
                                         />
                                     </Item>
@@ -241,20 +265,30 @@ export const QHostAuth = () => {
                                         />
                                         <Btn onClick={handleCheckEmailAuthNum}><Text>인증 번호 확인</Text></Btn>
                                     </Item>
+
                                     <Item sx={{place: 'left', margin: '10px'}}>
                                         <TextField sx={{width: '100%'}} id="id" name="id" type="password"
-                                                   label={password}
+                                                   label="5~16자리 영문자,숫자,특수문자(!@#$%) 입력"
                                                    variant="outlined"
-                                                   // helperText="5~16자리 영문자,숫자,특수문자(!@#$%) 입력"
-                                                   error={password === '5~16자리 영문자,숫자,특수문자(!@#$%) 입력'} required
+                                            //helperText={password}
+                                                   helperText={passwordStatus}
+                                                   error={password !== '' || false} required
                                                    onBlur={handlePwInput}
                                                    color={password === '위험' ? 'error' : password === '안전' ? 'primary' : password === '보통' ? 'success' : password === '권장하지 않습니다' ? 'warning' : 'error'}
+
+                                            // label={password}
+                                            // variant="outlined"
+                                            // helperText="5~16자리 영문자,숫자,특수문자(!@#$%) 입력"
+                                            //  error={password === '5~16자리 영문자,숫자,특수문자(!@#$%) 입력'} required
+                                            // onBlur={handlePwInput}
+                                            // color={password === '위험' ? 'error' : password === '안전' ? 'primary' : password === '보통' ? 'success' : password === '권장하지 않습니다' ? 'warning' : 'error'}
 
                                             //pri : 파랑 sec : '보라 info : '하늘' error : '빨강' warning: '주황'
 
                                             //onKeyPress={handleEnterKey}
                                         />
                                     </Item>
+
                                     <Item sx={{place: 'left', margin: '10px'}}>
                                         <TextField sx={{width: '100%'}} id="outlined-basic"
                                                    label="비밀번호 확인"

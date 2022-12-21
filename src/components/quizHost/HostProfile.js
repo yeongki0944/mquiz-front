@@ -16,7 +16,7 @@ export default function HostProfile(props) {
                 />
                 <p>{props.name} 님 환영합니다.</p>
 
-                <p>닉네임 : {props.info}</p>
+                {/*<p>닉네임 : {props.info}</p>*/}
             </Item>
         </Card_panel>
     )
