@@ -5,7 +5,7 @@ import {stompDisconnect, stompInit, stompSend} from "../../function/WebSocket";
 import {useDispatch} from "react-redux";
 import {useHistory} from "react-router-dom";
 import {flushLocalStorage, getPinNum} from "../../function/localStorage";
-import {redirectPage} from "../../function/common";
+import {checkConnected, redirectPage} from "../../function/common";
 
 /**
  * 대기방 component
@@ -15,7 +15,7 @@ export function QHostReconnect() {
     const history = useHistory();
 
     useEffect(() => {
-        stompInit(getPinNum());
+        // stompInit(getPinNum());
     }, [])
 
     const handleReconnect = () => {
@@ -47,10 +47,13 @@ export function QHostReconnect() {
                         다음
                     </Btn>
                     <Btn onClick={() => {
-                        stompSend("end", {
-                            pinNum: getPinNum(),
-                            action: "END"
-                        });
+                        if(checkConnected()){
+                            stompSend("end", {
+                                pinNum: getPinNum(),
+                                action: "END"
+                            });
+                            stompDisconnect();
+                        }
                         flushLocalStorage();
                         window.location.href = "/";
                     }}>

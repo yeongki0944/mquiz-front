@@ -6,7 +6,7 @@ import {useDispatch} from "react-redux";
 import {R_setData} from "../../redux/reducers/quizplayReducer";
 import {useHistory} from "react-router-dom";
 import {flushLocalStorage, getNickname, getPinNum} from "../../function/localStorage";
-import {redirectPage} from "../../function/common";
+import {checkConnected, redirectPage} from "../../function/common";
 
 /**
  * 대기방 component
@@ -45,7 +45,9 @@ export function QClientReconnect() {
                         </Btn>
                         <Btn onClick={() => {
                             flushLocalStorage();
-                            stompDisconnect();
+                            if(checkConnected()){
+                                stompDisconnect();
+                            }
                             window.location.href = "/";
                         }}>
                             메인으로
