@@ -15,6 +15,7 @@ import {
 import {redirectPage} from "../../function/common";
 import {HomeButton} from "../../components/HomeButton";
 import {chk_nickname, chk_passwd, chk_special} from "../../function/RegularExpression";
+import {FormControl, FormHelperText} from "@mui/material";
 
 export const QHostAuth = () => {
     const dispatch = useDispatch();
@@ -22,7 +23,7 @@ export const QHostAuth = () => {
     const [pageState, setPageState] = useState(true);
     const [email, chkEmail] = useState('');
     const [emailAuthNum, chkEmailAuthNum] = useState('');
-    const [password, setPasswdError] = useState('');
+    const [password, setPasswdError] = useState('5~16자리 영문자,숫자,특수문자(!@#$%) 입력');
     const [passwdChkError, setPasswdChkError] = useState('');
     const [nickName, setNickNameError] = useState('');
 
@@ -57,10 +58,10 @@ export const QHostAuth = () => {
                     alert("회원가입 실패");
                 }
             })
-        }else{
-            if(!chkDup){
+        } else {
+            if (!chkDup) {
                 alert("이메일 중복확인을 해주세요.");
-            }else if(!chkAuth){
+            } else if (!chkAuth) {
                 alert("이메일 인증을 해주세요.");
             }
         }
@@ -117,7 +118,7 @@ export const QHostAuth = () => {
         var specRegex = /[!@#$%]/im;
 
         // 패스워드 구성요소에 대한 길이 및 종류 체크
-        if(lengthRegex.exec(e.target.value)) {
+        if (lengthRegex.exec(e.target.value)) {
 //	          element.innerHTML = '길이 체크 통과!';
             // 각 요소별 체크를 통해 카운팅 결과에 따른 안전,보통,위험,사용불가 로 출력
             var safetyCount = 0;
@@ -140,7 +141,7 @@ export const QHostAuth = () => {
                     setPasswdError('권장하지 않습니다');
                     break;
             }
-        }else{
+        } else {
             setPasswdError('5~16자리 영문자,숫자,특수문자(!@#$%) 입력');
         }
 
@@ -165,7 +166,7 @@ export const QHostAuth = () => {
     const handleNickNameInput = (e) => {
         if (chk_nickname(e.target.value)) {
             setNickNameError('');
-        } else{
+        } else {
             setNickNameError('한글, 영어 대소문자 3~15자리 입력');
             return;
         }
@@ -240,20 +241,22 @@ export const QHostAuth = () => {
                                         />
                                         <Btn onClick={handleCheckEmailAuthNum}><Text>인증 번호 확인</Text></Btn>
                                     </Item>
-
                                     <Item sx={{place: 'left', margin: '10px'}}>
-                                        <TextField sx={{width: '100%'}} id="id" name="id" type="password" 
-                                                   label="5~16자리 영문자,숫자,특수문자(!@#$%) 입력"
+                                        <TextField sx={{width: '100%'}} id="id" name="id" type="password"
+                                                   label={password}
                                                    variant="outlined"
-                                                   helperText={password}
-                                                   error={password !== '' || false} required
+                                                   // helperText="5~16자리 영문자,숫자,특수문자(!@#$%) 입력"
+                                                   error={password === '5~16자리 영문자,숫자,특수문자(!@#$%) 입력'} required
                                                    onBlur={handlePwInput}
-                                                   //onKeyPress={handleEnterKey}
+                                                   color={password === '위험' ? 'error' : password === '안전' ? 'primary' : password === '보통' ? 'success' : password === '권장하지 않습니다' ? 'warning' : 'error'}
+
+                                            //pri : 파랑 sec : '보라 info : '하늘' error : '빨강' warning: '주황'
+
+                                            //onKeyPress={handleEnterKey}
                                         />
                                     </Item>
-
                                     <Item sx={{place: 'left', margin: '10px'}}>
-                                        <TextField sx={{width: '100%'}} id="outlined-basic" 
+                                        <TextField sx={{width: '100%'}} id="outlined-basic"
                                                    label="비밀번호 확인"
                                                    type="password"
                                                    variant="outlined"
