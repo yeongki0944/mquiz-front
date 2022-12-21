@@ -179,7 +179,7 @@ export const getLogInfoAPI = async (logId) => {
         .then((res) => {
             console.log(res.data);
             if (res.status === 200) {
-                store.dispatch(R_setReportInfo(res.data.Items))
+                store.dispatch(R_setReportInfo(res.data.Item))
             } else {
             }
         }).catch((err) => {

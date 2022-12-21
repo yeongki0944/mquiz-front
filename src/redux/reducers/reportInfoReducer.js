@@ -7,8 +7,12 @@ export const R_setReportInfo = createAction(SET_REPORTINFO);
 export const R_setReportList = createAction(SET_REPORTLIST);
 
 const initialState = {
-    reportInfo:{},
-    reportList:{}
+    reportInfo:{
+        id:""
+    },
+    reportList:{
+        id:""
+    }
 }
 
 export const reportInfoReducer = handleActions({
