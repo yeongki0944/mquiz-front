@@ -7,8 +7,6 @@ import {getNickname} from "../../function/localStorage";
  * 대기방 component
  */
 export function QClientReady() {
-    const {quizPlay} = useSelector(state => state.quizPlay);
-
     return (
         <Content>
             <Item sx={{place:'center'}} sm={{place:'center'}}>

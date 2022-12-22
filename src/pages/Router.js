@@ -8,6 +8,7 @@ import {QHostCreate} from "./quizHost/QHostCreate";
 import {QHostPlay} from "./quizHost/QHostPlay";
 import {QHostReport} from "./quizHost/QHostReport";
 import {checkConnected, disableBackPage, disableRefresh} from "../function/common";
+import {flushRedux} from "../function/reduxFunction";
 
 
 export const Router = () =>{

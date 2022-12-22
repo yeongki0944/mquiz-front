@@ -35,11 +35,6 @@ export const QHostReady = () => {
         })
     }
 
-    useEffect(() => {
-        disableBackPage();
-        disableRefresh();
-    }, []);
-
     return (
         <Content sx={{width: '100vw', height: '100vh'}}>
             <Text sx={{color:'#FFC107',fontSize:'3vw'}} sm={{fontSize:'6vw'}}>

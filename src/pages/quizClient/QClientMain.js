@@ -17,12 +17,12 @@ import {stompInit} from "../../function/WebSocket";
 import {flushLocalStorage, getCorrectCnt, getPinNum} from "../../function/localStorage";
 import {HomeButton} from "../../components/HomeButton";
 import {VolumeControlButton} from "../../components/VolumeControlButton";
+import {flushRedux, setCommand} from "../../function/reduxFunction";
 
 
 
 export const QClientMain = () => {
     // pinNum -> nickName -> wait-> (count -> play ->result -> count) -> result
-    const dispatch = useDispatch();
     const {quizPlay} = useSelector(state => state.quizPlay);
     const [open, setOpen] = useState(false); // 추방 확인 모달창 제어
 
@@ -39,12 +39,13 @@ export const QClientMain = () => {
                 break;
             case "START": //시작 시 3초 카운터 실행
                 setTimeout(() => {
-                    dispatch(R_setData({key: "command", value: "SHOW"}));
+                    setCommand("SHOW");
                 }, 3000);
                 break;
             case "KICK": //추방
                 setOpen(true);
                 flushLocalStorage();
+                flushRedux();
                 break;
         }
     }, [quizPlay.command]);
@@ -67,7 +68,6 @@ export const QClientMain = () => {
             {/*    <VolumeControlButton sx={{place: 'top-right', height: '5vh'}} mediaName='Ready'/>}*/}
             {/*{quizPlay.command != "WAIT" &&*/}
             {/*    <VolumeControlButton sx={{place: 'top-right', height: '5vh'}} mediaName='Play'/>}*/}
-            {getCorrectCnt()}
             <Item sx={{place:"center"}} sm={{place:'center'}}>
                 {quizPlay.command === "PIN" && <PinNumCheck/>}
                 {quizPlay.command === "NICK" && <NickNameCheck/>}
@@ -76,7 +76,7 @@ export const QClientMain = () => {
                 {quizPlay.command === "SHOW" && <QuizView currentQuiz={quizPlay.quiz} state={"play"}/>}
                 {quizPlay.command === "SUBMIT" && <QClientSubmitWait/>}
                 {quizPlay.command === "RESULT" && <RankPage/>}
-                {quizPlay.command === "FINAL" && <FinalRankPage/>}
+                {quizPlay.command === "FINAL" && <RankPage/>}
                 {quizPlay.command === "RECONNECT" && <QClientReconnect/>}
                 <QClientBanModal open={open} setOpen={setOpen}/>
             </Item>

@@ -6,6 +6,7 @@ import {Answer} from "./Answer";
 import * as React from "react";
 import {getNickname, getPinNum, getRole} from "../../function/localStorage";
 import {stompSend} from "../../function/WebSocket";
+import {FinalRankPage} from "./FinalRankPage";
 
 
 const RankBox = (props) => {
@@ -59,6 +60,7 @@ const RankBox = (props) => {
             )}
             <Item sx={{place:'center',height:'10%',position:'absolute',bottom:'0'}}>
                 <Btn onClick={()=>{props.setView('answer')}}>정답보기</Btn>
+                {getRole()==="CLIENT" && props.command ==="FINAL" && <Btn onClick={()=>{props.setView('final')}}>최종결과보기</Btn>}
                 {getRole() === "HOST" &&
                     <Btn onClick={()=>{
                         stompSend("start", {
@@ -81,8 +83,9 @@ export const RankPage = () => {
     return (
         <Content>
             <Item sx={{place: 'center', height: '90vh', width: '100vw'}}>
-                {view === 'rank' && <RankBox quizPlay={quizPlay} setView={setView}/>}
-                {view === 'answer' && <Answer currentQuiz={quizPlay.quiz} setView={setView}/>}
+                {view === 'rank' && <RankBox quizPlay={quizPlay} setView={setView} command = {quizPlay.command}/>}
+                {view === 'answer' && <Answer currentQuiz={quizPlay.quiz} setView={setView} command = {quizPlay.command}/>}
+                {view === 'final' && <FinalRankPage/>}
             </Item>
         </Content>
     )

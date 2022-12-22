@@ -6,6 +6,7 @@ import {R_setData} from "../../../redux/reducers/quizplayReducer";
 import {PlayActionBar} from "../PlayActionBar";
 import {getNickname, getPinNum, getRole} from "../../../function/localStorage";
 import {getSolvedTime} from "../../../function/Timer";
+import {setCommand} from "../../../function/reduxFunction";
 
 
 export const Type_Select = (props) => {
@@ -41,7 +42,7 @@ export const Type_Select = (props) => {
                 quizNum: quizPlay.quiz.num
             }
         });
-        dispatch(R_setData({key: "command", value: "SUBMIT"}));
+        setCommand("SUBMIT");
 
     }
 

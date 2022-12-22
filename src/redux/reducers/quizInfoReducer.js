@@ -1,5 +1,7 @@
 import {createAction, handleActions} from "redux-actions";
 
+
+const FLUSH_QUIZ_INFO = "FLUSH_QUIZ_INFO";
 const SET_QUIZ = "SET_QUIZ";
 const SET_QUIZ_DATA = "SET_QUIZ_DATA";
 const MAKE_QUIZ_SHOW = 'MAKE_QUIZ_SHOW';
@@ -14,6 +16,7 @@ const MODIFY_QUIZ_ANSWER = 'MODIFY_QUIZ_ANSWER';
 const SET_ID = 'SET_ID';
 
 
+export const R_flushQuizInfo = createAction(FLUSH_QUIZ_INFO);
 export const R_setQuiz = createAction(SET_QUIZ);
 export const R_setQuizData = createAction(SET_QUIZ_DATA);
 export const R_makeQuizShow = createAction(MAKE_QUIZ_SHOW);
@@ -26,6 +29,7 @@ export const R_renumberQuiz = createAction(RENUMBER_QUIZ);
 export const R_modifyQuiz = createAction(MODIFY_QUIZ);
 export const R_modifyQuizAnswer = createAction(MODIFY_QUIZ_ANSWER);
 export const R_setId = createAction(SET_ID);
+
 
 const initialState = {
     quiz: {
@@ -48,7 +52,7 @@ const initialState = {
                     "num4": ""
                 },
                 "answer": [],
-                "time": 0,
+                "time": 10,
                 "useScore": false,
                 "rate": 0
             },
@@ -59,6 +63,11 @@ const initialState = {
 
 
 export const quizInfoReducer = handleActions({
+    [FLUSH_QUIZ_INFO]: (state, action) => {
+        return {
+            quiz: initialState.quiz
+        }
+    },
     [SET_QUIZ]: (state, action) => {
         return {
             ...state,
@@ -142,7 +151,7 @@ export const quizInfoReducer = handleActions({
                             "num4": ""
                         },
                         "answer": [],
-                        "time": 0,
+                        "time": 10,
                         "useScore": true,
                         "rate": 0
                     }]

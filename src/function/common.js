@@ -3,6 +3,7 @@ import {stompDisconnect} from "./WebSocket";
 import {R_setPage} from "../redux/reducers/pageControlReducer";
 import store from "../redux/store";
 import {R_setData} from "../redux/reducers/quizplayReducer";
+import {flushRedux} from "./reduxFunction";
 
 export const redirectPage = (page) => {
     store.dispatch(R_setPage(page));
@@ -34,8 +35,10 @@ export const checkConnected = (command) => {
                 redirectPage('QCLIENT');
             }
         }
-    } else { //여긴 URL 접속 경로로 접근 시 사용됨
-        if (window.location.pathname.startsWith('/p/')) {
+    } else { //재접속 아닐 시
+        flushLocalStorage();
+        flushRedux();
+        if (window.location.pathname.startsWith('/p/')) { //여긴 URL 접속 경로로 접근 시 사용됨
             let pinNum = window.location.pathname.substring(3);
             if(pinNum){
                 setRole('CLIENT');

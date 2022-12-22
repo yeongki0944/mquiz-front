@@ -19,6 +19,8 @@ import {stompDisconnect} from "./WebSocket";
 
 
 export const playFunction = (data) => {
+    console.log("====================================");
+    console.log(data);
     switch (data.action){
         case "COMMAND":
             command(data);

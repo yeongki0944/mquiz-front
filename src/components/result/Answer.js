@@ -64,6 +64,7 @@ export const Answer = (props) => {
                 </Item>
                 <Item sx={{place:'center',height:'10%'}}>
                     <Btn onClick={()=>{props.setView('rank')}}>점수보기</Btn>
+                    {getRole()==="CLIENT" && props.command ==="FINAL" && <Btn onClick={()=>{props.setView('final')}}>최종결과보기</Btn>}
                     {getRole() === "HOST" &&
                         <Btn onClick={()=>{
                             stompSend("start", {

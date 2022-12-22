@@ -1,10 +1,13 @@
 import {createAction, handleActions} from "redux-actions";
 
 
+const FLUSH_QUIZ_PLAY = "FLUSH_QUIZ_PLAY";
 const SET_DATA = "SET_DATA";
 const SET_CONTENT = "SET_CONTENT";
 const SET_ANSWER = "SET_ANSWER";
 const SET_BAN = "SET_BAN";
+
+export const R_flushQuizPlay = createAction(FLUSH_QUIZ_PLAY);
 export const R_setData = createAction(SET_DATA);
 export const R_setContent = createAction(SET_CONTENT);
 export const R_setAnswer = createAction(SET_ANSWER);
@@ -27,8 +30,13 @@ const initialState = {
 }
 export const quizPlayReducer = handleActions({
 
-    //신버전
+    [FLUSH_QUIZ_PLAY]: (state, action) => {
+        return {
+            quizPlay: initialState.quizPlay
+        }
+    },
     [SET_DATA]: (state, action) => {
+        console.log(action.payload)
         return {
             quizPlay: {
                 ...state.quizPlay,

@@ -110,7 +110,7 @@ export const FormPanel = (props) => {
         )
     }
     const Options = () => {
-        const times = [{value: 0, label: '0초'}, {value: 10, label: '10초'}, {value: 20, label: '20초'}, {
+        const times = [{value: 10, label: '10초'}, {value: 20, label: '20초'}, {
             value: 30,
             label: '30초'
         }, {value: 40, label: '40초'}, {value: 50, label: '50초'}, {value: 60, label: '60초'}];

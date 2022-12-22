@@ -8,12 +8,12 @@ import {enterRoomAPI} from "../../function/API";
 import {R_setData} from "../../redux/reducers/quizplayReducer";
 import store from "../../redux/store";
 import {redirectPage} from "../../function/common";
+import {setCommand} from "../../function/reduxFunction";
 
 /**
  * 핀 번호 입력 component
  */
 export const PinNumCheck = () => {
-    const dispatch = useDispatch();
     const [pin_Num, setPin_Num] = useState('');
     const [error, setError] = useState('');
 
@@ -54,7 +54,7 @@ export const PinNumCheck = () => {
     const handleEnter = async (pin) => {
         enterRoomAPI(pin).then((res) => {
             if (res.data.statusCode === 200) {
-                dispatch(R_setData({key: 'command', value: 'NICK'}));
+                setCommand('NICK');
                 setPinNum(pin);
             } else {
                 setError('존재하지 않는 방입니다.');
@@ -72,7 +72,7 @@ export const PinNumCheck = () => {
                 if (pinNum.length === 6) {
                     enterRoomAPI(pinNum).then((res) => {
                         if (res.data.statusCode === 200) {
-                            dispatch(R_setData({key: 'command', value: 'NICK'}));
+                            setCommand('NICK');
                             setPin_Num(pinNum);
                             setPinNum(pinNum);
                         } else {

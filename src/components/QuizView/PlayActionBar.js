@@ -37,10 +37,8 @@ export const PlayActionBar = (props) => {
 
     return (
         <Item sx={props.sx}>
-            {quizPlay.command === "RESULT" ?
-                getRole() === "HOST" ? //결과창이고 host일시
+            {quizPlay.command === "RESULT" || quizPlay.command === "FINAL" ?
                     null
-                    : null
                 :
                 getRole() === "HOST" ? //결과창 아니고 host 일시
                     quizPlay.command === "SHOW" || quizPlay.command==="RESULT" ?

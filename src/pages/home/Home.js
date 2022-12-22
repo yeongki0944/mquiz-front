@@ -4,6 +4,7 @@ import {checkConnected, checkURLConnection, disableBackPage, disableRefresh, red
 import {useDispatch, useSelector} from "react-redux";
 import {R_setData} from "../../redux/reducers/quizplayReducer";
 import axios from "axios";
+import {flushRedux, setCommand} from "../../function/reduxFunction";
 
 
 export default function Home() {
@@ -14,15 +15,15 @@ export default function Home() {
         redirectPage("QHOSTAUTH");
     }
     const handleClient = () => {
-        dispatch(R_setData({key:'command',value:'PIN'}));
+        setCommand('PIN');
         redirectPage("QCLIENT");
     }
 
     useEffect(() => {
-        disableBackPage();
-        disableRefresh();
         checkConnected(quizPlay.command);
+        flushRedux();
     }, []);
+
     return (
         <Page sx={{bg:'img',img: '/img/background_1.jpg'}}>
             <Content>

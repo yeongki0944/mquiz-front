@@ -63,7 +63,7 @@ export const Gauge = (props) => {
     return (
         <Content sx={{width: '100%'}}>
             <Text sx={{color: '#FFC107', fontSize: '2vw'}} sm={{fontSize: '5vw'}}>
-                문제 {props.Qnum} / {props.TotalQcnt}
+                {props.Qnum}번 문제
             </Text>
             <Item sx={{place: 'center', width: '100%'}}>
                 <Item sx={{place: 'center', width: '10%'}}>

@@ -13,9 +13,9 @@ import {getPinNum} from "../../function/localStorage";
 import {VolumeControlButton} from "../../components/VolumeControlButton";
 import {QHostReconnect} from "../../components/quizHost/QHostReconnect";
 import {HomeButton} from "../../components/HomeButton";
+import {setCommand} from "../../function/reduxFunction";
 
 export const QHostPlay = () => {
-    const dispatch = useDispatch();
     const {quizPlay} = useSelector(state => state.quizPlay);
     /**
      * 퀴즈 진행 command 시 페이지 변경용 useEffect
@@ -27,12 +27,12 @@ export const QHostPlay = () => {
             case "READY":
                 stompInit(getPinNum());
                 setTimeout(() => {
-                    dispatch(R_setData({key: "command", value: "WAIT"}));
+                    setCommand("WAIT");
                 }, 50);
                 break;
             case "START":
                 setTimeout(() => {
-                    dispatch(R_setData({key: "command", value: "SHOW"}));
+                    setCommand("SHOW");
                 }, 3000);
                 break;
         }

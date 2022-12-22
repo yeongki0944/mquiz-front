@@ -11,9 +11,6 @@ import {getNickname, getPinNum, setNickname, setPinNum, setRole, setScore} from 
  * 닉네임 입력 component
  */
 export const NickNameCheck = () => {
-    const dispatch = useDispatch();
-
-    const {quizPlay} = useSelector(state => state.quizPlay);
     const [nick_Name, setNick_Name] = useState('');
     const [error, setError] = useState('');
 

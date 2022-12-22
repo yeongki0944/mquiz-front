@@ -15,6 +15,7 @@ import {
 import {redirectPage} from "../../function/common";
 import {HomeButton} from "../../components/HomeButton";
 import {chk_nickname, chk_passwd, chk_special} from "../../function/RegularExpression";
+import {setRole} from "../../function/localStorage";
 
 export const QHostAuth = () => {
     const dispatch = useDispatch();
@@ -32,7 +33,7 @@ export const QHostAuth = () => {
     const [chkPssword, setChkPssword] = useState(false);
 
     const handleSuccess = () => {
-        localStorage.setItem('role', 'HOST');
+        setRole('HOST');
         // 여기 호스트 닉네임 넣으면됨. 로컬스토리지로
         redirectPage("QHOST");
     }

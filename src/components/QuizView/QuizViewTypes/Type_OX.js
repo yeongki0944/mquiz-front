@@ -6,6 +6,7 @@ import {stompSend} from "../../../function/WebSocket";
 import {PlayActionBar} from "../PlayActionBar";
 import {getNickname, getPinNum, getRole} from "../../../function/localStorage";
 import {getSolvedTime} from "../../../function/Timer";
+import {setCommand} from "../../../function/reduxFunction";
 
 export const Type_OX = () => {
     const dispatch = useDispatch();
@@ -40,7 +41,7 @@ export const Type_OX = () => {
                 quizNum: quizPlay.quiz.num
             }
         });
-        dispatch(R_setData({key: "command", value: "SUBMIT"}));
+        setCommand("SUBMIT");
     }
 
     return (
