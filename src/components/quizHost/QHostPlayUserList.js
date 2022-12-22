@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Modal from "@mui/material/Modal";
 import Chip from "@mui/material/Chip";
-import {Btn, Img, Item, Text} from "../../layouts/LayOuts";
+import {Btn, Card, Img, Item, Text} from "../../layouts/LayOuts";
 import {useSelector} from "react-redux";
 import store from "../../redux/store";
 import {R_setData} from "../../redux/reducers/quizplayReducer";
@@ -13,20 +13,22 @@ export const UserList = (props) => {
 
     return (
         <Item sx={props.sx} sm={props.sm}>
-            <Item sx={{place:'center',display:'block'}}>
+            <Item sx={{place:'top-left',display:'block'}}>
 
             {quizPlay.userList.map((item,index) => {
                 return (
-                        <Chip
+                        <Card
                             key={index}
-                            label={item}
                             id={item}
-                            sx={{margin: 1, backgroundColor: '#61DAFB', color: '#202123'}}
-                            onDelete={() => {
+                            sx={{margin:'10px',width:'15%',float:'left',backgroundColor:'rgba(130, 195, 236,0.7)',borderRadius:'20%'}}
+                            sm={{width:'40%'}}
+                            onClick={() => {
                                 props.setOpen(true)
                                store.dispatch(R_setData({key: "bannedNickName", value: item}))
                             }}
-                        />
+                        >
+                            <Text sx={{color:'#000',fontWeight:'bold',fontSize:'1.5vw'}} sm={{fontSize:'5.5vw'}}>{item}</Text>
+                        </Card>
                 )
             })}
             </Item>

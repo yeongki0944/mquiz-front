@@ -49,7 +49,6 @@ export function QClientBanModal(props) {
                     <Btn onClick={() =>{
                         stompDisconnect();
                         redirectPage("MAIN");
-                        history.go(0)
                     }}>
                         확인
                     </Btn>

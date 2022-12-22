@@ -63,3 +63,8 @@ export const flushLocalStorage = ()=>{
     setCorrectCnt(0);
     setDiffScore(0);
 }
+
+export const flushDupliNickname = ()=>{
+    localStorage.removeItem('nickName');
+    localStorage.removeItem('role');
+}

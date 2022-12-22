@@ -2,8 +2,7 @@ import * as React from 'react';
 import {Item, Page} from "../../layouts/LayOuts";
 import {PinNumCheck} from "../../components/quizClient/QClientPinNumInput";
 import {useEffect, useState} from "react";
-import {R_setData} from "../../redux/reducers/quizplayReducer";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {NickNameCheck} from "../../components/quizClient/QClientNickNameInput";
 import {QClientReady} from "../../components/quizClient/QClientReady";
 import {QStartCounter} from "../../components/QStartCounter";
@@ -14,9 +13,8 @@ import {FinalRankPage} from "../../components/result/FinalRankPage";
 import {QClientReconnect} from "../../components/quizClient/QClientReconnect";
 import {QClientBanModal} from "../../components/quizClient/QClientBanModal";
 import {stompInit} from "../../function/WebSocket";
-import {flushLocalStorage, getCorrectCnt, getPinNum} from "../../function/localStorage";
+import {flushDupliNickname, flushLocalStorage, getCorrectCnt, getPinNum} from "../../function/localStorage";
 import {HomeButton} from "../../components/HomeButton";
-import {VolumeControlButton} from "../../components/VolumeControlButton";
 import {flushRedux, setCommand} from "../../function/reduxFunction";
 
 
@@ -50,6 +48,15 @@ export const QClientMain = () => {
         }
     }, [quizPlay.command]);
 
+    useEffect(()=>{
+        console.log(quizPlay.action);
+        switch (quizPlay.action){
+            case "NICKNAMERETRY":
+                flushDupliNickname();
+                alert("닉네임 중복입니다.");
+                break;
+        }
+    },[quizPlay.action])
 
     /**
      * PIN: 핀 입력창

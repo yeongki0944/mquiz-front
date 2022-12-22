@@ -36,6 +36,12 @@ export const playFunction = (data) => {
             store.dispatch(R_setBan({key: "bannedNickName", value: data.nickName}));
             store.dispatch(R_setData({key: "userList", value: data.userList}));
             break;
+        case "NICKNAMERETRY":
+            console.log(data.action);
+            if(getNickname() === data.nickName){
+                store.dispatch(R_setData({key: "action", value: data.action}));
+            }
+            break;
         case "END":
             stompDisconnect();
             window.confirm("게임세션이 종료되었습니다.");
