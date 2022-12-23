@@ -98,16 +98,17 @@ export const ControlPanel = (props) => {
                     }
                 </Item>
                 <Item sx={{place: 'center', height: '10%', width: '100%'}}>
-                    <Btn sx={{width:'50%', height:'100%', background:'#fff', border:'1px solid #000', borderRadius:'10px'}} onClick={() => {
+                    <Btn sx={{width:'50%', height:'100%'}} onClick={() => {
                         saveShowAPI(quiz).then((res) => {
                             console.log(res);
                             redirectPage("QHOST");
-                        }).catch(() => {
+                        }).catch((res) => {
+                            console.log(res);
                             alert("저장에 실패하였습니다.");
                         })
                         setOpen(false);
                     }}>저장</Btn>
-                    <Btn sx={{width:'50%', height:'100%', background:'#fff', border:'1px solid #000', borderRadius:'10px'}} onClick={() => {
+                    <Btn sx={{width:'50%', height:'100%'}} onClick={() => {
                         setOpen(false);
                     }}>돌아가기</Btn>
                 </Item>
