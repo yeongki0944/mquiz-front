@@ -1,8 +1,6 @@
-import {flushLocalStorage, getPinNum, getRole, setPinNum, setRole} from "./localStorage";
-import {stompDisconnect} from "./WebSocket";
+import {flushLocalStorage, getPinNum, getRole, setRole} from "./localStorage";
 import {R_setPage} from "../redux/reducers/pageControlReducer";
 import store from "../redux/store";
-import {R_setData} from "../redux/reducers/quizplayReducer";
 import {flushRedux, setCommand} from "./reduxFunction";
 
 export const redirectPage = (page) => {
@@ -31,9 +29,11 @@ export const checkConnected = (command) => {
             if (getRole() === 'HOST') {
                 setCommand('RECONNECT');
                 redirectPage('QHOSTPLAY');
+                return true;
             } else if (getRole() === 'CLIENT') {
                 setCommand('RECONNECT');
                 redirectPage('QCLIENT');
+                return true;
             }
         }
     } else { //재접속 아닐 시

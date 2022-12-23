@@ -56,8 +56,6 @@ export const stompSend = (path, data) => {
 export const stompDisconnect = () => {
     stomp.disconnect(() => {
         console.log("소켓 연결 해제");
-        localStorage.removeItem('pinNum');
-        localStorage.removeItem('nickName');
     }, {});
 }
 

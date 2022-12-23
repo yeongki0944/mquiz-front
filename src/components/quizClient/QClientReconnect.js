@@ -1,10 +1,9 @@
 import * as React from 'react';
 import {Btn, Content, Img, Item, Text} from "../../layouts/LayOuts";
 import {useEffect} from "react";
-import {stompDisconnect, stompInit} from "../../function/WebSocket";
+import {stompDisconnect, stompInit, stompSend} from "../../function/WebSocket";
 import {useDispatch} from "react-redux";
 import {R_setData} from "../../redux/reducers/quizplayReducer";
-import {useHistory} from "react-router-dom";
 import {flushLocalStorage, getNickname, getPinNum} from "../../function/localStorage";
 import {checkConnected, redirectPage} from "../../function/common";
 
@@ -13,7 +12,6 @@ import {checkConnected, redirectPage} from "../../function/common";
  */
 export function QClientReconnect() {
     const dispatch = useDispatch();
-    const history = useHistory();
 
     useEffect(() => {
         stompInit(getPinNum());
@@ -44,11 +42,19 @@ export function QClientReconnect() {
                             참가
                         </Btn>
                         <Btn onClick={() => {
-                            flushLocalStorage();
-                            if(checkConnected()){
-                                stompDisconnect();
+                            if(checkConnected(null)){
+                                stompSend("ban", {
+                                    pinNum: getPinNum(),
+                                    nickName: getNickname(),
+                                    action:"DOMAIN"
+                                });
+                                setTimeout(()=>{
+                                    window.location.href = "/";
+                                    flushLocalStorage();
+                                    stompDisconnect();
+                                },100);
                             }
-                            window.location.href = "/";
+
                         }}>
                             메인으로
                         </Btn>

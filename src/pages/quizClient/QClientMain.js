@@ -55,6 +55,8 @@ export const QClientMain = () => {
                 flushDupliNickname();
                 alert("닉네임 중복입니다.");
                 break;
+            default:
+                break;
         }
     },[quizPlay.action])
 

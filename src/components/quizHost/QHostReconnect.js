@@ -1,22 +1,17 @@
 import * as React from 'react';
-import {Btn, Content, Img, Item, Page, Text} from "../../layouts/LayOuts";
+import {Btn, Content, Img, Item, Text} from "../../layouts/LayOuts";
 import {useEffect} from "react";
-import {stompDisconnect, stompInit, stompSend} from "../../function/WebSocket";
-import {useDispatch} from "react-redux";
-import {useHistory} from "react-router-dom";
+import {stompInit, stompSend} from "../../function/WebSocket";
 import {flushLocalStorage, getPinNum} from "../../function/localStorage";
-import {checkConnected, redirectPage} from "../../function/common";
+import {checkConnected} from "../../function/common";
 
 /**
  * 대기방 component
  */
 export function QHostReconnect() {
-    const dispatch = useDispatch();
-    const history = useHistory();
 
     useEffect(() => {
-        // stompInit(getPinNum());
-        console.log("QHostReconnect");
+        stompInit(getPinNum());
     }, [])
 
     const handleReconnect = () => {
@@ -48,21 +43,22 @@ export function QHostReconnect() {
                         다음
                     </Btn>
                     <Btn onClick={() => {
-                        if(checkConnected()){
+                        console.log("메인으로");
+                        if(checkConnected(null)){
                             stompSend("end", {
                                 pinNum: getPinNum(),
                                 action: "END"
                             });
-                            stompDisconnect();
+                            setTimeout(()=>{
+                                window.location.href = "/";
+                                flushLocalStorage();
+                            },100);
                         }
-                        flushLocalStorage();
-                        window.location.href = "/";
                     }}>
                         메인으로
                     </Btn>
                 </Item>
             </Item>
-
         </Content>
     );
 }
