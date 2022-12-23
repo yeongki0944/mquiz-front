@@ -6,6 +6,8 @@ import {useEffect} from "react";
 import {useSelector} from "react-redux";
 import {getLogListAPI} from "../../function/API";
 import {ReportDetail} from "../../components/quizHost/QReportDetail";
+import store from "../../redux/store";
+import {R_setReportList} from "../../redux/reducers/reportInfoReducer";
 
 export const QHostReport = () => {
     const {userInfo} = useSelector(state => state.userInfo);
@@ -13,10 +15,25 @@ export const QHostReport = () => {
 
     useEffect(() => {
         if(userInfo.hostEmail != null){
-            getLogListAPI(userInfo.hostEmail);
+            getLogListAPI(userInfo.hostEmail).then((res) => {
+                if (res.status === 200) {
+                    store.dispatch(R_setReportList(res.data.Items))
+                } else {
+                }
+            }).catch((err) => {
+                console.log(err);
+            });
             console.log(userInfo.hostEmail)
         }else {
-            getLogListAPI("test@gmail.com");
+            getLogListAPI("test@gmail.com").then((res) => {
+                console.log(res);
+                if (res.status === 200) {
+                    store.dispatch(R_setReportList(res.data.Items))
+                } else {
+                }
+            }).catch((err) => {
+                console.log(err);
+            });
         }
     }, []);
 

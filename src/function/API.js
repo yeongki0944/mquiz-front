@@ -158,15 +158,7 @@ export const saveLogAPI = async (data) => {
  */
 export const getLogListAPI = async (email) => {
     return await CustomAxios_LAMDA.get("/log/list/" + email)
-        .then((res) => {
-            if (res.status === 200) {
-                store.dispatch(R_setReportList(res.data.Items))
-            } else {
 
-            }
-        }).catch((err) => {
-            console.log(err);
-        })
 }
 
 /**
@@ -176,14 +168,6 @@ export const getLogListAPI = async (email) => {
  */
 export const getLogInfoAPI = async (logId) => {
     return await CustomAxios_LAMDA.get("/log/" + logId)
-        .then((res) => {
-            // console.log(res.data);
-            if (res.status === 200) {
-                store.dispatch(R_setReportInfo(res.data.Item))
-            } else {
-            }
-        }).catch((err) => {
-        })
 }
 
 /**

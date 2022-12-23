@@ -4,6 +4,8 @@ import {getLogInfoAPI} from "../../function/API";
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import ClassIcon from '@mui/icons-material/Class';
 import PersonIcon from '@mui/icons-material/Person';
+import store from "../../redux/store";
+import {R_setReportInfo} from "../../redux/reducers/reportInfoReducer";
 
 /**
  * props:
@@ -21,7 +23,13 @@ export const QReportCardList = (props) => {
                 sm={{height:'50%', width:'100%', marginBottom:'15px'}}
                 key={index}
                 onClick={()=>{
-                    getLogInfoAPI(item.id);
+                    getLogInfoAPI(item.id).then((res) => {
+                        if (res.status === 200) {
+                            store.dispatch(R_setReportInfo(res.data.Item))
+                        } else {
+                        }
+                    }).catch((err) => {
+                    });
                 }}
             >
                 <Item sx={{place:'left', width:'100%', height:'50%'}}>
