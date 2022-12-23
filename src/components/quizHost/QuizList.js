@@ -17,6 +17,7 @@ import store from "../../redux/store";
 import {R_setData} from "../../redux/reducers/quizplayReducer";
 import {setPinNum} from "../../function/localStorage";
 import {R_addQuiz, R_setQuiz} from "../../redux/reducers/quizInfoReducer";
+import {setCommand} from "../../function/reduxFunction";
 
 /**
  * props:
@@ -99,7 +100,7 @@ export const QuizList = (props) => {
                                         setButtonDisabled(true);
                                         createPlayAPI(item.id).then((res) => {
                                             console.log(res);
-                                            store.dispatch(R_setData({key: "command", value: "READY"}));
+                                            setCommand("READY")
                                             setPinNum(res.data.data);
                                             redirectPage("QHOSTPLAY");
                                         }).catch((err) => {

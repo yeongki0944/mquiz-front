@@ -60,7 +60,6 @@ export const QuizView = (props) => {
                             quizPlay={quizPlay}
                             currentQuiz={currentQuiz}
                             Qnum={currentQuiz.num}
-                            TotalQcnt={quizPlay.quiz.num}
                         />
                     </Item>
                 </Item>
