@@ -16,6 +16,7 @@ export function QHostReconnect() {
 
     useEffect(() => {
         // stompInit(getPinNum());
+        console.log("QHostReconnect");
     }, [])
 
     const handleReconnect = () => {

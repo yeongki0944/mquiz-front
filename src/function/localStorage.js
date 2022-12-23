@@ -66,5 +66,4 @@ export const flushLocalStorage = ()=>{
 
 export const flushDupliNickname = ()=>{
     localStorage.removeItem('nickName');
-    localStorage.removeItem('role');
 }

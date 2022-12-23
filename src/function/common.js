@@ -3,9 +3,10 @@ import {stompDisconnect} from "./WebSocket";
 import {R_setPage} from "../redux/reducers/pageControlReducer";
 import store from "../redux/store";
 import {R_setData} from "../redux/reducers/quizplayReducer";
-import {flushRedux} from "./reduxFunction";
+import {flushRedux, setCommand} from "./reduxFunction";
 
 export const redirectPage = (page) => {
+    console.log(page);
     store.dispatch(R_setPage(page));
 };
 
@@ -28,10 +29,10 @@ export const checkConnected = (command) => {
     if (getPinNum() != null) {
         if (command === null) {
             if (getRole() === 'HOST') {
-                store.dispatch(R_setData({key: 'command', value: 'RECONNECT'}));
+                setCommand('RECONNECT');
                 redirectPage('QHOSTPLAY');
             } else if (getRole() === 'CLIENT') {
-                store.dispatch(R_setData({key: 'command', value: 'RECONNECT'}));
+                setCommand('RECONNECT');
                 redirectPage('QCLIENT');
             }
         }
@@ -42,7 +43,7 @@ export const checkConnected = (command) => {
             let pinNum = window.location.pathname.substring(3);
             if(pinNum){
                 setRole('CLIENT');
-                store.dispatch(R_setData({key: 'command', value: 'PIN'}));
+                setCommand('PIN');
                 redirectPage('QCLIENT');
             }
         }

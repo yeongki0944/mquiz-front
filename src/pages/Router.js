@@ -27,7 +27,7 @@ export const Router = () =>{
             "QHOSTAUTH": <QHostAuth/>,
             "QHOSTCREATE" : <QHostCreate/>,
             "QHOSTPLAY" : <QHostPlay/>,
-            "QHOSTREPORT" : <QHostReport/>,
+            "QHOSTREPORT" : <QHostReport/>
         }[page]
     )
 }

@@ -47,8 +47,8 @@ export const QHostPlay = () => {
      * FINAL : 최종 결과 표시
      */
     return (
-
         <Page sx={{bg: 'img', img: '/img/background_1.jpg'}}>
+            {console.log(quizPlay.command)}
             <HomeButton sx={{position: 'absolute', top: 5, left: 5, zIndex: 100,width:'5vh',height:'5vh'}}/>
             {quizPlay.command === "WAIT" &&
                 <VolumeControlButton sx={{place: 'top-right', height: '5vh'}} mediaName='Ready'/>}

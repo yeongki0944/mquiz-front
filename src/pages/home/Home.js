@@ -1,15 +1,12 @@
 import React, {useEffect} from "react";
 import {Card, Content, Img, Item, Page} from "../../layouts/LayOuts";
-import {checkConnected, checkURLConnection, disableBackPage, disableRefresh, redirectPage} from "../../function/common";
+import {checkConnected, redirectPage} from "../../function/common";
 import {useDispatch, useSelector} from "react-redux";
-import {R_setData} from "../../redux/reducers/quizplayReducer";
-import axios from "axios";
 import {flushRedux, setCommand} from "../../function/reduxFunction";
 
 
 export default function Home() {
     const {quizPlay} = useSelector(state => state.quizPlay);
-    const dispatch = useDispatch();
 
     const handleHost = () => {
         redirectPage("QHOSTAUTH");
@@ -21,7 +18,6 @@ export default function Home() {
 
     useEffect(() => {
         checkConnected(quizPlay.command);
-        flushRedux();
     }, []);
 
     return (
