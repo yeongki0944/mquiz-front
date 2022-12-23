@@ -84,7 +84,8 @@ export const QHostAuth = () => {
     }
 
     const handleCheckEmailAuthNum = () => {
-        checkEmailAuthNumAPI({authNum: userInfo.authNum}).then(res => {
+        checkEmailAuthNumAPI({AUTHNUM: userInfo.AUTHNUM}).then(res => {
+            console.log(userInfo.AUTHNUM);
             if (res.data.statusCode === 200) {
                 console.log(res.data.data);
                 alert("이메일 인증 성공");
@@ -198,7 +199,7 @@ export const QHostAuth = () => {
         dispatch(editUserInfo({key: "nickName", value: e.target.value}));
     }
     const handleAuthNumInput = (e) => {
-        dispatch(editUserInfo({key: "authNum", value: e.target.value}));
+        dispatch(editUserInfo({key: "AUTHNUM", value: "AUTHNUM:" + e.target.value}));
     }
 
 
