@@ -24,16 +24,6 @@ export const QHostReport = () => {
                 console.log(err);
             });
             console.log(userInfo.hostEmail)
-        }else {
-            getLogListAPI("test@gmail.com").then((res) => {
-                console.log(res);
-                if (res.status === 200) {
-                    store.dispatch(R_setReportList(res.data.Items))
-                } else {
-                }
-            }).catch((err) => {
-                console.log(err);
-            });
         }
     }, []);
 

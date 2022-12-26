@@ -104,7 +104,6 @@ export default function BasicModal(props) {
             quizData: quiz.quizData,}
         ).then((res) => {
             console.log(res);
-            // setShowListAPI("test@gmail.com");
             setShowListAPI(userInfo.hostEmail);
             handleClose();
         }).catch((err) => {
@@ -143,7 +142,6 @@ export default function BasicModal(props) {
         // let dateDataString = JSON.stringify(dateData);
 
 
-        //dispatch(R_makeQuizShow({key: 'email', value: "test@gmail.com"}))
         dispatch(R_makeQuizShow({key: 'email', value: userInfo.hostEmail}))
         dispatch(R_makeQuizShow({key: 'state', value: "작성중"}))
         dispatch(R_makeQuizShow({key: 'public', value: true}))

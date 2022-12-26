@@ -114,8 +114,6 @@ export const QuizList = (props) => {
                                     setButtonDisabled(true);
                                     deleteShowAPI(item.id).then((res) => {
                                         alert("삭제되었습니다.");
-                                        // setShowListAPI('test@gmail.com');
-                                        console.log(userInfo.hostEmail);
                                         setShowListAPI(userInfo.hostEmail);
 
                                         setButtonDisabled(false);

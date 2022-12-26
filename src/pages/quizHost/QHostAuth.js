@@ -4,7 +4,7 @@ import {useEffect, useState} from "react";
 import TextField from "@mui/material/TextField";
 import * as React from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {editUserInfo} from "../../redux/reducers/userInfoReducer";
+import {editUserInfo, setUserInfo} from "../../redux/reducers/userInfoReducer";
 import {
     checkEmailAPI,
     checkEmailAuthNumAPI,
@@ -34,7 +34,6 @@ export const QHostAuth = () => {
 
     const handleSuccess = () => {
         setRole('HOST');
-        // 여기 호스트 닉네임 넣으면됨. 로컬스토리지로
         redirectPage("QHOST");
     }
     const handleLogin = () => {
