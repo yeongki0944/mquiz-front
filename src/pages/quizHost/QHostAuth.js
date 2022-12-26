@@ -84,7 +84,7 @@ export const QHostAuth = () => {
     }
 
     const handleCheckEmailAuthNum = () => {
-        checkEmailAuthNumAPI({authNum: userInfo.authNum}).then(res => {
+        checkEmailAuthNumAPI({authNum: userInfo.hostEmail +":"+userInfo.authNum}).then(res => {
             console.log(userInfo.authNum);
             if (res.data.statusCode === 200) {
                 console.log(res.data.data);
