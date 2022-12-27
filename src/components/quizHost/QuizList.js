@@ -5,19 +5,16 @@ import {Button} from "@mui/material";
 import EditIcon from "@material-ui/icons/Edit";
 import PlayArrow from "@material-ui/icons/PlayArrow";
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import {useDispatch} from "react-redux";
 import Add from "@material-ui/icons/Add";
-import { useHistory} from "react-router-dom";
 import styled from "styled-components";
 import {useState} from "react";
 import {Card_panel, Item} from "../../layouts/LayOuts";
 import {createPlayAPI, deleteShowAPI, getShowInfoAPI, setShowListAPI} from "../../function/API";
 import {redirectPage} from "../../function/common";
-import store from "../../redux/store";
-import {R_setData} from "../../redux/reducers/quizplayReducer";
 import {setPinNum} from "../../function/localStorage";
-import {R_addQuiz, R_setQuiz} from "../../redux/reducers/quizInfoReducer";
 import {setCommand} from "../../function/reduxFunction";
+import withReactContent from "sweetalert2-react-content";
+import Swal from "sweetalert2";
 
 /**
  * props:
@@ -46,9 +43,9 @@ const AddBtn = styled.div`
 `
 
 export const QuizList = (props) => {
-    const history = useHistory();
     const quizList = props.quizList;
     const userInfo = props.userInfo;
+    const MySwal = withReactContent(Swal)
 
     const [buttonDisabled, setButtonDisabled] = useState(false);
 
@@ -113,12 +110,17 @@ export const QuizList = (props) => {
                                     e.stopPropagation();
                                     setButtonDisabled(true);
                                     deleteShowAPI(item.id).then((res) => {
-                                        alert("삭제되었습니다.");
+                                        MySwal.fire({
+                                            title: <strong>삭제되었습니다.</strong>,
+                                            icon: 'success'
+                                        });
                                         setShowListAPI(userInfo.hostEmail);
-
                                         setButtonDisabled(false);
                                     }).catch((err) => {
-                                        alert("삭제에 실패했습니다.");
+                                        MySwal.fire({
+                                            title: <strong>삭제에 실패했습니다.</strong>,
+                                            icon: 'error'
+                                        });
                                         setButtonDisabled(false);
                                     });
 

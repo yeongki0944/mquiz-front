@@ -14,7 +14,7 @@ const initialState = {
         password : null,
         hostEmail : null,
         nickName: null,
-        authNum : null,
+        AUTHNUM : null,
         role: null,
     }
 }

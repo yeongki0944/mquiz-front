@@ -1,6 +1,5 @@
 import {Btn, Card_panel, Content, Item, Page, Text} from "../../layouts/LayOuts";
-import {useHistory} from "react-router-dom";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import TextField from "@mui/material/TextField";
 import * as React from "react";
 import {useDispatch, useSelector} from "react-redux";
@@ -14,10 +13,13 @@ import {
 } from "../../function/API";
 import {redirectPage} from "../../function/common";
 import {HomeButton} from "../../components/HomeButton";
-import {chk_nickname, chk_passwd, chk_special} from "../../function/RegularExpression";
+import {chk_nickname} from "../../function/RegularExpression";
 import {setRole} from "../../function/localStorage";
+import withReactContent from "sweetalert2-react-content";
+import Swal from "sweetalert2";
 
 export const QHostAuth = () => {
+    const MySwal = withReactContent(Swal);
     const dispatch = useDispatch();
     const {userInfo} = useSelector(state => state.userInfo);
     const [pageState, setPageState] = useState(true);
@@ -42,7 +44,10 @@ export const QHostAuth = () => {
             if (res.data.statusCode === 200) {
                 handleSuccess();
             } else {
-                alert("로그인 실패");
+                MySwal.fire({
+                    title: <strong>로그인 실패</strong>,
+                    icon: 'error'
+                });
             }
         })
     }
@@ -57,14 +62,23 @@ export const QHostAuth = () => {
                 if (res.data.statusCode === 200) {
                     setPageState(true);
                 } else {
-                    alert("회원가입 실패");
+                    MySwal.fire({
+                        title: <strong>회원가입 실패</strong>,
+                        icon: 'error'
+                    });
                 }
             })
         }else{
             if(!chkDup){
-                alert("이메일 중복확인을 해주세요.");
+                MySwal.fire({
+                    title: <strong>이메일 중복확인을 해주세요.</strong>,
+                    icon: 'warning'
+                });
             }else if(!chkAuth){
-                alert("이메일 인증을 해주세요.");
+                MySwal.fire({
+                    title: <strong>이메일 인증을 해주세요.</strong>,
+                    icon: 'warning'
+                });
             }
         }
 
@@ -73,13 +87,17 @@ export const QHostAuth = () => {
     const handleEmailAuth = () => {
         emailSendAuthNumAPI({hostEmail: userInfo.hostEmail}).then(res => {
             if (res.data.statusCode === 200) {
-                console.log(res.data.data);
-                alert("이메일에 전송된 인증번호를 확인해 주세요");
+                MySwal.fire({
+                    title: <strong>이메일에 전송된 인증번호를 확인해 주세요.</strong>,
+                    icon: 'info'
+                });
             } else {
-                alert("이메일 인증 번호 전송 실패");
+                MySwal.fire({
+                    title: <strong>이메일 인증 번호 전송 실패</strong>,
+                    icon: 'error'
+                });
             }
         }).catch(res => {
-            console.log(res)
         });
     }
 
@@ -87,26 +105,35 @@ export const QHostAuth = () => {
         checkEmailAuthNumAPI({authNum: userInfo.hostEmail +":"+userInfo.authNum}).then(res => {
             console.log(userInfo.authNum);
             if (res.data.statusCode === 200) {
-                console.log(res.data.data);
-                alert("이메일 인증 성공");
+                MySwal.fire({
+                    title: <strong>이메일 인증 성공</strong>,
+                    icon: 'success'
+                });
                 setChkAuth(true);
             }else {
-                alert("유효하지 않은 인증 번호");
+                MySwal.fire({
+                    title: <strong>유효하지 않은 인증 번호</strong>,
+                    icon: 'error'
+                });
                 setChkAuth(false);
             }
         }).catch(res => {
-            console.log(res)
         });
     }
 
     const handleCheckEmailAuth = () => {
         checkEmailAPI({hostEmail: userInfo.hostEmail}).then(res => {
             if (res.data.statusCode === 200) {
-                console.log(res.data.data);
-                alert("이메일 사용 가능");
+                MySwal.fire({
+                    title: <strong>이메일 사용 가능</strong>,
+                    icon: 'success'
+                });
                 setChkDup(true);
             }else {
-                alert("이메일 중복");
+                MySwal.fire({
+                    title: <strong>이메일 중복</strong>,
+                    icon: 'error'
+                });
                 setChkDup(false);
             }
             //console.log(res.data.statusCode)

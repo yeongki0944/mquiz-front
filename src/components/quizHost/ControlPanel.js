@@ -1,17 +1,17 @@
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {R_addQuiz, R_makeQuizShow, R_setCurrentShow} from "../../redux/reducers/quizInfoReducer";
 import * as React from "react";
-import {useHistory} from "react-router-dom";
 import {saveShowAPI} from "../../function/API";
 import {Btn, Item, Text} from "../../layouts/LayOuts";
 import {useState} from "react";
 import Modal from "@mui/material/Modal";
-import {Slider} from "@mui/material";
 import {redirectPage} from "../../function/common";
+import withReactContent from "sweetalert2-react-content";
+import Swal from "sweetalert2";
 
 export const ControlPanel = (props) => {
+    const MySwal = withReactContent(Swal)
     const dispatch = useDispatch();
-    const history = useHistory();
     const quiz = props.quiz;
     const [open,setOpen] = useState(false);
     const [result,setResult] = useState('');
@@ -100,11 +100,12 @@ export const ControlPanel = (props) => {
                 <Item sx={{place: 'center', height: '10%', width: '100%'}}>
                     <Btn sx={{width:'50%', height:'100%'}} onClick={() => {
                         saveShowAPI(quiz).then((res) => {
-                            console.log(res);
                             redirectPage("QHOST");
                         }).catch((res) => {
-                            console.log(res);
-                            alert("저장에 실패하였습니다.");
+                            MySwal.fire({
+                                title: <strong>저장에 실패하였습니다.</strong>,
+                                icon: 'error'
+                            })
                         })
                         setOpen(false);
                     }}>저장</Btn>

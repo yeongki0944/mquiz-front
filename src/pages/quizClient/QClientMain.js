@@ -9,13 +9,14 @@ import {QStartCounter} from "../../components/QStartCounter";
 import {QuizView} from "../../components/QuizView/QuizView";
 import {QClientSubmitWait} from "../../components/quizClient/QClientSubmitWait";
 import {RankPage} from "../../components/result/RankPage";
-import {FinalRankPage} from "../../components/result/FinalRankPage";
 import {QClientReconnect} from "../../components/quizClient/QClientReconnect";
 import {QClientBanModal} from "../../components/quizClient/QClientBanModal";
 import {stompInit} from "../../function/WebSocket";
-import {flushDupliNickname, flushLocalStorage, getCorrectCnt, getPinNum} from "../../function/localStorage";
+import {flushDupliNickname, flushLocalStorage, getPinNum} from "../../function/localStorage";
 import {HomeButton} from "../../components/HomeButton";
 import {flushRedux, setCommand} from "../../function/reduxFunction";
+import withReactContent from "sweetalert2-react-content";
+import Swal from "sweetalert2";
 
 
 
@@ -23,6 +24,7 @@ export const QClientMain = () => {
     // pinNum -> nickName -> wait-> (count -> play ->result -> count) -> result
     const {quizPlay} = useSelector(state => state.quizPlay);
     const [open, setOpen] = useState(false); // 추방 확인 모달창 제어
+    const MySwal = withReactContent(Swal);
 
     /**
      * 퀴즈 진행 command 시 페이지 변경용 useEffect
@@ -53,7 +55,10 @@ export const QClientMain = () => {
         switch (quizPlay.action){
             case "NICKNAMERETRY":
                 flushDupliNickname();
-                alert("닉네임 중복입니다.");
+                MySwal.fire({
+                    title: <strong>닉네임 중복입니다.</strong>,
+                    icon: 'error'
+                });
                 break;
             default:
                 break;

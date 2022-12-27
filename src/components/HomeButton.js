@@ -2,37 +2,51 @@ import * as React from "react";
 import 'bootstrap/dist/css/bootstrap.css';
 import {Img, Item} from "../layouts/LayOuts";
 import {useSelector} from "react-redux";
-import {flushLocalStorage, getNickname, getPinNum, getRole} from "../function/localStorage";
+import {flushLocalStorage, getPinNum} from "../function/localStorage";
 import {stompIsConnected, stompSend} from "../function/WebSocket";
+import withReactContent from "sweetalert2-react-content";
+import Swal from "sweetalert2";
 
 export const HomeButton = (props) => {
+    const MySwal = withReactContent(Swal);
     const {page} = useSelector(state => state.page);
 
     const handleHomeButton = () => {
         switch(page){
             case "QCLIENT":
-                confirmRedirect("메인으로 이동하시겠습니까? 이동 시 게임에서 나가게 됩니다.");
+                confirmRedirect("메인으로 이동하시겠습니까?","이동 시 게임에서 나가게 됩니다.");
                 break;
             case "QHOSTAUTH":
-                confirmRedirect("메인으로 이동하시겠습니까?");
+                confirmRedirect("메인으로 이동하시겠습니까?","");
                 break;
             case "QHOSTPLAY":
-                confirmRedirect("메인으로 이동하시겠습니까? 이동 시 게임에서 나가게 됩니다.");
+                confirmRedirect("메인으로 이동하시겠습니까?", "이동 시 게임에서 나가게 됩니다.");
                 break;
         }
     };
 
-    const confirmRedirect = (Msg) => {
-        if(window.confirm(Msg)){
-            if(stompIsConnected()){
-                stompSend("end", {
-                    pinNum: getPinNum(),
-                    action: "END"
-                });
+    const confirmRedirect = (titleMsg, contentMsg) => {
+        Swal.fire({
+            title:titleMsg,
+            text: contentMsg,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '메인으로 이동',
+            cancelButtonText: '취소',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                if(stompIsConnected()){
+                    stompSend("end", {
+                        pinNum: getPinNum(),
+                        action: "END"
+                    });
+                }
+                flushLocalStorage();
+                window.location.href = "/";
             }
-            flushLocalStorage();
-            window.location.href = "/";
-        }
+        })
     };
 
 

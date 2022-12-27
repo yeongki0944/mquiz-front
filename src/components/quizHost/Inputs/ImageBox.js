@@ -7,6 +7,8 @@ import AWS from "aws-sdk";
 import {R_modifyQuiz} from "../../../redux/reducers/quizInfoReducer";
 import {useState} from "react";
 import {CircularProgress} from "@mui/material";
+import withReactContent from "sweetalert2-react-content";
+import Swal from "sweetalert2";
 
 export default function ImageBox() {
     const dispatch = useDispatch();
@@ -17,6 +19,7 @@ export default function ImageBox() {
        const file = e.target.files[0];
        /* eslint-disable-next-line no-restricted-globals */
        const filename = "original/"+self.crypto.randomUUID();
+       const MySwal = withReactContent(Swal)
 
        AWS.config.update({
            region:process.env.REACT_APP_AWS_S3_REGION,
@@ -39,7 +42,10 @@ export default function ImageBox() {
                setUpload(false);
            },
            function (err){
-               alert("이미지 업로드를 실패하셨습니다.");
+               MySwal.fire({
+                   title: <strong>이미지 업로드를 실패하셨습니다.</strong>,
+                   icon: 'error'
+               });
                setUpload(false);
            }
        )
