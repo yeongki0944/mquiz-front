@@ -258,7 +258,7 @@ export const QHostAuth = () => {
                                         />
                                     </Item>
                                     <Item sx={{place: 'center'}}>
-                                        <TextField id="id" name="id" type="id" label="비밀번호"
+                                        <TextField id="password" name="password" type="password" label="비밀번호"
                                                    variant="outlined"
                                             // helperText={error}
                                             // error={error !== '' || false} required autoFocus
