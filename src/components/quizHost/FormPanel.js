@@ -67,7 +67,7 @@ export const FormPanel = (props) => {
                                             setQuiz('base', 'answer', ['O']);
                                             break;
                                         case '단답형':
-                                            setQuiz('base', '', {"num1": '', "num2": '', "num3": '', "nu4": ''});
+                                            setQuiz('base', 'choiceList', {"num1": '', "num2": '', "num3": '', "nu4": ''});
                                             break;
                                     }
                                 }}
