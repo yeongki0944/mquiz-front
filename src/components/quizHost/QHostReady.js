@@ -2,12 +2,13 @@ import * as React from 'react';
 import {useSelector} from "react-redux";
 import {stompSend} from "../../function/WebSocket";
 import {Btn, Content, Item, Text} from "../../layouts/LayOuts";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {HostCountOutModal, UserList} from "./QHostPlayUserList";
 import {createSvgIcon} from "@mui/material/utils";
 import {QRModal} from "../QRModal";
 import {getPinNum} from "../../function/localStorage";
-import {disableBackPage, disableRefresh, redirectPage} from "../../function/common";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 const HomeIcon = createSvgIcon(
     <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>,
@@ -19,12 +20,19 @@ export const QHostReady = () => {
     const [openBan, setOpenBan] = useState(false);
     const [openQR, setOpenQR] = useState(false);
     const URL = "http://www.mquiz.site/p/"+ getPinNum();
+    const MySwal = withReactContent(Swal);
 
     const handleCopy = () => {
         navigator.clipboard.writeText(URL).then(function () {
-            alert("복사되었습니다.");
+            MySwal.fire({
+                title: <strong>복사가 되었습니다.</strong>,
+                icon: 'success'
+            });
         }, function (err) {
-            alert("복사에 실패하였습니다.");
+            MySwal.fire({
+                title: <strong>복사에 실패하였습니다.</strong>,
+                icon: 'error'
+            });
         });
     }
 

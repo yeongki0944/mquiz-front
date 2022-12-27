@@ -12,11 +12,13 @@ import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import * as React from "react";
 import '../../styles/baseStyle.css';
 import {Item} from "../../layouts/LayOuts";
+import withReactContent from "sweetalert2-react-content";
+import Swal from "sweetalert2";
 
 export const ListPanel = (props) => {
     const quiz = props.quiz;
     const dispatch = useDispatch();
-
+    const MySwal = withReactContent(Swal)
     const dragItem = useRef();
     const dragOverItem = useRef();
 
@@ -68,15 +70,6 @@ export const ListPanel = (props) => {
                     onDragEnd={drop}
                     draggable
                 >
-                    {/*<Item*/}
-                    {/*    sx={{*/}
-                    {/*        place: 'center',*/}
-                    {/*        width:'100%',*/}
-                    {/*        height:'25%'*/}
-                    {/*    }}*/}
-                    {/*>*/}
-                    {/*    {item.num}P*/}
-                    {/*</Item>*/}
                     <Item
                         sx={{
                             place: 'center',
@@ -121,7 +114,10 @@ export const ListPanel = (props) => {
                                 onClick={(e) => {
                                     e.stopPropagation();
                                     if (quiz.quizData.length === 1) {
-                                        alert("최소 1개의 문제는 존재해야 합니다.");
+                                        MySwal.fire({
+                                            title: <strong>최소 1개의 문제는 존재해야 합니다.</strong>,
+                                            icon: 'error'
+                                        })
                                         return;
                                     }
                                     dispatch(R_setCurrentShow(item.num - 1));
@@ -134,42 +130,5 @@ export const ListPanel = (props) => {
                 </Item>
             )}
         </Item>
-
-        // <div>
-        //     {quiz.quizData.map((item,index) =>
-        //         <div key={index}
-        //              onDragStart={(e) => dragStart(e, index)}
-        //              onDragEnter={(e) => dragEnter(e, index)}
-        //              onDragEnd={drop}
-        //              draggable>
-        //             <div>{item.num}P</div>
-        //             <Item_card className={"item_card"} key={item.num} id={item.num}
-        //                        onClick={() => {
-        //                            dispatch(R_setCurrentShow(item.num));
-        //                        }}
-        //             >
-        //                 Status [{item.type}]
-        //                 <div>
-        //                     <FileCopyIcon onClick={() => {
-        //                         dispatch(R_copyQuiz(item.num));
-        //                     }}
-        //                     />
-        //                     <DeleteForeverIcon
-        //                         onClick={(e) => {
-        //                             e.stopPropagation();
-        //                             if (quiz.quizData.length === 1) {
-        //                                 alert("최소 1개의 문제는 존재해야 합니다.");
-        //                                 return;
-        //                             }
-        //                             dispatch(R_setCurrentShow(item.num - 1));
-        //                             dispatch(R_deleteQuiz(item.num));
-        //                             dispatch(R_renumberQuiz());
-        //                         }}
-        //                     />
-        //                 </div>
-        //             </Item_card>
-        //         </div>
-        //     )}
-        // </div>
     )
 }

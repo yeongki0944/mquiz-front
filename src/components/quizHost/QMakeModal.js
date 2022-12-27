@@ -10,10 +10,10 @@ import Chip from "@mui/material/Chip";
 import {FormControlLabel, FormGroup, Switch} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import {R_makeQuizShow} from "../../redux/reducers/quizInfoReducer";
-import {useHistory} from "react-router-dom";
 import {Btn, Img, Item, Text} from "../../layouts/LayOuts";
 import {createShowAPI, setShowListAPI} from "../../function/API";
-import {redirectPage} from "../../function/common";
+import withReactContent from "sweetalert2-react-content";
+import Swal from "sweetalert2";
 
 const imageItemData = [
     {
@@ -85,6 +85,7 @@ const currencies = [
 ];
 
 export default function BasicModal(props) {
+    const MySwal = withReactContent(Swal);
     const dispatch = useDispatch();
     const {quiz} = useSelector(state => state.quiz);
     const {userInfo} = useSelector(state => state.userInfo);
@@ -98,19 +99,23 @@ export default function BasicModal(props) {
     // 이미지 변경
     const [imageUrl, setImageUrl] = useState(imageItemData[0].img);
 
+
     const handleCreate = () => {
-        createShowAPI({
-            quizInfo: quiz.quizInfo,
-            quizData: quiz.quizData,}
-        ).then((res) => {
-            console.log(res);
-            // setShowListAPI("test@gmail.com");
-            setShowListAPI(userInfo.hostEmail);
-            handleClose();
-        }).catch((err) => {
-            alert("에러");
-            console.log(err);
-        });
+        if (quiz.quizInfo.title !== undefined){
+            createShowAPI({
+                quizInfo: quiz.quizInfo,
+                quizData: quiz.quizData,}
+            ).then((res) => {
+                setShowListAPI(userInfo.hostEmail);
+                handleClose();
+            }).catch((err) => {
+            });
+        }else{
+            MySwal.fire({
+                title: <strong>쇼 제목을 입력하세요!</strong>,
+                icon: 'error'
+            });
+        }
     }
 
     const handleInputTitle = (e) => {
@@ -119,31 +124,10 @@ export default function BasicModal(props) {
 
     // 모달창 닫기
     const handleClose = () => {
-        // setTitleTextData('');
-        // setCurrency('');
-        // setChipData([]);
-        // setChipCount(0);
-        // setIsPublic(true);
-        // setLabel("공개");
-        // setImageUrl(imageItemData[0].img);
-        // setHelperText('');
-        // setQuizInfo();
-
         props.setOpen(false)
     };
 
     useEffect(() => {
-        // Date 포맷
-        // let d = new Date();
-        // let TIME_ZONE = 3240 * 10000;
-        // let date = new Date(+d + TIME_ZONE).toISOString().split('T')[0];
-        // let time = d.toTimeString().split(' ')[0];
-        // let dateData = date + ' ' + time;
-        // //Stringify dateData
-        // let dateDataString = JSON.stringify(dateData);
-
-
-        //dispatch(R_makeQuizShow({key: 'email', value: "test@gmail.com"}))
         dispatch(R_makeQuizShow({key: 'email', value: userInfo.hostEmail}))
         dispatch(R_makeQuizShow({key: 'state', value: "작성중"}))
         dispatch(R_makeQuizShow({key: 'public', value: true}))
@@ -316,16 +300,17 @@ export default function BasicModal(props) {
                     Show 제목
                 </Text>
                 <Item sx={{place: 'center', width: '100%', height: '70%'}}>
-                    <TextField sx={{
-                        marginTop: '5px',
-                        width: '95%',
-                        height: '100%',
-                        //marginLeft: '5px',
-                    }}
-                               placeholder={"제목을 입력해주세요."}
-                               variant="outlined"
-                               defaultValue={quiz.quizInfo.title}
-                               onBlur={handleInputTitle}
+                    <TextField
+                        sx={{
+                            marginTop: '5px',
+                            width: '95%',
+                            height: '100%',
+                            //marginLeft: '5px',
+                        }}
+                        placeholder={"제목을 입력해주세요."}
+                        variant="outlined"
+                        defaultValue={quiz.quizInfo.title}
+                        onBlur={handleInputTitle}
                     />
                 </Item>
             </Item>
