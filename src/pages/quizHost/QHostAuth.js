@@ -324,7 +324,6 @@ export const QHostAuth = () => {
                                 </Item>
                             )}
                         </Item>
-                        <Btn onClick={handleSuccess}><Text>로그인성공 버튼</Text></Btn>
                     </Card_panel>
                 </Content>
             </Item>
