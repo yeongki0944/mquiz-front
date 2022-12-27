@@ -8,7 +8,7 @@ import {YoutubeShow} from "./Outputs/YoutubeShow";
 import {useEffect} from "react";
 import {useSelector} from "react-redux";
 import { Card_panel, Item, Text} from "../../layouts/LayOuts"
-import {getPinNum} from "../../function/localStorage";
+import {getCurrentClient, getPinNum, getRole, getSubmitCnt} from "../../function/localStorage";
 import {Gauge} from "./Gauge";
 
 export const QuizView = (props) => {
@@ -52,9 +52,26 @@ export const QuizView = (props) => {
         return (
             <Item sx={{place: 'center', display: 'block', height: '100%'}}>
                 <Item sx={{place: 'center', display: 'block', height: '25%'}} sm={{height: '25%'}}>
-                    <Text sx={{color:'#FFC107',fontSize:'3vw'}} sm={{fontSize:'6vw'}}>
-                        PIN: {getPinNum()}
-                    </Text>
+                    <Item sx={{place: 'center', height: '25%'}}>
+                        <Item sx={{place: 'left'}}>
+                            <Text sx={{color: '#FFC107', fontSize: '3vw'}} sm={{fontSize: '6vw'}}>
+                                {quizPlay.quiz.rate === 0 && null}
+                                {quizPlay.quiz.rate === 1 && null}
+                                {quizPlay.quiz.rate === 2 && <>점수X2</>}
+                                {quizPlay.quiz.rate === 3 && <>점수X3</>}
+                            </Text>
+                        </Item>
+                        <Item sx={{place: 'center'}}>
+                            <Text sx={{color: '#FFC107', fontSize: '3vw'}} sm={{fontSize: '6vw'}}>
+                                PIN: {getPinNum()}
+                            </Text>
+                        </Item>
+                        <Item sx={{place: 'right'}}>
+                            <Text sx={{color: '#FFC107', fontSize: '3vw'}} sm={{fontSize: '6vw'}}>
+                                {getRole() === 'HOST' && <>제출 {getSubmitCnt()}/{getCurrentClient()}</>}
+                            </Text>
+                        </Item>
+                    </Item>
                     <Item sx={{place: 'center', height: '70%', width:'100%'}}>
                         <Gauge
                             quizPlay={quizPlay}

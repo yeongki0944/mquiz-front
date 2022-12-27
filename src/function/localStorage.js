@@ -27,6 +27,14 @@ export const getCorrectCnt = () => {
     return localStorage.getItem('correctCnt');
 }
 
+export const getCurrentClient = () => {
+    return localStorage.getItem('currentClient');
+}
+
+export const getSubmitCnt = () => {
+    return localStorage.getItem('submitCnt');
+}
+
 export const setPinNum = (pinNum)=>{
     return localStorage.setItem('pinNum',pinNum);
 }
@@ -55,12 +63,21 @@ export const setDiffScore = (diffScore)=>{
     return localStorage.setItem('diffScore',diffScore);
 }
 
+export const setCurrentClient = (currentClient)=>{
+    return localStorage.setItem('currentClient',currentClient);
+}
+
+export const setSubmitCnt = (submitCnt)=>{
+    return localStorage.setItem('submitCnt',submitCnt);
+}
+
 export const flushLocalStorage = ()=>{
     localStorage.removeItem('pinNum');
     localStorage.removeItem('nickName');
     localStorage.removeItem('quiztime');
     localStorage.removeItem('score');
     setCorrectCnt(0);
+    setCurrentClient(0);
     setDiffScore(0);
 }
 

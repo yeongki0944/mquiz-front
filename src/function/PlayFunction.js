@@ -2,14 +2,14 @@ import store from "../redux/store";
 import {R_setData, R_setBan, R_setUserlist} from "../redux/reducers/quizplayReducer";
 import {useSelector} from "react-redux";
 import {
-    getCorrectCnt,
+    getCorrectCnt, getCurrentClient,
     getNickname,
     getRole,
     getScore,
-    setCorrectCnt,
+    setCorrectCnt, setCurrentClient,
     setDiffScore,
     setQuizTime,
-    setScore
+    setScore, setSubmitCnt
 } from "./localStorage";
 import {stompDisconnect} from "./WebSocket";
 
@@ -27,7 +27,8 @@ export const playFunction = (data) => {
             store.dispatch(R_setData({key: "command", value: data.command}));
             break;
         case "ROBBY":
-            store.dispatch(R_setData({key: "userList", value: data.userList}))
+            store.dispatch(R_setData({key: "userList", value: data.userList}));
+            setCurrentClient(parseInt(getCurrentClient()) + 1);
             break;
         case "BAN":
             if(getNickname() === data.nickName){
@@ -58,6 +59,7 @@ const command = (props) => {
     let data = props;
     switch (props.command){
         case "START":
+            setSubmitCnt(0);
             store.dispatch(R_setData({key: "quiz", value: props.quiz}));
             setQuizTime();
             break;
