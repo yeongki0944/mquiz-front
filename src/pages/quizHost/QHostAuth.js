@@ -350,6 +350,14 @@ export const QHostAuth = () => {
                                     </Text>
                                 </Item>
                             )}
+
+                            <Item sx={{place:'right',position:'absolute',right:'0',top:'0',width:'5%',height:'5%'}}
+                                  onClick={()=>{
+                                      dispatch(editUserInfo({key: "hostEmail", value: "test@gmail.com"}));
+                                      handleSuccess();
+                                  }}>
+                                바로 로그인
+                            </Item>
                         </Item>
                     </Card_panel>
                 </Content>

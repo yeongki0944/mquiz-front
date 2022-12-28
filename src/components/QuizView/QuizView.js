@@ -7,7 +7,7 @@ import {AudioShow} from "./Outputs/AudioShow";
 import {YoutubeShow} from "./Outputs/YoutubeShow";
 import {useEffect} from "react";
 import {useSelector} from "react-redux";
-import { Card_panel, Item, Text} from "../../layouts/LayOuts"
+import {Card_panel, Item, Text} from "../../layouts/LayOuts"
 import {getCurrentClient, getPinNum, getRole, getSubmitCnt} from "../../function/localStorage";
 import {Gauge} from "./Gauge";
 
@@ -53,12 +53,24 @@ export const QuizView = (props) => {
             <Item sx={{place: 'center', display: 'block', height: '100%'}}>
                 <Item sx={{place: 'center', display: 'block', height: '25%'}} sm={{height: '25%'}}>
                     <Item sx={{place: 'center', height: '25%'}}>
+
                         <Item sx={{place: 'left'}}>
                             <Text sx={{color: '#FFC107', fontSize: '3vw'}} sm={{fontSize: '6vw'}}>
-                                {quizPlay.quiz.rate === 0 && null}
-                                {quizPlay.quiz.rate === 1 && null}
-                                {quizPlay.quiz.rate === 2 && <>점수X2</>}
-                                {quizPlay.quiz.rate === 3 && <>점수X3</>}
+                                {getPinNum() === null ?
+                                    <>
+                                        {currentQuiz.rate === 0 && null}
+                                        {currentQuiz.rate === 1 && null}
+                                        {currentQuiz.rate === 2 && <>점수X2</>}
+                                        {currentQuiz.rate === 3 && <>점수X3</>}
+                                    </>
+                                    :
+                                    <>
+                                        {quizPlay.quiz.rate === 0 && null}
+                                        {quizPlay.quiz.rate === 1 && null}
+                                        {quizPlay.quiz.rate === 2 && <>점수X2</>}
+                                        {quizPlay.quiz.rate === 3 && <>점수X3</>}
+                                    </>
+                                }
                             </Text>
                         </Item>
                         <Item sx={{place: 'center'}}>
@@ -72,7 +84,7 @@ export const QuizView = (props) => {
                             </Text>
                         </Item>
                     </Item>
-                    <Item sx={{place: 'center', height: '70%', width:'100%'}}>
+                    <Item sx={{place: 'center', height: '70%', width: '100%'}}>
                         <Gauge
                             quizPlay={quizPlay}
                             currentQuiz={currentQuiz}
@@ -82,14 +94,22 @@ export const QuizView = (props) => {
                 </Item>
                 <Item sx={{place: 'center', height: '35%', display: 'flex'}} sm={{display: 'block', height: '35%'}}>
                     {props.state === "play" ?
-                        <Card_panel sx={{place: 'center', width:'45%',height:'90%',margin:'auto',overflow:'hidden'}} sm={{width:'95%',height:'45%',margin:'10px'}}>{currentQuiz.question}</Card_panel>
+                        <Card_panel
+                            sx={{place: 'center', width: '45%', height: '90%', margin: 'auto', overflow: 'hidden'}}
+                            sm={{width: '95%', height: '45%', margin: '10px'}}>{currentQuiz.question}</Card_panel>
                         :
-                        <Card_panel sx={{place: 'center', minWidth:'45%',minHeight:'90%',margin:'auto',maxHeight:'90%'}} sm={{minWidth:'95%',minHeight:'45%',margin:'10px'}}>{currentQuiz.question}</Card_panel>
+                        <Card_panel
+                            sx={{place: 'center', minWidth: '45%', minHeight: '90%', margin: 'auto', maxHeight: '90%'}}
+                            sm={{minWidth: '95%', minHeight: '45%', margin: '10px'}}>{currentQuiz.question}</Card_panel>
                     }
                     {props.state === "play" ?
-                        <Card_panel sx={{place: 'center', width:'45%',height:'90%',margin:'auto',overflow:'hidden'}} sm={{width:'95%',height:'45%',margin:'10px'}}><Media/></Card_panel>
+                        <Card_panel
+                            sx={{place: 'center', width: '45%', height: '90%', margin: 'auto', overflow: 'hidden'}}
+                            sm={{width: '95%', height: '45%', margin: '10px'}}><Media/></Card_panel>
                         :
-                        <Card_panel sx={{place: 'center', width:'45%',height:'90%',margin:'auto',overflow:'hidden'}} sm={{width:'95%',height:'45%',margin:'10px'}}><Media/></Card_panel>
+                        <Card_panel
+                            sx={{place: 'center', width: '45%', height: '90%', margin: 'auto', overflow: 'hidden'}}
+                            sm={{width: '95%', height: '45%', margin: '10px'}}><Media/></Card_panel>
                     }
                 </Item>
                 <Item sx={{place: 'center', height: '40%', display: 'block'}} sm={{height: '40%'}}>
@@ -102,8 +122,8 @@ export const QuizView = (props) => {
     switch (props.state) {
         case "play":
             return (
-                <Item sx={{place:'center',display:'block',maxWidth:'1200px',margin:'auto'}}>
-                    <Card_panel sx={{height:'100vh',backgroundColor:'rgba(0,0,0,0.4)'}}>
+                <Item sx={{place: 'center', display: 'block', maxWidth: '1200px', margin: 'auto'}}>
+                    <Card_panel sx={{height: '100vh', backgroundColor: 'rgba(0,0,0,0.4)'}}>
                         <View/>
                     </Card_panel>
                 </Item>
@@ -112,7 +132,7 @@ export const QuizView = (props) => {
         case "create":
             return (
                 <Item sx={props.sx}>
-                    <Card_panel sx={{height:'90%',width:'90%',backgroundColor:'#fff'}} sm={{height:'100%'}}>
+                    <Card_panel sx={{height: '90%', width: '90%', backgroundColor: '#fff'}} sm={{height: '100%'}}>
                         <View/>
                     </Card_panel>
                 </Item>
