@@ -5,7 +5,7 @@ import {
     getCorrectCnt, getCurrentClient,
     getNickname,
     getRole,
-    getScore,
+    getScore, getSubmitCnt,
     setCorrectCnt, setCurrentClient,
     setDiffScore,
     setQuizTime,
@@ -42,6 +42,9 @@ export const playFunction = (data) => {
             if(getNickname() === data.nickName){
                 store.dispatch(R_setData({key: "action", value: data.action}));
             }
+            break;
+        case "SUBMIT":
+            setSubmitCnt(parseInt(getSubmitCnt()) + 1);
             break;
         case "END":
             stompDisconnect();
