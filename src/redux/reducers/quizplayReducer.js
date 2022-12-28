@@ -26,6 +26,7 @@ const initialState = {
         userList : [],
         bannedNickName: null,
         rank : null,
+        submitCnt:0
     }
 }
 export const quizPlayReducer = handleActions({

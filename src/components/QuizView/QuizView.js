@@ -8,12 +8,14 @@ import {YoutubeShow} from "./Outputs/YoutubeShow";
 import {useEffect} from "react";
 import {useSelector} from "react-redux";
 import {Card_panel, Item, Text} from "../../layouts/LayOuts"
-import {getCurrentClient, getPinNum, getRole, getSubmitCnt} from "../../function/localStorage";
+import {getCurrentClient, getPinNum, getRole} from "../../function/localStorage";
 import {Gauge} from "./Gauge";
 
 export const QuizView = (props) => {
     const currentQuiz = props.currentQuiz;
     const {quizPlay} = useSelector(state => state.quizPlay);
+
+    console.log(quizPlay.submitCnt);
 
     const AnswerSheet = () => {
         switch (currentQuiz.type) {
@@ -55,6 +57,7 @@ export const QuizView = (props) => {
                     <Item sx={{place: 'center', height: '25%'}}>
 
                         <Item sx={{place: 'left'}}>
+                            {quizPlay.submitCnt}
                             <Text sx={{color: '#FFC107', fontSize: '3vw'}} sm={{fontSize: '6vw'}}>
                                 {getPinNum() === null ?
                                     <>
@@ -80,7 +83,7 @@ export const QuizView = (props) => {
                         </Item>
                         <Item sx={{place: 'right'}}>
                             <Text sx={{color: '#FFC107', fontSize: '3vw'}} sm={{fontSize: '6vw'}}>
-                                {getRole() === 'HOST' && <>제출 {getSubmitCnt()}/{getCurrentClient()}</>}
+                                {getRole() === 'HOST' && <>제출 {quizPlay.submitCnt}/{getCurrentClient()}</>}
                             </Text>
                         </Item>
                     </Item>

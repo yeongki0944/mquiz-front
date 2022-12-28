@@ -44,7 +44,8 @@ export const playFunction = (data) => {
             }
             break;
         case "SUBMIT":
-            setSubmitCnt(parseInt(getSubmitCnt()) + 1);
+            console.log(data.submitCnt);
+            store.dispatch(R_setData({key: "submitCnt", value: data.submitCnt}));
             break;
         case "END":
             stompDisconnect();
@@ -64,6 +65,7 @@ const command = (props) => {
         case "START":
             setSubmitCnt(0);
             store.dispatch(R_setData({key: "quiz", value: props.quiz}));
+            store.dispatch(R_setData({key: "submitCnt", value: 0}));
             setQuizTime();
             break;
         case "RESULT":
