@@ -57,7 +57,6 @@ export const QuizView = (props) => {
                     <Item sx={{place: 'center', height: '25%'}}>
 
                         <Item sx={{place: 'left'}}>
-                            {quizPlay.submitCnt}
                             <Text sx={{color: '#FFC107', fontSize: '3vw'}} sm={{fontSize: '6vw'}}>
                                 {getPinNum() === null ?
                                     <>

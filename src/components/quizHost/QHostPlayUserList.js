@@ -6,7 +6,7 @@ import {useSelector} from "react-redux";
 import store from "../../redux/store";
 import {R_setData} from "../../redux/reducers/quizplayReducer";
 import {stompSend} from "../../function/WebSocket";
-import {getPinNum} from "../../function/localStorage";
+import {getCurrentClient, getPinNum, setCurrentClient} from "../../function/localStorage";
 
 export const UserList = (props) => {
     const {quizPlay} = useSelector(state => state.quizPlay)
@@ -80,6 +80,7 @@ export const HostCountOutModal = (props) => {
                             pinNum: getPinNum(),
                             nickName: quizPlay.bannedNickName
                         });
+                        setCurrentClient(parseInt(getCurrentClient())-1);
                         props.setOpen(false);
                     }}>
                         확인
