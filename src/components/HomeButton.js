@@ -2,8 +2,8 @@ import * as React from "react";
 import 'bootstrap/dist/css/bootstrap.css';
 import {Img, Item} from "../layouts/LayOuts";
 import {useSelector} from "react-redux";
-import {flushLocalStorage, getPinNum} from "../function/localStorage";
-import {stompIsConnected, stompSend} from "../function/WebSocket";
+import {flushLocalStorage, getPinNum, getRole} from "../function/localStorage";
+import {stompDisconnect, stompIsConnected, stompSend} from "../function/WebSocket";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
 
@@ -38,10 +38,13 @@ export const HomeButton = (props) => {
         }).then((result) => {
             if (result.isConfirmed) {
                 if(stompIsConnected()){
-                    stompSend("end", {
-                        pinNum: getPinNum(),
-                        action: "END"
-                    });
+                    if(getRole()==="HOST"){
+                        stompSend("end", {
+                            pinNum: getPinNum(),
+                            action: "END"
+                        });
+                    }
+                    stompDisconnect();
                 }
                 flushLocalStorage();
                 window.location.href = "/";
