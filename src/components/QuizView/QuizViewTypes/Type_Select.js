@@ -68,16 +68,20 @@ export const Type_Select = (props) => {
                             {quizPlay.command === "RESULT" ?  //정답화면 정답일 시
                                 currentQuiz.choiceList[item] != "" ?
                                         chkAnswer(item) ?
-                                            <Card sx={{width:'90%',height:'90%',backgroundColor:'orange'}}
+                                            <Card sx={{width:'90%',height:'90%',backgroundColor:'orange',fontSize:'2rem'}}
+                                                  sm={{fontSize:'1rem'}}
                                                   id={item}>{index + 1}.{currentQuiz.choiceList[item]}</Card>
                                             :
-                                            <Card sx={{width:'90%',height:'90%',backgroundColor:'rgba(255,255,255,0.5)'}}
+                                            <Card sx={{width:'90%',height:'90%',backgroundColor:'rgba(255,255,255,0.5)',fontSize:'2rem'}}
+                                                  sm={{fontSize:'1rem'}}
                                                   id={item}>{index + 1}.{currentQuiz.choiceList[item]}</Card>
+
                                     : null
                                 :
                                 getRole() === "HOST" && //호스트 화면
                                 currentQuiz.choiceList[item] != "" ?
-                                    <Card sx={{width:'90%',height:'90%',backgroundColor:'rgba(255,255,255,0.5)'}}
+                                    <Card sx={{width:'90%',height:'90%',backgroundColor:'rgba(255,255,255,0.5)',fontSize:'2rem'}}
+                                          sm={{fontSize:'1rem'}}
                                           id={item}>{index + 1}.{currentQuiz.choiceList[item]}</Card>
                                     : null
 
@@ -85,7 +89,9 @@ export const Type_Select = (props) => {
 
                             {quizPlay.command != "RESULT" && getRole() === "CLIENT" && //클라이언트
                             currentQuiz.choiceList[item] != "" ?
-                                <Card sx={{width:'90%',height:'90%',backgroundColor:'rgba(255,255,255,0.5)'}} id={item} onClick={setSelected}>{index + 1}.{currentQuiz.choiceList[item]}</Card>
+                                <Card sx={{width:'90%',height:'90%',backgroundColor:'rgba(255,255,255,0.5)',fontSize:'2rem'}}
+                                      sm={{fontSize:'1rem'}}
+                                      id={item} onClick={setSelected}>{index + 1}.{currentQuiz.choiceList[item]}</Card>
                                 : null
                             }
                         </Item>

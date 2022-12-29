@@ -45,7 +45,9 @@ export const Type_Reply = () => {
             <Item sx={{place: 'center', display: 'block', height: '70%'}}>
                 {quizPlay.command === "RESULT" ?  //정답화면 정답일 시
                     <Item sx={{place: 'center'}}>
-                        <Card sx={{place: 'center', background: 'orange'}}>
+                        <Card sx={{place: 'center', background: 'orange',fontSize:'2rem'}}
+                              sm={{fontSize:'1rem'}}
+                        >
                             {quizPlay.quiz.answer}
                         </Card>
                     </Item>

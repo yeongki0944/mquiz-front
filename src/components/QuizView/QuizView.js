@@ -98,12 +98,12 @@ export const QuizView = (props) => {
                 <Item sx={{place: 'center', height: '35%', display: 'flex'}} sm={{display: 'block', height: '35%'}}>
                     {props.state === "play" ?
                         <Card_panel
-                            sx={{place: 'center', width: '45%', height: '90%', margin: 'auto', overflow: 'hidden'}}
-                            sm={{width: '95%', height: '45%', margin: '10px'}}>{currentQuiz.question}</Card_panel>
+                            sx={{place: 'center', width: '45%', height: '90%', margin: 'auto', overflow: 'hidden',fontSize:'2rem'}}
+                            sm={{width: '95%', height: '45%', margin: '10px',fontSize:'1rem'}}>{currentQuiz.question}</Card_panel>
                         :
                         <Card_panel
-                            sx={{place: 'center', minWidth: '45%', minHeight: '90%', margin: 'auto', maxHeight: '90%'}}
-                            sm={{minWidth: '95%', minHeight: '45%', margin: '10px'}}>{currentQuiz.question}</Card_panel>
+                            sx={{place: 'center', minWidth: '45%', minHeight: '90%', margin: 'auto', maxHeight: '90%',fontSize:'2rem'}}
+                            sm={{minWidth: '95%', minHeight: '45%', margin: '10px',fontSize:'1rem'}}>{currentQuiz.question}</Card_panel>
                     }
                     {props.state === "play" ?
                         <Card_panel
