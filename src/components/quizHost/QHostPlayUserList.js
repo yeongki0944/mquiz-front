@@ -39,7 +39,7 @@ export const UserList = (props) => {
                                         store.dispatch(R_setData({key: "bannedNickName", value: item}))
                                         stompSend("ban", {
                                             pinNum: getPinNum(),
-                                            nickName: quizPlay.bannedNickName
+                                            nickName: item
                                         });
                                         setCurrentClient(parseInt(getCurrentClient())-1);
                                     }
