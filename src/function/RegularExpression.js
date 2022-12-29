@@ -50,6 +50,17 @@ export const chk_nickname = (str) => {
     return false;
 }
 
+export const chk_space = (str) => {
+    /*
+     * 공백 검증에 사용할 정규표현식 작성
+     *  공백이 있으면 true, 없으면 false
+     */
+    var reg = /\s/g;
+    if (reg.test(str)) {
+        return true;
+    }
+    return false;
+}
 
 
 

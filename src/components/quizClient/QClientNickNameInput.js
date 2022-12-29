@@ -2,7 +2,7 @@ import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import {useEffect, useState} from 'react';
 import {stompSend} from "../../function/WebSocket";
-import {chk_special} from "../../function/RegularExpression";
+import {chk_space, chk_special} from "../../function/RegularExpression";
 import {Btn, Content, Item, Text} from "../../layouts/LayOuts";
 import {getPinNum, setNickname, setRole, setScore} from "../../function/localStorage";
 
@@ -39,7 +39,9 @@ export const NickNameCheck = () => {
         } else if (nick_Name === '') {
             setError('닉네임을 입력해주세요!');
             return;
-        } else {
+        } else if (chk_space(nick)){
+            setError('공백은 사용할 수 없습니다.');
+        } else{
             setError('');
             handleEnter(nick);
         }
@@ -49,12 +51,13 @@ export const NickNameCheck = () => {
      * 유효성 통과된 닉네임 입력 후 입장
      */
     const handleEnter = (nick) => {
-        setNick_Name(nick);
+        nick = nick.replace(/^\s+|\s+$/g,"");
+        console.log(nick);
         setRole("CLIENT");
         setNickname(nick);
         stompSend('setnickname', {
             pinNum: getPinNum(),
-            nickName: nick,
+            nickName: nick.trim(),
         });
     }
 
