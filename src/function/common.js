@@ -24,29 +24,34 @@ export const disableRefresh = () => {
 };
 
 export const checkConnected = (command) => {
-    if (getPinNum() != null) {
-        if (command === null) {
-            if (getRole() === 'HOST') {
-                setCommand('RECONNECT');
-                redirectPage('QHOSTPLAY');
-                return true;
-            } else if (getRole() === 'CLIENT') {
-                setCommand('RECONNECT');
-                redirectPage('QCLIENT');
-                return true;
-            }
-        }
-    } else { //재접속 아닐 시
+    if (window.location.pathname.startsWith('/p/')) { //여긴 URL 접속 경로로 접근 시 사용됨
         flushLocalStorage();
         flushRedux();
-        if (window.location.pathname.startsWith('/p/')) { //여긴 URL 접속 경로로 접근 시 사용됨
-            let pinNum = window.location.pathname.substring(3);
-            if(pinNum){
-                setRole('CLIENT');
-                setCommand('PIN');
-                redirectPage('QCLIENT');
+        let pinNum = window.location.pathname.substring(3);
+        if(pinNum){
+            setRole('CLIENT');
+            setCommand('PIN');
+            redirectPage('QCLIENT');
+        }
+    }else{
+        if (getPinNum() != null) {
+            if (command === null) {
+                if (getRole() === 'HOST') {
+                    setCommand('RECONNECT');
+                    redirectPage('QHOSTPLAY');
+                    return true;
+                } else if (getRole() === 'CLIENT') {
+                    setCommand('RECONNECT');
+                    redirectPage('QCLIENT');
+                    return true;
+                }
             }
+        } else { //재접속 아닐 시
+            flushLocalStorage();
+            flushRedux();
+
         }
     }
+
 }
 
