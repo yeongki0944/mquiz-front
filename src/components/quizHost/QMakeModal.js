@@ -17,8 +17,8 @@ import Swal from "sweetalert2";
 
 const imageItemData = [
     {
-        img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
-        title: 'Breakfast',
+        img: '/img/quizlist.png',
+        title: 'base',
     },
     {
         img: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d',
@@ -68,19 +68,15 @@ const imageItemData = [
 const currencies = [
     {
         value: '카테고리1',
-        label: '카테고리1',
+        label: '학생용',
     },
     {
         value: '카테고리2',
-        label: '카테고리2',
+        label: '성인용',
     },
     {
         value: '카테고리3',
-        label: '카테고리3',
-    },
-    {
-        value: '카테고리4',
-        label: '카테고리4',
+        label: '전연령',
     },
 ];
 

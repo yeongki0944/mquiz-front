@@ -11,12 +11,19 @@ import {QClientSubmitWait} from "../../components/quizClient/QClientSubmitWait";
 import {RankPage} from "../../components/result/RankPage";
 import {QClientReconnect} from "../../components/quizClient/QClientReconnect";
 import {QClientBanModal} from "../../components/quizClient/QClientBanModal";
-import {stompInit} from "../../function/WebSocket";
-import {flushDupliNickname, flushLocalStorage, getPinNum} from "../../function/localStorage";
+import {stompDisconnect, stompInit, stompSend} from "../../function/WebSocket";
+import {
+    flushDupliNickname,
+    flushLocalStorage,
+    getCurrentClient,
+    getPinNum,
+    setCurrentClient
+} from "../../function/localStorage";
 import {HomeButton} from "../../components/HomeButton";
 import {flushRedux, setCommand} from "../../function/reduxFunction";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
+import {redirectPage} from "../../function/common";
 
 
 
@@ -43,6 +50,19 @@ export const QClientMain = () => {
                 }, 3000);
                 break;
             case "KICK": //추방
+                Swal.fire({
+                    title:"추방되셨습니다.",
+                    //text: contentMsg,
+                    icon: 'error',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: '확인',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        stompDisconnect();
+                        redirectPage("MAIN");
+                    }
+                })
                 setOpen(true);
                 flushLocalStorage();
                 flushRedux();
@@ -92,7 +112,7 @@ export const QClientMain = () => {
                 {quizPlay.command === "RESULT" && <RankPage/>}
                 {quizPlay.command === "FINAL" && <RankPage/>}
                 {quizPlay.command === "RECONNECT" && <QClientReconnect/>}
-                <QClientBanModal open={open} setOpen={setOpen}/>
+                {/*<QClientBanModal open={open} setOpen={setOpen}/>*/}
             </Item>
         </Page>
     );

@@ -5,8 +5,9 @@ import {Btn, Card, Img, Item, Text} from "../../layouts/LayOuts";
 import {useSelector} from "react-redux";
 import store from "../../redux/store";
 import {R_setData} from "../../redux/reducers/quizplayReducer";
-import {stompSend} from "../../function/WebSocket";
-import {getCurrentClient, getPinNum, setCurrentClient} from "../../function/localStorage";
+import {stompDisconnect, stompIsConnected, stompSend} from "../../function/WebSocket";
+import {flushLocalStorage, getCurrentClient, getPinNum, getRole, setCurrentClient} from "../../function/localStorage";
+import Swal from "sweetalert2";
 
 export const UserList = (props) => {
     const {quizPlay} = useSelector(state => state.quizPlay)
@@ -23,8 +24,26 @@ export const UserList = (props) => {
                             sx={{margin:'10px',width:'15%',float:'left',backgroundColor:'rgba(130, 195, 236,0.7)',borderRadius:'20%'}}
                             sm={{width:'40%'}}
                             onClick={() => {
-                                props.setOpen(true)
-                               store.dispatch(R_setData({key: "bannedNickName", value: item}))
+                                Swal.fire({
+                                    title:item+"님을 추방하시겠습니까?",
+                                    //text: contentMsg,
+                                    icon: 'question',
+                                    showCancelButton: true,
+                                    confirmButtonColor: '#3085d6',
+                                    cancelButtonColor: '#d33',
+                                    confirmButtonText: '강퇴하기',
+                                    cancelButtonText: '취소',
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        // props.setOpen(true)
+                                        store.dispatch(R_setData({key: "bannedNickName", value: item}))
+                                        stompSend("ban", {
+                                            pinNum: getPinNum(),
+                                            nickName: quizPlay.bannedNickName
+                                        });
+                                        setCurrentClient(parseInt(getCurrentClient())-1);
+                                    }
+                                })
                             }}
                         >
                             <Text sx={{color:'#000',fontWeight:'bold',fontSize:'1.5vw'}} sm={{fontSize:'5.5vw'}}>{item}</Text>
@@ -69,7 +88,13 @@ export const HostCountOutModal = (props) => {
                 height: '40%',
             }}>
                 <Item sx={{place:'center', height:'70%'}} sm={{height: '50%'}}>
-                    <Img alt={"유저 강퇴"} src={"/img/logo192.png"} sm={{height:'70%'}}/>
+                    <Img alt={"유저 강퇴"} src={"/img/Spaceman_ban.png"}
+                    sx={{
+                        width: '150px',
+                        height: '150px',
+                        objectFit: 'cover',
+                        borderRadius: '10px',
+                    }}/>
                 </Item>
                 <Text sm={{height:'20%'}}>
                     {quizPlay.bannedNickName}님을 강퇴하실건가요?

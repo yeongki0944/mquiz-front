@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import {Btn, Img, Item, Text} from "../../layouts/LayOuts";
 import {stompDisconnect} from "../../function/WebSocket";
 import {redirectPage} from "../../function/common";
+import {useEffect} from "react";
 
 export function QClientBanModal(props) {
     const open = props.open;
@@ -15,6 +16,11 @@ export function QClientBanModal(props) {
     }
     const history = useHistory();
 
+    useEffect(
+        () => {
+            stompDisconnect();
+        }, []
+    )
     return (
         <Modal
             open={open}
